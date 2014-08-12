@@ -1,0 +1,32 @@
+<!-- start header -->
+<?php
+$crnt_url=base_url(uri_string());
+$b_url=base_url();
+$class="active";
+?>
+         
+            <div class="container">
+                <div class="container-wrap">
+
+                    <!-- Logo-->
+                    <div class="logo">
+                        <a href="<?php echo base_url();?>home" title="Home">                            
+                            <img src="<?php echo base_url();?>img/logo.png" alt="Logo" class="logo_img">
+                        </a>
+                    </div>
+                    <!-- End Logo-->
+                                                      
+                    <!-- Nav-->
+                    <nav class="nav-menu">
+                        <!-- Menu-->
+                        <ul id="menu" class="cc_menu">
+                            <li><a href="<?php echo base_url();?>home">HOME</a></li>
+                            <li><a href="<?php echo base_url();?>contact-us">CONTACT</a></li>
+                        </ul>
+                        <!-- End Menu-->
+                    </nav>
+                    <!-- End Nav-->
+                    
+                </div><!-- End container-wrap-->
+            </div><!-- End Container-->
+        
