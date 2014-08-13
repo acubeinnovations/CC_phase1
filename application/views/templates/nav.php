@@ -11,7 +11,7 @@ $class="active";
                     <!-- Logo-->
                     <div class="logo">
                         <a href="<?php echo base_url();?>home" title="Home">                            
-                            <img src="<?php echo base_url();?>img/logo.png" alt="Logo" class="logo_img">
+                            <img src="<?php echo base_url();?>img/system/logo.png" alt="Logo" class="logo_img">
                         </a>
                     </div>
                     <!-- End Logo-->
