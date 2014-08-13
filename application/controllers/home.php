@@ -19,7 +19,7 @@ class Home extends CI_Controller {
 	 */
 	public function index()
 	{	$this->load->helper('url');
-		$Title['title']="Home | Acube";	
+		$Title['title']="Home | Acube Innovations";	
 		$this->load->view('templates/header',$Title);
 		$this->load->view('templates/nav');
 		$this->load->view('home');
