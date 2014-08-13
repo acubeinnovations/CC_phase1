@@ -5,8 +5,8 @@ $b_url=base_url();
 $class="active";
 ?>
          
-            <div class="container">
-                <div class="container-wrap">
+            <div class="container-wrap">
+                <div class="container">
 
                     <!-- Logo-->
                     <div class="logo">
@@ -27,6 +27,6 @@ $class="active";
                     </nav>
                     <!-- End Nav-->
                     
-                </div><!-- End container-wrap-->
-            </div><!-- End Container-->
+                </div><!-- End Container-->
+            </div><!-- End container-wrap-->
         

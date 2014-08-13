@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Home extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -18,8 +18,12 @@ class Welcome extends CI_Controller {
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index()
-	{
-		$this->load->view('welcome_message');
+	{	$this->load->helper('url');
+		$Title['title']="Home | Acube";	
+		$this->load->view('templates/header',$Title);
+		$this->load->view('templates/nav');
+		$this->load->view('home');
+		$this->load->view('templates/footer');
 	}
 }
 
