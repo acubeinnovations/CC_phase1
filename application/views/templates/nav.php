@@ -1,10 +1,4 @@
-<!-- start header -->
-<?php
-$crnt_url=base_url(uri_string());
-$b_url=base_url();
-$class="active";
-?>
-         
+     
             <div class="container-wrap">
                 <div class="container">
 
