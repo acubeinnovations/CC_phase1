@@ -4,6 +4,7 @@ class Home extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
+	 
 	 */
 	public function index($user = 'Accube Innovations')
 	{	$this->load->helper('url');
