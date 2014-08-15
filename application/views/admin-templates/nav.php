@@ -1,9 +1,16 @@
      
             <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
+                        <?php if($this->session->userdata('isLoggedIn')==null || $this->session->userdata('isLoggedIn')!=true) {?>
                         <li class="active">
                             <a href="index.html">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                                <i class="fa fa-dashboard"></i> <span> Home </span>
+                            </a>
+                        </li>
+                        <?php } else { ?>
+                        <li class="active">
+                            <a href="index.html">
+                                <i class="fa fa-dashboard"></i> <span> Dashboard </span>
                             </a>
                         </li>
                         <li>
@@ -69,7 +76,7 @@
                                 <i class="fa fa-envelope"></i> <span>Menu 7</span>
                                 <small class="badge pull-right bg-yellow">Notification</small>
                             </a>
-                        </li>
+                        </li> <?php } ?>
                         
                     </ul>
                 </section>

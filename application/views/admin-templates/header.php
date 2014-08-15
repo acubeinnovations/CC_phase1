@@ -46,6 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
+                <?php if($this->session->userdata('isLoggedIn')!=null || $this->session->userdata('isLoggedIn')==true) {?>
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
                         <!-- Messages: style can be found in dropdown.less-->
@@ -276,15 +277,19 @@
                         </li>
                     </ul>
                 </div>
+                 <?php } ?>
             </nav>
         </header>
+        
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
             <aside class="left-side sidebar-offcanvas">
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
+
                     <div class="user-panel">
+                        <?php if($this->session->userdata('isLoggedIn')!=null || $this->session->userdata('isLoggedIn')==true) {?>
                         <div class="pull-left image">
                             <img src="img/avatar3.png" class="img-circle" alt="User Image" />
                         </div>
@@ -293,7 +298,9 @@
 
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
+                        <?php } ?>
                     </div>
+                    <?php if($this->session->userdata('isLoggedIn')!=null || $this->session->userdata('isLoggedIn')==true) {?>
                     <!-- search form -->
                     <form action="#" method="get" class="sidebar-form">
                         <div class="input-group">
@@ -303,3 +310,4 @@
                             </span>
                         </div>
                     </form>
+                     <?php } ?> 
