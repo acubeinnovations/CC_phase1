@@ -20,7 +20,6 @@ class Sys_login extends CI_Controller {
 	
 	public function index()
 	{		
-		$this->load->helper('url');
 		if( $this->session->userdata('isLoggedIn') ) {
         	$this->load->view('home');
 		} else if(isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
@@ -30,7 +29,7 @@ class Sys_login extends CI_Controller {
 
 		     if( $username && $pass && $this->admin_model->AdminLogin($username,$pass)) {
 		       
-				 redirect('admin', 'refresh');
+				 redirect(base_url().'admin');
 		        
 		    } else {
 		        
@@ -46,9 +45,7 @@ class Sys_login extends CI_Controller {
 		
 	public function show_login( $show_error = false ) 
 	{   $Error['error'] = $show_error;
-        $this->load->helper('form'); 
-		$this->load->helper('html');
-		$Title['title']="Home | ";	
+       	$Title['title']="Home | ";	
 		$this->load->view('admin-templates/header',$Title);
 		$this->load->view('admin-templates/nav');
 		$this->load->view('admin-pages/login',$Error);
@@ -58,4 +55,4 @@ class Sys_login extends CI_Controller {
 	
 }
 
-/* Location: ./application/controllers/welcome.php */
+
