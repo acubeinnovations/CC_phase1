@@ -26,10 +26,10 @@
             <?php echo form_open(base_url().'syslogin','class=form_login');?>
                 <div class="body bg-gray">
                     <div class="form-group">
-						<?php echo form_input("username","","class='username form-control'","placeholder=User ID"); ?>
+						<?php echo form_input(array('name' => 'username','class'=>'username form-control','placeholder'=>'User ID')); ?>
                     </div>
                     <div class="form-group">
-						<?php echo form_password("password","","class='pass form-control'","placeholder=Password"); ?>
+						<?php echo form_password(array('name'=>'password','class'=>'pass form-control','placeholder'=>'Password')); ?>
                     </div>          
                    <?php if ($error == true) { ?>
 					 <div class="form-group">
@@ -40,11 +40,8 @@
                 <div class="footer">  
 					<?php echo form_submit("","Login","class='btn bg-olive btn-block'");  ?>                                                       
                                       
-                    <p><a href="#">I forgot my password</a></p>
-                    
-                    
-                </div>
-        	 <?php  echo form_close();   ?>
+                 </div>
+        	 <?php echo form_close(); ?>
 
             <div class="margin text-center">
                 
