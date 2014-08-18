@@ -1,8 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
 
 	<style type="text/css">
 
@@ -19,26 +14,23 @@
 	border:1px solid #333;
 	}
 	</style>
-</head>
-<body>
-
 <div id="container">
 	
 	<div id="body">
 	   <h1>Login</h1>
-		<?php if (isset($error) && $error == 'true') { ?>
-          <div class="alert alert-error">
-            <a class="close" data-dismiss="alert" href="#">×</a>Incorrect Username or Password!
-          </div>
-       <?php } ?>
-	   <?php echo validation_errors(); ?>
-	   <?php echo form_open('system_admin','class=form_login');
+		<?php echo validation_errors(); ?>
+	   <?php echo form_open('syslogin','class=form_login');
 	   echo form_label("Username: ");
 	   echo form_input("username","","class=username");
 	   echo br();
 	   echo form_label("Password: ");
 	   echo form_password("password","","class=pass");
 	   echo br();
+	   if ($error == true) { ?>
+          <div class="alert alert-error">
+            <a class="close" data-dismiss="alert" href="#">×</a>Incorrect Username or Password!
+          </div>
+       <?php } 
 	   echo form_submit("","Login");
 	   echo form_close();
 	   ?>
@@ -47,7 +39,4 @@
 	
 </div>
 
-   
- </body>
-</html>
-
+ 

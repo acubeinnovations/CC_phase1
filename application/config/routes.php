@@ -40,8 +40,9 @@
 
 $route['default_controller'] = "home";
 $route['404_override'] = '';
-$route['(:any)'] = 'home/index/$0';
+//$route['(:any)'] = 'home/index/$0';
 $route['syslogin'] = 'sys_login/index';
+$route['logout'] = 'logout';
 
 
 /* End of file routes.php */

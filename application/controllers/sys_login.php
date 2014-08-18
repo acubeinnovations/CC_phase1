@@ -24,13 +24,14 @@ class Sys_login extends CI_Controller {
 		if( $this->session->userdata('isLoggedIn') ) {
         	$this->load->view('home');
 		} else if(isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
-			 $this->load->model('user_model');
-			 $email = $this->input->post('username');
+			 $this->load->model('admin_model');
+			 $username = $this->input->post('username');
 		   	 $pass  = $this->input->post('password');
 
-		     if( $email && $pass && $this->user_model->validate_user($email,$pass)) {
+		     if( $username && $pass && $this->admin_model->AdminLogin($username,$pass)) {
+		       
+				 redirect('admin', 'refresh');
 		        
-		        $this->load->view('home');
 		    } else {
 		        
 		        $this->show_login(true);
@@ -38,26 +39,23 @@ class Sys_login extends CI_Controller {
 
 		} else {
 
-		 	$this->show_login('false');
+		 	$this->show_login(false);
 		}
 			
 	}
 		
 	public function show_login( $show_error = false ) 
-	{   $error = $show_error;
+	{   $Error['error'] = $show_error;
         $this->load->helper('form'); 
 		$this->load->helper('html');
 		$Title['title']="Home | ";	
 		$this->load->view('admin-templates/header',$Title);
 		$this->load->view('admin-templates/nav');
-		$this->load->view('login');
+		$this->load->view('admin-pages/login',$Error);
 		$this->load->view('admin-templates/footer');
     }
-	function logout() 
-	{
-      $this->session->sess_destroy();
-      $this->show_login('false');
-    }
+	
+	
 }
 
 /* Location: ./application/controllers/welcome.php */
