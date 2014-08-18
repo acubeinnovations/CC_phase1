@@ -35,16 +35,7 @@ class admin_model extends CI_Model {
         );
     }
 
-    function  create_new_user( $userData ) {
-      $data['firstName'] = $userData['firstName'];
-      $data['lastName'] = $userData['lastName'];
-      $data['email'] = $userData['email'];
-	  $data['type'] = '3';
-      $data['password'] = sha1($userData['password1']);
-
-      return $this->db->insert('user',$data);
-    }
-    
+        
     function  insertOrg($name,$addr ) {
 	$data=array('name'=>$name,'address'=>$addr,'status_id'=>'1');
 	$this->db->set('created', 'NOW()', FALSE);
@@ -54,6 +45,16 @@ class admin_model extends CI_Model {
     function getOrg(){
 	$query=$this->db->get('organisations');
 	return $query->result_array();
+    }
+	function getProfile(){
+	$this->db->from('users');
+	$this->db->where('id',$this->session->userdata('id'));
+	return $this->db->get()->result();
+    }
+	function updateProfile($data){
+	$this->db->where('id',$this->session->userdata('id') );
+	$this->db->update('users',$data);
+	
     }
    
 
