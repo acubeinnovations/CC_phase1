@@ -21,7 +21,7 @@ class Sys_login extends CI_Controller {
 	public function index()
 	{		
 		if( $this->session->userdata('isLoggedIn') ) {
-        	$this->load->view('home');
+        	redirect(base_url().'admin');
 		} else if(isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
 			 $this->load->model('admin_model');
 			 $username = $this->input->post('username');
@@ -44,12 +44,10 @@ class Sys_login extends CI_Controller {
 	}
 		
 	public function show_login( $show_error = false ) 
-	{   $Error['error'] = $show_error;
-       	$Title['title']="Home | ";	
-		$this->load->view('admin-templates/header',$Title);
-		$this->load->view('admin-templates/nav');
-		$this->load->view('admin-pages/login',$Error);
-		$this->load->view('admin-templates/footer');
+	{   $Data['error'] = $show_error;
+       	$Data['title']="Login | CC Phase 1";	
+		$this->load->view('admin-pages/login',$Data);
+		
     }
 	
 	
