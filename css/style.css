@@ -59,3 +59,30 @@ margin:0 auto;
 width:30%;
 margin:0 auto;
 }
+.change-password-body{
+width:30%;
+margin:0 auto;
+}
+.success-message{
+margin:20px 0 20px 0;
+}
+.body-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    
+}
+
+.body-head {
+    width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+	margin:10px;
+	font-size:28px;
+	background:#F9F9F9
+
+}
+.page-outer{
+	width:95%;
+	margin:0 auto;
+}

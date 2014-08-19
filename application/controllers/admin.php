@@ -13,8 +13,8 @@ class Admin extends CI_Controller {
         $this->load->view('admin-templates/footer');
 	
     }
-    public function organization($action){
-    if ($action =='new'){
+    public function organization($action = '', $secondaction = ''){
+    if ($action =='new' && $secondaction == ''){
       
 	if(isset($_REQUEST['name']) && isset($_REQUEST['addr'])&& isset($_REQUEST['uname'])&& isset($_REQUEST['pwd'])&& isset($_REQUEST['mail'])&& isset($_REQUEST['phn'])&& isset($_REQUEST['fname'])&& isset($_REQUEST['lname'])&&  isset($_REQUEST['submit'])){ 
 		    $name = $this->input->post('name');
@@ -63,42 +63,137 @@ class Admin extends CI_Controller {
 		} 
 		
 		}
-    else if($action=='list'){
+    else if($action=='list' && $secondaction == '') {
 	$this->load->model('admin_model');
 	$data=array('values'=>$this->admin_model->getOrg());
 	//print_r($data);exit();
 	$Title['title']='Organization List| CC Phase1';
 	$this->load->view('admin-templates/header',$Title);
-		$this->load->view('admin-templates/nav');
-		$this->load->view('admin-pages/orgList',$data);
-		$this->load->view('admin-templates/footer');
+	$this->load->view('admin-templates/nav');
+	$this->load->view('admin-pages/orgList',$data);
+	$this->load->view('admin-templates/footer');
 	 
 	}
     else
 	{
-	//if organization name comes what to do?
+	if($secondaction != '' && $secondaction =='password-reset'){
+		//if organization name  and password-reset comes what to do?
+		$this->load->model('admin_model');
+	   	$data['title']		  =		"Reset Password | CC Phase 1"; 
+		$data['password']	  = 	'';
+		$data['cpassword'] 	  = 	'';
+		$data['orgname']	  =		$action;
+       if(isset($_REQUEST['admin-org-password-reset'])){
+			$this->form_validation->set_rules('password','New Password','trim|required|min_length[5]|max_length[20]|xss_clean');
+			$this->form_validation->set_rules('cpassword','Confirm Password','trim|required|min_length[5]|max_length[20]|matches[password]|xss_clean');
+			$data['password'] = trim($this->input->post('password'));
+			$data['cpassword'] = trim($this->input->post('cpassword'));
+			if($this->form_validation->run() != False) {
+				$dbdata['password']  	= md5($this->input->post('password'));
+				$dbdata['id'] 			= '';
+				$val    			    = $this->admin_model->resetOrganizationPasswordAdmin($dbdata);
+				if($val == true) {				
+					redirect(base_url().'admin');
+				}else{
+					$this->show_org_reset_password($data);
+				}
+			} else {
+				
+					$this->show_org_reset_password($data);
+			}
+		} else {
+			
+					$this->show_org_reset_password($data);
+		}
+	}else{
+		//if organization name comes what to do?
+		echo $action.' '.$secondaction;
 	}
+	}
+	}
+	public function show_org_reset_password($data) {
+				$this->load->view('admin-templates/header',$data);
+			  	$this->load->view('admin-templates/nav');
+				$this->load->view('admin-pages/password-reset',$data);
+				$this->load->view('admin-templates/footer');
 	}
 	public function profile(){
 	   $this->load->model('admin_model');
+	   $dbdata = '';
        if(isset($_REQUEST['admin-profile-update'])){
+			$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean');
+			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[5]|max_length[20]|xss_clean');
+			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[5]|max_length[20]|xss_clean');
+			$this->form_validation->set_rules('email','Email','trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
+			$this->form_validation->set_rules('phone','Phone','trim|required|min_length[5]|max_length[20]|xss_clean');
+			$this->form_validation->set_rules('address','Address','trim|required|min_length[5]|max_length[50]|xss_clean');
 			$dbdata['username']  = $this->input->post('username');
 		   	$dbdata['first_name'] = $this->input->post('firstname');
 			$dbdata['last_name']  = $this->input->post('lastname');
 		    $dbdata['email'] 	   = $this->input->post('email');
 			$dbdata['phone'] 	   = $this->input->post('phone');
 		    $dbdata['address']   = $this->input->post('address');
-			$val    		   = $this->admin_model->updateProfile($dbdata);
-			redirect(base_url().'admin');
+			if($this->form_validation->run() != False) {
+				$val    		   = $this->admin_model->updateProfile($dbdata);
+				redirect(base_url().'admin');
+			}else{
+				$this->show_profile($dbdata);
+			}
 		}else{
+			
+			$this->show_profile($dbdata);
+
+		}
+	}
+	public function show_profile($data) {
+			if($data == ''){
 			$data['values']=$this->admin_model->getProfile();
+			}else{
+			$data['postvalues']=$data;
+			}
 			$Title['title']="Profile | CC Phase 1";  
 			$this->load->view('admin-templates/header',$Title);
 		  	$this->load->view('admin-templates/nav');
 		    $this->load->view('admin-pages/profile',$data);
 		    $this->load->view('admin-templates/footer');
-
+	}
+	public function changePassword() {
+	   $this->load->model('admin_model');
+	   	$data['title']		  =		"Change Password | CC Phase 1"; 
+		$data['old_password'] = 	'';
+		$data['password']	  = 	'';
+		$data['cpassword'] 	  = 	'';
+       if(isset($_REQUEST['admin-password-update'])){
+			$this->form_validation->set_rules('old_password','Current Password','trim|required|min_length[5]|max_length[20]|xss_clean');
+			$this->form_validation->set_rules('password','New Password','trim|required|min_length[5]|max_length[20]|xss_clean');
+			$this->form_validation->set_rules('cpassword','Confirm Password','trim|required|min_length[5]|max_length[20]|matches[password]|xss_clean');
+			$data['old_password'] = trim($this->input->post('old_password'));
+			$data['password'] = trim($this->input->post('password'));
+			$data['cpassword'] = trim($this->input->post('cpassword'));
+			if($this->form_validation->run() != False) {
+				$dbdata['password']  	= md5($this->input->post('password'));
+				$dbdata['old_password'] = md5(trim($this->input->post('old_password')));
+				$val    			    = $this->admin_model->changePassword($dbdata);
+				if($val == true) {				
+					redirect(base_url().'admin');
+				}else{
+					$this->show_change_password($data);
+				}
+			} else {
+				
+					$this->show_change_password($data);
+			}
+		} else {
+			
+					$this->show_change_password($data);
 		}
+	}	
+   
+	public function show_change_password($data) {
+				$this->load->view('admin-templates/header',$data);
+			  	$this->load->view('admin-templates/nav');
+				$this->load->view('admin-pages/change-password',$data);
+				$this->load->view('admin-templates/footer');
 	}
 
 	public function showAddOrg($data){
