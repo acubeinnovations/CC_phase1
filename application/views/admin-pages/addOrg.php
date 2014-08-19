@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<?php echo form_open(base_url().'admin/new_organization');?>
+<?php echo form_open(base_url().'admin/organization/new');?>
 <table width="258" border="0">
   <tr>
     <td width="106"><?php echo form_label('Organization Name');?></td>

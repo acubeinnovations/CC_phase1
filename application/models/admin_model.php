@@ -53,7 +53,7 @@ class admin_model extends CI_Model {
     
     function getOrg(){
 	$query=$this->db->get('organisations');
-	return $query->result();
+	return $query->result_array();
     }
    
 
