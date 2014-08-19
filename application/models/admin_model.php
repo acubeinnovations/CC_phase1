@@ -44,6 +44,12 @@ class admin_model extends CI_Model {
 
       return $this->db->insert('user',$data);
     }
+    
+    function  insertOrg($name,$addr ) {
+	$data=array('name'=>$name,'address'=>$addr,'status'=>'active','created'=CURTIME());
+	return $this->db->insert('organisations',$data);
+    }
+   
 
    
 }
