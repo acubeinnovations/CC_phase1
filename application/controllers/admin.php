@@ -2,17 +2,28 @@
 
 class Admin extends CI_Controller {
 
-    public function index(){
-        
-        $this->load->helper('form');
-        $this->load->helper('html');
-        $Title['title']="Home | CC Phase1";    
+	//newly added nijo
+	public function session_check() {
+	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==SYSTEM_ADMINISTRATOR)) {
+		return true;
+	} else {
+		return false;
+	}
+
+	}    
+	public function index(){
+        if($this->session_check()==true) {//newly added nijo
+		$Title['title']="Home | CC Phase1";    
         $this->load->view('admin-templates/header',$Title);
         $this->load->view('admin-templates/nav');
         $this->load->view('admin-pages/home');
         $this->load->view('admin-templates/footer');
+		}else{
+			echo 'you are not authorized access this page..';
+		}
 	
     }
+	
     public function organization($action = '', $secondaction = ''){
     if ($action =='new' && $secondaction == ''){
       
