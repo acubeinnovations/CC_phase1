@@ -18,8 +18,9 @@ define('FILE_WRITE_MODE', 0666);
 define('DIR_READ_MODE', 0755);
 define('DIR_WRITE_MODE', 0777);
 define('SYSTEM_ADMINISTRATOR',1);
-define('Organisation_Administrator',2);
-define('Front_Desk',3);
+define('ORGANISATION_ADMINISTRATOR',2);
+define('FRONT_DESK',3);
+define('SYSTEM_EMAIL','cc@cc.com');
 /*
 |--------------------------------------------------------------------------
 | File Stream Modes

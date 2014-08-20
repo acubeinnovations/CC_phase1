@@ -36,12 +36,18 @@ class admin_model extends CI_Model {
     }
 
         
-    function  insertOrg($name,$addr ) {
+    function  insertOrg($name,$fname,$lname,$addr,$uname,$pwd,$mail,$phn ) {
 	$data=array('name'=>$name,'address'=>$addr,'status_id'=>'1');
 	$this->db->set('created', 'NOW()', FALSE);
-	return $this->db->insert('organisations',$data);
+	$this->db->insert('organisations',$data);
+	$insert_id=$this->db->insert_id();
+	if($insert_id){
+	$data2=array('username'=>$uname,'password'=>md5($pwd),'first_name'=>$fname,'last_name'=>$lname,'phone'=>$phn,'address'=>$addr,'user_status_id'=>'1','user_type_id'=>ORGANISATION_ADMINISTRATOR,'email'=>$mail,'organisation_id'=>$insert_id);
+	$this->db->set('registration_date', 'NOW()', FALSE);
+	$this->db->insert('users',$data2);
+	return true;
+	  }
     }
-    
     function getOrg(){
 	$query=$this->db->get('organisations');
 	return $query->result_array();

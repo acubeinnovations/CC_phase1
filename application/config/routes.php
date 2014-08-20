@@ -45,5 +45,6 @@ $route['syslogin'] = 'sys_login/index';
 $route['logout'] = 'logout';
 
 
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
