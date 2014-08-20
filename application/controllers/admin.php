@@ -77,7 +77,13 @@ class Admin extends CI_Controller {
 		}
     else if($action=='list' && $secondaction == '') {
 	$this->load->model('admin_model');
-	$data=array('values'=>$this->admin_model->getOrg());
+	$condition='';
+	$tbl='organisations';
+	$per_page=5;
+	$this->load->library("pagination");
+	$data=$this->pagination->paging($tbl,$condition,$per_page);
+	//echo "<pre>";print_r($data);echo "</pre>";exit();
+	//$data=array('values'=>$this->admin_model->getOrg());
 	//print_r($data);exit();
 	$Title['title']='Organization List| CC Phase1';
 	$this->load->view('admin-templates/header',$Title);
@@ -302,6 +308,8 @@ class Admin extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
+	
+      
 
 }
 ?>

@@ -40,7 +40,7 @@
 					<?php endforeach;
 					?>
 				</tbody>
-			</table>
+			</table><?php echo $page_links;?>
 		</div>
 	</fieldset>
 </div>

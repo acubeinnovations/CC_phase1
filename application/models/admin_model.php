@@ -102,5 +102,30 @@ class admin_model extends CI_Model {
 		$qry=$this->db->get('user_statuses');
 		return $qry->result_array();
 	}
+	
+	function getCount($tbl,$condition){
+		if($condition==''){
+		$qry=$this->db->get($tbl);
+		}
+		else{
+		$this->db->where($condition);
+		$qry=$this->db->get($tbl);
+		}
+		return $qry->num_rows();
+	
+	}
+	function getDetails($tbl,$num,$condition,$offset){
+	//echo $tbl.$num.','.$condition.','.$offset; exit();
+		if($condition==''){
+		$qry=$this->db->get($tbl,$num,$offset);
+		//echo $this->db->get($tbl,$num,$offset); exit();
+		}
+		else{
+		$this->db->where($condition);
+		$qry= $this->db->get($tbl,$num,$offset);
+		}
+	   return $qry->result_array();
+	}
+	
    
 }
