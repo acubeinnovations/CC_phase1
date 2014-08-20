@@ -9,6 +9,11 @@ class Sys_login extends CI_Controller {
         	redirect(base_url().'admin');
 		} else if(isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
 			 $this->load->model('admin_model');
+			 $captcha = $this->input->post('captcha');
+			 $this->form_validation->set_rules('captcha', 'Captcha', 'trim|required|callback_captcha_check');
+			 $this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[10]|xss_clean');
+			 $this->form_validation->set_rules('password','Password','trim|required|min_length[4]|max_length[10]|xss_clean');
+			 if($this->form_validation->run()!=False){
 			 $username = $this->input->post('username');
 		   	 $pass  = $this->input->post('password');
 
@@ -18,19 +23,33 @@ class Sys_login extends CI_Controller {
 		        
 		    } else {
 		        
-		        $this->show_login(true);
+		        $this->show_login();
 		    }
+			} else {
 
+		 	$this->show_login();
+			}
 		} else {
 
-		 	$this->show_login(false);
+		 	$this->show_login();
 		}
 			
 	}
-		
-	public function show_login( $show_error = false ) 
-	{   $Data['error'] = $show_error;
-       	$Data['title']="Login | CC Phase 1";	
+	public function captcha_check($str)
+	{
+		if (trim($str) != trim($this->session->userdata('captcha_code')))
+		{
+			$this->form_validation->set_message('captcha_check', 'Captcha mismach.');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}	
+	
+	public function show_login() 
+	{   $Data['title']="Login | CC Phase 1";	
 		$this->load->view('admin-pages/login',$Data);
 		
     }

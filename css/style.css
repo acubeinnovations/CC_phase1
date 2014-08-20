@@ -45,7 +45,7 @@ display:block;
 background:#333;
 color:#fff;
 text-align:right;
-height:30px;
+
 }
 .footer-content{
 
@@ -85,4 +85,11 @@ margin:20px 0 20px 0;
 .page-outer{
 	width:95%;
 	margin:0 auto;
+}
+#captcha_div > .captcha{
+width:40% !important;
+float:left;
+}
+.captcha_id{
+float:left;
 }
