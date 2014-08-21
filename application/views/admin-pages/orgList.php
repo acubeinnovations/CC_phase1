@@ -10,6 +10,23 @@
            </div>
        </div>
        <?php    } ?>
+	  <?php 
+	  //search?>
+<div class="new-org-body">
+<?php echo form_open(base_url().'admin/organization/list/');?>
+
+<div class="form-group"> <?php echo form_input(array('name'=>'sname','class'=>'form-control','id'=>'sname','placeholder'=>'By Name','size'=>30));?> </div>
+<div class="form-group"> <?php $options = array(
+					'-1'  => 'By Status',
+                  '1'  => 'Active',
+                  '2'    => 'Inactive'
+                );
+		echo form_dropdown('status', $options,-1); ?></div>
+<div class="box-footer"><?php echo form_submit("search","Search","class='btn btn-primary'");?> </div>
+
+<?php echo form_close();?>
+</div>  
+	   
 <div class="page-outer">    
 	<fieldset class="body-border">
 		<legend class="body-head">List Organizations</legend>
@@ -23,7 +40,8 @@
 					    <th>Action</th>
 					</tr>
 					<?php
-					$status=array('1'=>'Active','2'=>'Inactive');
+					//$status=array('1'=>'Active','2'=>'Inactive');
+					
 					foreach($values as $row):
 					?>
 					<tr>

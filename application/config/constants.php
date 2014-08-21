@@ -21,6 +21,12 @@ define('SYSTEM_ADMINISTRATOR',1);
 define('ORGANISATION_ADMINISTRATOR',2);
 define('FRONT_DESK',3);
 define('SYSTEM_EMAIL','cc@cc.com');
+define('USER_STATUS_ACTIVE',1);
+define('USER_STATUS_SUSPENDED',2);
+define('USER_STATUS_DISABLED',3);
+define('STATUS_ACTIVE',1);
+define('STATUS_INACTIVE',2);
+
 /*
 |--------------------------------------------------------------------------
 | File Stream Modes
