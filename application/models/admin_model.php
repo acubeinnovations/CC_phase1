@@ -126,6 +126,17 @@ class admin_model extends CI_Model {
 		}
 	   return $qry->result_array();
 	}
+	function resetOrganizationPasswordAdmin($data) {
+			$dbdata = array('password'=>$data['password']);
+			$this->db->where('id',$data['id'] );
+			$succes=$this->db->update('users',$dbdata);
+			if($succes > 0) {
+			$this->session->set_userdata(array('dbSuccess'=>'Organization Password changed Successfully'));
+			$this->session->set_userdata(array('dbError'=>''));
+			return true;
+			}
+
+	}
 	
    
 }

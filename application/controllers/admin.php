@@ -80,8 +80,8 @@ class Admin extends CI_Controller {
 	$condition='';
 	$tbl='organisations';
 	$per_page=5;
-	$this->load->library("pagination");
-	$data=$this->pagination->paging($tbl,$condition,$per_page);
+	//$this->load->library("pagination");
+	$data=$this->mypage->paging($tbl,$condition,$per_page);
 	//echo "<pre>";print_r($data);echo "</pre>";exit();
 	//$data=array('values'=>$this->admin_model->getOrg());
 	//print_r($data);exit();
@@ -118,11 +118,16 @@ class Admin extends CI_Controller {
 			$data['password'] = trim($this->input->post('password'));
 			$data['cpassword'] = trim($this->input->post('cpassword'));
 			if($this->form_validation->run() != False) {
-				$dbdata['password']  	= md5($this->input->post('password'));
-				$dbdata['id'] 			= '';
-				$val    			    = $this->admin_model->resetOrganizationPasswordAdmin($dbdata);
-				if($val == true) {				
-					redirect(base_url().'admin');
+				$dbdata['password']  				= md5($this->input->post('password'));
+				$dbdata['passwordnotencrypted']  	= $this->input->post('password');
+				$dbdata['name']  					= $org_res['name'];
+				$dbdata['username'] 				= $user_res['username'];
+				$dbdata['email']  					= $user_res['email'];
+				$dbdata['id'] 						= $user_res['id'];
+				$val    			    			= $this->admin_model->resetOrganizationPasswordAdmin($dbdata);
+				if($val == true) {
+					//$this->sendEmailOnorganizationPaswordReset($dbdata);			
+					redirect(base_url().'admin/organization/list');
 				}else{
 					$this->show_org_reset_password($data);
 				}
@@ -290,13 +295,43 @@ class Admin extends CI_Controller {
 );
 		$this->email->from(SYSTEM_EMAIL, 'Acube Innovations');
 		$this->email->to($data['mail']);
-		//$this->email->cc('another@another-example.com');
-		//$this->email->bcc('them@their-example.com');
 		$this->email->subject('Succes Message');
 		$this->email->message('You have succesfully added a new organisation'.$data['name'].'!!</br> Following are your User Credentials.</br> Username:'.$data['uname'].'</br> Password:'.$data['pwd'].'Thanks & Regards</br> Acube Innovations');
 		if($this->email->send())
 			{
 			echo 'Email sent.';
+			return true;
+			}
+		else
+			{
+			show_error($this->email->print_debugger());
+			}
+			}
+		else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+	public function sendEmailOnorganizationPaswordReset($data){
+	   if($this->session_check()==true) {
+	
+		$config = Array(
+		  'protocol' => 'smtp',
+		  'smtp_host' => 'ssl://smtp.googlemail.com',
+		  'smtp_port' => 465,
+		  'smtp_user' => 'xxx@gmail.com', // change it to yours
+		  'smtp_pass' => 'xxx', // change it to yours
+		  'mailtype' => 'html',
+		  'charset' => 'iso-8859-1',
+		  'wordwrap' => TRUE
+		);
+		$this->email->from(SYSTEM_EMAIL, 'Acube Innovations');
+		$this->email->to($data['email']);
+		$this->email->subject('Succes Message');
+		$message ='Hi '.$data['name'].'!!</br> Your Passsword is reset by admin.Your </br> Username:'.$data['username'].'</br> Password:'.$data['passwordnotencrypted'].'</br>Thanks & Regards</br> Acube Innovations';
+	    $this->email->message($message);
+		if($this->email->send())
+			{
+			
 			return true;
 			}
 		else
