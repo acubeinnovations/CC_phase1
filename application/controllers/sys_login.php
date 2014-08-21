@@ -9,20 +9,29 @@ class Sys_login extends CI_Controller {
         	redirect(base_url().'admin');
 		} else if(isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
 			 $this->load->model('admin_model');
-			 $captcha = $this->input->post('captcha');
-			 $this->form_validation->set_rules('captcha', 'Captcha', 'trim|required|callback_captcha_check');
+			 $username=$this->input->post('username');
+			 $this->admin_model->LoginAttemptsChecks($username);
+			 if( $this->session->userdata('isloginAttemptexceeded')==false){
 			 $this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[10]|xss_clean');
 			 $this->form_validation->set_rules('password','Password','trim|required|min_length[4]|max_length[10]|xss_clean');
+			 } else {
+			  $captcha = $this->input->post('captcha');
+			 $this->form_validation->set_rules('captcha', 'Captcha', 'trim|required|callback_captcha_check');
+				$this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[10]|xss_clean');
+			 $this->form_validation->set_rules('password','Password','trim|required|min_length[4]|max_length[10]|xss_clean');
+			}
 			 if($this->form_validation->run()!=False){
 			 $username = $this->input->post('username');
 		   	 $pass  = $this->input->post('password');
 
 		     if( $username && $pass && $this->admin_model->AdminLogin($username,$pass)) {
-		       
+				 if($this->session->userdata('loginAttemptcount') > 1){
+		       	 $this->admin_model->clearLoginAttempts($username);
+				 }
 				 redirect(base_url().'admin');
 		        
 		    } else {
-		        
+		        $this->admin_model->recordLoginAttempts($username);
 		        $this->show_login();
 		    }
 			} else {

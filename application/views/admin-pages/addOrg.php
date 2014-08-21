@@ -1,8 +1,15 @@
 <div class="new-org-body">
-		<?php echo form_open(base_url().'admin/organization/new');?>
+		<?php
+		if(!isset($org_id) && !isset($user_id) && !isset($status)) {  
+		$url='admin/organization/new';
+		}else{ 
+		$url='admin/organization/'.$name;
+		}?>
+		<?php echo form_open(base_url().$url);?>
         <div class="form-group">
 		   <?php echo form_label('Organization Name');?>
            <?php echo form_input(array('name'=>'name','class'=>'form-control','id'=>'name','placeholder'=>'Enter Organization Name','value'=>$name)); ?>
+			<?php if(isset($org_id) && isset($user_id)) {  echo form_hidden('hname',$hname); } ?>
 	   <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
@@ -13,7 +20,7 @@
 	<div class="form-group">
 		   <?php echo form_label('Last Name');?>
            <?php echo form_input(array('name'=>'lname','class'=>'form-control','id'=>'lname','placeholder'=>'Enter Last Name','value'=>$lname)); ?>
-	   <?php echo form_error('lname', '<p class="text-red">', '</p>'); ?>
+	  	  <?php echo form_error('lname', '<p class="text-red">', '</p>'); ?>
         </div>
         <div class="form-group">
 			<?php echo form_label('Address','addresslabel'); ?>
@@ -21,10 +28,14 @@
 	    <?php echo form_error('addr', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
-			<?php echo form_label('Username'); ?>
-             <?php echo form_input(array('name'=>'uname','class'=>'form-control','id'=>'uname','placeholder'=>'Enter Username','value'=>$uname)); ?>
-	     <?php echo form_error('uname', '<p class="text-red">', '</p>'); ?>
+			<?php echo form_label('Username');if(isset($org_id) && isset($user_id) && isset($status)) { 
+			echo form_input(array('name'=>'uname','class'=>'form-control','id'=>'uname','placeholder'=>'Enter Username','value'=>$uname,'disabled'=>''));
+		 }else{
+			echo form_input(array('name'=>'uname','class'=>'form-control','id'=>'uname','placeholder'=>'Enter Username','value'=>$uname));
+		 } ?>
+			 <?php echo form_error('uname', '<p class="text-red">', '</p>'); ?>
         </div>
+	<?php if(!isset($org_id) && !isset($user_id) && !isset($status)) { ?>
 	<div class="form-group">
 			<?php echo form_label('Password'); ?>
             <?php echo form_password(array('name'=>'pwd','class'=>'form-control','id'=>'pwd','placeholder'=>'Enter Password','value'=>$pwd)); ?>
@@ -35,6 +46,7 @@
             <?php echo form_password(array('name'=>'cpwd','class'=>'form-control','id'=>'cpwd','placeholder'=>'Confirm Password','value'=>$cpwd)); ?>
 	    <?php echo form_error('cpwd', '<p class="text-red">', '</p>'); ?>
         </div>
+	<?php } ?>
 	<div class="form-group">
 			<?php echo form_label('Email-ID'); ?>
             <?php echo form_input(array('name'=>'mail','class'=>'form-control','id'=>'mail','placeholder'=>'Enter E-mail ID','value'=>$mail)); ?>
@@ -47,11 +59,20 @@
         </div>
 	
 		<div class="form-group">
-		<?php if(isset($msg)) echo $msg; ?>
+		<?php if(isset($org_id) && isset($user_id) && isset($status)) {  echo form_hidden('user_id',$user_id).form_hidden('org_id',$org_id).form_hidden('status',$status);
+		 } ?>
 		</div>
    		<div class="box-footer">
 		<?php // echo validation_errors();?>
-		<?php echo form_submit("submit","Save","class='btn btn-primary'");  ?>  
+		<?php if(!isset($org_id) && !isset($user_id)) {
+		echo form_submit("submit","Save","class='btn btn-primary'");
+		 }else {
+		if($status==STATUS_ACTIVE){
+		$cap_status="Disable";
+		}else if($status==STATUS_INACTIVE){
+		$cap_status="Enable";
+		} 
+		 echo form_submit("admin-org-profile-update","Update","class='btn btn-primary'").nbs(3).form_submit("admin-org-profile-status-change",$cap_status,"class='btn btn-primary'");}  ?>  
         </div>
 	 <?php echo form_close(); ?>
 </div><!-- body -->

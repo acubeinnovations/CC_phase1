@@ -93,3 +93,6 @@ float:left;
 .captcha_id{
 float:left;
 }
+.pagination > li > a{
+float:none;
+}

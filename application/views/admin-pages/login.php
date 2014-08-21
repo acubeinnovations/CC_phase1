@@ -30,11 +30,13 @@
                     <div class="form-group">
 						<?php echo form_password(array('name'=>'password','class'=>'pass form-control','placeholder'=>'Password')); ?>
 						<?php echo form_error('password','<p class="text-red">', '</p>'); ?>	
-                    </div>          
+                    </div>   
+					<?php  if( $this->session->userdata('isloginAttemptexceeded')==true){  ?>     
                    	<div class="form-group">
 						<div name="captcha_div" id="captcha_div"><?php echo form_input(array('name' => 'captcha','class'=>'captcha form-control','placeholder'=>'Captcha')).nbs(3); ?><img id="captcha_id" src="<?php echo base_url().'captcha';?>"/></div>
 					<?php echo form_error('captcha','<p class="text-red">', '</p>'); ?>	
                 </div>
+				<?php } ?>
                 <div class="footer">  
 					<?php echo form_submit("","Login","class='btn bg-olive btn-block'");  ?>                                                       
                                       
