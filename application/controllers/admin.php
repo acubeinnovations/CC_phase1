@@ -25,6 +25,7 @@ class Admin extends CI_Controller {
     }
 	
     public function organization($action = '', $secondaction = ''){
+    if($this->session_check()==true) {
     if ($action =='new' && $secondaction == ''){
       
 	if(isset($_REQUEST['name']) && isset($_REQUEST['addr'])&& isset($_REQUEST['uname'])&& isset($_REQUEST['pwd'])&& isset($_REQUEST['mail'])&& isset($_REQUEST['phn'])&& isset($_REQUEST['fname'])&& isset($_REQUEST['lname'])&&  isset($_REQUEST['submit'])){ 
@@ -89,9 +90,15 @@ class Admin extends CI_Controller {
 	{
 	$this->load->model('admin_model');
 	$result=$this->admin_model->checkOrg($action);
+	if(!$result){
+	echo "page not found";
+
+	}
+	else{
 	$org_res=$result['org_res'];
 	$user_res=$result['user_res'];
-			// $org_result holds organization info && $user_res holds user info
+	
+			// $org_result holds organization info && $user_res holds user info		
 	if($secondaction != '' && $secondaction =='password-reset'){
 		//if organization name  and password-reset comes what to do?
 		$this->load->model('admin_model');
@@ -123,22 +130,38 @@ class Admin extends CI_Controller {
 		}
 	}else{
 		//if organization name comes what to do?
-		$status=$this->admin_model->getStatus();
-		print_r( $status);exit();
+		//$status=$this->admin_model->getStatus();
+		//$data['name']=$result['name'];
+		//$data['address']=$result['address'];
+		//$data['status']=$status[$result['status_id']];
+			//$this->load->view('admin-pages/updateOrg',$data);
+			//pending work
 		
 	}
 	}
 	}
+		}
+	
+		else{
+			echo 'you are not authorized access this page..';
+			}
+	}
 	public function show_org_reset_password($data) {
+	if($this->session_check()==true) {
 				$this->load->view('admin-templates/header',$data);
 			  	$this->load->view('admin-templates/nav');
 				$this->load->view('admin-pages/password-reset',$data);
 				$this->load->view('admin-templates/footer');
+				}
+			else{
+				echo 'you are not authorized access this page..';
+			}
 	}
 	public function profile(){
-	   $this->load->model('admin_model');
-	   $dbdata = '';
-       if(isset($_REQUEST['admin-profile-update'])){
+	   if($this->session_check()==true) {
+		$this->load->model('admin_model');
+		$dbdata = '';
+              if(isset($_REQUEST['admin-profile-update'])){
 			$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean');
 			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[5]|max_length[20]|xss_clean');
 			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[5]|max_length[20]|xss_clean');
@@ -162,8 +185,13 @@ class Admin extends CI_Controller {
 			$this->show_profile($dbdata);
 
 		}
+	   }	
+		else{
+			echo 'you are not authorized access this page..';
+		}
 	}
 	public function show_profile($data) {
+		  if($this->session_check()==true) {
 			if($data == ''){
 			$data['values']=$this->admin_model->getProfile();
 			}else{
@@ -174,8 +202,13 @@ class Admin extends CI_Controller {
 		  	$this->load->view('admin-templates/nav');
 		    $this->load->view('admin-pages/profile',$data);
 		    $this->load->view('admin-templates/footer');
+		    }
+			else{
+				echo 'you are not authorized access this page..';
+			}
 	}
 	public function changePassword() {
+	if($this->session_check()==true) {
 	   $this->load->model('admin_model');
 	   	$data['title']		  =		"Change Password | CC Phase 1"; 
 		$data['old_password'] = 	'';
@@ -205,25 +238,39 @@ class Admin extends CI_Controller {
 			
 					$this->show_change_password($data);
 		}
+		           }
+		else{
+			echo 'you are not authorized access this page..';
+		}
 	}	
    
 	public function show_change_password($data) {
+		if($this->session_check()==true) {
 				$this->load->view('admin-templates/header',$data);
 			  	$this->load->view('admin-templates/nav');
 				$this->load->view('admin-pages/change-password',$data);
 				$this->load->view('admin-templates/footer');
+					}
+		else{
+			echo 'you are not authorized access this page..';
+		}
 	}
 
 	public function showAddOrg($data){
+	   if($this->session_check()==true) {
 		$Title['title']="Add New Organization | CC Phase 1";  
 		$this->load->view('admin-templates/header',$Title);
 		$this->load->view('admin-templates/nav');
 		$this->load->view('admin-pages/addOrg',$data);
 		$this->load->view('admin-templates/footer');
-	
+		}
+	   else{
+			echo 'you are not authorized access this page..';
+		}
 	}
 	
 	public function sendEmail($data){
+	   if($this->session_check()==true) {
 	
 	 $config = Array(
   'protocol' => 'smtp',
@@ -250,6 +297,10 @@ class Admin extends CI_Controller {
 			{
 			show_error($this->email->print_debugger());
 			}
+			}
+		else{
+			echo 'you are not authorized access this page..';
+		}
 	}
 
 }
