@@ -4,7 +4,7 @@ function getCount($tbl){
 	
 	$arry=$this->session->userdata('condition');
 	$like_arry=$arry[0];
-	print_r($like_arry);echo "hi";	$where_arry=$arry[1];
+	$where_arry=$arry[1];
 		if($like_arry==''&& $where_arry==''){
 		$qry=$this->db->get($tbl);
 		}
@@ -25,7 +25,7 @@ function getCount($tbl){
 		return $qry->num_rows();
 	
 	}
-	function getDetails($tbl,$num,$offset){
+	function getDetails($tbl,$num,$offset) {
 		
 	    $arry=$this->session->userdata('condition');
 	    $like_arry=$arry[0];

@@ -128,6 +128,61 @@ class admin_model extends CI_Model {
 			}
 
 	}
+
+	//newly added
+
+	function orgEnableDisable($data) {
+		$dbdata = array('user_status_id'=>$data['status_id']);
+		$this->db->where('id',$data['user_id'] );
+		$succesuser=$this->db->update('users',$dbdata);
+		if($succesuser>0){
+		$dbdata = array('status_id'=>$data['status_id']);
+		$this->db->where('id',$data['org_id'] );
+		$succes=$this->db->update('organisations',$dbdata);
+		if($succes > 0) {
+		return true;
+		}
+		}
+
+	}
+
+	function updateOrganization($data){
+		$orgdbdata = array('name'=>$data['name'],'address'=>$data['addr'],'updated'=>NOW());
+		$userdbdata = array('first_name'=>$data['fname'],'last_name'=>$data['lname'],'address'=>$data['addr'],'email'=>$data['mail'],'phone'=>$data['phn']);
+		$this->db->where('id',$data['user_id'] );
+		$succesuser=$this->db->update('users',$userdbdata);
+		if($succesuser>0){
+		$this->db->where('id',$data['org_id'] );
+		$succes=$this->db->update('organisations',$orgdbdata);
+		if($succes > 0) {
+		return true;
+		}
+		}
+	}
+	function LoginAttemptsChecks($username) {
+		$this->db->from('user_login_attempts');
+        $this->db->where('username',$username);
+        $login_attempts = $this->db->get()->result();
+		 if (count( $login_attempts) >= 3 ) {
+			$this->session->set_userdata(array('isloginAttemptexceeded'=>true));
+			$this->session->set_userdata(array('loginAttemptcount'=>count($login_attempts)));
+		}else{
+			$this->session->set_userdata(array('isloginAttemptexceeded'=>false));
+		}
+
+	}
+	function recordLoginAttempts($username) {
+		$data=array('username'=>$username);
+		$this->db->insert('user_login_attempts',$data);
+
+	}
+	function clearLoginAttempts($username) {
+		$tables = array('user_login_attempts');
+		$this->db->where('username', $username);
+		$this->db->delete($tables);
+
+	}
+   
 	
    
 }

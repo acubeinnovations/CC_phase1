@@ -197,7 +197,7 @@ class CI_Pagination {
 				$this->cur_page = ($num_pages - 1) * $this->per_page;
 			}
 		}
-
+		
 		$uri_page_number = $this->cur_page;
 		
 		if ( ! $this->use_page_numbers)
@@ -222,7 +222,7 @@ class CI_Pagination {
 		}
 
 		// And here we go...
-		$output = '<ul class="pagination pagination-sm no-margin pull-right">';
+		$output = '<div class="dataTables_paginate paging_bootstrap"><ul class="pagination">';
 
 		// Render the "First" link
 		if  ($this->first_link !== FALSE AND $this->cur_page > ($this->num_links + 1))
@@ -254,7 +254,7 @@ class CI_Pagination {
 			}
 
 		}
-
+	
 		// Render the pages
 		if ($this->display_pages !== FALSE)
 		{
@@ -274,7 +274,7 @@ class CI_Pagination {
 				{
 					if ($this->cur_page == $loop)
 					{
-						$output .= $this->cur_tag_open.$loop.$this->cur_tag_close; // Current page
+						$output .= '<li class="active"><a>'.$this->cur_tag_open.$loop.$this->cur_tag_close.'</a></li>'; // Current page
 					}
 					else
 					{
@@ -323,7 +323,7 @@ class CI_Pagination {
 			}
 			$output .= $this->last_tag_open.'<li><a '.$this->anchor_class.'href="'.$this->base_url.$this->prefix.$i.$this->suffix.'">'.$this->last_link.'</a></li>'.$this->last_tag_close;
 		}
-		//$output .= '</ul>';
+
 		// Kill double slashes.  Note: Sometimes we can end up with a double slash
 		// in the penultimate link so we'll kill all double slashes.
 		$output = preg_replace("#([^:])//+#", "\\1/", $output);
@@ -331,7 +331,7 @@ class CI_Pagination {
 		// Add the wrapper HTML if exists
 		$output = $this->full_tag_open.$output.$this->full_tag_close;
 
-		return $output.= '</ul>';
+		return $output.'</ul></div>';
 	}
 }
 // END Pagination Class

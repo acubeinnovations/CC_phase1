@@ -6,6 +6,7 @@ function paging($tbl,$per_page,$offset=''){
 		$config['base_url'] = base_url().'admin/organization/list/';
 		//$config['use_page_numbers'] = TRUE;
 		$config['per_page']=$per_page;
+		$config['uri_segment'] = '4';
 		$count=$CI->page_model->getCount($tbl);
 		$config['total_rows'] =$count;
 		$data['values']=$CI->page_model->getDetails($tbl,$config['per_page'],$offset);

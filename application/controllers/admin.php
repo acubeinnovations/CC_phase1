@@ -48,7 +48,7 @@ class Admin extends CI_Controller {
 		$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 		
       if($this->form_validation->run()==False){
-        $data=array('name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn,'cpwd'=>'');
+        $data=array('title'=>'Add New Organization | '.PRODUCT_NAME,'name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn,'cpwd'=>'');
 	$this->showAddOrg($data);
 	}
       else {
@@ -70,7 +70,7 @@ class Admin extends CI_Controller {
 	}
 		}
 			else if(($this->session->userdata('isLoggedIn')==true )&&($this->session->userdata('type')==SYSTEM_ADMINISTRATOR)){
-				$data=array('name'=>'','fname'=>'','lname'=>'','uname'=>'','pwd'=>'','addr'=>'','mail'=>'','phn'=>'','cpwd'=>'');
+			$data=array('title'=>'Add New Organization |'.PRODUCT_NAME,'name'=>'','fname'=>'','lname'=>'','uname'=>'','pwd'=>'','addr'=>'','mail'=>'','phn'=>'','cpwd'=>'');
 				$this->showAddOrg($data);
 		} 
 		
@@ -84,7 +84,7 @@ class Admin extends CI_Controller {
 	$where_arry='';
 	//for search
     if((isset($_REQUEST['sname'])|| isset($_REQUEST['status']))&& isset($_REQUEST['search'])){
-	$this->session->unset_userdata('condition');echo "helo";
+	$this->session->unset_userdata('condition');
 	if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
 	$like_arry=array('name'=> $_REQUEST['sname']);
 	$where_arry=array('status_id'=>$_REQUEST['status']);
@@ -97,13 +97,8 @@ class Admin extends CI_Controller {
 	}
 	$this->session->set_userdata(array('condition'=>array($like_arry,$where_arry)));
 	}
-	
-	
-
-	
-	
 	$tbl='organisations';
-	//print_r($where_arry);exit;
+	
     $p_res=$this->mypage->paging($tbl,$per_page,$secondaction);
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
@@ -163,12 +158,72 @@ class Admin extends CI_Controller {
 		}
 	}else{
 		//if organization name comes what to do?
-		//$status=$this->admin_model->getStatus();
-		//$data['name']=$result['name'];
-		//$data['address']=$result['address'];
-		//$data['status']=$status[$result['status_id']];
-			//$this->load->view('admin-pages/updateOrg',$data);
-			//pending work
+		//newly added nijo
+		$data['title']=$action.'\'s Profile Update |'.PRODUCT_NAME;
+		if(isset($_REQUEST['admin-org-profile-update'])){
+			$data['name'] = str_replace(' ','',($this->input->post('name')));
+			$data['uname'] = trim($this->input->post('uname'));
+			$data['hname']  = trim($this->input->post('hname'));
+		    $data['fname'] = $this->input->post('fname');
+		    $data['lname'] = $this->input->post('lname');
+		    $data['addr']  = $this->input->post('addr');
+		    $data['mail']  = $this->input->post('mail');
+		    $data['phn'] = $this->input->post('phn');
+			$data['user_id'] = $this->input->post('user_id');
+			$data['org_id'] = $this->input->post('org_id');
+			$data['status'] = $this->input->post('status');
+		if($data['name'] == $data['hname']){
+			$this->form_validation->set_rules('name','Organization','trim|required|min_length[5]|max_length[20]|xss_clean');
+		}else{
+			$this->form_validation->set_rules('name','Organization','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[organisations.name]');
+		}
+		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[4]|max_length[10]|xss_clean');
+		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[4]|max_length[10]|xss_clean');
+		$this->form_validation->set_rules('addr','Address','trim|required|min_length[20]|max_length[40]|xss_clean');
+		$this->form_validation->set_rules('mail','Mail','trim|required|valid_email');
+		$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+		if($this->form_validation->run()!=False){
+
+		$res    		   = $this->admin_model->updateOrganization($data);
+		if($res == true) { 
+	   	    $this->session->set_userdata(array('dbSuccess'=>'Organization Profile Updated Succesfully..!'));
+		    $this->session->set_userdata(array('dbError'=>''));
+		    redirect(base_url().'admin/organization/list');
+		}
+		}else{
+		$this->showAddOrg($data);
+
+		}
+		} else if(isset($_REQUEST['admin-org-profile-status-change'])){
+		if($this->input->post('status') == STATUS_ACTIVE){
+		$dbdata['status_id'] = STATUS_INACTIVE;
+		}else if($this->input->post('status')==STATUS_INACTIVE){
+		$dbdata['status_id'] = STATUS_ACTIVE;
+		} 
+		$dbdata['user_id'] = $this->input->post('user_id');
+		$dbdata['org_id']  =  $this->input->post('org_id');
+		$res    		   = $this->admin_model->orgEnableDisable($dbdata);
+		if($res == true) { 
+	   	    $this->session->set_userdata(array('dbSuccess'=>'Organization Status changed Successfully.!'));
+		    $this->session->set_userdata(array('dbError'=>''));
+		    redirect(base_url().'admin/organization/list');
+		}
+		} else {
+		$status=$this->admin_model->getStatus();
+		$data['org_id']=$org_res['id'];
+		$data['name']=$org_res['name'];
+		$data['hname']  = $org_res['name'];;
+		$data['addr']=$org_res['address'];
+
+		$data['user_id']=$user_res['id'];
+		$data['uname']=$user_res['username'];
+		$data['fname']=$user_res['first_name'];
+		$data['lname']=$user_res['last_name'];
+		$data['mail']=$user_res['email'];
+		$data['phn']=$user_res['phone'];
+		$data['status']=$user_res['user_status_id'];
+		$this->showAddOrg($data);
+		}
 		
 	}
 	}
@@ -291,8 +346,7 @@ class Admin extends CI_Controller {
 
 	public function showAddOrg($data){
 	   if($this->session_check()==true) {
-		$Title['title']="Add New Organization | CC Phase 1";  
-		$this->load->view('admin-templates/header',$Title);
+		$this->load->view('admin-templates/header',$data);
 		$this->load->view('admin-templates/nav');
 		$this->load->view('admin-pages/addOrg',$data);
 		$this->load->view('admin-templates/footer');

@@ -12,24 +12,31 @@
        <?php    } ?>
 	  <?php 
 	  //search?>
-<div class="new-org-body">
-<?php echo form_open(base_url().'admin/organization/list/');?>
 
-<div class="form-group"> <?php echo form_input(array('name'=>'sname','class'=>'form-control','id'=>'sname','placeholder'=>'By Name','size'=>30));?> </div>
-<div class="form-group"> <?php $options = array(
+<div class="page-outer">    
+	<fieldset class="body-border">
+		<legend class="body-head">List Organizations</legend>
+		<div class="box-body table-responsive no-padding">
+			<?php echo form_open(base_url().'admin/organization/list/');?>
+			<table class="table list-org-table">
+				<tbody>
+					<tr>
+					    <td><?php echo form_input(array('name'=>'sname','class'=>'form-control','id'=>'sname','placeholder'=>'By Name','size'=>30));?> </td>
+					    <td><?php $options = array(
 					'-1'  => 'By Status',
                   '1'  => 'Active',
                   '2'    => 'Inactive'
                 );
-		echo form_dropdown('status', $options,-1); ?></div>
-<div class="box-footer"><?php echo form_submit("search","Search","class='btn btn-primary'");?> </div>
-
-<?php echo form_close();?>
-</div>  
-	   
-<div class="page-outer">    
-	<fieldset class="body-border">
-		<legend class="body-head">List Organizations</legend>
+		echo form_dropdown('status', $options,-1,'class=form-control'); ?></td>
+					    <td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
+					    <?php echo form_close();?>
+						<td><?php echo nbs(55); ?></td>
+						<td><?php echo nbs(35); ?></td>
+						<td><?php echo nbs(25); ?></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<div class="box-body table-responsive no-padding">
 			<table class="table table-hover table-bordered">
 				<tbody>

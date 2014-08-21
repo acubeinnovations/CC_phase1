@@ -96,3 +96,6 @@ float:left;
 .pagination > li > a{
 float:none;
 }
+.list-org-table tr > td{
+border-top:none !important;
+}
