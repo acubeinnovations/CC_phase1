@@ -40,7 +40,7 @@
 
 $route['default_controller'] = "home";
 $route['404_override'] = '';
-$route['organization/(:any)'] = 'admin/organization/$0';
+$route['/admin/organization/(:any)'] = 'admin/organization/$0';
 $route['syslogin'] = 'sys_login/index';
 $route['logout'] = 'logout';
 

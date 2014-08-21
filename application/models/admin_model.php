@@ -85,5 +85,18 @@ class admin_model extends CI_Model {
 
    	}
 
+	function checkOrg($name){
+		$query=$this->db->get_where('organisations',array('name'=>$name));
+		$org_res=$query->row_array(); 
+		$id=$org_res['id'];
+		$qry=$this->db->get_where('users',array('organisation_id'=>$id));
+		$user_res=$qry->row_array();
+		$data=array('org_res'=>$org_res,'user_res'=>$user_res);
+		return $data;
+		}
+	function getStatus(){
+		$qry=$this->db->get('user_statuses');
+		return $qry->result_array();
+	}
    
 }

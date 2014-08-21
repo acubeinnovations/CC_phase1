@@ -76,6 +76,11 @@ class Admin extends CI_Controller {
 	}
     else
 	{
+	$this->load->model('admin_model');
+	$result=$this->admin_model->checkOrg($action);
+	$org_res=$result['org_res'];
+	$user_res=$result['user_res'];
+			// $org_result holds organization info && $user_res holds user info
 	if($secondaction != '' && $secondaction =='password-reset'){
 		//if organization name  and password-reset comes what to do?
 		$this->load->model('admin_model');
@@ -107,7 +112,9 @@ class Admin extends CI_Controller {
 		}
 	}else{
 		//if organization name comes what to do?
-		echo $action.' '.$secondaction;
+		$status=$this->admin_model->getStatus();
+		print_r( $status);exit();
+		
 	}
 	}
 	}
