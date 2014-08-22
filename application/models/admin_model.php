@@ -1,6 +1,4 @@
 <?php
-
-
 class admin_model extends CI_Model {
 
     var $details;
@@ -99,33 +97,26 @@ class admin_model extends CI_Model {
 		return false;
 		}
 	function getStatus(){
+		$qry=$this->db->get('statuses');
+		$count=$qry->num_rows();
+			$s= $qry->result_array();
+		
+			for($i=0;$i<$count;$i++){
+			
+			$status[$s[$i]['id']]=$s[$i]['name'];
+			}
+			return $status;
+	}
+		
+	
+	function getuserStatus(){
 		$qry=$this->db->get('user_statuses');
 		return $qry->result_array();
+		
+		
 	}
 	
-	function getCount($tbl,$condition){
-		if($condition==''){
-		$qry=$this->db->get($tbl);
-		}
-		else{
-		$this->db->where($condition);
-		$qry=$this->db->get($tbl);
-		}
-		return $qry->num_rows();
 	
-	}
-	function getDetails($tbl,$num,$condition,$offset){
-	//echo $tbl.$num.','.$condition.','.$offset; exit();
-		if($condition==''){
-		$qry=$this->db->get($tbl,$num,$offset);
-		//echo $this->db->get($tbl,$num,$offset); exit();
-		}
-		else{
-		$this->db->where($condition);
-		$qry= $this->db->get($tbl,$num,$offset);
-		}
-	   return $qry->result_array();
-	}
 	function resetOrganizationPasswordAdmin($data) {
 			$dbdata = array('password'=>$data['password']);
 			$this->db->where('id',$data['id'] );

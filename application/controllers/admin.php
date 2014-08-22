@@ -75,22 +75,44 @@ class Admin extends CI_Controller {
 		} 
 		
 		}
-    else if($action=='list' && $secondaction == '') {
+    else if($action=='list' && ($secondaction == ''|| is_numeric($secondaction))) {
 	$this->load->model('admin_model');
+	$data['status']=$this->admin_model->getStatus();
 	$condition='';
-	$tbl='organisations';
 	$per_page=5;
-	//$this->load->library("pagination");
-	$data=$this->mypage->paging($tbl,$condition,$per_page);
-	//echo "<pre>";print_r($data);echo "</pre>";exit();
-	//$data=array('values'=>$this->admin_model->getOrg());
-	//print_r($data);exit();
+	$like_arry='';
+	$where_arry='';
+	//for search
+    if((isset($_REQUEST['sname'])|| isset($_REQUEST['status']))&& isset($_REQUEST['search'])){
+	$this->session->unset_userdata('condition');echo "helo";
+	if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
+	$like_arry=array('name'=> $_REQUEST['sname']);
+	$where_arry=array('status_id'=>$_REQUEST['status']);
+	}
+	if($_REQUEST['sname']==null&& $_REQUEST['status']!=-1){
+	$where_arry=array('status_id'=>$_REQUEST['status']);
+	}
+	if($_REQUEST['sname']!=null&& $_REQUEST['status']==-1){
+	$like_arry=array('name'=> $_REQUEST['sname']);
+	}
+	$this->session->set_userdata(array('condition'=>array($like_arry,$where_arry)));
+	}
+	
+	
+
+	
+	
+	$tbl='organisations';
+	//print_r($where_arry);exit;
+    $p_res=$this->mypage->paging($tbl,$per_page,$secondaction);
+	$data['values']=$p_res['values'];
+	$data['page_links']=$p_res['page_links'];
 	$Title['title']='Organization List| CC Phase1';
 	$this->load->view('admin-templates/header',$Title);
 	$this->load->view('admin-templates/nav');
 	$this->load->view('admin-pages/orgList',$data);
 	$this->load->view('admin-templates/footer');
-	 
+	     
 	}
     else
 	{
