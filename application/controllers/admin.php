@@ -12,6 +12,7 @@ class Admin extends CI_Controller {
 
 	}    
 	public function index(){
+	
         if($this->session_check()==true) {//newly added nijo
 		$Title['title']="Home | CC Phase1";    
         $this->load->view('admin-templates/header',$Title);
@@ -25,15 +26,16 @@ class Admin extends CI_Controller {
     }
 	
     public function organization($action = '', $secondaction = ''){
+	
     if($this->session_check()==true) {
     if ($action =='new' && $secondaction == ''){
       
 	if(isset($_REQUEST['name']) && isset($_REQUEST['addr'])&& isset($_REQUEST['uname'])&& isset($_REQUEST['pwd'])&& isset($_REQUEST['mail'])&& isset($_REQUEST['phn'])&& isset($_REQUEST['fname'])&& isset($_REQUEST['lname'])&&  isset($_REQUEST['submit'])){ 
-		    $name = $this->input->post('name');
-		    $fname = $this->input->post('fname');
-		    $lname = $this->input->post('lname');
+		    $name = str_replace(' ','',($this->input->post('name')));
+		    $fname = trim($this->input->post('fname'));
+		    $lname = trim($this->input->post('lname'));
 		    $addr  = $this->input->post('addr');
-		    $uname  = $this->input->post('uname');
+		    $uname  = trim($this->input->post('uname'));
 		    $pwd  = $this->input->post('pwd');
 		    $mail  = $this->input->post('mail');
 		    $phn = $this->input->post('phn');
@@ -420,7 +422,7 @@ class Admin extends CI_Controller {
 		}
 	}
 	
-      
+	  
 
 }
 ?>
