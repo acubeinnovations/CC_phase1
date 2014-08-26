@@ -4,79 +4,100 @@
                         <?php if($this->session->userdata('isLoggedIn')==null || $this->session->userdata('isLoggedIn')!=true) {?>
                         <li class="active">
                             <a href="<?php echo base_url();?>">
-                                <i class="fa fa-dashboard"></i> <span> Home </span>
+                                <i class="fa fa-home"></i> <span> Home </span>
                             </a>
                         </li>
-                        <?php } else { ?>
+                        <?php } else if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){ ?>
                         <li class="active">
-                            <a href="<?php echo base_url();?>">
-                                <i class="fa fa-dashboard"></i> <span> Dashboard </span>
+                            <a href="<?php echo base_url().'admin';?>">
+                                <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
                         </li>
-                        <li>
-                            <a href="<?php echo base_url();?>">
-                                <i class="fa fa-th"></i> <span>Menu1</span> <small class="badge pull-right bg-green">Notification</small>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-wrench"></i>
+                                <span>Account Settings</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo base_url().'admin/profile';?>"><i class="fa fa-angle-double-right"></i> Profile</a></li>
+                                <li><a href="<?php echo base_url().'admin/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
+                                
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-users"></i>
+                                <span>Organizations</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo base_url().'admin/organization/new';?>"><i class="fa fa-user"></i> Add Organizations</a></li>
+                                <li><a href="<?php echo base_url().'admin/organization/list';?>"><i class="fa fa-users"></i> List Organizations</a></li>
+                                
+                            </ul>
+                        </li>
+                        <?php }else if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==ORGANISATION_ADMINISTRATOR){ ?>
+                        <li class="active">
+                            <a href="<?php echo base_url().'organization/admin';?>">
+                                <i class="fa fa-home"></i> <span> Dashboard </span>
+                            </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                               <i class="fa fa-wrench"></i> 
+                                <span>Account Settings</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo base_url().'organization/admin/profile';?>"><i class="fa fa-angle-double-right"></i> Profile</a></li>
+                                <li><a href="<?php echo base_url().'organization/admin/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
+                                
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-users"></i>
+                                <span>Users</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo base_url().'organization/admin/front-desk/new';?>"><i class="fa fa-user"></i> Add  Users</a></li>
+                                <li><a href="<?php echo base_url().'organization/admin/front-desk/list';?>"><i class="fa fa-users"></i> List Users</a></li>
+                                
+                            </ul>
+                        </li>
+                        <?php }else if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==FRONT_DESK){ ?>
+                        <li class="active">
+                            <a href="<?php echo base_url().'organization/admin';?>">
+                                <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
                         </li>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-bar-chart-o"></i>
-                                <span>Menu 2</span>
+                                <span>Account Settings</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 1</a></li>
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 2</a></li>
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 3</a></li>
+                                <li><a href="<?php echo base_url().'organization/admin/profile';?>"><i class="fa fa-angle-double-right"></i> Profile</a></li>
+                                <li><a href="<?php echo base_url().'organization/admin/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
+                                
                             </ul>
                         </li>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-laptop"></i>
-                                <span>Menu 3</span>
+                                <span>Organizations</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 1</a></li>
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 2</a></li>
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 3</a></li>
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 4</a></li>
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 5</a></li>
+                                <li><a href="<?php echo base_url().'organization/admin/front-desk/new';?>"><i class="fa fa-angle-double-right"></i> Add  Users</a></li>
+                                <li><a href="<?php echo base_url().'organization/admin/front-desk/list';?>"><i class="fa fa-angle-double-right"></i> List Users</a></li>
+                                
                             </ul>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-edit"></i> <span>Menu 4</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 1</a></li>
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 2</a></li>
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 3</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-table"></i> <span>Menu 5</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 1</a></li>
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> Sub Menu 2</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="pages/calendar.html">
-                                <i class="fa fa-calendar"></i> <span>Menu 6</span>
-                                <small class="badge pull-right bg-red">Notification</small>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url();?>">
-                                <i class="fa fa-envelope"></i> <span>Menu 7</span>
-                                <small class="badge pull-right bg-yellow">Notification</small>
-                            </a>
-                        </li> <?php } ?>
+                        <?php } ?>
                         
                     </ul>
                 </section>

@@ -128,7 +128,7 @@ class Organization_model extends CI_Model {
 	}
 	function updateUser($data){
 		
-		$userdbdata = array('first_name'=>$data['firstname'],'last_name'=>$data['lastname'],'address'=>$data['address'],'email'=>$data['email'],'phone'=>$data['phone']);
+		$userdbdata = array('first_name'=>$data['firstname'],'last_name'=>$data['lastname'],'address'=>$data['address'],'email'=>$data['email'],'phone'=>$data['phone'],'user_status_id'=>$data['status']);
 		$this->db->where('id',$data['id'] );
 		$succesuser=$this->db->update('users',$userdbdata);
 		if($succesuser>0){

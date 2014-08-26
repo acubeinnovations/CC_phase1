@@ -254,11 +254,18 @@
                                         
                                     </p>
                                 </li>
-                                
+                              <?php 
+				 if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){
+						$profile_url='admin/profile';
+	 			 }else if($this->session->userdata('isLoggedIn')==true && ($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR )){
+					$profile_url=base_url().'organization/admin/profile';
+	  			 }else if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==FRONT_DESK){
+					$profile_url=base_url().'organization/front-desk/profile';
+				 }?>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="<?php echo base_url();?>admin/profile" class="btn btn-default btn-flat">Profile</a>
+                                        <a href="<?php echo $profile_url; ?>" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="<?php echo base_url();?>logout" class="btn btn-default btn-flat">Sign out</a>
@@ -291,14 +298,4 @@
                         </div>
                         <?php } ?>
                     </div>
-                    <?php if($this->session->userdata('isLoggedIn')!=null || $this->session->userdata('isLoggedIn')==true) {?>
-                    <!-- search form -->
-                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                            <span class="input-group-btn">
-                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
-                    </form>
-                     <?php } ?> 
+                   

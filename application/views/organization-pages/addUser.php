@@ -2,16 +2,17 @@
 		<?php if(isset($id) && $id > 0){
 
 		$url='organization/admin/front-desk/'.$username;
+		$page_cap='Update User';
 		
 		}else{
 
 		$url='organization/admin/front-desk/new';
-
+		$page_cap='Add User';
  		}
 		 ?>
 		 <div class="profile-body">
 			<fieldset class="body-border">
-   			 <legend class="body-head">Profile</legend>
+   			 <legend class="body-head"><?php echo $page_cap; ?></legend>
 				<?php echo form_open(base_url().$url);?>
 				<div class="form-group">
 				   <?php echo form_label('Username','usernamelabel'); ?>
@@ -48,6 +49,15 @@
 				    <?php echo form_input(array('name'=>'lastname','class'=>'form-control','placeholder'=>'Enter Last Name','value'=>$lastname)); ?>
 					<?php echo form_error('lastname', '<p class="text-red">', '</p>'); ?>
 				</div>
+				<?php if(isset($id)) { ?>
+				<div class="form-group">
+				<?php 
+				 $class="form-control";
+				 $selected=$status;
+				 echo $this->form_functions->populate_dropdown('status',$user_status,$selected,$class);
+				 ?>
+				</div>
+				<?php }  ?>
 				<div class="form-group">
 					<?php echo form_label('Email','emaillabel'); ?>
 				    <?php echo form_input(array('name'=>'email','class'=>'form-control','placeholder'=>'Enter email','value'=>$email)); ?>

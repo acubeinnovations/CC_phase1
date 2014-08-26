@@ -21,8 +21,13 @@ class Logout extends CI_Controller {
 
 	function index() 
 	{ $this->load->helper('url');
+	  if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){
+			$logout_redirect_url=base_url().'syslogin';
+	  }else if($this->session->userdata('isLoggedIn')==true && ($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR ||$this->session->userdata('type')==FRONT_DESK)){
+			$logout_redirect_url=base_url().'organization/login';
+	  }
       $this->session->sess_destroy();
-      redirect('/home');
+      redirect($logout_redirect_url);
     }
 }
 

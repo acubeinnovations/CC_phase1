@@ -22,12 +22,9 @@
 				<tbody>
 					<tr>
 					    <td><?php echo form_input(array('name'=>'sname','class'=>'form-control','id'=>'sname','placeholder'=>'By Name','size'=>30));?> </td>
-					    <td><?php $options = array(
-					'-1'  => 'By Status',
-                  '1'  => 'Active',
-                  '2'    => 'Inactive'
-                );
-		echo form_dropdown('status', $options,-1,'class=form-control'); ?></td>
+					    <td><?php $class="form-control";
+						echo $this->form_functions->populate_dropdown('status',$user_status,$selected='',$class)?>
+						</td>
 					    <td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
 					    <?php echo form_close();?>
 						<td><?php echo nbs(55); ?></td>
@@ -56,10 +53,10 @@
 					    <td><?php echo $row['username'];?></td>
 						<td><?php echo $row['first_name'].' '.$row['last_name'];?></td>
 					    <td><?php echo $row['address'] ;?></td>
-					    <td><?php if($row['user_status_id'] == 1) { ?>
-							<span class="label label-success"><?php echo $status[$row['user_status_id']];?></span> 
+					    <td><?php if($row['user_status_id'] == USER_STATUS_ACTIVE) { ?>
+							<span class="label label-success"><?php echo $user_status[$row['user_status_id']];?></span> 
 						<?php } else {?>
-							<span class="label label-danger"> <?php echo $status[$row['user_status_id']];?></span>
+							<span class="label label-danger"> <?php echo $user_status[$row['user_status_id']];?></span>
 						<?php } ?>
 						</td>	
 						<td><?php echo anchor(base_url().'organization/admin/front-desk/'.$row['username'],'Update','class="btn btn-primary"').nbs(3).anchor(base_url().'organization/admin/front-desk/'.$row['username'].'/password-reset','Change Password','class="btn btn-primary"'); ?></td>

@@ -1,10 +1,15 @@
-<div class="new-org-body">
-		<?php
+
+	<?php
 		if(!isset($org_id) && !isset($user_id) && !isset($status)) {  
 		$url='admin/organization/new';
+		$page_cap='Add Organization';
 		}else{ 
 		$url='admin/organization/'.$name;
+		$page_cap='Update Organization';
 		}?>
+<div class="new-org-body">
+		<fieldset class="body-border">
+   			 <legend class="body-head"><?php echo $page_cap; ?></legend>
 		<?php echo form_open(base_url().$url);?>
         <div class="form-group">
 		   <?php echo form_label('Organization Name');?>
@@ -75,4 +80,5 @@
 		 echo form_submit("admin-org-profile-update","Update","class='btn btn-primary'").nbs(3).form_submit("admin-org-profile-status-change",$cap_status,"class='btn btn-primary'");}  ?>  
         </div>
 	 <?php echo form_close(); ?>
+	</fieldset>
 </div><!-- body -->

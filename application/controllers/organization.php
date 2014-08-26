@@ -74,22 +74,20 @@ class Organization extends CI_Controller {
 	public function admin(){
 	
 	if($this->session_check()==true) {
-		$Title['title']="Home | ".PRODUCT_NAME;	
-        $this->load->view('admin-templates/header',$Title);
-        $this->load->view('admin-templates/nav');
-        $this->load->view('organization-pages/admin_home');
-        $this->load->view('admin-templates/footer');
+		$data['title']="Home | ".PRODUCT_NAME;	
+		$page='organization-pages/admin_home';
+		$this->load_templates($page,$data);
+
 		}else{
 			echo 'you are not authorized access this page..';
 		}
 	}
 	public function front_desk_home(){
 	if($this->session_check()==true) {
-		$Title['title']="Home | ".PRODUCT_NAME;	
-        $this->load->view('admin-templates/header',$Title);
-        $this->load->view('admin-templates/nav');
-        $this->load->view('organization-pages/staff_home');
-        $this->load->view('admin-templates/footer');
+		$data['title']="Home | ".PRODUCT_NAME;	
+		$page='organization-pages/staff_home';
+		$this->load_templates($page,$data);
+
 		}else{
 			echo 'you are not authorized access this page..';
 		}
@@ -160,12 +158,10 @@ class Organization extends CI_Controller {
 
 	public function profile($data ='') {
 		if($this->session_check()==true) {
-		$Title['title']="Profile Update | ".PRODUCT_NAME;  
-		$this->load->view('admin-templates/header',$Title);
-	  	$this->load->view('admin-templates/nav');
-	    $this->load->view('organization-pages/profile',$data);
-	    $this->load->view('admin-templates/footer');
-	}
+		$data['title']="Profile Update | ".PRODUCT_NAME; 
+		$page='organization-pages/profile';
+		$this->load_templates($page,$data);
+	 	}
 	}
 
 	public function changepassword() {
@@ -211,12 +207,9 @@ class Organization extends CI_Controller {
 	
 
 			public function show_change_password($data = '') {
-					$Title['title']="Change Password | ".PRODUCT_NAME;  
-					$this->load->view('admin-templates/header',$Title);
-				  	$this->load->view('admin-templates/nav');
-					$this->load->view('organization-pages/change-password',$data);
-					$this->load->view('admin-templates/footer');
-
+					$data['title']="Change Password | ".PRODUCT_NAME;  
+					$page='organization-pages/change-password';
+					$this->load_templates($page,$data);
 			}
 	public function front_desk($action ='',$secondaction = '') {
 		 if ($action =='new' && $secondaction == ''){
@@ -270,7 +263,7 @@ class Organization extends CI_Controller {
 		}
     else if($action=='list' && ($secondaction == ''|| is_numeric($secondaction))) {
 	$this->load->model('organization_model');
-	$data['status']=$this->organization_model->getUserStatus();
+	$data['user_status']=$this->organization_model->getUserStatus();//print_r($user_status);
 	$condition='';
 	$per_page=5;
 	$like_arry='';
@@ -299,12 +292,9 @@ class Organization extends CI_Controller {
     $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
-	$Title['title']='User List| '.PRODUCT_NAME;
-	$this->load->view('admin-templates/header',$Title);
-	$this->load->view('admin-templates/nav');
-	$this->load->view('organization-pages/userList',$data);
-	$this->load->view('admin-templates/footer');
-	     
+	$data['title']='User List| '.PRODUCT_NAME;
+	$page='organization-pages/userList';
+	$this->load_templates($page,$data);
 	}
     else
 	{
@@ -362,7 +352,7 @@ class Organization extends CI_Controller {
 		    $data['email'] 	  = $this->input->post('email');
 		    $data['phone']    = $this->input->post('phone');
 			$data['id']		  = $this->input->post('id');
-			//$data['status'] = $this->input->post('status');
+			$data['status']   =   $this->input->post('status');
 	        
 		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[4]|max_length[10]|xss_clean');
 		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[4]|max_length[10]|xss_clean');
@@ -385,7 +375,7 @@ class Organization extends CI_Controller {
 
 		}
 		} else {
-		$status=$this->organization_model->getUserStatus();
+		$data['user_status']=$this->organization_model->getUserStatus();
 		$data['title']='User Profile Update | '.PRODUCT_NAME;
 		$data['id']=$result['id'];
 		$data['username']=$result['username'];
@@ -404,16 +394,20 @@ class Organization extends CI_Controller {
 	
 	public function showAddUser($data){
 	   if($this->session_check()==true) {
-		$this->load->view('admin-templates/header',$data);
-		$this->load->view('admin-templates/nav');
-		$this->load->view('organization-pages/addUser',$data);
-		$this->load->view('admin-templates/footer');
+		$page='organization-pages/addUser';
+		$this->load_templates($page,$data);
 		}
 	   else{
 			echo 'you are not authorized access this page..';
 		}
 	}
-		  
+	public function load_templates($page='',$data=''){
+	$this->load->view('admin-templates/header',$data);
+	$this->load->view('admin-templates/nav');
+	$this->load->view($page,$data);
+	$this->load->view('admin-templates/footer');
+
+	}	  
 	public function session_check() {
 	if(($this->session->userdata('isLoggedIn')==true ) && (($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR) ||($this->session->userdata('type')==FRONT_DESK))) {
 		return true;
