@@ -3,50 +3,51 @@ class Page_model extends CI_Model {
 function getCount($tbl){
 	
 	$arry=$this->session->userdata('condition');
-	$like_arry=$arry[0];
-	$where_arry=$arry[1];
-		if($like_arry==''&& $where_arry==''){
-		$qry=$this->db->get($tbl);
-		}
-		elseif($like_arry!=''&& $where_arry==''){
+	if(isset($arry['like'])){
+	if($arry['like']!=''&& count($arry['like']) > 0){
+	$like_arry=$arry['like'];
+	}
+	}
+	if(isset($arry['where'])){
+	if($arry['where']!='' && count($arry['where']) > 0){
+	$where_arry=$arry['where'];
+	}
+	}
+		
+		if(!empty($like_arry) && count($like_arry) > 0){
 		$this->db->like($like_arry);
-		$qry=$this->db->get($tbl);
 		}
-		elseif($like_arry==''&& $where_arry!=''){
+		if(!empty($where_arry) && count($where_arry) > 0){
 		$this->db->where($where_arry);
-		$qry=$this->db->get($tbl);
 		}
-		else{
-		$this->db->like($like_arry);
-		$this->db->where($where_arry);
+	
 		$qry=$this->db->get($tbl);
-		}
+		
 		
 		return $qry->num_rows();
-	
 	}
+	
 	function getDetails($tbl,$num,$offset) {
 		
 	    $arry=$this->session->userdata('condition');
-	    $like_arry=$arry[0];
-	    $where_arry=$arry[1];
-		if($like_arry==''&& $where_arry==''){
-		$qry=$this->db->get($tbl,$num,$offset);
-		//echo $this->db->get($tbl,$num,$offset); exit();
+		if(isset($arry['like'])){
+	    if($arry['like']!='' && count($arry['like'] > 0)){
+		$like_arry=$arry['like'];
 		}
-		elseif($like_arry!=''&& $where_arry==''){
+		}
+		if(isset($arry['where'])){
+		if($arry['where']!='' && count($arry['where'] > 0)){
+		$where_arry=$arry['where'];
+		}
+		}
+		if(!empty($like_arry) && count($like_arry) > 0){
 		$this->db->like($like_arry);
-		$qry= $this->db->get($tbl,$num,$offset);
 		}
-		elseif($like_arry==''&& $where_arry!=''){
+		if(!empty($where_arry) && count($where_arry) > 0){
 		$this->db->where($where_arry);
-		$qry= $this->db->get($tbl,$num,$offset);
 		}
-		else{
-		$this->db->like($like_arry);
-		$this->db->where($where_arry);
 		$qry= $this->db->get($tbl,$num,$offset);
-		}
+		
 	   return $qry->result_array();
 	}
 }

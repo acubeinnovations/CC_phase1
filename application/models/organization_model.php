@@ -95,5 +95,48 @@ class Organization_model extends CI_Model {
 		}
 		}
 	}
+	function  insertUser($fname,$lname,$addr,$uname,$pwd,$mail,$phn) {
+	$org_id=$this->session->userdata('id');
+	if($org_id){
+	$data=array('username'=>$uname,'password'=>md5($pwd),'first_name'=>$fname,'last_name'=>$lname,'phone'=>$phn,'address'=>$addr,'user_status_id'=>USER_STATUS_ACTIVE,'user_type_id'=>FRONT_DESK,'email'=>$mail,'organisation_id'=>$org_id);
+	$this->db->set('registration_date', 'NOW()', FALSE);
+	$this->db->insert('users',$data);
+	return true;
+	  }
+    }
+	function checkUser($username){
+		$qry=$this->db->get_where('users',array('username'=>$username));
+		$user_res=$qry->row_array();
+		if(count($user_res) > 0){
+		return $user_res;
+		} else {
+		return false;
+		}
+		}
+
+
+	function getUserStatus(){
+		$qry=$this->db->get('user_statuses');
+		$count=$qry->num_rows();
+			$s= $qry->result_array();
+		
+			for($i=0;$i<$count;$i++){
+			
+			$status[$s[$i]['id']]=$s[$i]['name'];
+			}
+			return $status;
+	}
+	function updateUser($data){
+		
+		$userdbdata = array('first_name'=>$data['firstname'],'last_name'=>$data['lastname'],'address'=>$data['address'],'email'=>$data['email'],'phone'=>$data['phone']);
+		$this->db->where('id',$data['id'] );
+		$succesuser=$this->db->update('users',$userdbdata);
+		if($succesuser>0){
+		return true;
+		}else{
+		return false;
+		}
+		
+	}
 }
 ?>
