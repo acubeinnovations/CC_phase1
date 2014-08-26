@@ -105,7 +105,8 @@ class Organization_model extends CI_Model {
 	  }
     }
 	function checkUser($username){
-		$qry=$this->db->get_where('users',array('username'=>$username));
+		
+		$qry=$this->db->get_where('users',array('username'=>$username,'organisation_id'=>$this->session->userdata('organisation_id')));
 		$user_res=$qry->row_array();
 		if(count($user_res) > 0){
 		return $user_res;
@@ -129,7 +130,8 @@ class Organization_model extends CI_Model {
 	function updateUser($data){
 		
 		$userdbdata = array('first_name'=>$data['firstname'],'last_name'=>$data['lastname'],'address'=>$data['address'],'email'=>$data['email'],'phone'=>$data['phone'],'user_status_id'=>$data['status']);
-		$this->db->where('id',$data['id'] );
+		$this->db->where('id',$data['id']);
+		$this->db->where('organisation_id',$this->session->userdata('organization_id'));
 		$succesuser=$this->db->update('users',$userdbdata);
 		if($succesuser>0){
 		return true;
@@ -141,6 +143,7 @@ class Organization_model extends CI_Model {
 	function resetUserPassword($data) {
 			$dbdata = array('password'=>$data['password']);
 			$this->db->where('id',$data['id'] );
+			$this->db->where('organisation_id',$this->session->userdata('organization_id'));
 			$succes=$this->db->update('users',$dbdata);
 			if($succes > 0) {
 			$this->session->set_userdata(array('dbSuccess'=>'User Password changed Successfully'));

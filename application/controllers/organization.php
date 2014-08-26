@@ -9,8 +9,6 @@ class Organization extends CI_Controller {
 
 		 }elseif($param1=='admin' && $param2=='' && $param3==''){
 			$this->admin();
-		 }elseif($param1=='front-desk' && $param2=='' && $param3==''){
-			$this->front_desk_home();
 		 }elseif($param1=='admin' && $param2=='profile' && $param3==''){
 			$this->redirect_to_profile();
 		 }elseif(($param1=='admin' || $param1=='front-desk' ) && $param2=='changepassword' && $param3==''){ 
@@ -24,12 +22,9 @@ class Organization extends CI_Controller {
 	
 	public function checking_credentials() {
 	if($this->session_check()==true) {
-        	if($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR){
+        	
 				 redirect(base_url().'organization/admin');
-				 }
-				 elseif($this->session->userdata('type')==FRONT_DESK){
-				 redirect(base_url().'organization/front_desk');
-				 }
+				 
 		} else if(isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
 			 $this->load->model('organization_model');
 			 $username=$this->input->post('username');
@@ -54,7 +49,7 @@ class Organization extends CI_Controller {
 				 if($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR){
 				 redirect(base_url().'organization/admin');
 				 }elseif($this->session->userdata('type')==FRONT_DESK){
-				 redirect(base_url().'organization/front_desk');
+				 redirect(base_url().'organization/front-desk');
 				 }
 				 
 		        
@@ -82,19 +77,10 @@ class Organization extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
-	public function front_desk_home(){
-	if($this->session_check()==true) {
-		$data['title']="Home | ".PRODUCT_NAME;	
-		$page='organization-pages/staff_home';
-		$this->load_templates($page,$data);
-
-		}else{
-			echo 'you are not authorized access this page..';
-		}
-	}
+	
 	public function show_login() 
-	{   $Data['title']="Login".PRODUCT_NAME;	
-		$this->load->view('organization-pages/login',$Data);
+	{   $data['title']="Login".PRODUCT_NAME;	
+		$this->load->view('organization-pages/login',$data);
 		
     }
 	public function redirect_to_profile() {
@@ -182,12 +168,7 @@ class Organization extends CI_Controller {
 				$dbdata['old_password'] = md5(trim($this->input->post('old_password')));
 				$val    			    = $this->organization_model->changePassword($dbdata);
 				if($val == true) {
-				if($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR){
-				redirect(base_url().'organization/admin');
-				}else if($this->session->userdata('type')==FRONT_DESK){
-				redirect(base_url().'organization/front-desk');
-				}			
-					
+					redirect(base_url().'organization/admin');
 				}else{
 					$this->show_change_password($data);
 				}
@@ -243,9 +224,10 @@ class Organization extends CI_Controller {
 		   //inserting values to db
 		    $res	=	$this->organization_model->insertUser($firstname,$lastname,$address,$username,$password,$email,$phone);
 		       if($res==true){ 
-			    //sending email to admin
-				// $data=array('name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn);
-				 // $rs=$this->sendEmail($data);
+			    //sending email to user
+					$to = $email;
+					$message='Hi..'.$firstname.' '.$lastname.'</br> Your profile is created.Your </br> username :'.$username.'Password :'.$password.'Thanks & Regards</br> Acube Innovations';
+				 // $rs=$this->sendEmail($message,$to);
 				 // if($rs==true){
 				    $this->session->set_userdata(array('dbSuccess'=>'User Added Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
@@ -268,6 +250,7 @@ class Organization extends CI_Controller {
 	$per_page=5;
 	$like_arry='';
 	$where_arry['user_type_id']=FRONT_DESK;
+	$where_arry['organisation_id']=$this->session->userdata('organisation_id');
 	if(isset($where_arry) && count($where_arry)>0){
 	$this->session->set_userdata(array('condition'=>array('where'=>$where_arry)));
 	}
@@ -330,7 +313,9 @@ class Organization extends CI_Controller {
 				$dbdata['id'] 						= $result['id'];
 				$val    			    			= $this->organization_model->resetUserPassword($dbdata);
 				if($val == true) {
-						//$this->sendEmail($dbdata);
+						$message='Hi..'.$dbdata['name'].'</br> Your changed Password is '.$dbdata['password'].'.Thanks & Regards</br> Acube Innovations';
+						$to=$dbdata['email'];
+						//$this->sendEmail($message.$to);
 						
 					redirect(base_url().'organization/admin/front-desk/list');
 				}else{
@@ -413,7 +398,7 @@ class Organization extends CI_Controller {
 
 	}	  
 	public function session_check() {
-	if(($this->session->userdata('isLoggedIn')==true ) && (($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR) ||($this->session->userdata('type')==FRONT_DESK))) {
+	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR) ) {
 		return true;
 		} else {
 		return false;
@@ -432,7 +417,7 @@ class Organization extends CI_Controller {
 		}
 	}
 	
-	public function sendEmail($data){
+	public function sendEmail($message,$to){
 	   if($this->session_check()==true) {
 	
 	 $config = Array(
@@ -446,9 +431,9 @@ class Organization extends CI_Controller {
   'wordwrap' => TRUE
 );
 		$this->email->from(SYSTEM_EMAIL, 'Acube Innovations');
-		$this->email->to($data['email']);
+		$this->email->to($to);
 		$this->email->subject('Succes Message');
-		$this->email->message('Hi..'.$data['name'].'</br> Your changed Password is '.$data['password'].'.Thanks & Regards</br> Acube Innovations');
+		$this->email->message($message);
 		if($this->email->send())
 			{
 			echo 'Email sent.';

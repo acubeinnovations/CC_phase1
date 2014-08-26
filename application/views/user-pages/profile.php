@@ -27,10 +27,10 @@
 		 <div class="profile-body">
 			<fieldset class="body-border">
    			 <legend class="body-head">Profile</legend>
-				<?php echo form_open(base_url().'admin/profile');?>
+				<?php echo form_open(base_url().'organization/front-desk/profile');?>
 				<div class="form-group">
 				   <?php echo form_label('Username','usernamelabel'); ?>
-				   <?php echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','value'=>$username)); ?>			
+				   <?php echo form_input(array('name'=>'username','class'=>'form-control','id'=>'username','placeholder'=>'Enter Username','disabled'=>'','value'=>$username)).form_hidden('husername',$username); ?>			
 					<?php echo form_error('username', '<p class="text-red">', '</p>'); ?>
 				</div>
 				<div class="form-group">

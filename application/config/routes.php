@@ -41,6 +41,8 @@
 $route['default_controller'] = "home";
 $route['404_override'] = '';
 $route['/admin/organization/(:any)'] = 'admin/organization/$0';
+$route['organization/front-desk'] = 'user/index';
+$route['organization/front-desk/(:any)'] = 'user/index';
 $route['organization/(:any)'] = 'organization/$0';
 $route['syslogin'] = 'sys_login/index';
 $route['logout'] = 'logout';

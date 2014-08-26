@@ -75,25 +75,25 @@
                         </li>
                         <li class="treeview">
                             <a href="#">
-                                <i class="fa fa-bar-chart-o"></i>
+                                <i class="fa fa-wrench"></i>
                                 <span>Account Settings</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'organization/admin/profile';?>"><i class="fa fa-angle-double-right"></i> Profile</a></li>
-                                <li><a href="<?php echo base_url().'organization/admin/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
+                                <li><a href="<?php echo base_url().'organization/front-desk/profile';?>"><i class="fa fa-angle-double-right"></i> Profile</a></li>
+                                <li><a href="<?php echo base_url().'organization/front-desk/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
                                 
                             </ul>
                         </li>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-laptop"></i>
-                                <span>Organizations</span>
+                                <span>Menu</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'organization/admin/front-desk/new';?>"><i class="fa fa-angle-double-right"></i> Add  Users</a></li>
-                                <li><a href="<?php echo base_url().'organization/admin/front-desk/list';?>"><i class="fa fa-angle-double-right"></i> List Users</a></li>
+                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i>menu1</a></li>
+                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> menu2</a></li>
                                 
                             </ul>
                         </li>
