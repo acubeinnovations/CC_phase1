@@ -111,7 +111,14 @@ class admin_model extends CI_Model {
 	
 	function getuserStatus(){
 		$qry=$this->db->get('user_statuses');
-		return $qry->result_array();
+		$count=$qry->num_rows();
+			$s= $qry->result_array();
+		
+			for($i=0;$i<$count;$i++){
+			
+			$status[$s[$i]['id']]=$s[$i]['name'];
+			}
+			return $status;
 		
 		
 	}
