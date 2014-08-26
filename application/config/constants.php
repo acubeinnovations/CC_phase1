@@ -26,7 +26,7 @@ define('USER_STATUS_SUSPENDED',2);
 define('USER_STATUS_DISABLED',3);
 define('STATUS_ACTIVE',1);
 define('STATUS_INACTIVE',2);
-define('PRODUCT_NAME','CC PHASE 1');
+define('PRODUCT_NAME','CNC PHASE 1');
 /*
 |--------------------------------------------------------------------------
 | File Stream Modes

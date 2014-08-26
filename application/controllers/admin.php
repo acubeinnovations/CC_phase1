@@ -104,7 +104,7 @@ class Admin extends CI_Controller {
     $p_res=$this->mypage->paging($tbl,$per_page,$secondaction);
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
-	$Title['title']='Organization List| CC Phase1';
+	$Title['title']='Organization List| '.PRODUCT_NAME;
 	$this->load->view('admin-templates/header',$Title);
 	$this->load->view('admin-templates/nav');
 	$this->load->view('admin-pages/orgList',$data);

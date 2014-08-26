@@ -58,7 +58,7 @@ class Sys_login extends CI_Controller {
 	}	
 	
 	public function show_login() 
-	{   $Data['title']="Login | CC Phase 1";	
+	{   $Data['title']="Login | ".PRODUCT_NAME;	
 		$this->load->view('admin-pages/login',$Data);
 		
     }

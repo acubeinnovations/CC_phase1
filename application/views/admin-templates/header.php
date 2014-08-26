@@ -37,7 +37,7 @@
         <header class="header">
             <a href="<?php echo base_url();?>" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                Acube CC Phase 1
+              <?php echo PRODUCT_NAME; ?>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">

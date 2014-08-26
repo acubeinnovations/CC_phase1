@@ -21,7 +21,7 @@
 
         <div class="form-box" id="login-box">
             <div class="header">Sign In</div>
-            <?php echo form_open(base_url().'organization','class=form_login');?>
+            <?php echo form_open(base_url().'organization/login','class=form_login');?>
                 <div class="body bg-gray">
                     <div class="form-group">
 						<?php echo form_input(array('name' => 'username','class'=>'username form-control','placeholder'=>'User ID')); ?>

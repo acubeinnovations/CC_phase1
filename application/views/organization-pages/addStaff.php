@@ -1,9 +1,9 @@
 <div class="new-org-body">
 		<?php
 		if(!isset($org_id) && !isset($user_id) && !isset($status)) {  
-		$url='admin/staff';
+		$url='admin/staff/new';
 		}else{ 
-		$url='admin/staff/'.$name;
+		$url='admin/staff/'.$uname;
 		}?>
 		<?php echo form_open(base_url().$url);?>
 	<div class="form-group">
