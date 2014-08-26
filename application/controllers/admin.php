@@ -97,11 +97,14 @@ class Admin extends CI_Controller {
 	if($_REQUEST['sname']!=null&& $_REQUEST['status']==-1){
 	$like_arry=array('name'=> $_REQUEST['sname']);
 	}
-	$this->session->set_userdata(array('condition'=>array($like_arry,$where_arry)));
+	$this->session->set_userdata(array('condition'=>array("like"=>$like_arry,"where"=>$where_arry)));
+	//print_r($where_arry);exit;
 	}
 	$tbl='organisations';
 	$data['org_status']=$this->admin_model->getStatus();
-    $p_res=$this->mypage->paging($tbl,$per_page,$secondaction);
+	$baseurl=base_url().'admin/organization/list/';
+    $uriseg ='4';
+    $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
 	$Title['title']='Organization List| '.PRODUCT_NAME;

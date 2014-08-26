@@ -138,5 +138,16 @@ class Organization_model extends CI_Model {
 		}
 		
 	}
+	function resetUserPassword($data) {
+			$dbdata = array('password'=>$data['password']);
+			$this->db->where('id',$data['id'] );
+			$succes=$this->db->update('users',$dbdata);
+			if($succes > 0) {
+			$this->session->set_userdata(array('dbSuccess'=>'User Password changed Successfully'));
+			$this->session->set_userdata(array('dbError'=>''));
+			return true;
+			}
+
+	}
 }
 ?>

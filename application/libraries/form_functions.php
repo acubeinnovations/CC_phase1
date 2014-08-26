@@ -1,9 +1,9 @@
 <?php class Form_functions{
-function populated_dropdown($name = '', $options = array(), $selected = array(),$class=''){
+function populate_dropdown($name = '', $options = array(), $selected = array(),$class='',$msg='select'){
 $CI = & get_instance();
 $form = '<select name="'.$name.'" class="'.$class.'"/>';
 if($selected==''){
-$form.='<option value="-1" selected="selected" >--select--</option></br>';
+$form.='<option value="-1" selected="selected" >--'.$msg.'--</option></br>';
 }
 foreach ($options as $key => $val)
 		{
