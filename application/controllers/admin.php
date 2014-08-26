@@ -14,11 +14,10 @@ class Admin extends CI_Controller {
 	public function index(){
 	
         if($this->session_check()==true) {//newly added nijo
-		$Title['title']="Home | CC Phase1";    
-        $this->load->view('admin-templates/header',$Title);
-        $this->load->view('admin-templates/nav');
-        $this->load->view('admin-pages/home');
-        $this->load->view('admin-templates/footer');
+		$data['title']="Home | CC Phase1";   
+        $page='admin-pages/home';
+     
+		$this->load_templates($page,$data);
 		}else{
 			echo 'you are not authorized access this page..';
 		}
@@ -107,14 +106,12 @@ class Admin extends CI_Controller {
     $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
-	$Title['title']='Organization List| '.PRODUCT_NAME;
-	$this->load->view('admin-templates/header',$Title);
-	$this->load->view('admin-templates/nav');
-	$this->load->view('admin-pages/orgList',$data);
-	$this->load->view('admin-templates/footer');
+	$data['title']='Organization List| '.PRODUCT_NAME;
+	$page='admin-pages/orgList';
+	$this->load_templates($page,$data);
 	     
 	}
-    else
+ else
 	{
 	$this->load->model('admin_model');
 	$result=$this->admin_model->checkOrg($action);
@@ -241,10 +238,9 @@ class Admin extends CI_Controller {
 	}
 	public function show_org_reset_password($data) {
 	if($this->session_check()==true) {
-				$this->load->view('admin-templates/header',$data);
-			  	$this->load->view('admin-templates/nav');
-				$this->load->view('admin-pages/password-reset',$data);
+				$page='admin-pages/password-reset';
 				$this->load->view('admin-templates/footer');
+				$this->load_templates($page,$data);
 				}
 			else{
 				echo 'you are not authorized access this page..';
@@ -290,11 +286,9 @@ class Admin extends CI_Controller {
 			}else{
 			$data['postvalues']=$data;
 			}
-			$Title['title']="Profile | CC Phase 1";  
-			$this->load->view('admin-templates/header',$Title);
-		  	$this->load->view('admin-templates/nav');
-		    $this->load->view('admin-pages/profile',$data);
-		    $this->load->view('admin-templates/footer');
+			$data['title']="Profile | CC Phase 1";  
+		    $page='admin-pages/profile';
+			$this->load_templates($page,$data);
 		    }
 			else{
 				echo 'you are not authorized access this page..';
@@ -339,10 +333,8 @@ class Admin extends CI_Controller {
    
 	public function show_change_password($data) {
 		if($this->session_check()==true) {
-				$this->load->view('admin-templates/header',$data);
-			  	$this->load->view('admin-templates/nav');
-				$this->load->view('admin-pages/change-password',$data);
-				$this->load->view('admin-templates/footer');
+				$page='admin-pages/change-password';
+				$this->load_templates($page,$data);
 					}
 		else{
 			echo 'you are not authorized access this page..';
@@ -351,10 +343,8 @@ class Admin extends CI_Controller {
 
 	public function showAddOrg($data){
 	   if($this->session_check()==true) {
-		$this->load->view('admin-templates/header',$data);
-		$this->load->view('admin-templates/nav');
-		$this->load->view('admin-pages/addOrg',$data);
-		$this->load->view('admin-templates/footer');
+		$page='admin-pages/addOrg';
+		$this->load_templates($page,$data);
 		}
 	   else{
 			echo 'you are not authorized access this page..';
@@ -425,7 +415,13 @@ class Admin extends CI_Controller {
 		}
 	}
 	
-	  
+	public function load_templates($page='',$data=''){
+    $this->load->view('admin-templates/header',$data);
+    $this->load->view('admin-templates/nav');
+    $this->load->view($page,$data);
+    $this->load->view('admin-templates/footer');
+
+    }  
 
 }
 ?>
