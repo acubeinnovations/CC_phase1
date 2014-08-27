@@ -7,6 +7,7 @@ class admin_model extends CI_Model {
         
         $this->db->from('users');
         $this->db->where('username',$username );
+		$this->db->where( 'user_type_id',SYSTEM_ADMINISTRATOR );
         $this->db->where( 'password', md5($password) );
         $login = $this->db->get()->result();
 
