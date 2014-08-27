@@ -42,8 +42,8 @@ public function profile() {
 		$dbdata = '';
               if(isset($_REQUEST['user-profile-update'])){
 			//$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean');
-			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[1]|max_length[20]|xss_clean');
-			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[1]|max_length[20]|xss_clean');
+			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[1]|max_length[20]|xss_clean|alpha_numeric');
+			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[1]|max_length[20]|xss_clean|alpha_numeric');
 			$this->form_validation->set_rules('email','Email','trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
 			$this->form_validation->set_rules('phone','Phone','trim|required|min_length[5]|max_length[20]|xss_clean');
 			$this->form_validation->set_rules('address','Address','trim|required|min_length[5]|max_length[50]|xss_clean');

@@ -18,7 +18,7 @@ class Organization extends CI_Controller {
 		 }
 		
 		}
-
+	
 	
 	public function checking_credentials() {
 	if($this->session_check()==true) {
@@ -93,19 +93,24 @@ class Organization extends CI_Controller {
 		    $data['lname'] = $this->input->post('lname');
 		    $data['addr']  = $this->input->post('addr');
 		    $data['mail']  = $this->input->post('mail');
+			$data['hmail']  = $this->input->post('hmail');
 		    $data['phn'] = $this->input->post('phn');
 			$data['user_id'] = $this->input->post('user_id');
 			$data['org_id'] = $this->input->post('org_id');
 			
 		if($data['name'] == $data['hname']){
-			$this->form_validation->set_rules('name','Organization','trim|required|min_length[5]|max_length[20]|xss_clean');
+			$this->form_validation->set_rules('name','Organization','trim|required|min_length[5]|max_length[20]|xss_clean|alpha_numeric');
 		}else{
-			$this->form_validation->set_rules('name','Organization','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[organisations.name]');
+			$this->form_validation->set_rules('name','Organization','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[organisations.name]|alpha_numeric');
 		}
-		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[4]|max_length[10]|xss_clean');
-		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[4]|max_length[10]|xss_clean');
+		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[4]|max_length[10]|xss_clean|alpha_numeric');
+		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[4]|max_length[10]|xss_clean|alpha_numeric');
 		$this->form_validation->set_rules('addr','Address','trim|required|min_length[20]|max_length[40]|xss_clean');
-		$this->form_validation->set_rules('mail','Mail','trim|required|valid_email');
+		if($data['mail'] == $data['hmail']){
+			$this->form_validation->set_rules('mail','Mail','trim|required|valid_email');
+		}else{
+			$this->form_validation->set_rules('mail','Mail','trim|required|valid_email|is_unique[users.email]');
+		}
 		$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 		if($this->form_validation->run()!=False){
 		
@@ -135,6 +140,7 @@ class Organization extends CI_Controller {
 		$data['fname']=$user_res['first_name'];
 		$data['lname']=$user_res['last_name'];
 		$data['mail']=$user_res['email'];
+		$data['hmail']=$user_res['email'];
 		$data['phn']=$user_res['phone'];
 		$data['status']=$user_res['user_status_id'];
 		$this->profile($data);
@@ -195,8 +201,7 @@ class Organization extends CI_Controller {
 	public function front_desk($action ='',$secondaction = '') {
 		 if ($action =='new' && $secondaction == ''){
       
-	if(isset($_REQUEST['user-profile-add'])) { 
-		   
+	if(isset($_REQUEST['user-profile-add'])) {		   
 		    $firstname = trim($this->input->post('firstname'));
 		    $lastname = trim($this->input->post('lastname'));
 		    $address  = $this->input->post('address');
@@ -205,22 +210,22 @@ class Organization extends CI_Controller {
 		    $email  = $this->input->post('email');
 		    $phone = $this->input->post('phone');
 	        
-		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[4]|max_length[10]|xss_clean');
-		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[4]|max_length[10]|xss_clean');
+		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[4]|max_length[10]|xss_clean|alpha_numeric');
+		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[4]|max_length[10]|xss_clean|alpha_numeric');
 		$this->form_validation->set_rules('address','Address','trim|required|min_length[20]|max_length[40]|xss_clean');
 		$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[users.username]');
 		$this->form_validation->set_rules('password','Password','trim|required|min_length[4]|max_length[12]|matches[cpassword]|xss_clean');
 		$this->form_validation->set_rules('cpassword','Confirmation','trim|required|min_length[4]|max_length[12]|xss_clean');
-		$this->form_validation->set_rules('email','Mail','trim|required|valid_email');
+		$this->form_validation->set_rules('email','Mail','trim|required|valid_email|is_unique[users.email]');
 		$this->form_validation->set_rules('phone','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 		
-      if($this->form_validation->run()==False){
+      if($this->form_validation->run()==False){ 
         $data=array('title'=>'Add New Organization | '.PRODUCT_NAME,'firstname'=>$firstname,'lastname'=>$lastname,'username'=>$username,'password'=>$password,'address'=>$address,'email'=>$email,'phone'=>$phone);
 	$this->showAddUser($data);
 	}
       else {
 	   $this->load->model('organization_model');
-		   
+		  
 		   //inserting values to db
 		    $res	=	$this->organization_model->insertUser($firstname,$lastname,$address,$username,$password,$email,$phone);
 		       if($res==true){ 
@@ -231,7 +236,7 @@ class Organization extends CI_Controller {
 				 // if($rs==true){
 				    $this->session->set_userdata(array('dbSuccess'=>'User Added Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'admin/organization/front-desk/list');
+				    redirect(base_url().'organization/admin/front-desk/list');
 		
 				  //}
 				}
@@ -342,12 +347,18 @@ class Organization extends CI_Controller {
 		    $data['phone']    = $this->input->post('phone');
 			$data['id']		  = $this->input->post('id');
 			$data['status']   =   $this->input->post('status');
+			
 	        
-		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[4]|max_length[10]|xss_clean');
-		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[4]|max_length[10]|xss_clean');
+		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[4]|max_length[10]|xss_clean|alpha_numeric');
+		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[4]|max_length[10]|xss_clean|alpha_numeric');
 		$this->form_validation->set_rules('address','Address','trim|required|min_length[20]|max_length[40]|xss_clean');
 		//$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[users.username]');
-		$this->form_validation->set_rules('email','Email','trim|required|valid_email');
+		if($this->input->post('email')==$this->input->post('hmail')){
+			$this->form_validation->set_rules('email','Email','trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
+			}
+			else{
+			$this->form_validation->set_rules('email','Email','trim|required|min_length[5]|max_length[50]|valid_email|xss_clean|is_unique[users.email]');
+			}
 		$this->form_validation->set_rules('phone','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 		if($this->form_validation->run()!=False){
 		
@@ -359,7 +370,7 @@ class Organization extends CI_Controller {
 		    redirect(base_url().'organization/admin/front-desk/list');
 		}
 		}else{
-		
+		$data['user_status']=$this->organization_model->getUserStatus();
 		$this->showAddUser($data);
 
 		}
@@ -391,10 +402,15 @@ class Organization extends CI_Controller {
 		}
 	}
 	public function load_templates($page='',$data=''){
-	$this->load->view('admin-templates/header',$data);
+	
+	if($this->session_check()==true) {
+    $this->load->view('admin-templates/header',$data);
 	$this->load->view('admin-templates/nav');
 	$this->load->view($page,$data);
 	$this->load->view('admin-templates/footer');
+	}else{
+	echo 'you are not authorized access this page..';
+	}
 
 	}	  
 	public function session_check() {

@@ -55,7 +55,8 @@
 	<div class="form-group">
 			<?php echo form_label('Email-ID'); ?>
             <?php echo form_input(array('name'=>'mail','class'=>'form-control','id'=>'mail','placeholder'=>'Enter E-mail ID','value'=>$mail)); ?>
-	    <?php echo form_error('mail', '<p class="text-red">', '</p>'); ?>
+	   <?php if(isset($org_id) && isset($user_id)) {  echo form_hidden('hmail',$hmail); } ?>
+	   <?php echo form_error('mail', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 			<?php echo form_label('Phone Number'); ?>

@@ -155,12 +155,14 @@ class admin_model extends CI_Model {
 	}
 
 	function updateOrganization($data){
-		$orgdbdata = array('name'=>$data['name'],'address'=>$data['addr'],'updated'=>NOW());
+		$orgdbdata = array('name'=>$data['name'],'address'=>$data['addr']);
 		$userdbdata = array('first_name'=>$data['fname'],'last_name'=>$data['lname'],'address'=>$data['addr'],'email'=>$data['mail'],'phone'=>$data['phn']);
 		$this->db->where('id',$data['user_id'] );
 		$succesuser=$this->db->update('users',$userdbdata);
 		if($succesuser>0){
+		$this->db->set('updated', 'NOW()', FALSE);
 		$this->db->where('id',$data['org_id'] );
+		
 		$succes=$this->db->update('organisations',$orgdbdata);
 		if($succes > 0) {
 		return true;
