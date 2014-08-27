@@ -79,7 +79,7 @@ class Organization extends CI_Controller {
 	}
 	
 	public function show_login() 
-	{   $data['title']="Login".PRODUCT_NAME;	
+	{   $data['title']="Login | ".PRODUCT_NAME;	
 		$this->load->view('organization-pages/login',$data);
 		
     }

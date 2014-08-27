@@ -69,7 +69,7 @@
                         </li>
                         <?php }else if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==FRONT_DESK){ ?>
                         <li class="active">
-                            <a href="<?php echo base_url().'organization/admin';?>">
+                            <a href="<?php echo base_url().'organization/front-desk';?>">
                                 <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
                         </li>
