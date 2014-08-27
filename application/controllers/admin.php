@@ -100,7 +100,7 @@ class Admin extends CI_Controller {
 	$this->session->set_userdata(array('condition'=>array($like_arry,$where_arry)));
 	}
 	$tbl='organisations';
-	
+	$data['org_status']=$this->admin_model->getStatus();
     $p_res=$this->mypage->paging($tbl,$per_page,$secondaction);
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];

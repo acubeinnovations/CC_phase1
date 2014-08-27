@@ -22,12 +22,10 @@
 				<tbody>
 					<tr>
 					    <td><?php echo form_input(array('name'=>'sname','class'=>'form-control','id'=>'sname','placeholder'=>'By Name','size'=>30));?> </td>
-					    <td><?php $options = array(
-					'-1'  => 'By Status',
-                  '1'  => 'Active',
-                  '2'    => 'Inactive'
-                );
-		echo form_dropdown('status', $options,-1,'class=form-control'); ?></td>
+					    <td><?php 	$class="form-control";
+									$data=$this->form_functions->populated_dropdown('status',$org_status,$selected='',$class);
+									echo $data;?>
+					</td>
 					    <td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
 					    <?php echo form_close();?>
 						<td><?php echo nbs(55); ?></td>
