@@ -15,8 +15,8 @@ class Organization extends CI_Controller {
 			$this->redirect_to_profile();
 		 }elseif(($param1=='admin' || $param1=='front-desk' ) && $param2=='changepassword' && $param3==''){ 
 			$this->changepassword();
-		 } elseif($param1=='admin'  && $param2=='front-desk' && $param3!= ''){
-			$this->front_desk($param3);
+		 } elseif($param1=='admin'  && $param2=='front-desk' && ($param3!= '' || $param4!= '')){
+			$this->front_desk($param3,$param4);
 		 }
 		
 		}
@@ -315,15 +315,18 @@ class Organization extends CI_Controller {
 
 	}
 	else{
-		
+	
 	if($secondaction != '' && $secondaction =='password-reset') {
+
 		//if user name  and password-reset comes what to do?
 		$this->load->model('organization_model');
 	   	$data['title']		  =		"Reset Password | CC Phase 1"; 
 		$data['password']	  = 	'';
 		$data['cpassword'] 	  = 	'';
 		$data['user']	  =		$action;
+			 
        if(isset($_REQUEST['user-password-reset'])){
+	  
 			$this->form_validation->set_rules('password','New Password','trim|required|min_length[5]|max_length[20]|xss_clean');
 			$this->form_validation->set_rules('cpassword','Confirm Password','trim|required|min_length[5]|max_length[20]|matches[password]|xss_clean');
 			$data['password'] = trim($this->input->post('password'));
@@ -331,14 +334,15 @@ class Organization extends CI_Controller {
 			if($this->form_validation->run() != False) {
 				$dbdata['password']  				= md5($this->input->post('password'));
 				$dbdata['passwordnotencrypted']  	= $this->input->post('password');
-				$dbdata['name']  					= $org_res['name'];
-				$dbdata['username'] 				= $user_res['username'];
-				$dbdata['email']  					= $user_res['email'];
-				$dbdata['id'] 						= $user_res['id'];
+				$dbdata['name']  					= $result['first_name'].$result['last_name'];
+				
+				$dbdata['email']  					= $result['email'];
+				$dbdata['id'] 						= $result['id'];
 				$val    			    			= $this->organization_model->resetUserPassword($dbdata);
 				if($val == true) {
-					//$this->sendEmailOnorganizationPaswordReset($dbdata);			
-					redirect(base_url().'admin/organization/list');
+						//$this->sendEmail($dbdata);
+						
+					redirect(base_url().'organization/admin/front-desk/list');
 				}else{
 					$this->show_user_reset_password($data);
 				}
@@ -419,6 +423,50 @@ class Organization extends CI_Controller {
 		return true;
 		} else {
 		return false;
+		}
+	}
+	
+	public function show_user_reset_password($data){
+	if($this->session_check()==true) {
+				$this->load->view('admin-templates/header',$data);
+			  	$this->load->view('admin-templates/nav');
+				$this->load->view('organization-pages/password-reset',$data);
+				$this->load->view('admin-templates/footer');
+					}
+		else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+	
+	public function sendEmail($data){
+	   if($this->session_check()==true) {
+	
+	 $config = Array(
+  'protocol' => 'smtp',
+  'smtp_host' => 'ssl://smtp.googlemail.com',
+  'smtp_port' => 465,
+  'smtp_user' => 'xxx@gmail.com', // change it to yours
+  'smtp_pass' => 'xxx', // change it to yours
+  'mailtype' => 'html',
+  'charset' => 'iso-8859-1',
+  'wordwrap' => TRUE
+);
+		$this->email->from(SYSTEM_EMAIL, 'Acube Innovations');
+		$this->email->to($data['email']);
+		$this->email->subject('Succes Message');
+		$this->email->message('Hi..'.$data['name'].'</br> Your changed Password is '.$data['password'].'.Thanks & Regards</br> Acube Innovations');
+		if($this->email->send())
+			{
+			echo 'Email sent.';
+			return true;
+			}
+		else
+			{
+			show_error($this->email->print_debugger());
+			}
+			}
+		else{
+			echo 'you are not authorized access this page..';
 		}
 	}
 }
