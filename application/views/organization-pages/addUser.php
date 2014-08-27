@@ -60,7 +60,8 @@
 				<?php }  ?>
 				<div class="form-group">
 					<?php echo form_label('Email','emaillabel'); ?>
-				    <?php echo form_input(array('name'=>'email','class'=>'form-control','placeholder'=>'Enter email','value'=>$email)); ?>
+				    <?php echo form_input(array('name'=>'email','class'=>'form-control','placeholder'=>'Enter email','value'=>$email)); 
+					  echo form_hidden('hmail',$email); ?>
 					<?php echo form_error('email', '<p class="text-red">', '</p>'); ?>
 				</div>
 				<div class="form-group">

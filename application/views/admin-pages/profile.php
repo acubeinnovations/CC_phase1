@@ -2,7 +2,8 @@
 	$username	=	$values[0]->username;
 	$Firstname	= 	$values[0]->first_name; 
 	$Lasttname	= 	$values[0]->last_name; 
-	$email		= 	$values[0]->email; 
+	$email		= 	$values[0]->email;
+	$hmail		= 	$values[0]->email;
 	$phone		= 	$values[0]->phone; 
 	$address	= 	$values[0]->address; 
 }else if(isset($postvalues)){
@@ -10,6 +11,7 @@
 	$Firstname	= 	$postvalues['first_name']; 
 	$Lasttname	= 	$postvalues['last_name']; 
 	$email		= 	$postvalues['email']; 
+	$hmail		= 	$postvalues['email'];
 	$phone		= 	$postvalues['phone']; 
 	$address	= 	$postvalues['address']; 
 
@@ -17,7 +19,8 @@
 	$username=	'';
 	$Firstname= ''; 
 	$Lasttname= ''; 
-	$email= 	''; 
+	$email= 	'';
+	$hmail= 	'';
 	$phone= 	''; 
 	$address= 	''; 
 
@@ -46,6 +49,7 @@
 				<div class="form-group">
 					<?php echo form_label('Email','emaillabel'); ?>
 				    <?php echo form_input(array('name'=>'email','class'=>'form-control','placeholder'=>'Enter email','value'=>$email)); ?>
+					<?php  echo form_hidden('hmail',$hmail);  ?>
 					<?php echo form_error('email', '<p class="text-red">', '</p>'); ?>
 				</div>
 				<div class="form-group">
