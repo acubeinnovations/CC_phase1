@@ -30,13 +30,13 @@ class Organization extends CI_Controller {
 			 $username=$this->input->post('username');
 			 $this->organization_model->LoginAttemptsChecks($username);
 			 if( $this->session->userdata('isloginAttemptexceeded')==false){
-			 $this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[10]|xss_clean');
-			 $this->form_validation->set_rules('password','Password','trim|required|min_length[4]|max_length[10]|xss_clean');
+			 $this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[15]|xss_clean');
+			 $this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|xss_clean');
 			 } else {
 			 $captcha = $this->input->post('captcha');
 			 $this->form_validation->set_rules('captcha', 'Captcha', 'trim|required|callback_captcha_check');
-			 $this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[10]|xss_clean');
-			 $this->form_validation->set_rules('password','Password','trim|required|min_length[4]|max_length[10]|xss_clean');
+			 $this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[15]|xss_clean');
+			 $this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|xss_clean');
 			}
 			 if($this->form_validation->run()!=False){
 			 $username = $this->input->post('username');
@@ -54,7 +54,8 @@ class Organization extends CI_Controller {
 				 
 		        
 		    } else {
-		        $this->organization_model->recordLoginAttempts($username);
+				$ip_address=$this->input->ip_address();
+		        $this->organization_model->recordLoginAttempts($username,$ip_address);
 		        $this->show_login();
 		    }
 			} else {
@@ -464,5 +465,7 @@ class Organization extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
+	
+
 }
 	?>

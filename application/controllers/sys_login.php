@@ -31,7 +31,8 @@ class Sys_login extends CI_Controller {
 				 redirect(base_url().'admin');
 		        
 		    } else {
-		        $this->admin_model->recordLoginAttempts($username);
+		        $ip_address=$this->input->ip_address();
+		        $this->admin_model->recordLoginAttempts($username,$ip_address);
 		        $this->show_login();
 		    }
 			} else {

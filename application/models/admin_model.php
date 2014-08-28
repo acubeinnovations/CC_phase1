@@ -42,7 +42,7 @@ class admin_model extends CI_Model {
 	$insert_id=$this->db->insert_id();
 	if($insert_id){
 	$data2=array('username'=>$uname,'password'=>md5($pwd),'first_name'=>$fname,'last_name'=>$lname,'phone'=>$phn,'address'=>$addr,'user_status_id'=>'1','user_type_id'=>ORGANISATION_ADMINISTRATOR,'email'=>$mail,'organisation_id'=>$insert_id);
-	$this->db->set('registration_date', 'NOW()', FALSE);
+	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('users',$data2);
 	return true;
 	  }
@@ -170,8 +170,12 @@ class admin_model extends CI_Model {
 		}
 	}
 	function LoginAttemptsChecks($username) {
+		$this->db->from('users');
+        $this->db->where('username',$username );
+		$login = $this->db->get()->result();
 		$this->db->from('user_login_attempts');
-        $this->db->where('username',$username);
+		if(count($login) > 0){
+        $this->db->where('user_id',$login[0]->id);
         $login_attempts = $this->db->get()->result();
 		 if (count( $login_attempts) >= 3 ) {
 			$this->session->set_userdata(array('isloginAttemptexceeded'=>true));
@@ -179,17 +183,24 @@ class admin_model extends CI_Model {
 		}else{
 			$this->session->set_userdata(array('isloginAttemptexceeded'=>false));
 		}
-
+		}
 	}
-	function recordLoginAttempts($username) {
-		$data=array('username'=>$username);
-		$this->db->insert('user_login_attempts',$data);
-
-	}
-	function clearLoginAttempts($username) {
+	function clearLoginAttempts($username){
 		$tables = array('user_login_attempts');
-		$this->db->where('username', $username);
+		$this->db->where('user_id',$this->session->userdata('id'));
 		$this->db->delete($tables);
+
+	}
+	function recordLoginAttempts($username,$ip_address) {
+		$this->db->from('users');
+        $this->db->where('username',$username );
+		$login = $this->db->get()->result();
+		$this->db->from('user_login_attempts');
+		if(count($login) > 0){
+		$data=array('user_id'=>$login[0]->id,'ip_address'=>$ip_address);
+		$this->db->set('created', 'NOW()', FALSE);
+		$this->db->insert('user_login_attempts',$data);
+		}
 
 	}
    
