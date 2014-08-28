@@ -2,7 +2,13 @@
 
 class Admin extends CI_Controller {
 
-	//newly added nijo
+	public function __construct()
+{
+    parent::__construct();
+    $this->load->helper('my_helper');
+    no_cache();
+
+}
 	public function session_check() {
 	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==SYSTEM_ADMINISTRATOR)) {
 		return true;
