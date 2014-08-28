@@ -23,5 +23,27 @@ foreach ($options as $key => $val)
 
 		return $form;
 }
+
+function populate_editable_dropdown($name = '', $options = array(),$class=''){
+$CI = & get_instance();
+
+$form = '<select name='.$name.' id="lstDropDown_A" class="'.$class.'" onKeyDown="fnKeyDownHandler_A(this, event);" onKeyUp="fnKeyUpHandler_A(this, event); return false;" onKeyPress = "return fnKeyPressHandler_A(this, event);"  onChange="fnChangeHandler_A(this);" onFocus="fnFocusHandler_A(this);">';
+$form.='<option selected="selected"></option></br>';
+
+foreach ($options as $key => $val)
+		{
+			$key = (string) $key;
+
+			
+					$form .= '<option value="'.$key.'">'.(string) $val."</option>\n";
+					
+		}
+		$form .= '</select>';
+
+		return $form;
+}
+
+
+
 }
 ?>
