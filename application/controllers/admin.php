@@ -2,7 +2,13 @@
 
 class Admin extends CI_Controller {
 
-	//newly added nijo
+	public function __construct()
+{
+    parent::__construct();
+    $this->load->helper('my_helper');
+    no_cache();
+
+}
 	public function session_check() {
 	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==SYSTEM_ADMINISTRATOR)) {
 		return true;
@@ -114,7 +120,7 @@ class Admin extends CI_Controller {
  else
 	{
 	$this->load->model('admin_model');
-	$result=$this->admin_model->checkOrg($action);
+	$result=$this->admin_model->checkOrg($action);//print_r($result);exit;
 	if(!$result){
 	echo "page not found";
 
