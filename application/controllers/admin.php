@@ -44,13 +44,13 @@ class Admin extends CI_Controller {
 		    $pwd  = $this->input->post('pwd');
 		    $mail  = $this->input->post('mail');
 		    $phn = $this->input->post('phn');
-	        $this->form_validation->set_rules('name','Organization','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[organisations.name]|alpha_numeric');
-		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[4]|max_length[10]|xss_clean|alpha_numeric');
-		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[4]|max_length[10]|xss_clean|alpha_numeric');
-		$this->form_validation->set_rules('addr','Address','trim|required|min_length[20]|max_length[40]|xss_clean');
-		$this->form_validation->set_rules('uname','Username','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[users.username]');
-		$this->form_validation->set_rules('pwd','Password','trim|required|min_length[4]|max_length[12]|matches[cpwd]|xss_clean');
-		$this->form_validation->set_rules('cpwd','Confirmation','trim|required|min_length[4]|max_length[12]|xss_clean|is_unique[users.email]');
+	        $this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|is_unique[organisations.name]|alpha_numeric');
+		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
+		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
+		$this->form_validation->set_rules('addr','Address','trim|required|min_length[10]|xss_clean');
+		$this->form_validation->set_rules('uname','Username','trim|required|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
+		$this->form_validation->set_rules('pwd','Password','trim|required|min_length[5]|max_length[12]|matches[cpwd]|xss_clean');
+		$this->form_validation->set_rules('cpwd','Confirmation','trim|required|min_length[5]|max_length[12]|xss_clean|is_unique[users.email]');
 		$this->form_validation->set_rules('mail','Mail','trim|required|valid_email');
 		$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 		
@@ -138,8 +138,8 @@ class Admin extends CI_Controller {
 		$data['cpassword'] 	  = 	'';
 		$data['orgname']	  =		$action;
        if(isset($_REQUEST['admin-org-password-reset'])){
-			$this->form_validation->set_rules('password','New Password','trim|required|min_length[5]|max_length[20]|xss_clean');
-			$this->form_validation->set_rules('cpassword','Confirm Password','trim|required|min_length[5]|max_length[20]|matches[password]|xss_clean');
+			$this->form_validation->set_rules('password','New Password','trim|required|min_length[5]|max_length[12]|xss_clean');
+			$this->form_validation->set_rules('cpassword','Confirm Password','trim|required|min_length[5]|max_length[12]|matches[password]|xss_clean');
 			$data['password'] = trim($this->input->post('password'));
 			$data['cpassword'] = trim($this->input->post('cpassword'));
 			if($this->form_validation->run() != False) {
@@ -182,13 +182,13 @@ class Admin extends CI_Controller {
 			$data['org_id'] = $this->input->post('org_id');
 			$data['status'] = $this->input->post('status');
 		if($data['name'] == $data['hname']){
-			$this->form_validation->set_rules('name','Organization','trim|required|min_length[5]|max_length[20]|xss_clean|alpha_numeric');
+			$this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|alpha_numeric');
 		}else{
-			$this->form_validation->set_rules('name','Organization','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[organisations.name]|alpha_numeric');
+			$this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|is_unique[organisations.name]|alpha_numeric');
 		}
-		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[4]|max_length[10]|xss_clean|alpha_numeric');
-		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[4]|max_length[10]|xss_clean|alpha_numeric');
-		$this->form_validation->set_rules('addr','Address','trim|required|min_length[20]|max_length[40]|xss_clean');
+		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
+		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
+		$this->form_validation->set_rules('addr','Address','trim|required|min_length[10]|xss_clean');
 		if($data['mail'] == $data['hmail']){
 			$this->form_validation->set_rules('mail','Mail','trim|required|valid_email');
 		}else{
@@ -264,17 +264,17 @@ class Admin extends CI_Controller {
 		$this->load->model('admin_model');
 		$dbdata = '';
               if(isset($_REQUEST['admin-profile-update'])){
-			$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean');
-			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[5]|max_length[20]|xss_clean|alpha_numeric');
-			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[5]|max_length[20]|xss_clean|alpha_numeric');
+			$this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[15]|xss_clean');
+			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
+			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
 			if($this->input->post('email')==$this->input->post('hmail')){
-			$this->form_validation->set_rules('email','Email','trim|required|min_length[5]|max_length[50]|valid_email|xss_clean');
+			$this->form_validation->set_rules('email','Email','trim|required|valid_email|xss_clean');
 			}
 			else{
-			$this->form_validation->set_rules('email','Email','trim|required|min_length[5]|max_length[50]|valid_email|xss_clean|is_unique[users.email]');
+			$this->form_validation->set_rules('email','Email','trim|required|valid_email|xss_clean|is_unique[users.email]');
 			}
 			$this->form_validation->set_rules('phone','Phone','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
-			$this->form_validation->set_rules('address','Address','trim|required|min_length[5]|max_length[50]|xss_clean');
+			$this->form_validation->set_rules('address','Address','trim|required|min_length[10]|xss_clean');
 			$dbdata['username']  = $this->input->post('username');
 		   	$dbdata['first_name'] = $this->input->post('firstname');
 			$dbdata['last_name']  = $this->input->post('lastname');
@@ -320,9 +320,9 @@ class Admin extends CI_Controller {
 		$data['password']	  = 	'';
 		$data['cpassword'] 	  = 	'';
        if(isset($_REQUEST['admin-password-update'])){
-			$this->form_validation->set_rules('old_password','Current Password','trim|required|min_length[5]|max_length[20]|xss_clean');
-			$this->form_validation->set_rules('password','New Password','trim|required|min_length[5]|max_length[20]|xss_clean');
-			$this->form_validation->set_rules('cpassword','Confirm Password','trim|required|min_length[5]|max_length[20]|matches[password]|xss_clean');
+			$this->form_validation->set_rules('old_password','Current Password','trim|required|min_length[5]|max_length[12]|xss_clean');
+			$this->form_validation->set_rules('password','New Password','trim|required|min_length[5]|max_length[12]|xss_clean');
+			$this->form_validation->set_rules('cpassword','Confirm Password','trim|required|min_length[5]|max_length[12]|matches[password]|xss_clean');
 			$data['old_password'] = trim($this->input->post('old_password'));
 			$data['password'] = trim($this->input->post('password'));
 			$data['cpassword'] = trim($this->input->post('cpassword'));
