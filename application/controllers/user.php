@@ -28,11 +28,25 @@ class User extends CI_Controller {
 		}elseif($param1=='changepassword'){
 		$this->changePassword();
 		}
+		elseif($param1=='settings'){
+		$this->settings();
+		}
 		}else{
 			echo 'you are not authorized access this page..';
 		}
 	
     }
+	
+	public function settings() {
+	if($this->session_check()==true) {
+	$data['title']="Settings | ".PRODUCT_NAME;  
+	$page='user-pages/settings';
+	$this->load_templates($page,$data);
+	}
+	else{
+			echo 'you are not authorized access this page..';
+		}
+	}
 	
 	public function load_templates($page='',$data=''){
 	if($this->session_check()==true) {
