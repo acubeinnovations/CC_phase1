@@ -1,5 +1,5 @@
-<div class="new-org-body">
-<table class="tbl">
+<div class="settings-body">
+<table class="tbl-settings">
 <tr>
 <td>
 <fieldset class="body-border">
@@ -9,7 +9,9 @@
 	<table class="tbl">
 	<tr>
 	<td ><?php echo form_label('Vehicle Ownership');?></td>
-	<td >editable select</td>
+	<td ><?php  
+	$class="form-control";
+	echo $this->form_functions->populate_editable_dropdown('name',$option_array,$class)?></td>
 	<td> <?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 	<td><?php echo form_submit("add","Add","class='btn btn-primary'");?></td>
 	<td><?php echo form_submit("edit","Edit","class='btn btn-primary'");?></td>
@@ -22,6 +24,7 @@
 </fieldset>
 
 </td>
+<td><?php echo nbs(10); ?></td>
 <td>
 <fieldset class="body-border">
 <legend class="body-head">General</legend>
@@ -63,8 +66,5 @@
 </td>
 </tr>
 </table>
-
-
-
 
 </div>

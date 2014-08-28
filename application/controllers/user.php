@@ -39,6 +39,7 @@ class User extends CI_Controller {
 	
 	public function settings() {
 	if($this->session_check()==true) {
+	$data['option_array']="";
 	$data['title']="Settings | ".PRODUCT_NAME;  
 	$page='user-pages/settings';
 	$this->load_templates($page,$data);

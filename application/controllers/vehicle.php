@@ -10,7 +10,7 @@ class Vehicle extends CI_Controller {
 		}
 	public function index($param1 ='',$param2='',$param3=''){
 		if($this->session_check()==true) {
-			if($param1=='vehicle-ownership' && $param2=='new' && $param3==''){
+			if($param1=='vehicle-ownership' && isset($_REQUEST['add'])){
 				$this->addOwnership();
 				}
 			if($param1=='vehicle-ownership' && $param2=='edit' && $param3!=''){
