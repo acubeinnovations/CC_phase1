@@ -50,14 +50,19 @@ class Organization_model extends CI_Model {
 
    	}
 	function LoginAttemptsChecks($username) {
+		$this->db->from('users');
+        $this->db->where('username',$username );
+		$login = $this->db->get()->result();
 		$this->db->from('user_login_attempts');
-        $this->db->where('username',$username);
+		if(count($login) > 0){
+        $this->db->where('user_id',$login[0]->id);
         $login_attempts = $this->db->get()->result();
 		 if (count( $login_attempts) >= 3 ) {
 			$this->session->set_userdata(array('isloginAttemptexceeded'=>true));
 			$this->session->set_userdata(array('loginAttemptcount'=>count($login_attempts)));
 		}else{
 			$this->session->set_userdata(array('isloginAttemptexceeded'=>false));
+		}
 		}
 	}
     function set_session() {
@@ -75,13 +80,20 @@ class Organization_model extends CI_Model {
 	
 	function clearLoginAttempts($username){
 		$tables = array('user_login_attempts');
-		$this->db->where('username', $username);
+		$this->db->where('user_id',$this->session->userdata('id'));
 		$this->db->delete($tables);
 
 	}
-	function recordLoginAttempts($username) {
-		$data=array('username'=>$username);
+	function recordLoginAttempts($username,$ip_address) {
+		$this->db->from('users');
+        $this->db->where('username',$username );
+		$login = $this->db->get()->result();
+		$this->db->from('user_login_attempts');
+		if(count($login) > 0){
+		$data=array('user_id'=>$login[0]->id,'ip_address'=>$ip_address);
+		$this->db->set('created', 'NOW()', FALSE);
 		$this->db->insert('user_login_attempts',$data);
+		}
 
 	}
 	function update($data){
@@ -97,12 +109,12 @@ class Organization_model extends CI_Model {
 		}
 		}
 	}
-	function  insertUser($fname,$lname,$addr,$uname,$pwd,$mail,$phn) {echo "hi";
+	function  insertUser($fname,$lname,$addr,$uname,$pwd,$mail,$phn) {
 	$org_id=$this->session->userdata('organisation_id');
 	if($org_id){
 	$data=array('username'=>$uname,'password'=>md5($pwd),'first_name'=>$fname,'last_name'=>$lname,'phone'=>$phn,'address'=>$addr,'user_status_id'=>USER_STATUS_ACTIVE,'user_type_id'=>FRONT_DESK,'email'=>$mail,'organisation_id'=>$org_id);
 
-	$this->db->set('registration_date', 'NOW()', FALSE);
+	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('users',$data);
 	return true;
 	  }
@@ -156,4 +168,5 @@ class Organization_model extends CI_Model {
 
 	}
 }
+	
 ?>

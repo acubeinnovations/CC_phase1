@@ -62,7 +62,8 @@ public function __construct()
 				 
 		        
 		    } else {
-		        $this->organization_model->recordLoginAttempts($username);
+				$ip_address=$this->input->ip_address();
+		        $this->organization_model->recordLoginAttempts($username,$ip_address);
 		        $this->show_login();
 		    }
 			} else {
@@ -472,5 +473,7 @@ public function __construct()
 			echo 'you are not authorized access this page..';
 		}
 	}
+	
+
 }
 	?>
