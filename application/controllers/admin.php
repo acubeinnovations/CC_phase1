@@ -252,7 +252,6 @@ class Admin extends CI_Controller {
 	public function show_org_reset_password($data) {
 	if($this->session_check()==true) {
 				$page='admin-pages/password-reset';
-				$this->load->view('admin-templates/footer');
 				$this->load_templates($page,$data);
 				}
 			else{
