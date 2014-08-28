@@ -99,3 +99,6 @@ float:none;
 .list-org-table tr > td{
 border-top:none !important;
 }
+.tbl{
+width:100%;
+}
