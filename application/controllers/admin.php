@@ -114,7 +114,7 @@ class Admin extends CI_Controller {
  else
 	{
 	$this->load->model('admin_model');
-	$result=$this->admin_model->checkOrg($action);
+	$result=$this->admin_model->checkOrg($action);//print_r($result);exit;
 	if(!$result){
 	echo "page not found";
 
