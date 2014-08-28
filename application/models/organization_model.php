@@ -3,6 +3,8 @@ class Organization_model extends CI_Model {
 	function OrganizationOrUserLogin( $username, $password ) {
         $this->db->from('users');
         $this->db->where('username',$username );
+		$user_type_condition='user_type_id = '.ORGANISATION_ADMINISTRATOR.' OR user_type_id = '.FRONT_DESK;
+		$this->db->where($user_type_condition);
         $this->db->where( 'password', md5($password) );
         $login = $this->db->get()->result();
         
