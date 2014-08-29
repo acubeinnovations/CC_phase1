@@ -139,3 +139,27 @@ cursor:pointer;
 .hide-me{
 display:none;
 }
+.trip-booking-body{
+width:100%;
+
+}
+.first-column-trip-booking{
+width:80%;
+float:left;
+margin:10px 3% 10px 1%;
+}
+.second-column-trip-booking{
+margin:10px 3% 10px 1%;
+width:12%;
+float:left;
+}
+.div-with-50-percent-width-with-margin-10{
+float:left;
+width:50%;
+margin:10px;
+}
+.row-source-50-percent-width-with-margin-8{
+width:46%;
+margin:8px;
+float:left;
+}

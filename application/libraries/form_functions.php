@@ -5,6 +5,7 @@ $form = '<select name="'.$name.'" class="'.$class.'"/>';
 if($selected==''){
 $form.='<option value="-1" selected="selected" >--'.$msg.'--</option></br>';
 }
+if(!empty($options)){
 foreach ($options as $key => $val)
 		{
 			$key = (string) $key;
@@ -19,6 +20,7 @@ foreach ($options as $key => $val)
 					$form .= '<option value="'.$key.'"'.$sel.'>'.(string) $val."</option>\n";
 					
 		}
+}
 		$form .= '</select>';
 
 		return $form;
