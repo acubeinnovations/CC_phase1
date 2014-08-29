@@ -13,10 +13,10 @@ class Vehicle extends CI_Controller {
 			if($param1=='vehicle-ownership' && isset($_REQUEST['add'])){
 				$this->addOwnership();
 				}
-			if($param1=='vehicle-ownership' && $param2=='edit' && $param3!=''){
+			if($param1=='vehicle-ownership' && isset($_REQUEST['edit'])){
 				$this->editOwnership();
 			}
-			if($param1=='vehicle-ownership' && $param2=='delete' && $param3!=''){
+			if($param1=='vehicle-ownership' && isset($_REQUEST['delete'])){
 				$this->deleteOwnership();
 			}
 		
