@@ -46,7 +46,7 @@ $route['organization/front-desk/(:any)'] = 'user/index';
 $route['organization/(:any)'] = 'organization/$0';
 $route['syslogin'] = 'sys_login/index';
 $route['logout'] = 'logout';
-
+$route['vehicle/(:any)'] = 'vehicle/$0';
 
 
 /* End of file routes.php */
