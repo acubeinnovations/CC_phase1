@@ -35,6 +35,8 @@
         <script src="<?php echo base_url();?>js/AdminLTE/demo.js" type="text/javascript"></script>
 		<!--main.js -->
         <script src="<?php echo base_url();?>js/main.js" type="text/javascript"></script>
+		<!--main.js -->
+        <script src="<?php echo base_url();?>js/editable_dropdown.js" type="text/javascript"></script>
 
     </body>
 </html>
