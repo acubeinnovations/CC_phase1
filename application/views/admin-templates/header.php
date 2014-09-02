@@ -27,7 +27,7 @@
 		<!-- user updation style.css -->
         <link href="<?php echo base_url();?>css/style.css" rel="stylesheet" type="text/css" />
 		 <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <!-- jQuery UI 1.10.3 -->
         <script src="<?php echo base_url();?>js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

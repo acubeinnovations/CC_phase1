@@ -18,6 +18,9 @@ function TriggerClckDelete(){
 document.getElementById("settings-delete-id").click();
 
 }
+
+$(document).ready(function(){
+
 $('#pickupdatetimepicker').datetimepicker();
 $('#dropdatetimepicker').datetimepicker();
 $('#via').click(function(event){
@@ -40,3 +43,31 @@ $('.recurrent-container').toggle();
 
 
 });
+ 
+	$('select').change(function(){ 
+		    $id=$('#lstDropDown_A').val();
+			$tbl=$(this).attr('tblname');
+		base_url="<?php echo base_url(); ?>";
+	$(this).attr('trigger',false);
+	  $.post(base_url+"vehicle/getDescription",
+		  {
+			id:$id,
+			tbl:$tbl
+		  },function(data){
+		  var str=data;
+		  var values=str.split(" ",3);
+			$('#id').val(values[0]);
+			$('#description').val(values[1]);
+			$('#editbox').val(values[2]);
+		}
+	
+			); 
+		
+		$('#lstDropDown_A').hide();
+		$('#editbox').show();
+	
+	
+	
+	});
+ });
+

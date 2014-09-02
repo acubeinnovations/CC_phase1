@@ -10,35 +10,9 @@
            </div>
        </div>
        <?php    } ?>
-	   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	  
 	   <script type="text/javascript">
-            $(document).ready(function(){ 
-                    $('select').change(function(){ 
-                            $id=$('#lstDropDown_A').val();
-							$tbl=$(this).attr('tblname');
-						base_url="<?php echo base_url(); ?>";
-                  $(this).attr('trigger',false);
-					  $.post(base_url+"vehicle/getDescription",
-						  {
-							id:$id,
-							tbl:$tbl
-						  },function(data){
-						  var str=data;
-						  var values=str.split(" ",3);
-						    $('#id').val(values[0]);
-							$('#description').val(values[1]);
-							$('#editbox').val(values[2]);
-						}
-						
-							); 
-							
-						$('#lstDropDown_A').hide();
-						$('#editbox').show();
-						
-						
-						
-	});
-        });
+            
     </script>
 <div class="settings-body">
 <table class="tbl-settings">

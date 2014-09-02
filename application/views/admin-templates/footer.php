@@ -30,7 +30,7 @@
         
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo base_url();?>js/AdminLTE/demo.js" type="text/javascript"></script>
-		<script src="<?php echo base_url();?>plugins/datetimepicker-master/jquery.js"></script>
+		
 		<script src="<?php echo base_url();?>plugins/datetimepicker-master/jquery.datetimepicker.js"></script>
 		
 

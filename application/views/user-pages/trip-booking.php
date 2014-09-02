@@ -8,7 +8,7 @@
 					<legend class="body-head">Booking Source</legend>
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						echo $this->form_functions->populate_dropdown('status',$user_status='',$selected='',$class,$msg="Select Source");
+						echo $this->form_functions->populate_dropdown('booking_sources',$booking_sources='',$selected='',$class,$msg="Select Source");
 						echo form_input(array('name'=>'source','class'=>'form-control row-source-50-percent-width-with-margin-8','id'=>'source','placeholder'=>'Source','value'=>'')); ?>
 						</div>
 					</fieldset>
@@ -46,7 +46,7 @@
 								?>
 								
 								<div class="group-toggle">
-									<?php echo $this->form_functions->populate_dropdown('groups',$user_status='',$selected='',$class ='groups form-control',$msg="Select Groups"); ?>
+									<?php echo $this->form_functions->populate_dropdown('customer_groups',$customer_groups='',$selected='',$class ='groups form-control',$msg="Select Groups"); ?>
 								</div>
 							</div>
 							</td>
@@ -68,7 +68,7 @@
 							<td>
 							<div class="form-group">
 								<?php $class="form-control row-source-50-percent-width-with-margin-8";
-								 echo $this->form_functions->populate_dropdown('bookingType',$bookingType='',$selected='',$class,$msg="Select Type"); 
+								 echo $this->form_functions->populate_dropdown('trip_models',$trip_models='',$selected='',$class,$msg="Select Type"); 
 								echo form_input(array('name'=>'no_of_passengers','class'=>'form-control row-source-50-percent-width-with-margin-8','id'=>'no_of_passengers','placeholder'=>'No of passengers','value'=>'')).br(2);?>
 							</div>
 							<div class="form-group">
@@ -155,8 +155,8 @@
 					<legend class="body-head">Vehicle Information</legend>
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						echo $this->form_functions->populate_dropdown('vehicletype',$vehicletype='',$selected='',$class,$msg="Select Type");
-						echo $this->form_functions->populate_dropdown('acornonac',$acornonac='',$selected='',$class,$msg="Select AC/Non AC");
+						echo $this->form_functions->populate_dropdown('vehicle_types',$vehicle_types='',$selected='',$class,$msg="Select Type");
+						echo $this->form_functions->populate_dropdown('vehicle_ac_types',$vehicle_ac_types='',$selected='',$class,$msg="Select AC/Non AC");
 						echo br(2);
 						 ?>
 						</div>
@@ -203,7 +203,7 @@
 						</div>
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						echo $this->form_functions->populate_dropdown('seats',$seats='',$selected='',$class,$msg="Select Seats");
+						echo $this->form_functions->populate_dropdown('vehicle_seating_capacity',$vehicle_seating_capacity='',$selected='',$class,$msg="Select Seats");
 						echo $this->form_functions->populate_dropdown('languages',$languages='',$selected='',$class,$msg="Select Languages");
 						echo br(2);
 						 ?>
