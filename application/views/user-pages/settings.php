@@ -10,6 +10,36 @@
            </div>
        </div>
        <?php    } ?>
+	   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	   <script type="text/javascript">
+            $(document).ready(function(){ 
+                    $('select').change(function(){ 
+                            $id=$('#lstDropDown_A').val();
+							$tbl=$(this).attr('tblname');
+						base_url="<?php echo base_url(); ?>";
+                  $(this).attr('trigger',false);
+					  $.post(base_url+"vehicle/getDescription",
+						  {
+							id:$id,
+							tbl:$tbl
+						  },function(data){
+						  var str=data;
+						  var values=str.split(" ",3);
+						    $('#id').val(values[0]);
+							$('#description').val(values[1]);
+							$('#editbox').val(values[2]);
+						}
+						
+							); 
+							
+						$('#lstDropDown_A').hide();
+						$('#editbox').show();
+						
+						
+						
+	});
+        });
+    </script>
 <div class="settings-body">
 <table class="tbl-settings">
 <tr>
@@ -23,8 +53,10 @@
 	<?php echo form_label('Vehicle Ownership');?></td>
 <td><?php  
 	$class="form-control";
-	
-	echo $this->form_functions->populate_editable_dropdown('name',$vehicle_ownership_types,$class)?></td>
+	$tbl="vehicle_ownership_types";
+	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_ownership_types,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select','id'=>'editbox','class'=>'form-control','style'=>'display:none'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'))?></td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
 	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
