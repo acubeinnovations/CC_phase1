@@ -30,6 +30,8 @@ class User extends CI_Controller {
 		}
 		elseif($param1=='settings'){
 		$this->settings();
+		}elseif($param1=='trip-booking'){
+		$this->ShowBookTrip();
 		}
 		}else{
 			echo 'you are not authorized access this page..';
@@ -58,7 +60,24 @@ class User extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
-	
+	public function ShowBookTrip(){
+	if($this->session_check()==true) {
+	$data['booking_types']="";
+	$data['vehicle_types']="";
+	$data['vehicle_ac_types']="";
+	$data['vehicle_seating_capacity']="";
+	$data['languages']="";
+	$data['tariffs']="";
+	$data['available_vehicles']="";
+	$data['payment_types']="";
+	$data['title']="Trip Booking | ".PRODUCT_NAME;  
+	$page='user-pages/trip-booking';
+	$this->load_templates($page,$data);
+	}
+	else{
+			echo 'you are not authorized access this page..';
+		}
+	}
 	public function load_templates($page='',$data=''){
 	if($this->session_check()==true) {
 		$this->load->view('admin-templates/header',$data);

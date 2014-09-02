@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2014 at 05:28 AM
+-- Generation Time: Aug 29, 2014 at 07:40 AM
 -- Server version: 5.5.37-0ubuntu0.13.10.1
 -- PHP Version: 5.5.3-1ubuntu2.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `cc`
@@ -59,6 +53,24 @@ CREATE TABLE IF NOT EXISTS `booking_sources` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `customer groups`
+--
+
+CREATE TABLE IF NOT EXISTS `customer groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `description` text,
+  `value` int(11) DEFAULT NULL,
+  `organisation_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customers`
 --
 
@@ -73,6 +85,8 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `app_key` varchar(100) NOT NULL,
   `fa_customer_id` int(11) NOT NULL,
   `organisation_id` int(11) NOT NULL,
+  `customer type id` int(11) NOT NULL,
+  `customer group id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -389,6 +403,7 @@ CREATE TABLE IF NOT EXISTS `trips` (
   `trip_from_lng` double NOT NULL,
   `trip_to_lat` double NOT NULL,
   `trip_to_lng` double NOT NULL,
+  `no_of_passengers` int(3) NOT NULL,
   `kilometer_reading_start` double NOT NULL,
   `kilometer_reading_drop` double NOT NULL,
   `vehicle_type_id` int(11) NOT NULL,
@@ -564,7 +579,7 @@ CREATE TABLE IF NOT EXISTS `user_login_attempts` (
   `ip_address` varchar(255) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -913,6 +928,3 @@ CREATE TABLE IF NOT EXISTS `vehicle_types` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
