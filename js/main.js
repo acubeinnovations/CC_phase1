@@ -17,4 +17,25 @@ function TriggerClckDelete(){
 document.getElementById("settings-delete-id").click();
 
 }
+$('#pickupdatetimepicker').datetimepicker();
+$('#dropdatetimepicker').datetimepicker();
+$('#via').click(function(event){
+event.preventDefault();
+$('.toggle-via').toggle();
 
+
+});
+
+$('.advanced-chek-box').click(function(){
+
+$('.group-toggle').toggle();
+
+
+});
+
+$('.recurrent-yes-chek-box').click(function(){
+
+$('.recurrent-container').toggle();
+
+
+});

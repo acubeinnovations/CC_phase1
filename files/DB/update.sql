@@ -1,5 +1,3 @@
-CREATE TABLE IF NOT EXISTS `user_login_attempts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+ALTER TABLE `customers` CHANGE `app_key` `app_id` VARCHAR( 100 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ;
+
+ALTER TABLE `customers` ADD `password` VARCHAR( 255 ) NULL AFTER `app_id` ;

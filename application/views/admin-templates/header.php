@@ -18,13 +18,18 @@
         <link href="<?php echo base_url();?>css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" />
         <!-- Daterange picker -->
         <link href="<?php echo base_url();?>css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+		<!-- Date picker -->
+        <link href="<?php echo base_url();?>plugins/datetimepicker-master/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
         <!-- bootstrap wysihtml5 - text editor -->
         <link href="<?php echo base_url();?>css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="<?php echo base_url();?>css/AdminLTE.css" rel="stylesheet" type="text/css" />
 		<!-- user updation style.css -->
         <link href="<?php echo base_url();?>css/style.css" rel="stylesheet" type="text/css" />
-
+		 <!-- jQuery 2.0.2 -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <!-- jQuery UI 1.10.3 -->
+        <script src="<?php echo base_url();?>js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>

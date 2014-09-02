@@ -1,9 +1,6 @@
 		  </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->       
-		 <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <!-- jQuery UI 1.10.3 -->
-        <script src="<?php echo base_url();?>js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+		
         <!-- Bootstrap -->
         <script src="<?php echo base_url();?>js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Morris.js charts -->
@@ -33,10 +30,13 @@
         
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo base_url();?>js/AdminLTE/demo.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>plugins/datetimepicker-master/jquery.js"></script>
+		<script src="<?php echo base_url();?>plugins/datetimepicker-master/jquery.datetimepicker.js"></script>
+		
+
 		<!--main.js -->
         <script src="<?php echo base_url();?>js/main.js" type="text/javascript"></script>
-		<!--main.js -->
+		<!--editable_dropdown.js -->
         <script src="<?php echo base_url();?>js/editable_dropdown.js" type="text/javascript"></script>
-
     </body>
 </html>
