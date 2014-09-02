@@ -206,9 +206,27 @@ margin:-30px 0 0 0;
 .float-right{
 float:right;
 }
+.margin-top-less-10{
+margin-top:-10px;
+}
+.margin-top-less-20{
+margin-top:-20px;
+}
+
 .recurrent-container{
 display:none;
 }
 .no-border-top{
 border-top:none;
 }
+.add-customer,
+.clear-customer{
+display:none;
+}
+.passenger-basic-info > .form-group > label[for=email_error],
+.passenger-basic-info > .form-group > label[for=name_error],
+.passenger-basic-info > .form-group > label[for=mobile_error]{
+color:red;
+margin-top:-10px;
+}
+

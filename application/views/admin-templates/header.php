@@ -14,6 +14,8 @@
         <link href="<?php echo base_url();?>css/morris/morris.css" rel="stylesheet" type="text/css" />
         <!-- jvectormap -->
         <link href="<?php echo base_url();?>css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+		<!-- iCheck for checkboxes and radio inputs -->
+        <link href="<?php echo base_url();?>css/iCheck/all.css" rel="stylesheet" type="text/css" />
         <!-- fullCalendar -->
         <link href="<?php echo base_url();?>css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" />
         <!-- Daterange picker -->
