@@ -37,7 +37,21 @@ class user_model extends CI_Model {
 
    	}
 
-	
+	public function getArray($tbl){
+		$qry=$this->db->get($tbl);
+		$count=$qry->num_rows();
+			$l= $qry->result_array();
+		
+			for($i=0;$i<$count;$i++){
+			$values[$l[$i]['id']]=$l[$i]['name'];
+			}
+			if(!empty($values)){
+			return $values;
+			}
+			else{
+			return false;
+			}
+	}
    
 	
    

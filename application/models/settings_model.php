@@ -1,0 +1,26 @@
+<?php 
+class Settings_model extends CI_Model {
+	
+	
+	public function addValues($tbl,$data){
+	$this->db->set('created', 'NOW()', FALSE);
+	$this->db->insert($tbl,$data);
+	return true;
+	}
+	public function getValues($id,$tbl){ 
+	$this->db->select('id,description,name');
+	$this->db->from($tbl);
+	 $this->db->where('id',$id );
+	return $this->db->get()->result_array();
+	
+	}
+	public function updateValues($tbl,$data){
+	$this->db->update($tbl,$data);
+	return true;
+	}
+	public function deleteValues($tbl,$data){
+	$this->db->delete($tbl,$data);
+	return true;
+	}
+}
+?>
