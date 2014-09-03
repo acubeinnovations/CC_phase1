@@ -1,23 +1,22 @@
-
-function TriggerClckAdd(){
-var trigger = $("#lstDropDown_A").attr("trigger");
+$(document).ready(function(){
+$('.settings-add').click(function(){
+var trigger = $(this).parent().prev().prev().find('#editbox').attr('trigger');alert(trigger);
 if(trigger=='true'){
-document.getElementById("settings-add-id").click();
+$(this).siblings().find(':submit').trigger('click');
 }
-}
+});
+$('.settings-edit').click(function(){
 
-function TriggerClckEdit(){
+$(this).siblings().find(':submit').trigger('click');
+});
+$('.settings-delete').click(function(){
+$(this).siblings().find(':submit').trigger('click');
+});
+});
 
-document.getElementById("settings-edit-id").click();
-
-}
 
 
-function TriggerClckDelete(){
 
-document.getElementById("settings-delete-id").click();
-
-}
 
 function Trim(strInput) {
     while (true) {
@@ -162,31 +161,34 @@ var mobile=$('#mobile').val();
 //trip_bookig page-js end
  
 	$('select').change(function(){ 
-		    $id=$('#lstDropDown_A').val();
+	 var edit=$('.edit').attr('for_edit');
+	  if(edit=='false'){
+		    $id=$(this).val();
 			$tbl=$(this).attr('tblname');
-		
-	$(this).attr('trigger',false);
+			$obj=$(this);
+	//$(this).attr('trigger',false);
+	  $(this).next().attr('trigger',false);
+	  $('.edit').attr('for_edit',true);
+	  
+	
 	  $.post(base_url+"/vehicle/getDescription",
 		  {
 			id:$id,
 			tbl:$tbl
 		  },function(data){
-		  var str=data;
-		  var values=str.split(" ",3);
-			$('#id').val(values[0]);
-			$('#description').val(values[1]);
-			$('#editbox').val(values[2]);
-		}
-	
-			); 
-		
-		$('#lstDropDown_A').hide();
-		$('#editbox').show();
-	
-	
-	
+		  
+				var values=data.split(" ",3);//alert($(this).parent().find('#id').attr('id'));
+				  $obj.parent().find('#id').val(values[0]);
+				  $obj.parent().find('#editbox').val(values[2]);
+				  $obj.parent().next().find('#description').val(values[1]);
+				
+				$obj.hide();
+				$obj.parent().find('#editbox').show();
+		});
+		}	
+			
 	});
-
+	
 	
 
 
