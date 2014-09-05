@@ -42,7 +42,7 @@ var base_url=window.location.origin;
 $('#pickupdatetimepicker').datetimepicker();
 $('#dropdatetimepicker').datetimepicker();
 $('#via').click(function(event){
-event.preventDefault();
+	event.preventDefault();
 $('.toggle-via').toggle();
 
 
@@ -54,13 +54,34 @@ $('.group-toggle').toggle();
 
 
 });
+$('.recurrent-radio-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
 
+
+})
 $('.recurrent-yes-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
 
-$('.recurrent-container').toggle();
+$('.recurrent-radio-container').toggle();
 
 
 });
+
+$('.recurrent-radio-container > .div-continues > .iradio_minimal > .iCheck-helper').on('click',function(){
+
+$('.recurrent-container-continues').show();
+ $('#reccurent_continues_pickupdatetimepicker').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+$('#reccurent_continues_dropdatetimepicker').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+
+$('.recurrent-container-alternatives').hide();
+});
+
+
+$('.recurrent-radio-container > .div-alternatives > .iradio_minimal > .iCheck-helper').on('click',function(){
+
+$('.recurrent-container-continues').hide();
+
+$('.recurrent-container-alternatives').show();
+});
+
 //for checking user in db
 $('#email,#mobile').on('keyup focus focusout click blur',function(){
 var email=$('#email').val();
@@ -158,6 +179,101 @@ var mobile=$('#mobile').val();
 	}
 
 	});
+
+$("#pickupcity,#pickuparea,#dropdownlocation,#dropdownarea,#viacity,#viaarea").on('keyup',function(){
+
+var pickupcity=$("#pickupcity").val();//alert(pickupcity);
+var pickuparea=$("#pickuparea").val();
+var viacity=$("#viacity").val();
+var viaarea=$("#viaarea").val();
+var dropdownlocation=$("#dropdownlocation").val();
+var dropdownarea=$("#dropdownarea").val();
+var origin='';
+var destination='';
+if(pickupcity!=''){
+pickupcity=pickupcity.replace(/\s/g,"");
+origin=pickupcity;
+
+}
+if(pickuparea!='' && pickupcity!=''){
+pickuparea=pickuparea.replace(/\s/g,"");
+origin=origin+'+'+pickuparea;
+
+}
+
+if(viacity!=''){
+viacity=viacity.replace(/\s/g,"");
+origin=origin+'|'+viacity;
+destination=viacity;
+}
+if(viaarea!='' && viacity!=''){
+viaarea=viaarea.replace(/\s/g,"");
+origin=origin+'+'+viaarea;
+destination=destination+'+'+viaarea;
+}
+
+if(dropdownlocation!=''){
+if(viacity!=''){
+destination=destination+'|';
+}
+dropdownlocation=dropdownlocation.replace(/\s/g,"");
+if(destination==''){
+destination=dropdownlocation;
+}else{
+destination=destination+dropdownlocation;
+}
+
+}
+if(dropdownarea!='' && dropdownlocation!=''){
+dropdownarea=dropdownarea.replace(/\s/g,"");
+destination=destination+'+'+dropdownarea;
+
+}
+if(viacity!=''){
+var via='YES';
+}else{
+var via='NO';
+}
+if(origin!='' && destination!=''){
+getDistance(origin,destination,via);
+}
+});
+
+
+function getDistance(origin,destination,via){
+var url='https://maps.googleapis.com/maps/api/distancematrix/json?origins='+origin+'&destinations='+destination+'&mode=driving&language=	en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
+
+$.post(base_url+'/trip_booking/get-distance',{
+	url:url,
+	via:via
+	},function(data){
+data=jQuery.parseJSON(data);
+if(data.No_Data=='false'){
+if(data.via=='NO'){
+$('.estimated-distance-of-journey').html(data.distance);
+$('.estimated-time-of-journey').html(data.duration);
+}else if(data.via=='YES'){
+first_duration=data.first_duration.replace(/\hour\b/g, 'h');
+first_duration=first_duration.replace(/\hours\b/g, 'h');
+first_duration=first_duration.replace(/\mins\b/g, 'm');
+second_duration=data.second_duration.replace(/\hours\b/g, 'h');
+second_duration=second_duration.replace(/\hour\b/g, 'h');
+second_duration=second_duration.replace(/\mins\b/g, 'm');
+var distance_estimation='<div class="via-distance-estimation">Pick up to Via Loc : '+data.first_distance+' Via to Drop Loc : '+data.second_distance+'</div>';
+var duration_estimation='<div class="via-duration-estimation">Pick up to Via Loc : '+first_duration+' Via to Drop Loc : '+second_duration+'</div>';
+
+$('.estimated-distance-of-journey').html(distance_estimation);
+$('.estimated-time-of-journey').html(duration_estimation);
+}
+}else{
+$('.estimated-distance-of-journey').html('');
+$('.estimated-time-of-journey').html('');
+}
+});
+
+
+
+}
 
 //trip_bookig page-js end
  

@@ -213,8 +213,10 @@ margin-top:-10px;
 margin-top:-20px;
 }
 
-.recurrent-container{
+.recurrent-container-continues,
+.recurrent-container-alternatives{
 display:none;
+margin:20px 0 0 0;
 }
 .no-border-top{
 border-top:none;
@@ -229,4 +231,15 @@ display:none;
 color:red;
 margin-top:-10px;
 }
+.wdith-30-percent{
+width:30%;
+}
+.recurrent-radio-container{
+margin:-12px 0 0px 0;
+display:none;
+}
+.div-continues,
+.div-alternatives{
 
+float:left;
+}

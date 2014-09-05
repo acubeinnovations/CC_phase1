@@ -93,7 +93,7 @@
 									<div class="toggle-via">
 										<div class="form-group">
 										<?php 
-										echo form_input(array('name'=>'vialocation','class'=>'form-control width-96-percent-and-margin-8','id'=>'vialocation','placeholder'=>'Via Location','value'=>''));
+										echo form_input(array('name'=>'viacity','class'=>'form-control width-96-percent-and-margin-8','id'=>'viacity','placeholder'=>'Via City','value'=>''));
 						
 										 ?>
 										</div>
@@ -112,7 +112,7 @@
 									</div>
 									<div class="form-group">
 									<?php 
-									echo form_input(array('name'=>'dropdownlocation','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlocation','placeholder'=>'Drop Down Location','value'=>''));
+									echo form_input(array('name'=>'dropdownlocation','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlocation','placeholder'=>'Drop Down City','value'=>''));
 						
 									 ?>
 									</div>
@@ -228,51 +228,82 @@
 									echo nbs(5).form_label('Yes');
 								?>
 						</div>
-						<div class="recurrent-container">
-							<div class="form-group">
-							<?php 
-							echo form_input(array('name'=>'pickupdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'pickupdatetimepicker','placeholder'=>'Pick up Date and time ','value'=>''));
-						
-							 ?>
-							</div>
-							<div class="form-group">
-							<?php 
-							echo form_input(array('name'=>'dropdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdatetimepicker','placeholder'=>'Drop Date and time ','value'=>''));
-						
-							 ?>
-							</div>
+						<div class="form-group float-right recurrent-radio-container">
+						<div class="div-continues">
+						<?php
+									echo nbs(1).form_radio(array('name' => 'recurrent','id' => 'continues-recurrent','value'=>'continues'));
+								
+								    echo nbs(5).form_label('Continues').nbs(5);
+									?></div> <div class="div-alternatives"><?php
+								    echo form_radio(array('name' => 'recurrent','id' => 'alternative-recurrent','value'=>'alternative'));
+								
+								echo nbs(5).form_label('Alternatives');
+								?>
 						</div>
+						</div>
+						<div class="recurrent-container-continues">
+							<div class="form-group">
+									
+									<?php 
+								
+									echo form_input(array('name'=>'reccurent_continues_pickupdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'reccurent_continues_pickupdatetimepicker','placeholder'=>'Pick up Date and time ','value'=>''));
+						
+									 ?>
+									
+								</div>
+								<div class="form-group">
+								<?php 
+								echo form_input(array('name'=>'reccurent_continues_dropdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'reccurent_continues_dropdatetimepicker','placeholder'=>'Drop Date and time ','value'=>''));
+						
+								 ?>
+								</div>
+							</div>
+							<div class="recurrent-container-alternatives">
+								<div class="form-group">
+								<?php 
+								echo form_input(array('name'=>'pickupdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'pickupdatetimepicker','placeholder'=>'Pick up Date and time ','value'=>''));
+						
+								 ?>
+								</div>
+								<div class="form-group">
+								<?php 
+								echo form_input(array('name'=>'dropdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdatetimepicker','placeholder'=>'Drop Date and time ','value'=>''));
+						
+								 ?>
+								</div>
+							</div>
+						
 					</fieldset>
 				</div>
 				<div class="booking-source">
 					<fieldset class="body-border">
 					<legend class="body-head">Rough Estimate</legend>
-						<div class="box no-border-top">
+						<div class="box no-border-top rough-estimate-body">
                               <div class="box-body no-padding">
                                     <table class="table table-striped">
                                         <tbody>
 		                                    <tr>
-		                                        <td>Time Of Journey</td>
+		                                        <td class="wdith-30-percent">Time Of Journey<span class="float-right"> : </span></td>
 		                                        <td><div class="estimated-time-of-journey"></div></td>
 		                                        
 		                                    </tr>
 		                                    <tr>
-		                                        <td>Distance</td>
+		                                        <td>Distance<span class="float-right"> : </span></td>
 		                                        <td><div class="estimated-distance-of-journey"></div></td>
 		                                        
 		                                    </tr>
 											<tr>
-		                                        <td>Charge</td>
+		                                        <td>Charge<span class="float-right"> : </span></td>
 		                                        <td><div class="charge-per-km"></div></td>
 		                                        
 		                                    </tr>
 											<tr>
-		                                        <td>Service Tax</td>
+		                                        <td>Service Tax<span class="float-right"> : </span></td>
 		                                        <td><div class="service-tax"></div></td>
 		                                        
 		                                    </tr>
 											<tr>
-		                                        <td>Total Amount</td>
+		                                        <td>Total Amount<span class="float-right"> : </span></td>
 		                                        <td><div class="estimated-total-amount"></div></td>
 		                                        
 		                                    </tr>
