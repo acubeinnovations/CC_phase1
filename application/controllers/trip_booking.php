@@ -14,6 +14,10 @@ class Trip_booking extends CI_Controller {
 			
 			$this->customer_check();
 				
+		}else if($param1=='get-distance') {
+			
+			$this->getDistance();
+				
 		}
 		
 	}else{
@@ -39,7 +43,42 @@ class Trip_booking extends CI_Controller {
 		}
 		
 		}
+		public function getDistance(){
+		if(isset($_REQUEST['url']) && $_REQUEST['via']=='NO') {
+		$target_url=$_REQUEST['url'];
+			$data=file_get_contents($target_url);
+			$decode = json_decode($data);//print_r($decode);
+			if(isset($decode->rows[0]->elements[0]->status) && $decode->rows[0]->elements[0]->status!='NOT_FOUND') {
+			$jsondata['distance']=$decode->rows[0]->elements[0]->distance->text;
+			$jsondata['duration']=$decode->rows[0]->elements[0]->duration->text;
+			$jsondata['via']='NO';
+			$jsondata['No_Data']='false';
+			echo json_encode($jsondata);
+			}
+		else{
+			$jsondata['No_Data']='true';
+			echo json_encode($jsondata);
+		}
+		}elseif(isset($_REQUEST['url']) && $_REQUEST['via']=='YES'){
+			$target_url=$_REQUEST['url'];
+			$data=file_get_contents($target_url);
+			$decode = json_decode($data);//print_r($decode);exit;
+			if(isset($decode->rows[0]->elements[0]->status) && $decode->rows[0]->elements[0]->status!='NOT_FOUND' && isset($decode->rows[0]->elements[1]->status) && $decode->rows[0]->elements[1]->status!='NOT_FOUND') {
+			$jsondata['first_distance']=$decode->rows[0]->elements[0]->distance->text;
+			$jsondata['first_duration']=$decode->rows[0]->elements[0]->duration->text;
+			$jsondata['second_distance']=$decode->rows[0]->elements[1]->distance->text;
+			$jsondata['second_duration']=$decode->rows[0]->elements[1]->duration->text;
+			$jsondata['via']='YES';
+			$jsondata['No_Data']='false';
+			echo json_encode($jsondata);
+		}else{
+			$jsondata['No_Data']='true';
+			echo json_encode($jsondata);
+		}
 
+		}
+		}
+		
 		public function session_check() {
 	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==FRONT_DESK)) {
 		return true;
