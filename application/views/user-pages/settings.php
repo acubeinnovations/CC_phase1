@@ -10,9 +10,25 @@
                 ?>
            </div>
        </div>
-       <?php    } ?>
-	  
-	  
+       <?php    } 
+	  if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_num_name') != ''||$this->session->userdata('Err_num_desc') != ''||$this->session->userdata('Err_name') != ''||$this->session->userdata('Err_desc') != '') { ?>
+	<div class="alert alert-danger alert-dismissable">
+                                        <i class="fa fa-ban"></i>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <b>Alert!</b><br><?php
+													echo $this->session->userdata('dbvalErr').br();
+													echo $this->session->userdata('Err_num_name').br();
+													echo $this->session->userdata('Err_num_desc').br();
+													echo $this->session->userdata('Err_name').br();
+													echo $this->session->userdata('Err_desc').br();
+													 $this->session->set_userdata(array('dbvalErr'=>''));
+													 $this->session->set_userdata(array('Err_num_name'=>''));
+													 $this->session->set_userdata(array('Err_num_desc'=>''));
+													 $this->session->set_userdata(array('Err_name'=>''));
+													 $this->session->set_userdata(array('Err_desc'=>''));
+										?>
+                                    </div> 
+							<?php    } ?>									
 <div class="settings-body">
 
 <table class="tbl-settings">

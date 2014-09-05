@@ -12,7 +12,7 @@ class Vehicle extends CI_Controller {
 	
 		if($this->session_check()==true) {
 	
-		$tbl=array('vehicle-ownership'=>'vehicle_ownership_types','vehicle-types'=>'vehicle_types','ac-types'=>'vehicle_ac_types','fuel-types'=>'vehicle_fuel_types','seating-capacity'=>'vehicle_seating_capacity','beacon-light-options '=>'vehicle_beacon_light_options ','vehicle-makes'=>'vehicle_makes','driver-bata-percentages '=>'vehicle_driver_bata_percentages ','permit-types'=>'vehicle_permit_types');
+		$tbl=array('vehicle-ownership'=>'vehicle_ownership_types','vehicle-types'=>'vehicle_types','ac-types'=>'vehicle_ac_types','fuel-types'=>'vehicle_fuel_types','seating-capacity'=>'vehicle_seating_capacity','beacon-light-options'=>'vehicle_beacon_light_options ','vehicle-makes'=>'vehicle_makes','driver-bata-percentages'=>'vehicle_driver_bata_percentages ','permit-types'=>'vehicle_permit_types');
 			if($param1=='getDescription') {
 			$this->getDescription();
 			}
@@ -40,77 +40,91 @@ class Vehicle extends CI_Controller {
 	public function add($tbl,$param1){
 	
 	if(isset($_REQUEST['select'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['add'])){ 
-			
+			$err=false;
 		    $data['name']=$this->input->post('select');
 			$data['description']=$this->input->post('description');
 			if($data['name']==''||$data['description']==''){
 			
 			$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
+			$err=true;
 			}
 			if(is_numeric($data['name'])){
 			$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
+			$err=true;
 			}
 			if(is_numeric($data['description'])){
 			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
+			$err=true;
 			}
 			if(preg_match('#[^a-zA-Z0-9]#', $data['name'])){
 			$this->session->set_userdata(array('Err_name'=>'Invalid Characters on name field!'));
+			$err=true;
 			}
 			if(preg_match('#[^a-zA-Z0-9]#', $data['description'])){
 			$this->session->set_userdata(array('Err_desc'=>'Invalid Characters on description field!'));
+			$err=true;
 			}
+			if($err==true){
+			redirect(base_url().'organization/front-desk/settings');
+			}
+			else{
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
 			
-	        $this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
-			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean|alpha_numeric');
-		if($this->form_validation->run()==False){
-        redirect(base_url().'organization/front-desk/settings');
-		}
-      else {
+	        
+        
+	
 		$result=$this->settings_model->addValues($tbl[$param1],$data);
 		if($result==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Details Added Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
 				    redirect(base_url().'organization/front-desk/settings');
 						}
-			}
+			
+							}
 							}
 	}
 	public function edit($tbl,$param1){
 	if(isset($_REQUEST['select_text'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['edit'])){ 
-			
+			$err=false;
 		    $data['name']=$this->input->post('select_text');
 			$data['description']=$this->input->post('description');
 			if($data['name']==''||$data['description']==''){
 			
 			$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
+			$err=true;
 			}
 			if(is_numeric($data['name'])){
 			$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
+			$err=true;
 			}
 			if(is_numeric($data['description'])){
 			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
+			$err=true;
 			}
 			if(preg_match('#[^a-zA-Z0-9]#', $data['name'])){
 			$this->session->set_userdata(array('Err_name'=>'Invalid Characters on name field!'));
+			$err=true;
 			}
 			if(preg_match('#[^a-zA-Z0-9]#', $data['description'])){
 			$this->session->set_userdata(array('Err_desc'=>'Invalid Characters on description field!'));
+			$err=true;}
+			if($err==true){
+			redirect(base_url().'user/settings');
 			}
+			else{
 			$id=$this->input->post('id_val');
 	        $this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
 			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean|alpha_numeric');
-		if($this->form_validation->run()==False){
-        redirect(base_url().'user/settings');
-		}
-      else {
+		
+      
 		$result=$this->settings_model->updateValues($tbl[$param1],$data,$id);
 		if($result==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Details Updated Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
 				    redirect(base_url().'user/settings');
 						}
+			
 			}
 							}
 	
