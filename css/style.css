@@ -243,3 +243,24 @@ display:none;
 
 float:left;
 }
+.width-80-percent-and-margin-8{
+width:80%;
+margin:8px;
+}
+.float-left{
+
+float:left;
+}
+
+.alternative-table{
+width:100%;
+}
+.width-80-percent{
+width:80%;
+}
+.margin-15{
+margin:15px;
+}
+.margin-8{
+margin:8px;
+}

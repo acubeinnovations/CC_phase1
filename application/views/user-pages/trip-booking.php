@@ -259,20 +259,33 @@
 								</div>
 							</div>
 							<div class="recurrent-container-alternatives">
-								<div class="form-group">
-								<?php 
-								echo form_input(array('name'=>'pickupdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'pickupdatetimepicker','placeholder'=>'Pick up Date and time ','value'=>''));
+								<table class="alternative-table">
+									<tr>
+										<td class="width-80-percent">
+											<div class="form-group">
+											<?php 
+											echo form_input(array('name'=>'reccurent_alternatives_pickupdatetimepicker[]','class'=>'form-control  margin-8','id'=>'reccurent_alternatives_pickupdatetimepicker','placeholder'=>'Pick up Date and time ','value'=>''));
 						
-								 ?>
-								</div>
-								<div class="form-group">
-								<?php 
-								echo form_input(array('name'=>'dropdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdatetimepicker','placeholder'=>'Drop Date and time ','value'=>''));
+											 ?>
+											</div>
+								
+											<div class="form-group">
+											<?php 
+											echo form_input(array('name'=>'reccurent_alternatives_dropdatetimepicker[]','class'=>'form-control margin-8','id'=>'reccurent_alternatives_dropdatetimepicker','placeholder'=>'Drop Date and time ','value'=>''));
 						
-								 ?>
+											 ?>
+											</div>
+										</td>
+										<td>
+											<div class="float-left margin-15"><button class="btn btn-info btn-lg add-reccurent-dates" count="0">ADD</button></div>
+										</td>
+									</tr>
+								</table>
+								<div class="new-reccurent-date-textbox">
+								
 								</div>
 							</div>
-						
+							
 					</fieldset>
 				</div>
 				<div class="booking-source">

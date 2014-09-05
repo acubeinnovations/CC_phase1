@@ -79,6 +79,17 @@ $('.recurrent-radio-container > .div-alternatives > .iradio_minimal > .iCheck-he
 $('.recurrent-container-continues').hide();
 
 $('.recurrent-container-alternatives').show();
+$('#reccurent_alternatives_pickupdatetimepicker').datetimepicker();
+$('#reccurent_alternatives_dropdatetimepicker').datetimepicker();
+});
+
+$('.add-reccurent-dates').click(function(){
+var count = $('.add-reccurent-dates').attr('count');
+var new_content='<div class="form-group"><input name="reccurent_alternatives_pickupdatetimepicker[]" value="" class="form-control width-80-percent-and-margin-8" id="reccurent_alternatives_pickupdatetimepicker'+count+'" placeholder="Pick up Date and time " type="text"></div><div class="form-group"><input name="reccurent_alternatives_dropdatetimepicker[]" value="" class="form-control width-80-percent-and-margin-8" id="reccurent_alternatives_dropdatetimepicker'+count+'" placeholder="Drop Date and time " type="text"></div>';
+$('.new-reccurent-date-textbox').append(new_content);
+$('#reccurent_alternatives_pickupdatetimepicker'+count).datetimepicker();
+$('#reccurent_alternatives_dropdatetimepicker'+count).datetimepicker();
+$('.add-reccurent-dates').attr('count',Number(count)+1);
 });
 
 //for checking user in db
