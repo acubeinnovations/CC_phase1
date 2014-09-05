@@ -167,7 +167,7 @@ var mobile=$('#mobile').val();
 			$tbl=$(this).attr('tblname');
 			$obj=$(this);
 	//$(this).attr('trigger',false);
-	alert($(this).attr('trigger'));
+	
 	  $(this).next().attr('trigger',false);
 	  $('.edit').attr('for_edit',true);
 	  
