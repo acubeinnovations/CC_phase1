@@ -16,6 +16,7 @@ class Settings_model extends CI_Model {
 	}
 	public function updateValues($tbl,$data,$id){
 	 $this->db->where('id',$id );
+	 $this->db->set('updated', 'NOW()', FALSE);
 	$this->db->update($tbl,$data);
 	return true;
 	}

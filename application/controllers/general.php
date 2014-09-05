@@ -1,5 +1,5 @@
 <?php 
-class Vehicle extends CI_Controller {
+class General extends CI_Controller {
 	public function __construct()
 		{
 		parent::__construct();
@@ -12,7 +12,7 @@ class Vehicle extends CI_Controller {
 	
 		if($this->session_check()==true) {
 	
-		$tbl=array('vehicle-ownership'=>'vehicle_ownership_types','vehicle-types'=>'vehicle_types','ac-types'=>'vehicle_ac_types','fuel-types'=>'vehicle_fuel_types','seating-capacity'=>'vehicle_seating_capacity','beacon-light-options '=>'vehicle_beacon_light_options ','vehicle-makes'=>'vehicle_makes','driver-bata-percentages '=>'vehicle_driver_bata_percentages ','permit-types'=>'vehicle_permit_types');
+		$tbl=array('languages'=>'languages','language-proficiency'=>'language_proficiency','driver-type'=>'driver_type','payment-type'=>'payment_type','customer-type'=>'customer_types','customer-groups'=>'customer-group','registration-types'=>'customer_registration_types ','marital-statuses'=>'marital_statuses','bank-account-types'=>'bank_account_types','id-proof-types'=>'id_proof_types');
 			if($param1=='getDescription') {
 			$this->getDescription();
 			}
@@ -43,36 +43,20 @@ class Vehicle extends CI_Controller {
 			
 		    $data['name']=$this->input->post('select');
 			$data['description']=$this->input->post('description');
-			if($data['name']==''||$data['description']==''){
-			
-			$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
-			}
-			if(is_numeric($data['name'])){
-			$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
-			}
-			if(is_numeric($data['description'])){
-			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
-			}
-			if(preg_match('#[^a-zA-Z0-9]#', $data['name'])){
-			$this->session->set_userdata(array('Err_name'=>'Invalid Characters on name field!'));
-			}
-			if(preg_match('#[^a-zA-Z0-9]#', $data['description'])){
-			$this->session->set_userdata(array('Err_desc'=>'Invalid Characters on description field!'));
-			}
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
 			
 	        $this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
 			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean|alpha_numeric');
 		if($this->form_validation->run()==False){
-        redirect(base_url().'organization/front-desk/settings');
+        redirect(base_url().'user/settings');
 		}
       else {
 		$result=$this->settings_model->addValues($tbl[$param1],$data);
 		if($result==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Details Added Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'organization/front-desk/settings');
+				    redirect(base_url().'user/settings');
 						}
 			}
 							}
@@ -82,22 +66,6 @@ class Vehicle extends CI_Controller {
 			
 		    $data['name']=$this->input->post('select_text');
 			$data['description']=$this->input->post('description');
-			if($data['name']==''||$data['description']==''){
-			
-			$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
-			}
-			if(is_numeric($data['name'])){
-			$this->session->set_userdata(array('Err_num_name'=>'Invalid input on name field!'));
-			}
-			if(is_numeric($data['description'])){
-			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
-			}
-			if(preg_match('#[^a-zA-Z0-9]#', $data['name'])){
-			$this->session->set_userdata(array('Err_name'=>'Invalid Characters on name field!'));
-			}
-			if(preg_match('#[^a-zA-Z0-9]#', $data['description'])){
-			$this->session->set_userdata(array('Err_desc'=>'Invalid Characters on description field!'));
-			}
 			$id=$this->input->post('id_val');
 	        $this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
 			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean|alpha_numeric');

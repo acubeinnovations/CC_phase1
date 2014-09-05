@@ -1,6 +1,6 @@
 $(document).ready(function(){
 $('.settings-add').click(function(){
-var trigger = $(this).parent().prev().prev().find('#editbox').attr('trigger');alert(trigger);
+var trigger = $(this).parent().prev().prev().find('#editbox').attr('trigger');
 if(trigger=='true'){
 $(this).siblings().find(':submit').trigger('click');
 }
@@ -167,6 +167,7 @@ var mobile=$('#mobile').val();
 			$tbl=$(this).attr('tblname');
 			$obj=$(this);
 	//$(this).attr('trigger',false);
+	alert($(this).attr('trigger'));
 	  $(this).next().attr('trigger',false);
 	  $('.edit').attr('for_edit',true);
 	  
