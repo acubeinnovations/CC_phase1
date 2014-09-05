@@ -14,12 +14,15 @@ class Settings_model extends CI_Model {
 	return $this->db->get()->result_array();
 	
 	}
-	public function updateValues($tbl,$data){
+	public function updateValues($tbl,$data,$id){
+	 $this->db->where('id',$id );
+	 $this->db->set('updated', 'NOW()', FALSE);
 	$this->db->update($tbl,$data);
 	return true;
 	}
-	public function deleteValues($tbl,$data){
-	$this->db->delete($tbl,$data);
+	public function deleteValues($tbl,$id){
+	 $this->db->where('id',$id );
+	$this->db->delete($tbl);
 	return true;
 	}
 }

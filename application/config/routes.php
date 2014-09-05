@@ -47,6 +47,8 @@ $route['organization/(:any)'] = 'organization/$0';
 $route['syslogin'] = 'sys_login/index';
 $route['logout'] = 'logout';
 $route['vehicle/(:any)'] = 'vehicle/$0';
+$route['trip/(:any)'] = 'trip/$0';
+$route['general/(:any)'] = 'general/$0';
 $route['trip_booking/(:any)'] = 'trip_booking/$0';
 
 /* End of file routes.php */

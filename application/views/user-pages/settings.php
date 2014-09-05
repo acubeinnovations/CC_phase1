@@ -1,5 +1,6 @@
 <?php    if($this->session->userdata('dbSuccess') != '') { ?>
         <div class="success-message">
+			
             <div class="alert alert-success alert-dismissable">
                 <i class="fa fa-check"></i>
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -11,11 +12,11 @@
        </div>
        <?php    } ?>
 	  
-	   <script type="text/javascript">
-            
-    </script>
+	  
 <div class="settings-body">
+
 <table class="tbl-settings">
+<div class="edit" for_edit='false'></div>
 <tr>
 <td>
 <fieldset class="body-border">
@@ -29,17 +30,18 @@
 	$class="form-control";
 	$tbl="vehicle_ownership_types";
 	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_ownership_types,$class,$tbl)?>
-	<?php echo form_input(array('name'=>'select','id'=>'editbox','class'=>'form-control','style'=>'display:none'));?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
 	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'))?></td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?>
-	<?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?>
-	<?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
-    <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	>
+	</td>
+    <td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+    <?php echo form_error('select_text', '<p class="text-red">', '</p>'); ?>
+	<?php echo form_error('select', '<p class="text-red">', '</p>'); ?>
+	
 	<?php echo form_close();?>
 
 </tr>
@@ -50,49 +52,59 @@
 	<?php echo form_label('Vehicle Types');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$vehicle_types,$class)?></td>
+	$tbl="vehicle_types";
+	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_types,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
-
 <tr>
 <td><div class="form-group">
 	<?php echo form_open(base_url()."vehicle/ac-types");?>
 	<?php echo form_label('AC Types');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$vehicle_ac_types,$class)?></td>
+	$tbl="vehicle_ac_types";
+	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_ac_types,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
-
 <tr>
 <td><div class="form-group">
 	<?php echo form_open(base_url()."vehicle/fuel-types");?>
 	<?php echo form_label('Fuel Types');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$vehicle_fuel_types,$class)?></td>
+	$tbl="vehicle_fuel_types";
+	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_fuel_types,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
@@ -104,13 +116,17 @@
 	<?php echo form_label('Seating Capacity');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$vehicle_seating_capacity,$class)?></td>
+	$tbl="vehicle_seating_capacity";
+	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_seating_capacity,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
@@ -122,13 +138,17 @@
 	<?php echo form_label('Beacon Light Options');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$vehicle_beacon_light_options,$class)?></td>
+	$tbl="vehicle_beacon_light_options";
+	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_beacon_light_options,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
@@ -140,13 +160,17 @@
 	<?php echo form_label('Vehicle Makes');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$vehicle_makes,$class)?></td>
+	$tbl="vehicle_makes";
+	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_makes,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
@@ -155,16 +179,20 @@
 <tr>
 <td><div class="form-group">
 	<?php echo form_open(base_url()."vehicle/driver-bata-percentages");?>
-	<?php echo form_label('Driver Bata Percentages');echo nbs(5);?></td>
+	<?php echo form_label('Driver Bata Percentages');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$vehicle_driver_bata_percentages,$class)?></td>
+	$tbl="vehicle_driver_bata_percentages";
+	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_driver_bata_percentages,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
@@ -176,17 +204,22 @@
 	<?php echo form_label('Permit Types');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$vehicle_permit_types,$class)?></td>
+	$tbl="vehicle_permit_types";
+	echo $this->form_functions->populate_editable_dropdown('select',$vehicle_permit_types,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
+
 
 </table>
 </fieldset>
@@ -196,75 +229,90 @@
  <table class='tbl'>
  <tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."trip/vehicle-ownership");?>
+	<?php echo form_open(base_url()."trip/trip-models");?>
 	<?php echo form_label('Trip Models');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$trip_models,$class)?></td>
+	$tbl="trip_models";
+	echo $this->form_functions->populate_editable_dropdown('select',$trip_models,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
-
-<tr>
+ <tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."vehicle/vehicle-ownership");?>
+	<?php echo form_open(base_url()."trip/trip-statuses");?>
 	<?php echo form_label('Trip Statuses');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$trip_statuses,$class)?></td>
+	$tbl="trip_statuses";
+	echo $this->form_functions->populate_editable_dropdown('select',$trip_statuses,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
-
-<tr>
+ <tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."vehicle/vehicle-ownership");?>
-	<?php echo form_label('Booking Sources  ');echo nbs(5);?></td>
+	<?php echo form_open(base_url()."trip/booking-sources");?>
+	<?php echo form_label('Booking Sources');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$booking_sources,$class)?></td>
+	$tbl="booking_sources";
+	echo $this->form_functions->populate_editable_dropdown('select',$booking_sources,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
 
-<tr>
+ <tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."vehicle/vehicle-ownership");?>
+	<?php echo form_open(base_url()."trip/trip-expense");?>
 	<?php echo form_label('Trip Expense');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$trip_expense_type,$class)?></td>
+	$tbl="trip_expense_type";
+	echo $this->form_functions->populate_editable_dropdown('select',$trip_expense_type,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
+
  </table>
 </fieldset>
 </td>
@@ -274,177 +322,219 @@
 <fieldset class="body-border">
 <legend class="body-head">General</legend>
  <table class="tbl">
- <tr>
+  <tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."general/vehicle-ownership");?>
-	<?php echo form_label('Languages  ');?></td>
+	<?php echo form_open(base_url()."general/languages");?>
+	<?php echo form_label('Languages');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$languages,$class)?></td>
+	$tbl="languages";
+	echo $this->form_functions->populate_editable_dropdown('select',$languages,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
-
- <tr>
+  <tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."general/vehicle-ownership");?>
+	<?php echo form_open(base_url()."general/language-proficiency");?>
 	<?php echo form_label('Language Proficiency');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$language_proficiency,$class)?></td>
+	$tbl="language_proficiency";
+	echo $this->form_functions->populate_editable_dropdown('select',$language_proficiency,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
-</tr>
- <tr>
+</tr> 
+
+   <tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."general/vehicle-ownership");?>
-	<?php echo form_label('Driver Type ');?></td>
+	<?php echo form_open(base_url()."general/driver-type");?>
+	<?php echo form_label('Driver Type');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$driver_type,$class)?></td>
+	$tbl="driver_type";
+	echo $this->form_functions->populate_editable_dropdown('select',$driver_type,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
- <tr>
+   <tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."general/vehicle-ownership");?>
-	<?php echo form_label('Payment Type ');?></td>
+	<?php echo form_open(base_url()."general/payment-type");?>
+	<?php echo form_label('Payment Type');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$payment_type,$class)?></td>
+	$tbl="payment_type";
+	echo $this->form_functions->populate_editable_dropdown('select',$payment_type,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
- <tr>
+ </tr>
+   <tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."general/vehicle-ownership");?>
-	<?php echo form_label('Customer Types  ');?></td>
+	<?php echo form_open(base_url()."general/customer-type");?>
+	<?php echo form_label('Customer Types');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$customer_types,$class)?></td>
+	$tbl="customer_types";
+	echo $this->form_functions->populate_editable_dropdown('select',$customer_types,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
- <tr>
+<tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."general/vehicle-ownership");?>
+	<?php echo form_open(base_url()."general/customer-groups");?>
 	<?php echo form_label('Customer Group');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$option_array='',$class)?></td>
+	$tbl="customer_groups";
+	echo $this->form_functions->populate_editable_dropdown('select',$customer_groups,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
- <tr>
+<tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."general/vehicle-ownership");?>
-	<?php echo form_label('Customer Registration Types');echo nbs(5);?></td>
+	<?php echo form_open(base_url()."general/registration-types");?>
+	<?php echo form_label('Customer Registration Types');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$customer_registration_types,$class)?></td>
+	$tbl="customer_registration_types";
+	echo $this->form_functions->populate_editable_dropdown('select',$customer_registration_types,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
- <tr>
+<tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."general/vehicle-ownership");?>
-	<?php echo form_label('Marital Statuses  ');?></td>
+	<?php echo form_open(base_url()."general/marital-statuses");?>
+	<?php echo form_label('Marital Statuses');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$marital_statuses,$class)?></td>
+	$tbl="marital_statuses";
+	echo $this->form_functions->populate_editable_dropdown('select',$marital_statuses,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
- <tr>
+<tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."general/vehicle-ownership");?>
+	<?php echo form_open(base_url()."general/bank-account-types");?>
 	<?php echo form_label('Bank Account Types');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$bank_account_types,$class)?></td>
+	$tbl="bank_account_types";
+	echo $this->form_functions->populate_editable_dropdown('select',$bank_account_types,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
- <tr>
+<tr>
 <td><div class="form-group">
-	<?php echo form_open(base_url()."general/vehicle-ownership");?>
-	<?php echo form_label('Id Proof ');?></td>
+	<?php echo form_open(base_url()."general/id-proof-types");?>
+	<?php echo form_label('Id Proof');?></td>
 <td><?php  
 	$class="form-control";
-	echo $this->form_functions->populate_editable_dropdown('name',$id_proof_types,$class)?></td>
+	$tbl="id_proof_types";
+	echo $this->form_functions->populate_editable_dropdown('select',$id_proof_types,$class,$tbl)?>
+	<?php echo form_input(array('name'=>'select_text','id'=>'editbox','class'=>'form-control','style'=>'display:none','trigger'=>'true'));?>
+	<?php echo form_input(array('name'=>'id_val','id'=>'id','style'=>'display:none'));?>
+	</td>
 <td><?php echo form_input(array('name'=>'description','class'=>'form-control','id'=>'description','placeholder'=>'Description','value'=>'')); ?></td>
 
-	<td><div  class="settings-add" onclick="TriggerClckAdd();"><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-edit" onclick="TriggerClckEdit();"><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div></td>
-    <td><div  class="settings-delete" onclick="TriggerClckDelete();"><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me">
-	<div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
+	<td><div  class="settings-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=settings-add-id","class=btn");?></div
+	></td>
+<td><div  class="settings-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=settings-edit-id","class=btn");?></div></td>
+    <td><div  class="settings-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=settings-delete-id","class=btn");?></div></td>
     <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
 	<?php echo form_close();?>
 
 </tr>
+ 
 <tr><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td></td><td></td><td></td><td></td><td></td></tr>
