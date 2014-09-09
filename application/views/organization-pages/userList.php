@@ -59,7 +59,7 @@
 							<span class="label label-danger"> <?php echo $user_status[$row['user_status_id']];?></span>
 						<?php } ?>
 						</td>	
-						<td><?php echo anchor(base_url().'organization/admin/front-desk/'.$row['username'],'Update','class="btn btn-primary"').nbs(3).anchor(base_url().'organization/admin/front-desk/'.$row['username'].'/password-reset','Change Password','class="btn btn-primary"'); ?></td>
+						<td><?php echo anchor(base_url().'organization/admin/front-desk/'.$row['username'],'Edit','class="btn btn-primary"').nbs(3).anchor(base_url().'organization/admin/front-desk/'.$row['username'].'/password-reset','Change Password','class="btn btn-primary"'); ?></td>
 					</tr>
 					<?php endforeach;
 					?>
