@@ -1,4 +1,5 @@
-<?php class Form_functions{
+<?php 
+class Form_functions{
 function populate_dropdown($name = '', $options = array(), $selected = array(),$class='',$msg='select'){
 $CI = & get_instance();
 $form = '<select name="'.$name.'" class="'.$class.'"/>';
@@ -47,7 +48,16 @@ foreach ($options as $key => $val)
 		return $form;
 }
 
-
+function form_error_session($field = '', $container_open ='', $container_close=''){
+		$CI = & get_instance();
+		if(isset($field) && $field!=''){
+		$form_error_session=$container_open.$CI->session->userdata($field).$container_close;
+		$CI->session->set_userdata($field,'');
+		return $form_error_session;
+		}else{
+		return '';
+		}
+}
 
 }
 ?>

@@ -1,5 +1,6 @@
 <div class="trip-booking-body">
 	<div class="first-column-trip-booking">
+		<?php echo form_open(base_url().'trip-booking/book-trip');?>
 		<fieldset class="body-border">
 		<legend class="body-head">Trip Booking</legend>
 			<div class="inner-first-column-trip-booking div-with-50-percent-width-with-margin-10">
@@ -8,8 +9,9 @@
 					<legend class="body-head">Booking Source</legend>
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						echo $this->form_functions->populate_dropdown('booking_sources',$booking_sources='',$selected='',$class,$msg="Select Source");
+						echo $this->form_functions->populate_dropdown('booking_sources',$booking_sources,$selected='',$class,$msg="Select Source");
 						echo form_input(array('name'=>'source','class'=>'form-control row-source-50-percent-width-with-margin-8','id'=>'source','placeholder'=>'Source','value'=>'')); ?>
+						<?php echo $this->form_functions->form_error_session('booking_sources', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('source', '<p class="text-red">', '</p>'); ?>
 						</div>
 					</fieldset>
 				</div>
@@ -61,6 +63,7 @@
 							<td>
 								<div class="group-toggle div-with-90-percent-width-and-marigin-5">
 										<?php echo $this->form_functions->populate_dropdown('customer_groups',$customer_groups,$selected='',$class ='groups form-control',$msg="Select Groups"); ?>
+										<?php echo $this->form_functions->form_error_session('customer_groups', '<p class="text-red">', '</p>');?>
 								</div>
 							
 							</td>
@@ -72,12 +75,15 @@
 										<?php 
 										echo form_input(array('name'=>'guestname','class'=>'form-control','id'=>'guestname','placeholder'=>'Guest','value'=>''));
 										 ?>
+										<?php echo $this->form_functions->form_error_session('guestname', '<p class="text-red">', '</p>');?>
 										</div>
 										<div class="form-group margin-top-less-10">
 										<?php 
 										echo form_input(array('name'=>'guestemail','class'=>'form-control col-1-textbox-with-50-percent-width-and-float-left','id'=>'guestemail','placeholder'=>'Email','value'=>''));
 										echo form_input(array('name'=>'guestmobile','class'=>'form-control col-2-textbox-with-50-percent-width-and-float-left','id'=>'guestmobile','placeholder'=>'Mobile','value'=>''));
-										 ?>
+										 echo $this->form_functions->form_error_session('guestemail', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('guestmobile', '<p class="text-red">', '</p>');
+										?>
+										
 									</div>
 								</div>
 							</td>
@@ -99,13 +105,14 @@
 										<?php $class="form-control row-source-50-percent-width-with-margin-8";
 										 echo $this->form_functions->populate_dropdown('trip_models',$trip_models,$selected='',$class,$msg="Select Type"); 
 										echo form_input(array('name'=>'no_of_passengers','class'=>'form-control row-source-50-percent-width-with-margin-8','id'=>'no_of_passengers','placeholder'=>'No of passengers','value'=>'')).br(2);?>
+									<?php echo $this->form_functions->form_error_session('trip_models', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('no_of_passengers', '<p class="text-red">', '</p>');?>
 									</div>
 									<div class="form-group">
 								
                                         <div class="input-group-btn ">
                                             <?php 
 									echo form_input(array('name'=>'pickupcity','class'=>'form-control width-96-percent-and-margin-8 dropdown-toggle','id'=>'pickupcity','placeholder'=>'Pick up City','value'=>''));
-						
+									echo $this->form_functions->form_error_session('pickupcity', '<p class="text-red">', '</p>');
 									 ?>
                                             <ul class="dropdown-menu dropdown-menu-on-key-press autofill-pickupcity">
                                                 
@@ -119,13 +126,13 @@
 									<div class="form-group">
 									<?php 
 									echo form_input(array('name'=>'pickuparea','class'=>'form-control width-96-percent-and-margin-8','id'=>'pickuparea','placeholder'=>'Pick up Area','value'=>''));
-						
+										echo $this->form_functions->form_error_session('pickuparea', '<p class="text-red">', '</p>');
 									 ?>
 									</div>
 									<div class="form-group">
 									<?php 
 									echo form_input(array('name'=>'pickuplandmark','class'=>'form-control width-96-percent-and-margin-8','id'=>'pickuplandmark','placeholder'=>'Pickup Landmark','value'=>''));
-							
+									echo $this->form_functions->form_error_session('pickuplandmark', '<p class="text-red">', '</p>');
 									 ?>
 									</div>
 									<div class="toggle-via">
@@ -133,7 +140,7 @@
 											  <div class="input-group-btn ">
 										<?php 
 										echo form_input(array('name'=>'viacity','class'=>'form-control width-96-percent-and-margin-8','id'=>'viacity','placeholder'=>'Via City','value'=>''));
-						
+										echo $this->form_functions->form_error_session('viacity', '<p class="text-red">', '</p>');
 										 ?>
 												 <ul class="dropdown-menu dropdown-menu-on-key-press autofill-viacity">
                                                 
@@ -143,13 +150,13 @@
 										<div class="form-group">
 										<?php 
 										echo form_input(array('name'=>'viaarea','class'=>'form-control width-96-percent-and-margin-8' ,'id'=>'viaarea','placeholder'=>'Via Area','value'=>''));
-						
+										echo $this->form_functions->form_error_session('viaarea', '<p class="text-red">', '</p>');
 										 ?>
 										</div>
 										<div class="form-group">
 										<?php 
 										echo form_input(array('name'=>'vialandmark','class'=>'form-control width-96-percent-and-margin-8','id'=>'vialandmark','placeholder'=>'Via Landmark','value'=>''));
-						
+										echo $this->form_functions->form_error_session('vialandmark', '<p class="text-red">', '</p>');
 										 ?>
 										</div>
 									</div>
@@ -157,7 +164,7 @@
 										  <div class="input-group-btn ">
 									<?php 
 									echo form_input(array('name'=>'dropdownlocation','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlocation','placeholder'=>'Drop Down City','value'=>''));
-						
+									echo $this->form_functions->form_error_session('dropdownlocation', '<p class="text-red">', '</p>');
 									 ?>
 											 <ul class="dropdown-menu dropdown-menu-on-key-press autofill-dropdownlocation">
                                                 
@@ -167,25 +174,25 @@
 									<div class="form-group">
 									<?php 
 									echo form_input(array('name'=>'dropdownarea','class'=>'form-control width-96-percent-and-margin-8' ,'id'=>'dropdownarea','placeholder'=>'Drop Down Area','value'=>''));
-						
+										echo $this->form_functions->form_error_session('dropdownarea', '<p class="text-red">', '</p>');
 									 ?>
 									</div>
 									<div class="form-group">
 									<?php 
 									echo form_input(array('name'=>'dropdownlandmark','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlandmark','placeholder'=>'Drop Down Landmark','value'=>''));
-						
+										echo $this->form_functions->form_error_session('dropdownlandmark', '<p class="text-red">', '</p>');
 									 ?>
 									</div>
 									<div class="form-group">
 									<?php 
 									echo form_input(array('name'=>'pickupdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'pickupdatetimepicker','placeholder'=>'Pick up Date and time ','value'=>''));
-						
+										echo $this->form_functions->form_error_session('pickupdatetimepicker', '<p class="text-red">', '</p>');
 									 ?>
 									</div>
 									<div class="form-group">
 									<?php 
 									echo form_input(array('name'=>'dropdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdatetimepicker','placeholder'=>'Drop Date and time ','value'=>''));
-						
+									echo $this->form_functions->form_error_session('dropdatetimepicker', '<p class="text-red">', '</p>');
 									 ?>
 									</div>
 									</td>
@@ -206,6 +213,7 @@
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
 						echo $this->form_functions->populate_dropdown('vehicle_types',$vehicle_types,$selected='',$class,$msg="Select Type");
 						echo $this->form_functions->populate_dropdown('vehicle_ac_types',$vehicle_ac_types,$selected='',$class,$msg="Select AC/Non AC");
+						echo $this->form_functions->form_error_session('vehicle_types', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('vehicle_ac_types', '<p class="text-red">', '</p>');						
 						echo br(2);
 						 ?>
 						</div>
@@ -254,6 +262,7 @@
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
 						echo $this->form_functions->populate_dropdown('vehicle_seating_capacity',$vehicle_seating_capacity,$selected='',$class,$msg="Select Seats");
 						echo $this->form_functions->populate_dropdown('languages',$languages,$selected='',$class,$msg="Select Languages");
+						echo $this->form_functions->form_error_session('vehicle_seating_capacity', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('languages', '<p class="text-red">', '</p>');
 						echo br(2);
 						 ?>
 						</div>
@@ -266,8 +275,8 @@
 						</div>
 					</fieldset>
 				</div>
-				<div class="booking-source">
-					<fieldset class="body-border">
+				<div class="reccurent-container" slider='0'>
+					<fieldset class="body-border ">
 					<legend class="body-head">Recurrent</legend>
 						<div class="form-group float-right recurrent-yes-container">
 								<?php
@@ -283,7 +292,7 @@
 								
 								    echo nbs(5).form_label('Continues').nbs(5);
 									?></div> <div class="div-alternatives"><?php
-								    echo form_radio(array('name' => 'recurrent','id' => 'alternative-recurrent','value'=>'alternative'));
+								    echo form_radio(array('name' => 'recurrent','id' => 'alternative-recurrent','value'=>'alternatives'));
 								
 								echo nbs(5).form_label('Alternatives');
 								?>
@@ -295,14 +304,14 @@
 									<?php 
 								
 									echo form_input(array('name'=>'reccurent_continues_pickupdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'reccurent_continues_pickupdatetimepicker','placeholder'=>'Pick up Date and time ','value'=>''));
-						
+									echo $this->form_functions->form_error_session('reccurent_continues_pickupdatetimepicker', '<p class="text-red">', '</p>');
 									 ?>
 									
 								</div>
 								<div class="form-group">
 								<?php 
 								echo form_input(array('name'=>'reccurent_continues_dropdatetimepicker','class'=>'form-control width-96-percent-and-margin-8','id'=>'reccurent_continues_dropdatetimepicker','placeholder'=>'Drop Date and time ','value'=>''));
-						
+								echo $this->form_functions->form_error_session('reccurent_continues_dropdatetimepicker', '<p class="text-red">', '</p>');
 								 ?>
 								</div>
 							</div>
@@ -313,23 +322,23 @@
 											<div class="form-group">
 											<?php 
 											echo form_input(array('name'=>'reccurent_alternatives_pickupdatetimepicker[]','class'=>'form-control  margin-8','id'=>'reccurent_alternatives_pickupdatetimepicker','placeholder'=>'Pick up Date and time ','value'=>''));
-						
+											echo $this->form_functions->form_error_session('reccurent_alternatives_pickupdatetimepicker[]', '<p class="text-red">', '</p>');
 											 ?>
 											</div>
 								
 											<div class="form-group">
 											<?php 
 											echo form_input(array('name'=>'reccurent_alternatives_dropdatetimepicker[]','class'=>'form-control margin-8','id'=>'reccurent_alternatives_dropdatetimepicker','placeholder'=>'Drop Date and time ','value'=>''));
-						
+											echo $this->form_functions->form_error_session('reccurent_alternatives_dropdatetimepicker[]', '<p class="text-red">', '</p>');
 											 ?>
 											</div>
 										</td>
 										<td>
-											<div class="float-left margin-15"><button class="btn btn-info btn-lg add-reccurent-dates" count="0">ADD</button></div>
+											<div class="float-left margin-15"><a class="btn btn-info btn-lg add-reccurent-dates" count="0">ADD</a></div>
 										</td>
 									</tr>
 								</table>
-								<div class="new-reccurent-date-textbox">
+								<div class="new-reccurent-date-textbox reccurent-slider">
 								
 								</div>
 							</div>
@@ -374,8 +383,23 @@
                             </div>
 					</fieldset>
 				</div>
+
+				<div class="form-submit-reset-buttons-group">
+						<?php 
+							if(isset($trip_id)){
+							$cancel_or_reset="CANCEL TRIP";
+							}else{
+							$cancel_or_reset="RESET";
+							}
+						?>
+						<?php echo form_submit("book_trip","BOOK TRIP","class='btn btn-success btn-lg book-trip'");  ?>  
+						<?php echo form_reset("cancel_trip",$cancel_or_reset,"class='btn btn-danger btn-lg cancel-trip'");  ?> 
+						
+				</div>
+			
 			</div>
 		</fieldset>
+		 <?php echo form_close(); ?>
 	</div>
 	<div class="second-column-trip-booking">
 		<fieldset class="body-border">

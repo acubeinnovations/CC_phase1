@@ -145,7 +145,7 @@ class CI_Form_validation {
 			'postdata'			=> NULL,
 			'error'				=> ''
 		);
-
+		
 		return $this;
 	}
 
@@ -285,7 +285,7 @@ class CI_Form_validation {
 		{
 			return FALSE;
 		}
-
+		
 		// Does the _field_data array containing the validation rules exist?
 		// If not, we look to see if they were assigned via a config file
 		if (count($this->_field_data) == 0)
@@ -529,7 +529,9 @@ class CI_Form_validation {
 
 				if ( ! isset($this->_error_array[$row['field']]))
 				{
-					$this->_error_array[$row['field']] = $message;
+				 $CI =& get_instance();
+				 $CI->session->set_userdata(array($row['field']=>$message));
+				 $this->_error_array[$row['field']] = $message;
 				}
 			}
 

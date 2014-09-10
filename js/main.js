@@ -73,8 +73,9 @@ $('.recurrent-container-alternatives').hide();
 $('.recurrent-radio-container > .div-continues > .iradio_minimal > .iCheck-helper').on('click',function(){
 
 $('.recurrent-container-continues').show();
- $('#reccurent_continues_pickupdatetimepicker').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-$('#reccurent_continues_dropdatetimepicker').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+$('#reccurent_continues_pickupdatetimepicker').daterangepicker({format: 'MM/DD/YYYY'});
+$('#reccurent_continues_dropdatetimepicker').daterangepicker({format: 'MM/DD/YYYY'});
+
 
 $('.recurrent-container-alternatives').hide();
 });
@@ -90,6 +91,13 @@ $('#reccurent_alternatives_dropdatetimepicker').datetimepicker();
 });
 
 $('.add-reccurent-dates').click(function(){
+var slider=$('.reccurent-container').attr('slider');
+if(slider=='2'){
+$('.reccurent-slider').css('overflow-y','scroll');
+$('.reccurent-slider').css('height','300px');
+}else{
+$('.reccurent-container').attr('slider',Number(slider)+1);
+}
 var count = $('.add-reccurent-dates').attr('count');
 var new_content='<div class="form-group"><input name="reccurent_alternatives_pickupdatetimepicker[]" value="" class="form-control width-80-percent-and-margin-8" id="reccurent_alternatives_pickupdatetimepicker'+count+'" placeholder="Pick up Date and time " type="text"></div><div class="form-group"><input name="reccurent_alternatives_dropdatetimepicker[]" value="" class="form-control width-80-percent-and-margin-8" id="reccurent_alternatives_dropdatetimepicker'+count+'" placeholder="Drop Date and time " type="text"></div>';
 $('.new-reccurent-date-textbox').append(new_content);
@@ -126,7 +134,7 @@ var mobile=$('#mobile').val();
      }
 	}
 	if(Trim(mobile)!="" || Trim(email)!=""){
-	$.post(base_url+'/trip_booking/customer-check',{
+	$.post(base_url+'/customers/customer-check',{
 	email:email,
 	mobile:mobile
 	},function(data){
@@ -170,7 +178,7 @@ var mobile=$('#guestmobile').val();
 		 }
 	}
 	if(Trim(mobile)!="" || Trim(email)!=""){
-	$.post(base_url+'/trip_booking/customer-check',{
+	$.post(base_url+'/customers/customer-check',{
 	email:email,
 	mobile:mobile
 	},function(data){
@@ -241,7 +249,20 @@ var mobile=$('#guestmobile').val();
 	$(".passenger-basic-info > .form-group > label[for=name_error]").text(error_name);
 	$(".passenger-basic-info > .form-group > label[for=email_error]").text(error_email);
 	$(".passenger-basic-info > .form-group > label[for=mobile_error]").text(error_mobile);
+	}else{
+	$.post(base_url+'/customers/add-customer',{
+	name:name,
+	email:email,
+	mobile:mobile
+	},function(data){
+	if(data!=true){
+	$('#email').trigger('click');
 	}
+
+	});
+
+	}
+
 
 	});
 
@@ -338,7 +359,7 @@ getDistance(origin,destination,via);
 function getDistance(origin,destination,via){
 var url='https://maps.googleapis.com/maps/api/distancematrix/json?origins='+origin+'&destinations='+destination+'&mode=driving&language=	en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
 
-$.post(base_url+'/trip_booking/get-distance',{
+$.post(base_url+'/maps/get-distance',{
 	url:url,
 	via:via
 	},function(data){
@@ -375,7 +396,7 @@ function placeAutofillGenerator(city,ul_class,insert_to){
 var 
 url='https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&language=en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
 
-$.post(base_url+'/trip_booking/get-places',{
+$.post(base_url+'/maps/get-places',{
 	url:url,
 	insert_to:insert_to
 	},function(data){
