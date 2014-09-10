@@ -53,6 +53,12 @@ $('.group-toggle').toggle();
 
 
 });
+$('.guest-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
+
+$('.guest-toggle').toggle();
+
+
+});
 $('.recurrent-radio-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
 
 
@@ -126,7 +132,7 @@ var mobile=$('#mobile').val();
 	},function(data){
 	if(data!=false){
 		data=jQuery.parseJSON(data);
-		$('#passenger').val(data[0].name);
+		$('#customer').val(data[0].name);
 		$('#email').val(data[0].email);	
 		$('#mobile').val(data[0].mobile);
 		$('.clear-customer').show();
@@ -138,9 +144,50 @@ var mobile=$('#mobile').val();
 	});
 	}
 	});
-	//clear passenger information fields
+//guest passengerchecking in db
+
+	$('#guestemail,#guestmobile').on('keyup focus focusout click blur',function(){
+var email=$('#guestemail').val();
+var mobile=$('#guestmobile').val();
+	
+    if(Trim(email)==""){
+        
+    }else{
+	    
+	    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
+	    result = pattern.test(email);
+	    if( result== false) {
+	     email='';
+	    }
+	}
+ 
+    if(Trim(mobile)==""){
+       
+    }else{
+	   var regEx = /^(\+91|\+91|0)?\d{10}$/;
+	   if (!mobile.match(regEx)) {
+	 		 mobile='';
+		 }
+	}
+	if(Trim(mobile)!="" || Trim(email)!=""){
+	$.post(base_url+'/trip_booking/customer-check',{
+	email:email,
+	mobile:mobile
+	},function(data){
+	if(data!=false){
+		data=jQuery.parseJSON(data);
+		$('#guestname').val(data[0].name);
+		$('#guestemail').val(data[0].email);	
+		$('#guestmobile').val(data[0].mobile);
+		$('.clear-guest').show();
+		
+      }
+	});
+	}
+	});
+	//clear customer information fields
 	$('.clear-customer').click(function(){
-		$('#passenger').val('');
+		$('#customer').val('');
 		$('#email').val('');	
 		$('#mobile').val('');
 		$('.clear-customer').hide();
@@ -149,10 +196,18 @@ var mobile=$('#mobile').val();
 		$(".passenger-basic-info > .form-group > label[for=mobile_error]").text('');
 
 	});
+	//clear guest information fields
+	$('.clear-guest').click(function(){
+		$('#guestname').val('');
+		$('#guestemail').val('');	
+		$('#guestmobile').val('');
+		$('.clear-guest').hide();
+		
+	});
 
 	//add pasenger informations
 	$('.add-customer').click(function(){
-		var name =$('#passenger').val();
+		var name =$('#customer').val();
 		var email=$('#email').val();
 		var mobile=$('#mobile').val();
 		var error_email ="";
@@ -190,7 +245,37 @@ var mobile=$('#mobile').val();
 
 	});
 
-$("#pickupcity,#pickuparea,#dropdownlocation,#dropdownarea,#viacity,#viaarea").on('keyup',function(){
+$("#pickupcity").on('keyup',function(){
+var pickupcity=$("#pickupcity").val();
+if(pickupcity!=''){
+
+placeAutofillGenerator(pickupcity,'autofill-pickupcity','pickupcity');
+
+}
+});
+
+$("#dropdownlocation").on('keyup',function(){
+
+var dropdownlocation=$("#dropdownlocation").val();
+if(dropdownlocation!=''){
+
+placeAutofillGenerator(dropdownlocation,'autofill-dropdownlocation','dropdownlocation');
+
+}
+});
+
+$("#viacity").on('keyup',function(){
+var viacity=$("#viacity").val();
+if(viacity!=''){
+
+placeAutofillGenerator(viacity,'autofill-viacity','viacity');
+
+}
+});
+
+
+
+$("#pickupcity,#pickuparea,#dropdownlocation,#dropdownarea,#viacity,#viaarea").on('keyup click',function(){
 
 var pickupcity=$("#pickupcity").val();//alert(pickupcity);
 var pickuparea=$("#pickuparea").val();
@@ -269,8 +354,8 @@ first_duration=first_duration.replace(/\mins\b/g, 'm');
 second_duration=data.second_duration.replace(/\hours\b/g, 'h');
 second_duration=second_duration.replace(/\hour\b/g, 'h');
 second_duration=second_duration.replace(/\mins\b/g, 'm');
-var distance_estimation='<div class="via-distance-estimation">Pick up to Via Loc : '+data.first_distance+' Via to Drop Loc : '+data.second_distance+'</div>';
-var duration_estimation='<div class="via-duration-estimation">Pick up to Via Loc : '+first_duration+' Via to Drop Loc : '+second_duration+'</div>';
+var distance_estimation='<div class="via-distance-estimation">Pick up to Via Loc : '+data.first_distance+'<br/> Via to Drop Loc : '+data.second_distance+'</div>';
+var duration_estimation='<div class="via-duration-estimation">Pick up to Via Loc : '+first_duration+'<br/>  Via to Drop Loc : '+second_duration+'</div>';
 
 $('.estimated-distance-of-journey').html(distance_estimation);
 $('.estimated-time-of-journey').html(duration_estimation);
@@ -284,6 +369,37 @@ $('.estimated-time-of-journey').html('');
 
 
 }
+
+function placeAutofillGenerator(city,ul_class,insert_to){
+
+var 
+url='https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&language=en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
+
+$.post(base_url+'/trip_booking/get-places',{
+	url:url,
+	insert_to:insert_to
+	},function(data){
+if(data!='false'){
+$('.'+ul_class).html(data);
+$('.'+ul_class).parent().addClass('open');
+}
+
+});
+
+}
+$('html').click(function(){
+$('.input-group-btn').removeClass('open');
+});
+
+$('.drop-down-places').live('click',function(e){
+
+var insert_to=$(this).attr('insert_to');
+var place=$(this).attr('place');
+$('#'+insert_to).val(place);
+$('#'+insert_to).trigger('click');
+$(this).parent().parent().parent().removeClass('open');
+
+});
 
 //trip_bookig page-js end
  

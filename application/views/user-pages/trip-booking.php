@@ -15,14 +15,14 @@
 				</div>
 				<div class="booking-source">
 					<fieldset class="body-border">
-					<legend class="body-head">Passenger Informations</legend>
+					<legend class="body-head">Customer Informations</legend>
 					<table>
 						<tr>
 							<td>
 							<div class="div-with-90-percent-width-and-marigin-5 passenger-basic-info">
 								<div class="form-group">
 								<?php 
-								echo form_input(array('name'=>'passenger','class'=>'form-control','id'=>'passenger','placeholder'=>'Passenger','value'=>'')).form_label('','name_error');
+								echo form_input(array('name'=>'customer','class'=>'form-control','id'=>'customer','placeholder'=>'Customer','value'=>'')).form_label('','name_error');
 								 ?>
 								</div>
 								<div class="form-group margin-top-less-10">
@@ -40,21 +40,49 @@
 						</tr>
 						<tr>
 							<td>
-							<div class="form-group advanced-container margin-top-less-20">
-								<?php
-								echo form_checkbox(array('name'=> 'advanced','class'=>'advanced-chek-box flat-red'));
-								echo nbs(4).form_label('Advanced')
-								?>
-								
-								<div class="group-toggle">
-									<?php echo $this->form_functions->populate_dropdown('customer_groups',$customer_groups='',$selected='',$class ='groups form-control',$msg="Select Groups"); ?>
+								<div class="form-group advanced-container margin-top-less-20">
+									<?php
+									echo form_checkbox(array('name'=> 'advanced','class'=>'advanced-chek-box flat-red'));
+									echo nbs(4).form_label('Advanced')
+									?>
 								</div>
-							</div>
+								<div class="form-group guest-container margin-top-less-40 float-right">
+									<?php
+									echo form_checkbox(array('name'=> 'guest','class'=>'guest-chek-box flat-red'));
+									echo nbs(4).form_label('Guest')
+									?>
+								</div>
+								
+															
+							</td>
+							
+						</tr>
+						<tr>
+							<td>
+								<div class="group-toggle div-with-90-percent-width-and-marigin-5">
+										<?php echo $this->form_functions->populate_dropdown('customer_groups',$customer_groups,$selected='',$class ='groups form-control',$msg="Select Groups"); ?>
+								</div>
+							
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="guest-toggle div-with-90-percent-width-and-marigin-5">
+									<div class="form-group">
+										<?php 
+										echo form_input(array('name'=>'guestname','class'=>'form-control','id'=>'guestname','placeholder'=>'Guest','value'=>''));
+										 ?>
+										</div>
+										<div class="form-group margin-top-less-10">
+										<?php 
+										echo form_input(array('name'=>'guestemail','class'=>'form-control col-1-textbox-with-50-percent-width-and-float-left','id'=>'guestemail','placeholder'=>'Email','value'=>''));
+										echo form_input(array('name'=>'guestmobile','class'=>'form-control col-2-textbox-with-50-percent-width-and-float-left','id'=>'guestmobile','placeholder'=>'Mobile','value'=>''));
+										 ?>
+									</div>
+								</div>
 							</td>
 							<td>
-							<div class="form-group">
-							
-							</div>
+								<button class="btn btn-danger btn-lg clear-guest">CLEAR</button>
 							</td>
 						</tr>
 					</table>
@@ -69,14 +97,24 @@
 									<td>
 									<div class="form-group">
 										<?php $class="form-control row-source-50-percent-width-with-margin-8";
-										 echo $this->form_functions->populate_dropdown('trip_models',$trip_models='',$selected='',$class,$msg="Select Type"); 
+										 echo $this->form_functions->populate_dropdown('trip_models',$trip_models,$selected='',$class,$msg="Select Type"); 
 										echo form_input(array('name'=>'no_of_passengers','class'=>'form-control row-source-50-percent-width-with-margin-8','id'=>'no_of_passengers','placeholder'=>'No of passengers','value'=>'')).br(2);?>
 									</div>
 									<div class="form-group">
-									<?php 
-									echo form_input(array('name'=>'pickupcity','class'=>'form-control width-96-percent-and-margin-8','id'=>'pickupcity','placeholder'=>'Pick up City','value'=>''));
+								
+                                        <div class="input-group-btn ">
+                                            <?php 
+									echo form_input(array('name'=>'pickupcity','class'=>'form-control width-96-percent-and-margin-8 dropdown-toggle','id'=>'pickupcity','placeholder'=>'Pick up City','value'=>''));
 						
 									 ?>
+                                            <ul class="dropdown-menu dropdown-menu-on-key-press autofill-pickupcity">
+                                                
+                                            </ul>
+                                        </div>
+                                       
+                                   
+								 </div>
+									
 									</div>
 									<div class="form-group">
 									<?php 
@@ -92,10 +130,15 @@
 									</div>
 									<div class="toggle-via">
 										<div class="form-group">
+											  <div class="input-group-btn ">
 										<?php 
 										echo form_input(array('name'=>'viacity','class'=>'form-control width-96-percent-and-margin-8','id'=>'viacity','placeholder'=>'Via City','value'=>''));
 						
 										 ?>
+												 <ul class="dropdown-menu dropdown-menu-on-key-press autofill-viacity">
+                                                
+                                          		  </ul>
+                                        </div>
 										</div>
 										<div class="form-group">
 										<?php 
@@ -111,10 +154,15 @@
 										</div>
 									</div>
 									<div class="form-group">
+										  <div class="input-group-btn ">
 									<?php 
 									echo form_input(array('name'=>'dropdownlocation','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlocation','placeholder'=>'Drop Down City','value'=>''));
 						
 									 ?>
+											 <ul class="dropdown-menu dropdown-menu-on-key-press autofill-dropdownlocation">
+                                                
+                                            </ul>
+                                        </div>
 									</div>
 									<div class="form-group">
 									<?php 
@@ -156,8 +204,8 @@
 					<legend class="body-head">Vehicle Information</legend>
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						echo $this->form_functions->populate_dropdown('vehicle_types',$vehicle_types='',$selected='',$class,$msg="Select Type");
-						echo $this->form_functions->populate_dropdown('vehicle_ac_types',$vehicle_ac_types='',$selected='',$class,$msg="Select AC/Non AC");
+						echo $this->form_functions->populate_dropdown('vehicle_types',$vehicle_types,$selected='',$class,$msg="Select Type");
+						echo $this->form_functions->populate_dropdown('vehicle_ac_types',$vehicle_ac_types,$selected='',$class,$msg="Select AC/Non AC");
 						echo br(2);
 						 ?>
 						</div>
@@ -204,8 +252,8 @@
 						</div>
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						echo $this->form_functions->populate_dropdown('vehicle_seating_capacity',$vehicle_seating_capacity='',$selected='',$class,$msg="Select Seats");
-						echo $this->form_functions->populate_dropdown('languages',$languages='',$selected='',$class,$msg="Select Languages");
+						echo $this->form_functions->populate_dropdown('vehicle_seating_capacity',$vehicle_seating_capacity,$selected='',$class,$msg="Select Seats");
+						echo $this->form_functions->populate_dropdown('languages',$languages,$selected='',$class,$msg="Select Languages");
 						echo br(2);
 						 ?>
 						</div>

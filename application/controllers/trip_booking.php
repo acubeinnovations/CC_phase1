@@ -18,6 +18,10 @@ class Trip_booking extends CI_Controller {
 			
 			$this->getDistance();
 				
+		}else if($param1=='get-places') {
+			
+			$this->getPlaces();
+				
 		}
 		
 	}else{
@@ -77,6 +81,27 @@ class Trip_booking extends CI_Controller {
 		}
 
 		}
+		}
+		
+		public function getPlaces(){
+			if(isset($_REQUEST['url']) && isset($_REQUEST['insert_to'])) {
+			$target_url=$_REQUEST['url'];
+			$jsondata ='';
+				$data=file_get_contents($target_url);
+				$decode = json_decode($data);//print_r($decode);exit;
+				if(isset($decode->status) && $decode->status!='ZERO_RESULTS') {
+				for($jsondata_index=0;$jsondata_index<count($decode->predictions);$jsondata_index++){
+				$place=explode(",", $decode->predictions[$jsondata_index]->description);
+				$jsondata.='<li><a class="drop-down-places" place='.$place[0].' insert_to="'.$_REQUEST['insert_to'].'">'.$decode->predictions[$jsondata_index]->description.'</a></li><li class="divider"></li>';
+				}
+				echo $jsondata;
+				}
+				}
+			else{
+				$jsondata='false';
+				echo $jsondata;
+			}
+		
 		}
 		
 		public function session_check() {

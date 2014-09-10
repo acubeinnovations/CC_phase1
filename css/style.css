@@ -164,12 +164,12 @@ margin:8px;
 float:left;
 }
 .col-1-textbox-with-50-percent-width-and-float-left{
-margin-right:12px;
+margin-right:13px;
 width:46%;
 float:left;
 }
 .col-2-textbox-with-50-percent-width-and-float-left{
-margin-left:12px;
+margin-left:13px;
 width:46%;
 float:left;
 }
@@ -212,6 +212,9 @@ margin-top:-10px;
 .margin-top-less-20{
 margin-top:-20px;
 }
+.margin-top-less-40{
+margin-top:-40px;
+}
 
 .recurrent-container-continues,
 .recurrent-container-alternatives{
@@ -223,6 +226,9 @@ border-top:none;
 }
 .add-customer,
 .clear-customer{
+display:none;
+}
+.clear-guest{
 display:none;
 }
 .passenger-basic-info > .form-group > label[for=email_error],
@@ -263,4 +269,17 @@ margin:15px;
 }
 .margin-8{
 margin:8px;
+}
+.guest-toggle{
+display:none;
+margin-top:5px;
+}
+
+.dropdown-menu-on-key-press{
+margin: -6px 0px 0px 10px !important;
+
+}
+.drop-down-places{
+
+z-index:2400;
 }

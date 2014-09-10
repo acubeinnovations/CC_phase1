@@ -63,7 +63,7 @@ class User extends CI_Controller {
 	public function ShowBookTrip(){
 	if($this->session_check()==true) {
 	
-	$tbl_arry=array('booking_sources','trip_models','	vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
+	$tbl_arry=array('booking_sources','trip_models','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
 	$this->load->model('user_model');
 	for ($i=0;$i<count($tbl_arry);$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
@@ -74,9 +74,6 @@ class User extends CI_Controller {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
-
-
-	
 
 	$data['title']="Trip Booking | ".PRODUCT_NAME;  
 	$page='user-pages/trip-booking';
