@@ -29,6 +29,7 @@ float:left;
 }
 .bg-light-black{
 background-color: #303123 !important;
+height:250px;
 }
 .cc_menu{
 list-style:none;
@@ -290,6 +291,7 @@ z-index:2400;
 }
 #divGeneral{
 padding:105px 0 110px 80px;
+
 }
 #general{
 margin-right: 80px !important;
@@ -297,5 +299,6 @@ height:80%;
 }
 #logo{
 height:200px !important;
+
 
 }
