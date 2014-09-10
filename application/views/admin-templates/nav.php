@@ -85,15 +85,23 @@
                                 
                             </ul>
                         </li>
-                        <li class="treeview">
+                        <li>
+                            <a href="<?php echo base_url().'organization/front-desk/settings';?>">
+                                <i class="fa fa-laptop"></i>
+                                <span>Settings</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                          
+                        </li>
+						<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-laptop"></i>
-                                <span>Menu</span>
+                                <span>Trip</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i>menu1</a></li>
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i> menu2</a></li>
+                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i>Trip Booking</a></li>
+                                
                                 
                             </ul>
                         </li>

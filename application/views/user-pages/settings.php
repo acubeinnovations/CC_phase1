@@ -335,9 +335,10 @@
 <td><?php echo nbs(10); // trip ends?></td>
 
 <td>
-<fieldset class="body-border">
-<legend class="body-head">General</legend>
- <table class="tbl">
+<fieldset class="body-border" id="general">
+<legend class="body-head" >General</legend>
+<div id="divGeneral">
+ <table class="tbl" >
   <tr>
 <td><div class="form-group">
 	<?php echo form_open(base_url()."general/languages");?>
@@ -550,13 +551,8 @@
 	<?php echo form_close();?>
 
 </tr>
- 
-<tr><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td></td><td></td><td></td><td></td><td></td></tr>
-
 </table> 
+</div>
 </fieldset>
 
 

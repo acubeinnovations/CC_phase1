@@ -15,6 +15,7 @@ margin:0 auto;
 .logo{
 width:150px;
 float:left;
+padding:60px 60px 60px 60px;
 }
 
 .logo_img{
@@ -25,6 +26,9 @@ float:left;
 width:874px;
 float:left;
 
+}
+.bg-light-black{
+background-color: #303123 !important;
 }
 .cc_menu{
 list-style:none;
@@ -270,6 +274,7 @@ margin:15px;
 .margin-8{
 margin:8px;
 }
+
 .guest-toggle{
 display:none;
 margin-top:5px;
@@ -282,4 +287,15 @@ margin: -6px 0px 0px 10px !important;
 .drop-down-places{
 
 z-index:2400;
+}
+#divGeneral{
+padding:105px 0 110px 80px;
+}
+#general{
+margin-right: 80px !important;
+height:80%;
+}
+#logo{
+height:200px !important;
+
 }
