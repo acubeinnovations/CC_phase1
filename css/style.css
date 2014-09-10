@@ -113,7 +113,7 @@ width:100%;
 width:100%;
 margin:0 30px;
 }
-.settings-add{
+.settings-add ,.tarrif-add{
 color:#00A65A;
 
 }
@@ -299,8 +299,9 @@ height:80%;
 }
 #logo{
 height:200px !important;
-
-
+}
+.border-style{
+width:80% !important;
 }
 .form-submit-reset-buttons-group{
 bottom:0px;

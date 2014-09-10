@@ -32,6 +32,8 @@ class User extends CI_Controller {
 		$this->settings();
 		}elseif($param1=='trip-booking'){
 		$this->ShowBookTrip();
+		}elseif($param1=='tarrif-masters'){
+		$this->tarrif_masters();
 		}
 		}else{
 			echo 'you are not authorized access this page..';
@@ -54,6 +56,29 @@ class User extends CI_Controller {
 	}
 	$data['title']="Settings | ".PRODUCT_NAME;  
 	$page='user-pages/settings';
+	$this->load_templates($page,$data);
+	}
+	else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+	public function tarrif_masters() {
+	if($this->session_check()==true) {
+	$tbl_arry=array('trip_models','vehicle_makes','vehicle_ac_types');
+	$this->load->model('user_model');
+		for ($i=0;$i<3;$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data[$tbl_arry[$i]]=$result;
+	//print_r($result);exit;
+	//echo $result['id'];exit;
+	}
+	else{
+	$data[$tbl_arry[$i]]='';
+	}
+	}
+	$data['title']="Tarrif Masters | ".PRODUCT_NAME;  
+	$page='user-pages/tarrif_master';
 	$this->load_templates($page,$data);
 	}
 	else{
@@ -113,6 +138,7 @@ public function profile() {
 			$dbdata['phone'] 	   = $this->input->post('phone');
 		    $dbdata['address']   = $this->input->post('address');
 			$dbdata['username']   = $this->input->post('husername');
+			
 			if($this->form_validation->run() != False) {
 				$val    		   = $this->user_model->updateProfile($dbdata);
 				redirect(base_url().'organization/front-desk');
@@ -189,7 +215,6 @@ public function profile() {
 			echo 'you are not authorized access this page..';
 		}
 	}
-	   
-
+	
 }
 ?>

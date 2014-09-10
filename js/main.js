@@ -14,8 +14,12 @@ $(this).siblings().find(':submit').trigger('click');
 });
 });
 
-
-
+//for tarrif trigger
+$(document).ready(function(){
+$('.tarrif-add').click(function(){
+$('#tarrif-add-id').trigger('click');
+});
+});
 
 
 function Trim(strInput) {
