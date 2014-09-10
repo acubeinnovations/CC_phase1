@@ -59,15 +59,15 @@ $('.guest-toggle').toggle();
 
 
 });
-$('.recurrent-radio-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
 
-
-})
 $('.recurrent-yes-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
 
 $('.recurrent-radio-container').toggle();
 
-
+if(Trim($('.recurrent-container-continues').css('display'))=='block' || Trim($('.recurrent-container-alternatives').css('display'))=='block' ){
+$('.recurrent-container-continues').hide();
+$('.recurrent-container-alternatives').hide();
+}
 });
 
 $('.recurrent-radio-container > .div-continues > .iradio_minimal > .iCheck-helper').on('click',function(){
