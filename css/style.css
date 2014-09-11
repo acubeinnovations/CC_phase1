@@ -163,6 +163,16 @@ float:left;
 width:47%;
 margin:10px;
 }
+.width-60-percent-with-margin-10{
+float:left;
+width:57%;
+margin:10px;
+}
+.width-40-percent-with-margin-10{
+float:left;
+width:37%;
+margin:10px;
+}
 .row-source-50-percent-width-with-margin-8{
 width:45%;
 margin:8px;

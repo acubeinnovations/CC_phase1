@@ -474,6 +474,18 @@ public function __construct()
 		}
 	}
 	
+	public function captcha_check($str)
+	{
+		if (trim($str) != trim($this->session->userdata('captcha_code')))
+		{
+			$this->form_validation->set_message('captcha_check', 'Captcha mismach.');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
 
 }
 	?>
