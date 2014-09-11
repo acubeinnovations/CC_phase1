@@ -26,19 +26,18 @@ class Tarrif extends CI_Controller {
 	 $data['minimum_hours'] = $this->input->post('min_hours');
 	 $data['organisation_id']=$this->session->userdata('organisation_id');
 	 $data['user_id']=$this->session->userdata('id');
-	print_r($data);
+	
 	 $this->form_validation->set_rules('title','Title','trim|required|min_length[2]|xss_clean|alpha_numeric');
-	 $this->form_validation->set_rules('select_trip_model','Trip Model','trim|required|min_length[2]|xss_clean|numeric');
-	 $this->form_validation->set_rules('select_vehicle_makes','Vehicle Make','trim|required|min_length[2]|xss_clean|numeric');
-	 $this->form_validation->set_rules('select_ac_type','AC Type','trim|required|min_length[2]|xss_clean|numeric');
+	 $this->form_validation->set_rules('select_trip_model', 'Trip Model', 'callback_value_check');
+	 $this->form_validation->set_rules('select_vehicle_makes', 'Trip Model', 'callback_value_check');
+	 $this->form_validation->set_rules('select_ac_type', 'Trip Model', 'callback_value_check');
 	 $this->form_validation->set_rules('min_kilo','Minimum Kilometers','trim|required|min_length[2]|xss_clean|numeric');
 	 $this->form_validation->set_rules('min_hours','Minimum Hours','trim|required|min_length[2]|xss_clean|numeric');
 	
 		if($this->form_validation->run()==False){//echo "err";exit;
-		$this->load_templates($page='user-pages/tarrif_master',$data);
-		//redirect(base_url().'user-pages/tarrif-masters');
+		redirect(base_url().'organization/front-desk/tarrif-masters');
 		}
-		else {echo "hi";exit;
+		else {
 		$res=$this->tarrif_model->addValues($data);
 		if($res==true){
 		$this->session->set_userdata(array('dbSuccess'=>' Added Succesfully..!'));
@@ -52,19 +51,20 @@ class Tarrif extends CI_Controller {
 			echo 'you are not authorized access this page..';
 			}
 	}
+	public function value_check($str)
+	{
 	
-	public function load_templates($page='',$data=''){
-	
-	if($this->session_check()==true) {
-    $this->load->view('admin-templates/header',$data);
-	$this->load->view('admin-templates/nav');
-	$this->load->view($page,$data);
-	$this->load->view('admin-templates/footer');
-	}else{
-	echo 'you are not authorized access this page..';
+		if ($str == -1)
+		{
+			$this->form_validation->set_message('value_check', 'Choose Trip Model');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
 	}
-
-	}	
+	
 	
 }
 ?>
