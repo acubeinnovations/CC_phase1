@@ -19,6 +19,12 @@ $(document).ready(function(){
 $('.tarrif-add').click(function(){
 $('#tarrif-add-id').trigger('click');
 });
+$('.tarrif-edit').click(function(){
+$('#tarrif-edit-id').trigger('click');
+});
+$('.tarrif-delete').click(function(){
+$('#tarrif-delete-id').trigger('click');
+});
 });
 
 

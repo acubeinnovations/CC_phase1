@@ -77,7 +77,7 @@ class User extends CI_Controller {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
-	$getAllDetails=$this->user_model->getAllDetails();
+	$data['allDetails']=$this->user_model->getAllDetails();
 	$data['title']="Tarrif Masters | ".PRODUCT_NAME;  
 	$page='user-pages/tarrif_master';
 	$this->load_templates($page,$data);

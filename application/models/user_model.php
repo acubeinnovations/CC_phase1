@@ -54,8 +54,12 @@ class user_model extends CI_Model {
 	}
    
 	public function getAllDetails(){
-	$result=$this->db->get('tariff_masters');print_r($result);
-	$qry=$result->result_array();print_r($qry);exit;
+	$qry=$this->db->get('tariff_masters');
+	$count=$qry->num_rows();
+	$result=$qry->result_array();
+	return $result;
+	
+	
 	}
    
 }
