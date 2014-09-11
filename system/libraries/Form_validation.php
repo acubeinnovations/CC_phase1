@@ -169,8 +169,9 @@ class CI_Form_validation {
 			$lang = array($lang => $val);
 		}
 
-		$this->_error_messages = array_merge($this->_error_messages, $lang);
-
+			$this->_error_messages = array_merge($this->_error_messages, $lang);
+			
+	
 		return $this;
 	}
 
@@ -678,7 +679,9 @@ class CI_Form_validation {
 				$this->_field_data[$row['field']]['error'] = $message;
 
 				if ( ! isset($this->_error_array[$row['field']]))
-				{
+				{	
+					$CI = & get_instance();
+					$CI->session->set_userdata(array($row['field']=>$message));
 					$this->_error_array[$row['field']] = $message;
 				}
 
