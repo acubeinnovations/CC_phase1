@@ -18,8 +18,23 @@ $minimum_kilometers=$data['minimum_kilometers'];
 $minimum_hours=$data['minimum_hours'];
 $this->session->set_userdata('post','');
 }
-?>
-<?php    if($this->session->userdata('dbSuccess') != '') { ?>
+
+if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_title') != ''||$this->session->userdata('Err_kilo') != ''||$this->session->userdata('Err_hrs') != '') { ?>
+	<div class="alert alert-danger alert-dismissable">
+                                        <i class="fa fa-ban"></i>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <b>Alert!</b><br><?php
+													echo $this->session->userdata('dbvalErr').br();
+													echo $this->session->userdata('Err_title').br();
+													echo $this->session->userdata('Err_kilo').br();
+													echo $this->session->userdata('Err_hrs').br();
+													 $this->session->set_userdata(array('dbvalErr'=>''));
+													 $this->session->set_userdata(array('Err_title'=>''));
+													 $this->session->set_userdata(array('Err_kilo'=>''));
+													 $this->session->set_userdata(array('Err_hrs'=>''));
+										?>
+                                    </div>
+<?php  }  if($this->session->userdata('dbSuccess') != '') { ?>
         <div class="success-message">
 			
             <div class="alert alert-success alert-dismissable">
@@ -76,9 +91,11 @@ $this->session->set_userdata('post','');
 <?php 
 foreach ($allDetails as $det):
 ?>
+
 <table><tr>
 <td><?php echo form_open(base_url()."tarrif/tarrif_manage"); echo form_input(array('name'=>'manage_title','class'=>'form-control','id'=>'manage_title','placeholder'=>'Title','value'=> $det['title'] )); ?></td>
-<td><?php  	$class="form-control";
+<td><?php 
+$class="form-control";
 		$msg="Select Trip Model";
 		$name="manage_select_trip_model";
 		$selected='';
@@ -92,7 +109,8 @@ foreach ($allDetails as $det):
 		$name="manage_select_ac_type";
 		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$det['vehicle_ac_type_id'],$class,$msg)?></td>
 <td><?php echo form_input(array('name'=>'manage_min_kilo','class'=>'form-control','id'=>'manage_min_kilo','placeholder'=>'Minimum Kilometers','value'=> $det['minimum_kilometers'])); ?></td>
-<td><?php echo form_input(array('name'=>'manage_min_hours','class'=>'form-control','id'=>'min_hours','placeholder'=>'Minimum Hours','value'=> $det['minimum_hours'] )); ?></td>
+<td><?php echo form_input(array('name'=>'manage_min_hours','class'=>'form-control','id'=>'min_hours','placeholder'=>'Minimum Hours','value'=> $det['minimum_hours'] )); ?>
+           <div class="hide-me"><?php echo form_input(array('name'=>'manage_id','class'=>'form-control','id'=>'manage_id','value'=> $det['id'],'trigger'=>'true' )); 	 ?></div></td>
 <td><div  class="tarrif-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=tarrif-edit-id","class=btn");?></div></td>
 <td><div  class="tarrif-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=tarrif-delete-id","class=btn");?></div></td>
 <?php echo form_close();?>
