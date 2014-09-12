@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 10, 2014 at 05:24 AM
+-- Generation Time: Sep 12, 2014 at 06:47 AM
 -- Server version: 5.5.37-0ubuntu0.13.10.1
 -- PHP Version: 5.5.3-1ubuntu2.6
 
@@ -71,6 +71,8 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `dob` date NOT NULL,
   `registration_type_id` int(11) NOT NULL,
   `app_id` varchar(100) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `imei` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   `fa_customer_id` int(11) NOT NULL,
   `organisation_id` int(11) NOT NULL,
@@ -80,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -603,7 +605,7 @@ CREATE TABLE IF NOT EXISTS `user_login_attempts` (
   `ip_address` varchar(255) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 

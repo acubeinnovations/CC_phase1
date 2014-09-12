@@ -165,16 +165,16 @@ margin:10px;
 }
 .width-60-percent-with-margin-10{
 float:left;
-width:57%;
+width:56%;
 margin:10px;
 }
-.width-40-percent-with-margin-10{
+.width-30-percent-with-margin-left-20{
 float:left;
-width:37%;
-margin:10px;
+width:30%;
+margin:10px 0 10px 20px;
 }
 .row-source-50-percent-width-with-margin-8{
-width:45%;
+width:40%;
 margin:8px;
 float:left;
 }

@@ -27,107 +27,178 @@ class Trip_booking extends CI_Controller {
 			
 			if(isset($_REQUEST['book_trip'])){
 				if(isset($_REQUEST['advanced'])){
-					$this->form_validation->set_rules('customer_groups','Customer groups','trim|required|xss_clean');
+					$this->form_validation->set_rules('customer_group','Customer groups','trim|required|xss_clean');
+					$data['advanced']=TRUE;
+					$data['customer_group']=$this->input->post('customer_group');
+				}else{
+					$data['advanced']='';
+					$data['customer_group']='';
 				}
 				if(isset($_REQUEST['guest'])){
 					$this->form_validation->set_rules('guestname','Guest name','trim|required|xss_clean');
-					$this->form_validation->set_rules('guestemail','Guest email','trim|required|valid_email|is_unique[customers.email]');
+					$this->form_validation->set_rules('guestemail','Guest email','trim|valid_email|is_unique[customers.email]');
 					$this->form_validation->set_rules('guestmobile','Guest mobile','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean|is_unique[customers.mobile]');
+					$data['guest']=TRUE;
+					$data['guestname']=$this->input->post('guestname');
+					$data['guestemail']=$this->input->post('guestemail');
+					$data['guestmobile']=$this->input->post('guestmobile');
+				}else{
+					$data['guest']='';
+					$data['guestname']='';
+					$data['guestemail']='';
+					$data['guestmobile']='';
 				}
-				$this->form_validation->set_rules('booking_source','Booking source','trim|required|xss_clean');
-				$this->form_validation->set_rules('source','Source','trim|required|min_length[2]|xss_clean|alpha');
-				$this->form_validation->set_rules('trip_models','Trip models','trim|required|xss_clean');
-				$this->form_validation->set_rules('no_of_passengers','No of passengers','trim|required|xss_clean');
+				$this->form_validation->set_rules('customer','Customer name','trim|required|xss_clean');
+				$this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|is_unique[customers.email]');
+				$this->form_validation->set_rules('mobile','Mobile','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean|is_unique[customers.mobile]');
+				$this->form_validation->set_rules('booking_source','Booking source','trim|xss_clean');
+				$this->form_validation->set_rules('source','Source','trim|min_length[2]|xss_clean|alpha');
+				$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
+				$this->form_validation->set_rules('no_of_passengers','No of passengers','trim|xss_clean');
 				$this->form_validation->set_rules('pickupcity','Pickup city','trim|required|xss_clean');
-				$this->form_validation->set_rules('pickuparea','Pickup area','trim|required|xss_clean');
-				$this->form_validation->set_rules('pickuplandmark','Pickup landmark','trim|alpha|xss_clean');
-				$this->form_validation->set_rules('viacity','Via city','trim|alpha|xss_clean');
-				$this->form_validation->set_rules('viaarea','Via area','trim|alpha|xss_clean');
-				$this->form_validation->set_rules('vialandmark','Via landmark','trim|alpha|xss_clean');
+				$this->form_validation->set_rules('pickuparea','Pickup area','trim|xss_clean|alpha_numeric');
+				$this->form_validation->set_rules('pickuplandmark','Pickup landmark','trim|alpha_numeric|xss_clean');
+				$this->form_validation->set_rules('viacity','Via city','trim|alpha_numeric|xss_clean');
+				$this->form_validation->set_rules('viaarea','Via area','trim|alpha_numeric|xss_clean');
+				$this->form_validation->set_rules('vialandmark','Via landmark','trim|alpha_numeric|xss_clean');
 				$this->form_validation->set_rules('dropdownlocation','Drop down location','trim|required|xss_clean');
-				$this->form_validation->set_rules('dropdownarea','Drop down area','trim|required|xss_clean');
-				$this->form_validation->set_rules('dropdownlandmark','Drop down landmark','trim|alpha|xss_clean');
-				$this->form_validation->set_rules('pickupdatetimepicker','Pickup date time','trim|required|xss_clean');
-				$this->form_validation->set_rules('dropdatetimepicker','Drop date time','trim|required|xss_clean');
-				$this->form_validation->set_rules('vehicle_types','Vehicle types','trim|alpha|xss_clean');
-				$this->form_validation->set_rules('vehicle_ac_types','Vehicle ac types','trim|required|xss_clean');
-				$this->form_validation->set_rules('vehicle_seating_capacity','Vehicle seating capacity','trim|required|xss_clean');
-				$this->form_validation->set_rules('languages','Languages','trim|required|xss_clean');
-				$this->form_validation->set_rules('tarrifs','Vehicle ac types','trim|required|xss_clean');
-				$this->form_validation->set_rules('available_vehicles','Vehicle seating capacity','trim|required|xss_clean');
-				if(isset($_REQUEST['recurrent-yes'])){
+				$this->form_validation->set_rules('dropdownarea','Drop down area','trim|alpha_numeric|xss_clean');
+				$this->form_validation->set_rules('dropdownlandmark','Drop down landmark','trim|alpha_numeric|xss_clean');
+				$this->form_validation->set_rules('pickupdatepicker','Pickup date','trim|required|xss_clean');
+				$this->form_validation->set_rules('dropdatepicker','Drop date ','trim|xss_clean');
+				$this->form_validation->set_rules('pickuptimepicker','Pickup time','trim|xss_clean');
+				$this->form_validation->set_rules('droptimepicker','Drop time','trim|xss_clean');
+				$this->form_validation->set_rules('vehicle_types','Vehicle types','trim|required|xss_clean');
+				$this->form_validation->set_rules('vehicle_ac_types','Vehicle ac types','trim|xss_clean');
+				$this->form_validation->set_rules('seating_capacity','Vehicle seating capacity','trim|xss_clean');
+				$this->form_validation->set_rules('languages','Languages','trim|xss_clean');
+				$this->form_validation->set_rules('tarrifs','Vehicle ac types','trim|xss_clean');
+				
+	
+				$data['customer']			=	$this->input->post('customer');
+				$data['email']				=	$this->input->post('source');
+				$data['mobile']				=	$this->input->post('mobile');
+				$data['booking_source']		=	$this->input->post('booking_source');
+				$data['source']				=	$this->input->post('source');
+				$data['trip_model']			=	$this->input->post('trip_model');
+				$data['no_of_passengers']	=	$this->input->post('no_of_passengers');
+				$data['pickupcity']			=	$this->input->post('pickupcity');
+				$data['pickuparea']			=	$this->input->post('pickuparea');
+				$data['pickuplandmark']		=	$this->input->post('pickuplandmark');
+				$data['viacity']			=	$this->input->post('viacity');
+				$data['viaarea']			=	$this->input->post('viaarea');
+				$data['vialandmark']		=	$this->input->post('vialandmark');
+				$data['dropdownlocation']	=	$this->input->post('dropdownlocation');
+				$data['dropdownarea']		=	$this->input->post('dropdownarea');
+				$data['dropdownlandmark']	=	$this->input->post('dropdownlandmark');
+				$data['pickupdatepicker']	=	$this->input->post('pickupdatepicker');
+				$data['dropdatepicker']		=	$this->input->post('dropdatepicker');
+				$data['pickuptimepicker']	=	$this->input->post('pickuptimepicker');
+				$data['droptimepicker']		=	$this->input->post('droptimepicker');
+				$data['vehicle_type']		=	$this->input->post('vehicle_type');
+				$data['vehicle_ac_type']	=	$this->input->post('vehicle_ac_type');
+				if(isset($_REQUEST['beacon_light'])){
+					$data['beacon_light']=TRUE;
+					if($this->input->post('beacon-light-radio')=='red'){
+						$data['beacon_light_radio']='red';
+						
+					}else{
+						$data['beacon_light_radio']='blue';
+						
+					}
+				}else{
+					$data['beacon_light']='';
+					$data['beacon_light_radio']='';
+					
+				}
+				if(isset($_REQUEST['pluck_card'])){
+					$data['pluck_card']=TRUE;
+				}else{
+					$data['pluck_card']='';
+				}
+				if(isset($_REQUEST['uniform'])){
+				$data['uniform']=TRUE;
+				}else{
+					$data['uniform']='';
+				}
+				$data['seating_capacity']=$this->input->post('seating_capacity');
+				$data['language']=$this->input->post('language');
+				$data['tariff']=$this->input->post('tariff');
+				$data['available_vehicle']=$this->input->post('available_vehicle');
+
+				if(isset($_REQUEST['recurrent_yes'])){
+				$data['recurrent_yes'] = TRUE;
+				$data['recurrent_continues'] = '';
+				$data['recurrent_alternatives'] = '';
 				if($this->input->post('recurrent')=='continues'){
-					$this->form_validation->set_rules('reccurent_continues_pickupdatetimepicker','Pickup date time','trim|required|xss_clean');
-					$this->form_validation->set_rules('reccurent_continues_dropdatetimepicker','Drop date time','trim|required|xss_clean');
+					$this->form_validation->set_rules('reccurent_continues_pickupdatepicker','Pickup date','trim|required|xss_clean');
+					$this->form_validation->set_rules('reccurent_continues_dropdatepicker','Drop date','trim|xss_clean');
+					$this->form_validation->set_rules('reccurent_continues_pickuptimepicker','Pickup time','trim|xss_clean');
+					$this->form_validation->set_rules('reccurent_continues_droptimepicker','Drop time','trim|xss_clean');
+
+					$data['recurrent'] = 'continues';
+					$data['recurrent_continues'] = TRUE;
+					$data['recurrent_alternatives'] = '';
+					$data['reccurent_continues_pickupdatepicker'] = $this->input->post('reccurent_continues_pickupdatepicker');
+					$reccurent_continues_pickupdatepicker = explode('-',$this->input->post('reccurent_continues_pickupdatepicker'));
+					$data['reccurent_continues_pickuptimepicker'] = $reccurent_continues_pickuptimepicker = $this->input->post('reccurent_continues_pickuptimepicker');
+					$pickupdatepicker_start=$reccurent_continues_pickupdatepicker[0];
+					$pickupdatepicker_end=$reccurent_continues_pickupdatepicker[1];
+				
+					$data['reccurent_continues_dropdatepicker'] = $this->input->post('reccurent_continues_dropdatepicker');
+					$reccurent_continues_dropdatepicker	  = explode('-',$this->input->post('reccurent_continues_dropdatepicker'));
+					$data['reccurent_continues_droptimepicker'] = $reccurent_continues_droptimepicker	  = $this->input->post('reccurent_continues_droptimepicker');
+					$dropdatepicker_start=$reccurent_continues_dropdatepicker[0];
+					$dropdatepicker_end=$reccurent_continues_dropdatepicker[1];
+
+					$pickup_dates = array();
+					$start = $current = strtotime($pickupdatepicker_start);
+					$end = strtotime($pickupdatepicker_end);
+
+					while ($current <= $end) {
+						$pickup_dates[] = date('d/m/Y', $current);
+						$current = strtotime('+1 days', $current);
+					}
+					
+					$dropdown_dates = array();
+					$start = $current = strtotime($dropdatepicker_start);
+					$end = strtotime($dropdatepicker_end);
+
+					while ($current <= $end) {
+						$dropdown_dates[] = date('d/m/Y', $current);
+						$current = strtotime('+1 days', $current);
+					}
+												
+
 				}else if($this->input->post('recurrent')=='alternatives'){
-					$this->form_validation->set_rules('reccurent_alternatives_pickupdatetimepicker[]','Pickup date time','trim|required|xss_clean');
-					$this->form_validation->set_rules('reccurent_alternatives_dropdatetimepicker[]','Drop date time','trim|required|xss_clean');
+					$this->form_validation->set_rules('reccurent_alternatives_pickupdatepicker','Pickup date','trim|required|xss_clean');
+					$this->form_validation->set_rules('reccurent_alternatives_dropdatepicker','Drop date ','trim|xss_clean');
+					$this->form_validation->set_rules('reccurent_alternatives_pickuptimepicker','Pickup time','trim|xss_clean');
+					$this->form_validation->set_rules('reccurent_alternatives_droptimepicker','Drop time','trim|xss_clean');
+			
+					$data['recurrent'] = 'alternatives';
+					$data['recurrent_continues'] = '';
+					$data['recurrent_alternatives'] = TRUE;
+					$data['reccurent_alternatives_pickupdatepicker'] = $reccurent_alternatives_pickupdatepicker = $this->input->post('reccurent_alternatives_pickupdatepicker');
+					$data['reccurent_alternatives_pickuptimepicker'] = $reccurent_alternatives_pickuptimepicker = $this->input->post('reccurent_alternatives_pickuptimepicker');
+					$data['reccurent_alternatives_dropdatepicker'] = $reccurent_alternatives_dropdatepicker	 = $this->input->post('reccurent_alternatives_dropdatepicker');
+					$data['reccurent_alternatives_droptimepicker'] = $reccurent_alternatives_droptimepicker	 = $this->input->post('reccurent_alternatives_droptimepicker');
+
 				}
+				}else{
+	
+					$data['recurrent_yes'] = '';
+					$data['recurrent_continues'] = '';
+					$data['recurrent_alternatives'] = '';
+
 				}
-		
+
+				
 			if($this->form_validation->run()==False){
+				$this->mysession->set( 'post',$data);
 				redirect(base_url().'organization/front-desk/trip-booking');
 			}else{
 
-				if(isset($_REQUEST['advanced'])){
-					$data['customer_groups']=$this->input->post('customer_groups');
-				}
-				if(isset($_REQUEST['guest'])){
-					$data_guest['name']=$this->input->post('guestname');
-					$data_guest['email']=$this->input->post('guestemail');
-					$data_guest['mobile']=$this->input->post('guestmobile');
-				}
-
-				$data['booking_source_id']=$this->input->post('booking_source');
-				$data['source']=$this->input->post('source');
-				$data['trip_models_id']=$this->input->post('trip_models');
-				$data['no_of_passengers']=$this->input->post('no_of_passengers');
-				$data['pickupcity']=$this->input->post('pickupcity');
-				$data['pickuparea']=$this->input->post('pickuparea');
-				$data['pickuplandmark']=$this->input->post('pickuplandmark');
-				$data['viacity']=$this->input->post('viacity');
-				$data['viaarea']=$this->input->post('viaarea');
-				$data['vialandmark']=$this->input->post('vialandmark');
-				$data['dropdownlocation']=$this->input->post('dropdownlocation');
-				$data['dropdownarea']=$this->input->post('dropdownarea');
-				$data['dropdownlandmark']=$this->input->post('dropdownlandmark');
-				$data['pickupdatetimepicker']=$this->input->post('pickupdatetimepicker');
-				$data['dropdatetimepicker']=$this->input->post('dropdatetimepicker');
-				$data['vehicle_types_id']=$this->input->post('vehicle_types');
-				$data['vehicle_ac_types_id']=$this->input->post('vehicle_ac_types');
-				$data['vehicle_seating_capacity_id']=$this->input->post('vehicle_seating_capacity');
-				$data['languages_id']=$this->input->post('languages');
-				$data['tarrifs_id']=$this->input->post('tarrifs');
-
-				if(isset($_REQUEST['recurrent-yes'])){
-					if($this->input->post('recurrent')=='continues'){
-						
-						$reccurent_continues_pickupdatetimepicker =explode('-',$this->input->post('reccurent_continues_pickupdatetimepicker'));
-						$pickupdatetimepicker_start=$reccurent_continues_pickupdatetimepicker[0];
-						$pickupdatetimepicker_end=$reccurent_continues_pickupdatetimepicker[1];
-					
-						$reccurent_continues_dropdatetimepicker	  =$this->input->post('reccurent_continues_dropdatetimepicker');
-						$start = $pickupdatetimepicker_start; //start date
-						$end = $pickupdatetimepicker_end; //end date
-
-						$dates = array();
-						$start = $current = strtotime($start);
-						$end = strtotime($end);
-
-						while ($current <= $end) {
-							$dates[] = date('d/m/Y', $current);
-							$current = strtotime('+1 days', $current);
-						}
-						//print_r($dates);
-						
-				
-					}else if($this->input->post('recurrent')=='alternatives'){
-
-						$reccurent_alternatives_pickupdatetimepicker =$this->input->post('reccurent_alternatives_pickupdatetimepicker');print_r($reccurent_alternatives_pickupdatetimepicker);exit;
-						$reccurent_alternatives_dropdatetimepicker	  =$this->input->post('reccurent_alternatives_dropdatetimepicker');
-						
-					}
-				}
 
 			}
 		} 
