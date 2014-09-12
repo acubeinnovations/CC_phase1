@@ -101,8 +101,8 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'organization/front-desk/profile';?>"><i class="fa fa-angle-double-right"></i> Tarrif Masters</a></li>
-                                <li><a href="<?php echo base_url().'organization/front-desk/changepassword';?>"><i class="fa fa-angle-double-right"></i>Tarrifs</a></li>
+                                <li><a href="<?php echo base_url().'organization/front-desk/tarrif-masters';?>"><i class="fa fa-angle-double-right"></i> Tarrif Masters</a></li>
+                                <li><a href="<?php echo base_url().'organization/front-desk/tarrif';?>"><i class="fa fa-angle-double-right"></i>Tarrifs</a></li>
                                 
                             </ul>
                         </li>

@@ -16,8 +16,19 @@ $(this).siblings().find(':submit').trigger('click');
 
 //for tarrif trigger
 $(document).ready(function(){
+
 $('.tarrif-add').click(function(){
 $('#tarrif-add-id').trigger('click');
+});
+$('.tarrif-edit').click(function(){
+
+$(this).siblings().find(':submit').trigger('click');
+
+});
+$('.tarrif-delete').click(function(){
+
+$(this).siblings().find(':submit').trigger('click');
+
 });
 });
 
@@ -591,6 +602,10 @@ $(this).parent().parent().parent().removeClass('open');
 		}	
 			
 	});
+	
+	//add tarrif page js start
+	$('#fromdatepicker').datetimepicker({timepicker:false,format:'Y-m-d'});
+	
 	
 	
 

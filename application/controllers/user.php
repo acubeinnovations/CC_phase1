@@ -6,6 +6,7 @@ class User extends CI_Controller {
 	{
     parent::__construct();
     $this->load->helper('my_helper');
+	$this->load->model('user_model');
     no_cache();
 
 	}
@@ -34,6 +35,8 @@ class User extends CI_Controller {
 		$this->ShowBookTrip();
 		}elseif($param1=='tarrif-masters'){
 		$this->tarrif_masters();
+		}elseif($param1=='tarrif'){
+		$this->tarrif();
 		}
 		}else{
 			echo 'you are not authorized access this page..';
@@ -44,7 +47,7 @@ class User extends CI_Controller {
 	public function settings() {
 	if($this->session_check()==true) {
 	$tbl_arry=array('vehicle_ownership_types','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','vehicle_makes','vehicle_driver_bata_percentages','vehicle_permit_types','languages','language_proficiency','driver_type','payment_type','customer_types','customer_groups','customer_registration_types','marital_statuses','bank_account_types','id_proof_types','trip_models','trip_statuses','booking_sources','trip_expense_type');
-	$this->load->model('user_model');
+	
 	for ($i=0;$i<23;$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
 	if($result!=false){
@@ -77,9 +80,29 @@ class User extends CI_Controller {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
+	$data['allDetails']=$this->user_model->getAllDetails();
 	$data['title']="Tarrif Masters | ".PRODUCT_NAME;  
 	$page='user-pages/tarrif_master';
 	$this->load_templates($page,$data);
+	}
+	else{
+			echo 'you are not authorized access this page..';
+		}
+	
+	}
+	public function tarrif(){
+	if($this->session_check()==true) {
+	$result=$this->user_model->getTarrif_masters();
+	if($result!=false){
+	$data['masters']=$result;
+	}else
+	{
+	$data['masters']='';
+	}
+	$data['title']="Tarrif| ".PRODUCT_NAME; 
+	$page='user-pages/tarrif';
+	$this->load_templates($page,$data);
+	
 	}
 	else{
 			echo 'you are not authorized access this page..';

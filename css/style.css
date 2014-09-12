@@ -118,11 +118,11 @@ color:#00A65A;
 
 }
 
-.settings-edit{
+.settings-edit,.tarrif-edit{
 color:#00C0EF;
 }
 
-.settings-delete{
+.settings-delete,.tarrif-delete{
 color:#F56954;
 }
 
@@ -315,4 +315,14 @@ width:80% !important;
 }
 .form-submit-reset-buttons-group{
 bottom:0px;
+}
+.tarrif_body{
+width:30%;
+margin-left:500px;
+margin-top:70px;
+
+}
+.tbl_tarrif >tr{
+
+
 }

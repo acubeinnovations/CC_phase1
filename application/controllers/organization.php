@@ -219,7 +219,7 @@ public function __construct()
 		    $email  = $this->input->post('email');
 		    $phone = $this->input->post('phone');
 	        
-		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
+		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean|numeric');
 		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
 		$this->form_validation->set_rules('address','Address','trim|required|min_length[10]|xss_clean');
 		$this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');

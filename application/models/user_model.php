@@ -53,6 +53,29 @@ class user_model extends CI_Model {
 			}
 	}
    
+	public function getAllDetails(){
+	$qry=$this->db->get('tariff_masters');
+	$count=$qry->num_rows();
+	$result=$qry->result_array();
+	return $result;
 	
+	
+	}
+	public function getTarrif_masters(){
+	$this->db->where('organisation_id',$this->session->userdata('organisation_id') );
+	$this->db->where('user_id',$this->session->userdata('id') );
+	$qry=$this->db->get('tariff_masters');
+	$count=$qry->num_rows();
+	$l= $qry->result_array();
+	for($i=0;$i<$count;$i++){
+			$values[$l[$i]['id']]=$l[$i]['title'];
+			}
+			if(!empty($values)){
+			return $values;
+			}
+			else{
+			return false;
+			}
+	}
    
 }
