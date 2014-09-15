@@ -531,8 +531,8 @@ class CI_Form_validation {
 				if ( ! isset($this->_error_array[$row['field']]))
 				{
 				 $CI =& get_instance();
-				 $CI->session->set_userdata(array($row['field']=>$message));
-				 $this->_error_array[$row['field']] = $message;
+				 $CI->mysession->set($row['field'],$message);
+				$this->_error_array[$row['field']] = $message;
 				}
 			}
 
@@ -681,10 +681,10 @@ class CI_Form_validation {
 				if ( ! isset($this->_error_array[$row['field']]))
 				{	
 					$CI = & get_instance();
-					$CI->session->set_userdata(array($row['field']=>$message));
+					$CI->mysession->set($row['field'],$message);
 					$this->_error_array[$row['field']] = $message;
 				}
-
+		
 				return;
 			}
 		}

@@ -51,8 +51,8 @@ foreach ($options as $key => $val)
 function form_error_session($field = '', $container_open ='', $container_close=''){
 		$CI = & get_instance();
 		if(isset($field) && $field!=''){
-		$form_error_session=$container_open.$CI->session->userdata($field).$container_close;
-		$CI->session->set_userdata($field,'');
+		$form_error_session=$container_open.$CI->mysession->get($field).$container_close;
+		$CI->mysession->delete($field);
 		return $form_error_session;
 		}else{
 		return '';
