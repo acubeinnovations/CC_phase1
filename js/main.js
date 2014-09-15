@@ -693,8 +693,10 @@ alert("Add Customer Informations");
 	});
 	
 	//add tarrif page js start
-	$('#fromdatepicker').datetimepicker({timepicker:false,format:'Y-m-d'});
-	
+	//$('#fromdatepicker').datetimepicker({timepicker:false,format:'Y-m-d'});
+	$('.fromdatepicker').each(function(){
+	$(this).datetimepicker({timepicker:false,format:'Y-m-d'});
+	});
 	
 	
 

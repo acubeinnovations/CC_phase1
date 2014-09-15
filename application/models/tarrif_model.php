@@ -22,11 +22,56 @@ class Tarrif_model extends CI_Model {
 	return true;
 	}
 	public function addTariff($data){
-	$tbl="tariffs";
+	$id=$data['tariff_master_id'];
+	$date=explode("-",$data['from_date']);
+	$year=$date[0];
+	$month=$date[1];
+	$day=$date[2];
+	$date=$data['from_date'];
+	$date_result=$this->date_check($date);
+	if( $date_result==true ) {
+	$from_unix_time = mktime(0, 0, 0, $month, $day, $year);
+	$day_before = strtotime("yesterday", $from_unix_time);
+	$formatted_date = date('Y-m-d', $day_before);
 	$to_date='9999-12-30';
+	$tbl="tariffs";
+	$qry=$this->db->where(array('tariff_master_id'=>$id,'organisation_id'=>$data['organisation_id'],'to_date'=>$to_date));
+	$qry=$this->db->get($tbl);
+	$result=$qry->result_array();
+	$from=$result[0]['from_date'];
+	if($qry->num_rows()>0){
+	$this->db->where('id',$result[0]['id']);
+	$this->db->set('updated', 'NOW()', FALSE);
+	$this->db->update($tbl,array('to_date'=>$formatted_date));
+	
+	}
+	
 	$this->db->set('to_date', $to_date);
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert($tbl,$data);
+	return true;
+	}
+	else{
+	return false;
+	}
+	}
+	
+	public function date_check($date){
+	if( strtotime($date) >= strtotime(date('Y-m-d')) ){
+	return true;
+	}	
+	}
+	public function edit_tarrifValues($data,$id){
+	$tbl="tariffs";
+	$this->db->where('id',$id );
+	$this->db->set('updated', 'NOW()', FALSE);
+	$this->db->update($tbl,$data);
+	return true;
+	}
+	public function delete_tarrifValues($id){
+	$tbl="tariffs";
+	$this->db->where('id',$id );
+	$this->db->delete($tbl);
 	return true;
 	}
 	}
