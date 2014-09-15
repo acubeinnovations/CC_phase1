@@ -252,6 +252,9 @@ display:none;
 color:red;
 margin-top:-10px;
 }
+.width-50-percent{
+width:50%;
+}
 .wdith-30-percent{
 width:30%;
 }
@@ -326,3 +329,4 @@ margin-top:70px;
 
 
 }
+

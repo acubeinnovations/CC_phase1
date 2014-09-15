@@ -4,6 +4,7 @@ class Trip_booking extends CI_Controller {
 		{
 		parent::__construct();
 		$this->load->model("trip_booking_model");
+		$this->load->model("customers_model");
 		$this->load->helper('my_helper');
 		no_cache();
 
@@ -15,6 +16,10 @@ class Trip_booking extends CI_Controller {
 		if($param2=='book-trip') {
 		
 			$this->bookTrip();
+			
+		}else if($param2=='set-session-post') {
+		
+			$this->setSession();
 			
 		}
 		}
@@ -48,9 +53,10 @@ class Trip_booking extends CI_Controller {
 					$data['guestemail']='';
 					$data['guestmobile']='';
 				}
+
 				$this->form_validation->set_rules('customer','Customer name','trim|required|xss_clean');
-				$this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|is_unique[customers.email]');
-				$this->form_validation->set_rules('mobile','Mobile','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean|is_unique[customers.mobile]');
+				$this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|');
+				$this->form_validation->set_rules('mobile','Mobile','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 				$this->form_validation->set_rules('booking_source','Booking source','trim|xss_clean');
 				$this->form_validation->set_rules('source','Source','trim|min_length[2]|xss_clean|alpha');
 				$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
@@ -76,19 +82,27 @@ class Trip_booking extends CI_Controller {
 				
 	
 				$data['customer']			=	$this->input->post('customer');
-				$data['email']				=	$this->input->post('source');
+				$data['new_customer']		=	$this->input->post('new_customer');
+				$data['email']				=	$this->input->post('email');
 				$data['mobile']				=	$this->input->post('mobile');
+				$data['registration_type_id']=CUSTOMER_REG_TYPE_PHONE_CALL;	
 				$data['booking_source']		=	$this->input->post('booking_source');
 				$data['source']				=	$this->input->post('source');
 				$data['trip_model']			=	$this->input->post('trip_model');
 				$data['no_of_passengers']	=	$this->input->post('no_of_passengers');
 				$data['pickupcity']			=	$this->input->post('pickupcity');
+				$data['pickupcitylat']		=	$this->input->post('pickupcitylat');
+				$data['pickupcitylng']		=	$this->input->post('pickupcitylng');
 				$data['pickuparea']			=	$this->input->post('pickuparea');
 				$data['pickuplandmark']		=	$this->input->post('pickuplandmark');
 				$data['viacity']			=	$this->input->post('viacity');
+				$data['viacitylat']			=	$this->input->post('viacitylat');
+				$data['viacitylng']			=	$this->input->post('viacitylng');
 				$data['viaarea']			=	$this->input->post('viaarea');
 				$data['vialandmark']		=	$this->input->post('vialandmark');
 				$data['dropdownlocation']	=	$this->input->post('dropdownlocation');
+				$data['dropdownlocationlat']	=	$this->input->post('dropdownlocationlat');
+				$data['dropdownlocationlng']	=	$this->input->post('dropdownlocationlng');
 				$data['dropdownarea']		=	$this->input->post('dropdownarea');
 				$data['dropdownlandmark']	=	$this->input->post('dropdownlandmark');
 				$data['pickupdatepicker']	=	$this->input->post('pickupdatepicker');
@@ -99,7 +113,7 @@ class Trip_booking extends CI_Controller {
 				$data['vehicle_ac_type']	=	$this->input->post('vehicle_ac_type');
 				if(isset($_REQUEST['beacon_light'])){
 					$data['beacon_light']=TRUE;
-					if($this->input->post('beacon-light-radio')=='red'){
+					if($this->input->post('beacon_light_radio')=='red'){
 						$data['beacon_light_radio']='red';
 						
 					}else{
@@ -198,11 +212,13 @@ class Trip_booking extends CI_Controller {
 				$this->mysession->set( 'post',$data);
 				redirect(base_url().'organization/front-desk/trip-booking');
 			}else{
-
-
+				$dbdata=array('customer'=>$data['customer'],'email'=>$data['email'],'mobile'=>$data['mobile'],'registration_type_id'=>$data['registration_type_id']);
+				$data['guest_id']=$this->customers_model->addCustomer($dbdata);
+				
 			}
 		} 
 	}
+	
 	public function session_check() {
 	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==FRONT_DESK)) {
 		return true;

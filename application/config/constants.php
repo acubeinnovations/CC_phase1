@@ -27,6 +27,8 @@ define('USER_STATUS_DISABLED',3);
 define('STATUS_ACTIVE',1);
 define('STATUS_INACTIVE',2);
 define('PRODUCT_NAME','CNC PHASE 1');
+define('CUSTOMER_REG_TYPE_PHONE_CALL',1);
+define('CUSTOMER_REG_TYPE_APP',2);
 /*
 |--------------------------------------------------------------------------
 | File Stream Modes

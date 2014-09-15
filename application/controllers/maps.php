@@ -18,6 +18,9 @@ class Maps extends CI_Controller {
 			
 			$this->getPlaces();
 				
+		}else if($param1=='get-latlng'){
+
+			$this->getLatLng();
 		}
 		
 	}else{
@@ -29,7 +32,7 @@ class Maps extends CI_Controller {
 		if(isset($_REQUEST['url']) && $_REQUEST['via']=='NO') {
 		$target_url=$_REQUEST['url'];
 			$data=file_get_contents($target_url);
-			$decode = json_decode($data);//print_r($decode);
+			$decode = json_decode($data);print_r($data);exit;
 			if(isset($decode->rows[0]->elements[0]->status) && $decode->rows[0]->elements[0]->status!='NOT_FOUND') {
 			$jsondata['distance']=$decode->rows[0]->elements[0]->distance->text;
 			$jsondata['duration']=$decode->rows[0]->elements[0]->duration->text;
@@ -81,6 +84,23 @@ class Maps extends CI_Controller {
 			}
 		
 		}
+
+		public function getLatLng(){
+		if(isset($_REQUEST['url'])) {
+			$target_url=$_REQUEST['url'];
+			$jsondata ='';
+				$data=file_get_contents($target_url);
+				$decode = json_decode($data);
+				$jsondata['lat']=$decode->results[0]->geometry->location->lat;
+				$jsondata['lng']=$decode->results[0]->geometry->location->lng;
+				echo json_encode($jsondata);
+				}else{
+				$jsondata='false';
+				echo $jsondata;
+			}
+		
+		}
+	
 		
 		public function session_check() {
 	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==FRONT_DESK)) {

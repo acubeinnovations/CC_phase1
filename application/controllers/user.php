@@ -122,7 +122,7 @@ class User extends CI_Controller {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
-
+	
 	$data['title']="Trip Booking | ".PRODUCT_NAME;  
 	$page='user-pages/trip-booking';
 	$this->load_templates($page,$data);

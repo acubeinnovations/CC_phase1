@@ -45,17 +45,17 @@ class Customers extends CI_Controller {
 		}
 
 		public function addCustomer(){
-		if(isset($_REQUEST['mobile']) && $_REQUEST['mobile']!='' && isset($_REQUEST['email']) && $_REQUEST['email']!='' && isset($_REQUEST['name']) && $_REQUEST['name']!=''){
+		if(isset($_REQUEST['mobile']) && $_REQUEST['mobile']!=''  && isset($_REQUEST['name']) && $_REQUEST['name']!=''){
 			$data['mobile']=$_REQUEST['mobile'];
 			$data['email']=$_REQUEST['email'];
 			$data['name']=$_REQUEST['name'];
-				
+			$data['registration_type_id']=CUSTOMER_REG_TYPE_PHONE_CALL;	
 		$res=$this->customers_model->addCustomer($data);
-		if(isset($res) && $res==true){
+		if(isset($res) && $res!=false){
 			
-			return true;
+			echo true;exit;
 		}else{
-			return false;
+			echo false;exit;
 		}
 		}
 		}

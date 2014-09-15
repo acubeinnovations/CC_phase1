@@ -17,7 +17,7 @@ class Customers_model extends CI_Model {
 	$insert_id=$this->db->insert_id();
 
 	if($insert_id > 0){
-		return true;
+		return $insert_id;
 	}else{
 		return false;
 	}

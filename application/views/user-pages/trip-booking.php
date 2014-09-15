@@ -3,6 +3,7 @@
 $booking_source		=	'';
 $source				=	'';
 $customer			=	'';
+$new_customer		=	true;
 $email				=	'';
 $mobile				=	'';
 $advanced			=	'';
@@ -56,34 +57,49 @@ $reccurent_alternatives_pickuptimepicker	=	'';
 $reccurent_alternatives_dropdatepicker		=	'';
 $reccurent_alternatives_droptimepicker		=	'';
 
-
+$alternative_pickupdatepicker	= '';
+$alternative_pickuptimepicker	= '';
+$alternative_droptimepicker 	= '';
+$alternative_dropdatepicker	    = '';
 
 
 if($this->mysession->get('post')!=NULL){
 $data						=	$this->mysession->get('post');//print_r($data);
+if($data['booking_source']!=-1){
 $booking_source				=	$data['booking_source'];
+}
 $source						=	$data['source'];
 $customer					=	$data['customer'];
+$new_customer				=	$data['new_customer'];
 $email						=	$data['email'];
 $mobile						=	$data['mobile'];
 $advanced					=	$data['advanced'];
 $email						=	$data['email'];
-$advanced					=	$data['advanced'];
+if($data['customer_group']!=-1){
 $customer_group				=	$data['customer_group'];
+}
 $guest						=	$data['guest'];
 $guestname					=	$data['guestname'];
 $guestemail					=	$data['guestemail'];
 $guestmobile				=	$data['guestmobile'];
 
-$trip_model					=	$data['trip_model'];	
+if($data['trip_model']!=-1){
+$trip_model					=	$data['trip_model'];
+}	
 $no_of_passengers			=	$data['no_of_passengers'];
 $pickupcity					=	$data['pickupcity'];
+$pickupcitylat				=	$data['pickupcitylat'];
+$pickupcitylng				=	$data['pickupcitylng'];
 $pickuparea					=	$data['pickuparea'];
 $pickuplandmark				=	$data['pickuplandmark'];
 $viacity					=	$data['viacity'];
+$viacitylat					=	$data['viacitylat'];
+$viacitylng					=	$data['viacitylng'];
 $viaarea					=	$data['viaarea'];
 $vialandmark				=	$data['vialandmark'];
 $dropdownlocation			=	$data['dropdownlocation'];
+$dropdownlocationlat		=	$data['dropdownlocationlat'];
+$dropdownlocationlng		=	$data['dropdownlocationlng'];
 $dropdownarea				=	$data['dropdownarea'];
 $dropdownlandmark			=	$data['dropdownlandmark'];
 $pickupdatepicker			=	$data['pickupdatepicker'];
@@ -91,16 +107,28 @@ $dropdatepicker				=	$data['dropdatepicker'];
 $pickuptimepicker			=	$data['pickuptimepicker'];
 $droptimepicker 			=	$data['droptimepicker'];
 
+if($data['vehicle_type']!=-1){
 $vehicle_type 				=	$data['vehicle_type'];
+}
+if($data['vehicle_ac_type']!=-1){
 $vehicle_ac_type			=	$data['vehicle_ac_type'];
+}
 $beacon_light				=	$data['beacon_light'];
 $beacon_light_radio	   	    =	$data['beacon_light_radio'];
 $pluck_card 				=	$data['pluck_card'];
 $uniform 					=	$data['uniform'];
+if($data['seating_capacity']!=-1){
 $seating_capacity 			=	$data['seating_capacity'];
+}
+if($data['language']!=-1){
 $language 					=	$data['language'];
+}
+if($data['tariff']!=-1){
 $tariff 					=	$data['tariff'];
+}
+if($data['available_vehicle']!=-1){
 $available_vehicle			=	$data['available_vehicle'];
+}
 
 $recurrent_yes 				=	$data['recurrent_yes'];
 $recurrent_continues 		=	$data['recurrent_continues'];
@@ -132,7 +160,7 @@ $this->mysession->delete('post');
 <div class="trip-booking-body">
 	<div class="first-column-trip-booking">
 		<?php	
-		$attributes = array('autocomplete'=>'off');
+		$attributes = array('autocomplete'=>'off','id'=>'trip-form');
 		 echo form_open(base_url().'trip-booking/book-trip',$attributes);?>
 		<fieldset class="body-border">
 		<legend class="body-head">Trip Booking</legend>
@@ -157,20 +185,27 @@ $this->mysession->delete('post');
 							<div class="div-with-90-percent-width-and-marigin-5 passenger-basic-info">
 								<div class="form-group">
 								<?php 
-								echo form_input(array('name'=>'customer','class'=>'form-control','id'=>'customer','placeholder'=>'Customer','value'=>$customer)).form_label('','name_error');
+								echo form_input(array('name'=>'customer','class'=>'form-control','id'=>'customer','placeholder'=>'Customer','value'=>$customer)).form_label('','name_error').$this->form_functions->form_error_session('customer', '<p class="text-red">', '</p>');
 								 ?>
+								<div class="hide-me"><?php echo form_input(array('name'=>'new_customer','class'=>'form-control new-customer','value'=>$new_customer)); ?></div>
 								</div>
 								<div class="form-group margin-top-less-10">
 								<?php 
 								echo form_input(array('name'=>'email','class'=>'form-control col-1-textbox-with-50-percent-width-and-float-left','id'=>'email','placeholder'=>'Email','value'=>$email));
 								echo form_input(array('name'=>'mobile','class'=>'form-control col-2-textbox-with-50-percent-width-and-float-left','id'=>'mobile','placeholder'=>'Mobile','value'=>$mobile)).br().form_label('','email_error').nbs(61).form_label('','mobile_error');
+								?>
+								<span class="width-50-percent margin-top-less-10 float-left">
+								<?php echo $this->form_functions->form_error_session('email', '<p class="text-red">', '</p>').nbs(8);?>
+								</span><span class="width-50-percent margin-top-less-20 float-left">
+								<?php echo $this->form_functions->form_error_session('mobile', '<p class="text-red">', '</p>');
 								 ?>
+								</span>
 								</div>
 							</div>
 							</td>
 							<td>
-								<button class="btn btn-info btn-lg add-customer">ADD</button>
-								<button class="btn btn-danger btn-lg clear-customer">CLEAR</button>
+								<button class="btn btn-info btn-lg add-customer" type="button">ADD</button>
+								<button class="btn btn-danger btn-lg clear-customer" type="button">CLEAR</button>
 							</td>
 						</tr>
 						<tr>
@@ -194,7 +229,7 @@ $this->mysession->delete('post');
 							<td>
 								<div class="group-toggle div-with-90-percent-width-and-marigin-5">
 										<?php echo $this->form_functions->populate_dropdown('customer_group',$customer_groups,$customer_group,$class ='groups form-control',$msg="Select Groups"); ?>
-										<?php echo $this->form_functions->form_error_session('customer_groups', '<p class="text-red">', '</p>');?>
+										<?php echo $this->form_functions->form_error_session('customer_group', '<p class="text-red">', '</p>');?>
 								</div>
 							
 							</td>
@@ -242,7 +277,7 @@ $this->mysession->delete('post');
 								
                                         <div class="input-group-btn ">
                                             <?php 
-									echo form_input(array('name'=>'pickupcity','class'=>'form-control width-96-percent-and-margin-8 dropdown-toggle','id'=>'pickupcity','placeholder'=>'Pick up City','value'=>$pickupcity));
+									echo form_input(array('name'=>'pickupcity','class'=>'form-control width-96-percent-and-margin-8 dropdown-toggle','id'=>'pickupcity','placeholder'=>'Pick up City','value'=>$pickupcity));?><div class="hide-me"><?php echo form_input(array('name'=>'pickupcitylat','id'=>'pickupcitylat','value'=>$pickupcitylat)).form_input(array('name'=>'pickupcitylng','id'=>'pickupcitylng','value'=>$pickupcitylng));?></div><?php
 									echo $this->form_functions->form_error_session('pickupcity', '<p class="text-red">', '</p>');
 									 ?>
                                             <ul class="dropdown-menu dropdown-menu-on-key-press autofill-pickupcity">
@@ -270,7 +305,7 @@ $this->mysession->delete('post');
 										<div class="form-group">
 											  <div class="input-group-btn ">
 										<?php 
-										echo form_input(array('name'=>'viacity','class'=>'form-control width-96-percent-and-margin-8','id'=>'viacity','placeholder'=>'Via City','value'=>$viacity));
+										echo form_input(array('name'=>'viacity','class'=>'form-control width-96-percent-and-margin-8','id'=>'viacity','placeholder'=>'Via City','value'=>$viacity));?><div class="hide-me"><?php echo form_input(array('name'=>'viacitylat','id'=>'viacitylat','value'=>$viacitylat)).form_input(array('name'=>'viacitylng','id'=>'viacitylng','value'=>$viacitylng));?></div><?php
 										echo $this->form_functions->form_error_session('viacity', '<p class="text-red">', '</p>');
 										 ?>
 												 <ul class="dropdown-menu dropdown-menu-on-key-press autofill-viacity">
@@ -294,7 +329,7 @@ $this->mysession->delete('post');
 									<div class="form-group">
 										  <div class="input-group-btn ">
 									<?php 
-									echo form_input(array('name'=>'dropdownlocation','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlocation','placeholder'=>'Drop Down City','value'=>$dropdownlocation));
+									echo form_input(array('name'=>'dropdownlocation','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlocation','placeholder'=>'Drop Down City','value'=>$dropdownlocation));?><div class="hide-me"><?php echo form_input(array('name'=>'dropdownlocationlat','id'=>'dropdownlocationlat','value'=>$dropdownlocationlat)).form_input(array('name'=>'dropdownlocationlng','id'=>'dropdownlocationlng','value'=>$dropdownlocationlng));?></div><?php
 									echo $this->form_functions->form_error_session('dropdownlocation', '<p class="text-red">', '</p>');
 									 ?>
 											 <ul class="dropdown-menu dropdown-menu-on-key-press autofill-dropdownlocation">
@@ -310,7 +345,7 @@ $this->mysession->delete('post');
 									</div>
 									<div class="form-group">
 									<?php 
-									echo form_input(array('name'=>'dropdownlandmark','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlandmark','placeholder'=>'Drop Down Landmark','value'=>$dropdownlandmark));
+							echo form_input(array('name'=>'dropdownlandmark','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlandmark','placeholder'=>'Drop Down Landmark','value'=>$dropdownlandmark));
 										echo $this->form_functions->form_error_session('dropdownlandmark', '<p class="text-red">', '</p>');
 									 ?>
 									</div>
@@ -351,7 +386,7 @@ $this->mysession->delete('post');
 						<div class="form-group">
 						<table class="radio-checkbox-vehicle-group">
 						<tr>
-							<td>
+							<td class="beacon-light-chk-box-container">
 								<?php
 									echo form_checkbox(array('name'=> 'beacon_light','class'=>'beacon-light-chek-box flat-red','checked'=>$beacon_light,'radio_to_be_selected'=>$beacon_light_radio));
 								
@@ -366,7 +401,7 @@ $this->mysession->delete('post');
 								    echo nbs(5).form_label('Red').nbs(15);?>
 									</span>
 									<span class="beacon-radio2-container"><?php
-								    echo form_radio(array('name' => 'beacon-light-radio','id' => 'beacon-light-radio2','value'=>'blue'));
+								    echo form_radio(array('name' => 'beacon_light_radio','id' => 'beacon-light-radio2','value'=>'blue'));
 								
 								echo nbs(5).form_label('Blue');
 								?>
@@ -439,7 +474,7 @@ $this->mysession->delete('post');
 									<?php 
 								
 									echo form_input(array('name'=>'reccurent_continues_pickupdatepicker','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_continues_pickupdatepicker','placeholder'=>'Pick up Date ','value'=>$reccurent_continues_pickupdatepicker)).form_input(array('name'=>'reccurent_continues_pickuptimepicker','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_continues_pickuptimepicker','placeholder'=>'Pick up time ','value'=>$reccurent_continues_pickuptimepicker));
-									echo $this->form_functions->form_error_session('reccurent_continues_pickupdatepicker', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_continues_pickuptimepicker', '<p class="text-red">', '</p>');
+									echo br(3).$this->form_functions->form_error_session('reccurent_continues_pickupdatepicker', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_continues_pickuptimepicker', '<p class="text-red">', '</p>');
 									 ?>
 									
 								</div>
@@ -457,13 +492,13 @@ $this->mysession->delete('post');
 											<div class="form-group">
 											<?php 
 											if(isset($reccurent_alternatives_pickupdatepicker[0]) && $reccurent_alternatives_pickupdatepicker[0]!=''){
-											$pickupdatepicker=$reccurent_alternatives_pickupdatepicker[0];
+											$alternative_pickupdatepicker=$reccurent_alternatives_pickupdatepicker[0];
 											}
 											if(isset($reccurent_alternatives_pickuptimepicker[0]) && $reccurent_alternatives_pickuptimepicker[0]!=''){
-											$pickuptimepicker=$reccurent_alternatives_pickuptimepicker[0];
+											$alternative_pickuptimepicker=$reccurent_alternatives_pickuptimepicker[0];
 											}
 											
-											echo form_input(array('name'=>'reccurent_alternatives_pickupdatepicker[]','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_alternatives_pickupdatepicker0','placeholder'=>'Pick up Date and time ','value'=>$pickupdatepicker)).form_input(array('name'=>'reccurent_alternatives_pickuptimepicker[]','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_alternatives_pickuptimepicker0','placeholder'=>'Pick up time ','value'=>$pickuptimepicker));
+											echo form_input(array('name'=>'reccurent_alternatives_pickupdatepicker[]','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_alternatives_pickupdatepicker0','placeholder'=>'Pick up Date and time ','value'=>$alternative_pickupdatepicker)).form_input(array('name'=>'reccurent_alternatives_pickuptimepicker[]','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_alternatives_pickuptimepicker0','placeholder'=>'Pick up time ','value'=>$alternative_pickuptimepicker));
 											echo $this->form_functions->form_error_session('reccurent_alternatives_pickupdatepicker', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_alternatives_pickuptimepicker', '<p class="text-red">', '</p>');
 											 ?>
 											</div>
@@ -471,13 +506,13 @@ $this->mysession->delete('post');
 											<div class="form-group">
 											<?php 
 											if(isset($reccurent_alternatives_dropdatepicker[0]) && $reccurent_alternatives_dropdatepicker[0]!=''){
-											$dropdatepicker=$reccurent_alternatives_dropdatepicker[0];
+											$alternative_dropdatepicker=$reccurent_alternatives_dropdatepicker[0];
 											}
 											if(isset($reccurent_alternatives_droptimepicker[0]) && $reccurent_alternatives_droptimepicker[0]!=''){
-											$droptimepicker=$reccurent_alternatives_droptimepicker[0];
+											$alternative_droptimepicker=$reccurent_alternatives_droptimepicker[0];
 											}
 											
-											echo form_input(array('name'=>'reccurent_alternatives_dropdatepicker[]','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_alternatives_dropdatepicker0','placeholder'=>'Drop Date and time ','value'=>$dropdatepicker)).form_input(array('name'=>'reccurent_alternatives_droptimepicker[]','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_alternatives_droptimepicker0','placeholder'=>'Drop time ','value'=>$droptimepicker));
+											echo form_input(array('name'=>'reccurent_alternatives_dropdatepicker[]','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_alternatives_dropdatepicker0','placeholder'=>'Drop Date and time ','value'=>$alternative_dropdatepicker)).form_input(array('name'=>'reccurent_alternatives_droptimepicker[]','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_alternatives_droptimepicker0','placeholder'=>'Drop time ','value'=>$alternative_droptimepicker));
 											echo $this->form_functions->form_error_session('reccurent_alternatives_dropdatepicker[]', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_alternatives_droptimepicker[]', '<p class="text-red">', '</p>');
 											 ?>
 											</div>
@@ -560,7 +595,8 @@ $this->mysession->delete('post');
 							$cancel_or_reset="RESET";
 							}
 						?>
-						<?php echo form_submit("book_trip","BOOK TRIP","class='btn btn-success btn-lg book-trip'");  ?>  
+						<button class="btn btn-success btn-lg book-trip-validate" type="button" enable_redirect='false'>BOOK TRIP</button>
+						<div class="hide-me"><?php echo form_submit("book_trip","","class='btn btn-success btn-lg book-trip'");  ?> </div> 
 						<?php echo form_reset("cancel_trip",$cancel_or_reset,"class='btn btn-danger btn-lg cancel-trip'");  ?> 
 						
 				</div>

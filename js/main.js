@@ -65,7 +65,7 @@ $('.guest-toggle').toggle();
 
 }
 if($('.beacon-light-chek-box').attr('checked')=='checked'){
-var radio_button_to_be_checked = $('.beacon-light-chek-box').attr('radio_to_be_selected');alert(radio_button_to_be_checked);
+var radio_button_to_be_checked = $('.beacon-light-chek-box').attr('radio_to_be_selected');
 if(radio_button_to_be_checked=='red'){
 
 $('.beacon-radio1-container > .iradio_minimal > .iCheck-helper').trigger('click');
@@ -74,12 +74,18 @@ $('.beacon-radio1-container > .iradio_minimal > .iCheck-helper').trigger('click'
 
 }else if(radio_button_to_be_checked=='blue'){
 
-$('.beacon-radio1-container > .iradio_minimal > .iCheck-helper').trigger('click');
+$('.beacon-radio2-container > .iradio_minimal > .iCheck-helper').trigger('click');
 
 	
 
 }
 }
+
+
+if($("#viacity").val()!='' || $("#viaarea").val()!='' || $("#vialandmark").val()!=''){
+$('.toggle-via').toggle();
+}
+
 
 if($('.recurrent-yes-chek-box').attr('checked')=='checked'){
 
@@ -115,7 +121,7 @@ $('.recurrent-container-alternatives').show();
 
 var count = $('.add-reccurent-dates').attr('count');
 var slider=$('.reccurent-container').attr('slider');
-if(slider>='2'){
+if(slider>=2){
 $('.reccurent-slider').css('overflow-y','scroll');
 $('.reccurent-slider').css('height','300px');
 }else{
@@ -139,7 +145,18 @@ $('#reccurent_alternatives_droptimepicker'+i).datetimepicker({datepicker:false,
 
 }
 
+$('.beacon-light-chk-box-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
 
+if($('.beacon-light-chek-box').attr('checked')=='checked'){
+	$('.beacon-radio1-container > .iradio_minimal > .iCheck-helper').trigger('click');
+}else{
+	$('.beacon-radio1-container > .iradio_minimal').removeClass('checked');
+	$('.beacon-radio2-container > .iradio_minimal').removeClass('checked');
+	$('#beacon-light-radio1').prop('checked',false);
+	$('#beacon-light-radio2').prop('checked',false);
+}
+
+});
 
 $('#pickupdatepicker').datetimepicker({timepicker:false,format:'d/m/Y',formatDate:'d/m/Y'});
 $('#dropdatepicker').datetimepicker({timepicker:false,format:'d/m/Y',formatDate:'d/m/Y'});
@@ -292,6 +309,7 @@ var mobile=$('#mobile').val();
 		$('#customer').val(data[0].name);
 		$('#email').val(data[0].email);	
 		$('#mobile').val(data[0].mobile);
+		$('.new-customer').attr('value',false);
 		$('.clear-customer').show();
 		$('.add-customer').hide();
       }else{
@@ -374,7 +392,7 @@ var mobile=$('#guestmobile').val();
 		error_name ="Name is mandatory";
 	}
     if(Trim(email)==""){
-        error_email ="Email id is mandatory";
+       
     }else{
 	    
 	    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
@@ -405,6 +423,13 @@ var mobile=$('#guestmobile').val();
 	mobile:mobile
 	},function(data){
 	if(data!=true){
+	
+	}else{
+	
+	$('.new-customer').attr('value',false);
+	$(".passenger-basic-info > .form-group > label[for=name_error]").html('');
+	$(".passenger-basic-info > .form-group > label[for=email_error]").html('');
+	$(".passenger-basic-info > .form-group > label[for=mobile_error]").text('');
 	$('#email').trigger('click');
 	}
 
@@ -543,7 +568,7 @@ $('.estimated-time-of-journey').html('');
 function placeAutofillGenerator(city,ul_class,insert_to){
 
 var 
-url='https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&language=en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
+url='https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&country=IN&language=en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
 
 $.post(base_url+'/maps/get-places',{
 	url:url,
@@ -565,10 +590,74 @@ $('.drop-down-places').live('click',function(e){
 
 var insert_to=$(this).attr('insert_to');
 var place=$(this).attr('place');
+var full_address=$(this).text();
+full_address=replaceCommas(full_address);
+full_address=full_address.replace(/\s+/g, '');
 $('#'+insert_to).val(place);
 $('#'+insert_to).trigger('click');
 $(this).parent().parent().parent().removeClass('open');
+getLatLng(full_address,insert_to);
+});
 
+function replaceCommas(place){ 
+	 var placeArray = place.split(','); 
+	 var placeWithoutCommas=''; 
+	 for(var index=0;index<placeArray.length;index++){ 
+		if(index==0){
+			placeWithoutCommas+=placeArray[index]; 
+		}else{
+			placeWithoutCommas+='+'+placeArray[index]; 
+		}
+	} 
+	 return placeWithoutCommas; 
+}
+
+function getLatLng(city,text_box_class){
+
+var url='https://maps.googleapis.com/maps/api/geocode/json?address='+city+'&country:IN&language=en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
+var text_box_class = text_box_class;
+$.post(base_url+'/maps/get-latlng',{
+	url:url
+	},function(data){
+data=jQuery.parseJSON(data);
+if(data!='false'){
+$('#'+text_box_class+'lat').attr('value',data.lat);
+$('#'+text_box_class+'lng').attr('value',data.lng);
+}
+
+});
+
+}
+
+
+var test = 1;
+window.onbeforeunload = function(){
+	var redirect=$('.book-trip-validate').attr('enable_redirect');
+	if(window.location=="http://cc.local/organization/front-desk/trip-booking" && redirect!='true'){
+    setTimeout(function(){
+        test = 2;
+    },500)
+    return "If you leave this page, data may be lost.";
+	}
+}
+    setInterval(function(){
+    if (test === 2) {
+       test = 3; 
+    }
+    },50);
+  
+
+
+$('.book-trip-validate').on('click',function(){
+
+if($('.new-customer').val()=='false'){//alert('clciked');
+$('.book-trip-validate').attr('enable_redirect','true');
+$('.book-trip').trigger('click');
+}else{
+
+alert("Add Customer Informations");
+
+}
 });
 
 //trip_bookig page-js end
