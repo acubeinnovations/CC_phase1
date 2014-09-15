@@ -61,6 +61,14 @@ class user_model extends CI_Model {
 	
 	
 	}
+	public function getAll_tarrifDetails(){
+	$qry=$this->db->get('tariffs');
+	$count=$qry->num_rows();
+	$result=$qry->result_array();
+	return $result;
+	
+	
+	}
 	public function getTarrif_masters(){
 	$this->db->where('organisation_id',$this->session->userdata('organisation_id') );
 	$this->db->where('user_id',$this->session->userdata('id') );

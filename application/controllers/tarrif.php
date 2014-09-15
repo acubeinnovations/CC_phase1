@@ -15,7 +15,7 @@ class Tarrif extends CI_Controller {
 		return false;
 	}
 	}
-	public function tarrif_manage(){
+	public function tarrif_master_manage(){
 	if($this->session_check()==true) {
 	if(isset($_REQUEST['add'])){
 	 $data['title'] = $this->input->post('title');
@@ -115,7 +115,7 @@ class Tarrif extends CI_Controller {
 			}
 	}
 	
-	public function add_tarrif(){
+	public function tarrif_manage(){
 	if($this->session_check()==true) {
 	if(isset($_REQUEST['tarrif-add'])){
 	$data['tariff_master_id']=$this->input->post('select_tariff');
@@ -125,7 +125,7 @@ class Tarrif extends CI_Controller {
 	$data['additional_hour_rate']=$this->input->post('additional_hour_rate');
 	$data['driver_bata']=$this->input->post('driver_bata');
 	$data['night_halt']=$this->input->post('night_halt');
-	$data['organisation_id']=$this->session->userdata('organisation_id');
+	$data['organisation_id']=$this->session->userdata('organisation_id'); //print_r($data);exit;
 	 $data['user_id']=$this->session->userdata('id');
 	 $this->form_validation->set_rules('select_tariff','Tariff Master','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('fromdatepicker','Date ','trim|required|xss_clean');
@@ -145,10 +145,78 @@ class Tarrif extends CI_Controller {
 				    $this->session->set_userdata(array('dbError'=>''));
 				    redirect(base_url().'organization/front-desk/tarrif');
 		}
+		else{
+		$this->session->set_userdata('post',$data);
+		$this->session->set_userdata(array('Err_date'=>'Invalid Date!'));
+		redirect(base_url().'organization/front-desk/tarrif');
+		}
 	 }
 	}
+	if(isset($_REQUEST['edit'])){
+	 $id= $this->input->post('manage_id');
+	 $data['tariff_master_id'] = $this->input->post('manage_tariff');
+	 $data['from_date'] = $this->input->post('manage_datepicker');
+	 $data['rate'] = $this->input->post('manage_rate');
+	 $data['additional_kilometer_rate'] = $this->input->post('manage_additional_kilometer_rate');
+	 $data['additional_hour_rate'] = $this->input->post('manage_additional_hour_rate');
+	 $data['driver_bata'] = $this->input->post('manage_driver_bata');
+	 $data['night_halt'] = $this->input->post('manage_night_halt');
 	
+	
+		$err=False;
+		if($data['tariff_master_id']==''||$data['from_date']==''||$data['rate']==''||$data['additional_kilometer_rate']==''||$data['additional_hour_rate'] ==''||$data['driver_bata']==''||$data['night_halt']==''){
+			
+			$this->session->set_userdata(array('dbvalTarrif_Err'=>'Fields Required..!'));
+			$err=true;
+			}
+		if($this->tarrif_model->date_check($data['from_date'])!=true){
+		$this->session->set_userdata(array('Err_date'=>'Invalid Date!'));
+			$err=true;
+		}
+		if(preg_match('#[^0-9\.]#', $data['rate'])){
+			$this->session->set_userdata(array('Err_rate'=>'Invalid Characters on Rate field!'));
+			$err=true;
+			}
+		if(preg_match('#[^0-9\.]#', $data['additional_kilometer_rate'])){
+			$this->session->set_userdata(array('Err_add_kilo'=>'Invalid Characters on Kilometers field!'));
+			$err=true;
+			}
+		if(preg_match('#[^0-9\.]#', $data['additional_hour_rate'])){
+			$this->session->set_userdata(array('Err_add_hrs'=>'Invalid Characters on Hours field!'));
+			$err=true;
+			}
+		if(preg_match('#[^0-9\.]#', $data['driver_bata'])){
+			$this->session->set_userdata(array('Err_bata'=>'Invalid Characters on Driver Bata field!'));
+			$err=true;
+			}	
+		if(preg_match('#[^0-9\.]#', $data['night_halt'])){
+			$this->session->set_userdata(array('Err_halt'=>'Invalid Characters on Night Halt field!'));
+			$err=true;
+			}
+			if($err==true){
+			redirect(base_url().'organization/front-desk/tarrif');
+			}
+			else{ 
+			
+		$res=$this->tarrif_model->edit_tarrifValues($data,$id);
+		if($res==true){
+		$this->session->set_userdata(array('dbSuccess'=>' Updated Succesfully..!'));
+				    $this->session->set_userdata(array('dbError'=>''));
+				    redirect(base_url().'organization/front-desk/tarrif');
+		}
+		}
 	}
+			if(isset($_REQUEST['delete'])){
+	 $id= $this->input->post('manage_id');
+	 $res=$this->tarrif_model->delete_tarrifValues($id);
+		if($res==true){
+		$this->session->set_userdata(array('dbSuccess'=>' Deleted Succesfully..!'));
+				    $this->session->set_userdata(array('dbError'=>''));
+				    redirect(base_url().'organization/front-desk/tarrif');
+		}
+	}
+	}
+	
 	else{
 			echo 'you are not authorized access this page..';
 			}

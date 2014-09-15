@@ -99,6 +99,7 @@ class User extends CI_Controller {
 	{
 	$data['masters']='';
 	}
+	$data['allDetails']=$this->user_model->getAll_tarrifDetails();
 	$data['title']="Tarrif| ".PRODUCT_NAME; 
 	$page='user-pages/tarrif';
 	$this->load_templates($page,$data);
