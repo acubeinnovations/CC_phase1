@@ -61,7 +61,8 @@
 	<div class="form-group">
 			<?php echo form_label('Phone Number'); ?>
             <?php echo form_input(array('name'=>'phn','class'=>'form-control','id'=>'phn','placeholder'=>'Enter Phone Number','value'=>$phn)); ?>
-	    <?php echo form_error('phn', '<p class="text-red">', '</p>'); ?>
+			 <?php if(isset($org_id) && isset($user_id)) {  echo form_hidden('hphone',$hphone); } ?>
+		<?php echo form_error('phn', '<p class="text-red">', '</p>'); ?>
         </div>
 	
 		<div class="form-group">

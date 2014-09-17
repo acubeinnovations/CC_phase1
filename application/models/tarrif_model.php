@@ -74,5 +74,7 @@ class Tarrif_model extends CI_Model {
 	$this->db->delete($tbl);
 	return true;
 	}
+	
+	
 	}
 	?>

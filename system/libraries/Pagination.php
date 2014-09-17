@@ -249,7 +249,7 @@ class CI_Pagination {
 			}
 			else
 			{
-				$i = ($i == 0) ? '' : $this->prefix.$i.$this->suffix;
+				$i = ($i == 0) ? '1' : $this->prefix.$i.$this->suffix;
 				$output .= $this->prev_tag_open.'<li><a '.$this->anchor_class.'href="'.$this->base_url.$i.'">'.$this->prev_link.'</a></li>'.$this->prev_tag_close;
 			}
 
@@ -273,21 +273,25 @@ class CI_Pagination {
 				if ($i >= $base_page)
 				{
 					if ($this->cur_page == $loop)
-					{
-						$output .= '<li class="active"><a>'.$this->cur_tag_open.$loop.$this->cur_tag_close.'</a></li>'; // Current page
+					{	if($loop==1){
+						$tweak='href="'.$this->base_url.'/'.$loop.'"';
+						}else{
+						$tweak='';
+						}
+						$output .= '<li class="active"><a '.$tweak.'>'.$this->cur_tag_open.$loop.$this->cur_tag_close.'</a></li>'; // Current page
 					}
 					else
 					{
 						$n = ($i == $base_page) ? '' : $i;
 
 						if ($n == '' && $this->first_url != '')
-						{
+						{	
 							$output .= $this->num_tag_open.'<li><a '.$this->anchor_class.'href="'.$this->first_url.'">'.$loop.'</a></li>'.$this->num_tag_close;
 						}
 						else
-						{
-							$n = ($n == '') ? '' : $this->prefix.$n.$this->suffix;
-
+						{	
+							$n = ($n == '') ? '1' : $this->prefix.$n.$this->suffix;
+							
 							$output .= $this->num_tag_open.'<li><a '.$this->anchor_class.'href="'.$this->base_url.$n.'">'.$loop.'</a></li>'.$this->num_tag_close;
 						}
 					}
