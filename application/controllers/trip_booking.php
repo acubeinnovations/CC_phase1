@@ -17,9 +17,9 @@ class Trip_booking extends CI_Controller {
 		
 			$this->bookTrip();
 			
-		}else if($param2=='set-session-post') {
+		}else if($param2=='getAvailableVehicles') {
 		
-			$this->setSession();
+			$this->getAvailableVehicles();
 			
 		}
 		}
@@ -241,6 +241,23 @@ class Trip_booking extends CI_Controller {
 		} 
 	}
 	
+	public function getAvailableVehicles(){
+	if($_REQUEST['vehicle_type'] && $_REQUEST['vehicle_ac_type'] && $_REQUEST['pickupdatetime'] && $_REQUEST['dropdatetime']){
+	$data['vehicle_type']=$_REQUEST['vehicle_type'];
+	$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
+	$data['pickupdatetime']=$_REQUEST['pickupdatetime'];
+	$data['dropdatetime']=$_REQUEST['dropdatetime'];
+	$data['organisation_id']=$this->session->userdata('organisation_id');
+	
+	$res['data']=$this->trip_booking_model->selectAvailableVehicles($data);
+
+	echo json_encode($res);
+
+	}
+
+	}
+
+
 	public function session_check() {
 	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==FRONT_DESK)) {
 		return true;

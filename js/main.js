@@ -53,6 +53,8 @@ var base_url=window.location.origin;
 
 //trip_bookig page-js start
 
+if(window.location=="http://cc.local/organization/front-desk/trip-booking"){
+
 if($('.advanced-chek-box').attr('checked')=='checked'){
 
 $('.group-toggle').toggle();
@@ -145,6 +147,8 @@ $('#reccurent_alternatives_droptimepicker'+i).datetimepicker({datepicker:false,
 }
 }
 
+
+}
 
 }
 
@@ -692,10 +696,13 @@ generateTariffs(vehicle_type,vehicle_ac_type);
 });
 
 function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,dropdatetime){
-	 $.post(base_url+"/vehicle/getDescription",
+	alert(vehicle_type);alert(vehicle_ac_type);alert(pickupdatetime);alert(dropdatetime);
+	 $.post(base_url+"/trip-booking/getAvailableVehicles",
 		  {
-			id:$id,
-			tbl:$tbl
+			vehicle_type:vehicle_type,
+			vehicle_ac_type:vehicle_ac_type,
+			pickupdatetime:pickupdatetime,
+			dropdatetime:dropdatetime
 		  },function(data){
 
 		   });

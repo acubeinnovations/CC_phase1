@@ -34,6 +34,12 @@ class Trip_booking_model extends CI_Model {
 			return false;
 		}
 	}
-	
+	function selectAvailableVehicles($data){
+	$qry='SELECT V.registration_number,V.id FROM vehicle as V, LEFT JOIN trips T on T.vehicle_id=V.id AND CONCAT(T.pick_up_date,T.pick_up_time) NOT BETWEEN('.$data['pickupdatetime'].','.$data['dropdatetime'].') CONCAT(T.drop_date,T.drop_time) NOT BETWEEN('.$data['pickupdatetime'].','.$data['dropdatetime'].') WHERE V.vehicle_type_id='.$data['vehicle_type'].' AND vehicle_ac_type_id='.$data['vehicle_ac_type_id'];
+	$result=$this->db->query($qry);
+	$result=$result->result_array();
+	return $result;
+
+	}
 }
 ?>
