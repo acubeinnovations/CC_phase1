@@ -2,11 +2,14 @@
 
 class User extends CI_Controller {
 
-		public function __construct()
+	public function __construct()
 	{
     parent::__construct();
     $this->load->helper('my_helper');
 	$this->load->model('user_model');
+	$this->load->model('customers_model');
+	$this->load->model('trip_booking_model');
+	$this->load->model('customers_model');
     no_cache();
 
 	}
@@ -19,6 +22,7 @@ class User extends CI_Controller {
 	}   
 	public function index(){
 		$param1=$this->uri->segment(3);
+		$param2=$this->uri->segment(4);
         if($this->session_check()==true) {
 		if($param1==''){
 		$data['title']="Home | CC Phase1";    
@@ -32,7 +36,7 @@ class User extends CI_Controller {
 		elseif($param1=='settings'){
 		$this->settings();
 		}elseif($param1=='trip-booking'){
-		$this->ShowBookTrip();
+		$this->ShowBookTrip($param2);
 		}elseif($param1=='tarrif-masters'){
 		$this->tarrif_masters();
 		}elseif($param1=='tarrif'){
@@ -109,7 +113,7 @@ class User extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
-	public function ShowBookTrip(){
+	public function ShowBookTrip($trip_id =''){
 	if($this->session_check()==true) {
 	
 	$tbl_arry=array('booking_sources','trip_models','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
@@ -123,7 +127,114 @@ class User extends CI_Controller {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
+
+	$data['notification']=$this->trip_booking_model->getDetails($conditon = '');
+	$data['customers_array']=$this->customers_model->getArray();
+
+	if($trip_id!='' && $trip_id > 0) {
+	$conditon = array('id'=>$trip_id);
+	$result=$this->trip_booking_model->getDetails($conditon);
+	$result=$result[0];
+	$data1['id']=$result->id;
+	$data1['recurrent_continues']='';
+	$data1['recurrent_alternatives']='';
+	if(isset($result->customer_group_id) && $result->customer_group_id > 0){
+		$data1['advanced']=TRUE;
+		$data1['customer_group']=$result->customer_group_id;
+	}else{
+		$data1['advanced']='';
+		$data1['customer_group']='';
+	}
+
+
+	if(isset($result->guest_id) && $result->guest_id > 0){
+	$dbdata=array('id'=>$result->guest_id);
+	$guest 	=	$this->customers_model->getCustomerDetails($dbdata);
+	$guest 	=$guest[0];
+	$data1['guest']	=	TRUE;
+	$data1['guestname']=	$guest['name'];
+	$data1['guestemail']=$guest['email'];
+	$data1['guestmobile']=$guest['mobile'];
+	}else{
+	$data1['guest']='';
+	$data1['guestname']='';
+	$data1['guestemail']='';
+	$data1['guestmobile']='';
+	}
 	
+	$dbdata=array('id'=>$result->customer_id);	
+	$customer 	=	$this->customers_model->getCustomerDetails($dbdata);
+	$customer=$customer[0];
+	$data1['customer']				=	$customer['name'];
+	$data1['new_customer']			=	false;
+	$data1['email']					=	$customer['email'];
+	$data1['mobile']					=	$customer['mobile'];
+	 
+	$data1['booking_source']			=	$result->booking_source_id;	
+	$data1['source']					=	$result->source;
+	$data1['trip_model']				=	$result->trip_model_id;
+	$data1['no_of_passengers']		=	$result->no_of_passengers;
+	$data1['pickupcity']				=	$result->pick_up_city;
+	$data1['pickupcitylat']			=	$result->pick_up_lat;
+	$data1['pickupcitylng']			=	$result->pick_up_lng;
+	$data1['pickuparea']				=	$result->pick_up_area;
+	$data1['pickuplandmark']			=	$result->pick_up_landmark;
+	$data1['viacity']				=	$result->via_city;
+	$data1['viacitylat']				=	$result->via_lat;
+	$data1['viacitylng']				=	$result->via_lng;
+	$data1['viaarea']				=	$result->via_area;
+	$data1['vialandmark']			=	$result->via_landmark;
+	$data1['dropdownlocation']		=	$result->drop_city;
+	$data1['dropdownlocationlat']	=	$result->drop_lat;
+	$data1['dropdownlocationlng']	=	$result->drop_lng;
+	$data1['dropdownarea']			=	$result->drop_area;
+	$data1['dropdownlandmark']		=	$result->drop_landmark;
+	$data1['pickupdatepicker']		=	$result->pick_up_date;
+	$data1['dropdatepicker']			=	$result->drop_date;
+	$data1['pickuptimepicker']		=	$result->pick_up_time;
+	$data1['droptimepicker']			=	$result->drop_time;
+	$data1['vehicle_type']			=	$result->vehicle_type_id;
+	$data1['vehicle_ac_type']		=	$result->vehicle_ac_type_id;
+	$data1['recurrent_yes']			= 	'';
+	if(isset($result->vehicle_beacon_light_option_id) && $result->vehicle_beacon_light_option_id > 0){
+		$data1['beacon_light']=TRUE;
+		if($result->vehicle_beacon_light_option_id==BEACON_LIGHT_RED){
+
+			$data1['beacon_light_radio']='red';
+					
+		}else{
+	
+			$data1['beacon_light_radio']='blue';
+			
+		}
+	}else{
+
+		$data1['beacon_light']='';
+		$data1['beacon_light_radio']='';
+		$data1['beacon_light_id'] = '';
+
+	}
+	if(isset($result->pluckcard) && $result->pluckcard==true){
+		$data1['pluck_card']=TRUE;
+	}else{
+		$data1['pluck_card']='';
+	}
+	if(isset($result->uniform) && $result->uniform==true){
+		$data1['uniform']=TRUE;
+	}else{
+		$data1['uniform']='';
+	}
+	$data1['seating_capacity']		=	$result->vehicle_seating_capacity_id;
+	$data1['language']				=	$result->driver_language_id;
+	$data1['tariff']				=	$result->tariff_id;
+	$data1['available_vehicle']		=	$result->vehicle_id;
+	$data1['customer_type']			=	$result->customer_type_id;
+	}
+	if(isset($data1) && count($data1)>0){
+	$data['information']=$data1;
+	}else{
+	$data['information']=false;
+	}
 	$data['title']="Trip Booking | ".PRODUCT_NAME;  
 	$page='user-pages/trip-booking';
 	$this->load_templates($page,$data);

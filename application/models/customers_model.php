@@ -24,5 +24,21 @@ class Customers_model extends CI_Model {
 	
 	}
 	
+	public function getArray(){
+		$qry=$this->db->get('customers');
+		$count=$qry->num_rows();
+		$l= $qry->result_array();
+		
+			for($i=0;$i<$count;$i++){
+			$values[$l[$i]['id']]=$l[$i]['name'];
+			}
+			if(!empty($values)){
+			return $values;
+			}
+			else{
+			return false;
+			}
+	}
+	
 }
 ?>

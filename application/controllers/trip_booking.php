@@ -62,23 +62,23 @@ class Trip_booking extends CI_Controller {
 				$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
 				$this->form_validation->set_rules('no_of_passengers','No of passengers','trim|xss_clean');
 				$this->form_validation->set_rules('pickupcity','Pickup city','trim|required|xss_clean');
-				$this->form_validation->set_rules('pickuparea','Pickup area','trim|xss_clean|alpha_numeric');
-				$this->form_validation->set_rules('pickuplandmark','Pickup landmark','trim|alpha_numeric|xss_clean');
-				$this->form_validation->set_rules('viacity','Via city','trim|alpha_numeric|xss_clean');
-				$this->form_validation->set_rules('viaarea','Via area','trim|alpha_numeric|xss_clean');
-				$this->form_validation->set_rules('vialandmark','Via landmark','trim|alpha_numeric|xss_clean');
-				$this->form_validation->set_rules('dropdownlocation','Drop down location','trim|required|xss_clean');
-				$this->form_validation->set_rules('dropdownarea','Drop down area','trim|alpha_numeric|xss_clean');
-				$this->form_validation->set_rules('dropdownlandmark','Drop down landmark','trim|alpha_numeric|xss_clean');
-				$this->form_validation->set_rules('pickupdatepicker','Pickup date','trim|required|xss_clean');
-				$this->form_validation->set_rules('dropdatepicker','Drop date ','trim|xss_clean');
-				$this->form_validation->set_rules('pickuptimepicker','Pickup time','trim|xss_clean');
-				$this->form_validation->set_rules('droptimepicker','Drop time','trim|xss_clean');
-				$this->form_validation->set_rules('vehicle_types','Vehicle types','trim|required|xss_clean');
-				$this->form_validation->set_rules('vehicle_ac_types','Vehicle ac types','trim|xss_clean');
+				$this->form_validation->set_rules('pickuparea','Pickup area','trim|xss_clean');
+				$this->form_validation->set_rules('pickuplandmark','Pickup landmark','trim|xss_clean');
+				$this->form_validation->set_rules('viacity','Via city','trim|xss_clean');
+				$this->form_validation->set_rules('viaarea','Via area','trim|xss_clean');
+				$this->form_validation->set_rules('vialandmark','Via landmark','trim|xss_clean');
+				$this->form_validation->set_rules('dropdownlocation','Drop location','trim|required|xss_clean');
+				$this->form_validation->set_rules('dropdownarea','Drop  area','trim|xss_clean');
+				$this->form_validation->set_rules('dropdownlandmark','Drop landmark','trim|xss_clean');
+				$this->form_validation->set_rules('pickupdatepicker','Date','trim|required|xss_clean');
+				$this->form_validation->set_rules('dropdatepicker','Date ','trim|required|xss_clean');
+				$this->form_validation->set_rules('pickuptimepicker','Time','trim|required|xss_clean');
+				$this->form_validation->set_rules('droptimepicker','Time','trim|required|xss_clean');
+				$this->form_validation->set_rules('vehicle_type','Vehicle types','trim|xss_clean');
+				$this->form_validation->set_rules('vehicle_ac_type','Vehicle ac types','trim|xss_clean');
 				$this->form_validation->set_rules('seating_capacity','Vehicle seating capacity','trim|xss_clean');
-				$this->form_validation->set_rules('languages','Languages','trim|xss_clean');
-				$this->form_validation->set_rules('tarrifs','Vehicle ac types','trim|xss_clean');
+				$this->form_validation->set_rules('language','Languages','trim|xss_clean');
+				$this->form_validation->set_rules('tarrif','Vehicle ac types','trim|xss_clean');
 				
 	
 				$data['customer']			=	$this->input->post('customer');
@@ -115,15 +115,16 @@ class Trip_booking extends CI_Controller {
 					$data['beacon_light']=TRUE;
 					if($this->input->post('beacon_light_radio')=='red'){
 						$data['beacon_light_radio']='red';
+						$data['beacon_light_id'] = BEACON_LIGHT_RED;
 						
 					}else{
 						$data['beacon_light_radio']='blue';
-						
+						$data['beacon_light_id'] = BEACON_LIGHT_BLUE;
 					}
 				}else{
 					$data['beacon_light']='';
 					$data['beacon_light_radio']='';
-					
+					$data['beacon_light_id'] = '';
 				}
 				if(isset($_REQUEST['pluck_card'])){
 					$data['pluck_card']=TRUE;
@@ -135,11 +136,11 @@ class Trip_booking extends CI_Controller {
 				}else{
 					$data['uniform']='';
 				}
-				$data['seating_capacity']=$this->input->post('seating_capacity');
-				$data['language']=$this->input->post('language');
-				$data['tariff']=$this->input->post('tariff');
-				$data['available_vehicle']=$this->input->post('available_vehicle');
-
+				$data['seating_capacity']		=	$this->input->post('seating_capacity');
+				$data['language']				=	$this->input->post('language');
+				$data['tariff']					=	$this->input->post('tariff');
+				$data['available_vehicle']		=	$this->input->post('available_vehicle');
+				$data['customer_type']			=	$this->input->post('customer_type');
 				if(isset($_REQUEST['recurrent_yes'])){
 				$data['recurrent_yes'] = TRUE;
 				$data['recurrent_continues'] = '';
@@ -209,12 +210,33 @@ class Trip_booking extends CI_Controller {
 
 				
 			if($this->form_validation->run()==False){
-				$this->mysession->set( 'post',$data);
+				$this->mysession->set('post',$data);
 				redirect(base_url().'organization/front-desk/trip-booking');
 			}else{
-				$dbdata=array('customer'=>$data['customer'],'email'=>$data['email'],'mobile'=>$data['mobile'],'registration_type_id'=>$data['registration_type_id']);
+				if(isset($_REQUEST['guest'])){
+				$dbdata=array('name'=>$data['guestname'],'guestemail'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id']);
 				$data['guest_id']=$this->customers_model->addCustomer($dbdata);
-				
+				}else{
+				$data['guest_id']=gINVALID;
+
+				}
+				if($data['available_vehicle']>0){
+
+					$data['driver_id'] = $this->trip_booking_model->getDriver($data['available_vehicle']);
+
+				}else{
+					$data['driver_id'] = gINVALID;
+				}
+				$dbdata=array('customer_id'=>$this->session->userdata('customer_id'),'guest_id'=>$data['guest_id'],'customer_type_id'=>$data['customer_type'],'trip_status_id'=>TRIP_STATUS_PENDING,'booking_date'=>date('Y-m-d'),'booking_time'=>date('H:i'),'booking_source_id'=>$data['booking_source'],'source'=>$data['source'],'pick_up_date'=>$data['pickupdatepicker'],'pick_up_time'=>$data['pickuptimepicker'],'drop_date'=>$data['dropdatepicker'],'drop_time'=>$data['droptimepicker'],'pick_up_city'=>$data['pickupcity'],'pick_up_lat'=>$data['pickupcitylat'],'pick_up_lng'=>$data['pickupcitylng'],'pick_up_area'=>$data['pickuparea'],'pick_up_landmark'=>$data['pickuplandmark'],'via_city'=>$data['viacity'],'via_lat'=>$data['viacitylat'],'via_lng'=>$data['viacitylng'],'via_area'=>$data['viaarea'],'via_landmark'=>$data['vialandmark'],'drop_city'=>$data['dropdownlocation'],'drop_lat'=>$data['dropdownlocationlat'],'drop_lng'=>$data['dropdownlocationlng'],'drop_area'=>$data['dropdownarea'],'drop_landmark'=>$data['dropdownlandmark'],'no_of_passengers'=>$data['no_of_passengers'],'vehicle_type_id'=>$data['vehicle_type'],'vehicle_ac_type_id'=>$data['vehicle_ac_type'],'vehicle_seating_capacity_id'=>$data['seating_capacity'],'vehicle_beacon_light_option_id'=>$data['beacon_light_id'],'pluckcard'=>$data['pluck_card'],'uniform'=>$data['uniform'],'driver_language_id'=>$data['language'],'trip_model_id'=>$data['trip_model'],'tariff_id'=>$data['tariff'],'driver_id'=>$data['driver_id'],'vehicle_id'=>$data['available_vehicle'],'organisation_id'=>$this->session->userdata('organisation_id'),'user_id'=>$this->session->userdata('id'));
+				$res = $this->trip_booking_model->bookTrip($dbdata);
+				if($res==true){
+					$this->session->set_userdata(array('dbSuccess'=>'Trip Booked Succesfully..!!'));
+					$this->session->set_userdata(array('dbError'=>''));
+				}else{
+					$this->session->set_userdata(array('dbError'=>'Trip Booked unsuccesfully..!!'));
+					$this->session->set_userdata(array('dbSuccess'=>''));
+				}
+				redirect(base_url().'organization/front-desk/trip-booking');
 			}
 		} 
 	}

@@ -1,5 +1,7 @@
 <?php
 
+
+
 $booking_source		=	'';
 $source				=	'';
 $customer			=	'';
@@ -62,9 +64,18 @@ $alternative_pickuptimepicker	= '';
 $alternative_droptimepicker 	= '';
 $alternative_dropdatepicker	    = '';
 
+$customer_type					= '';
+
+
+
+//echo $information['customer'];
+if($this->mysession->get('post')!=NULL || $information!=false){
 
 if($this->mysession->get('post')!=NULL){
 $data						=	$this->mysession->get('post');//print_r($data);
+}else{
+$data =$information;
+}
 if($data['booking_source']!=-1){
 $booking_source				=	$data['booking_source'];
 }
@@ -149,8 +160,12 @@ $reccurent_alternatives_droptimepicker		=	$data['reccurent_alternatives_droptime
 $recurrent									=	$data['recurrent'];
 }
 }
+
+$customer_type					= $data['customer_type'];
+
 $this->mysession->delete('post');
 }
+
 ?>
 
 
@@ -158,6 +173,27 @@ $this->mysession->delete('post');
 
 
 <div class="trip-booking-body">
+<?php    if($this->session->userdata('dbSuccess') != '') { ?>
+        <div class="success-message">
+			
+            <div class="alert alert-success alert-dismissable">
+                <i class="fa fa-check"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <?php 
+                echo $this->session->userdata('dbSuccess');
+                $this->session->set_userdata(array('dbSuccess'=>''));
+                ?>
+           </div>
+       </div>
+       <?php    }else if($this->session->userdata('dbError') != ''){ ?>
+	<div class="alert alert-danger alert-dismissable">
+        <i class="fa fa-ban"></i>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+         <b>Alert!</b><br><?php
+		echo $this->session->userdata('dbError').br();
+	?>
+      </div> 
+	<?php    } ?>	
 	<div class="first-column-trip-booking">
 		<?php	
 		$attributes = array('autocomplete'=>'off','id'=>'trip-form');
@@ -352,13 +388,13 @@ $this->mysession->delete('post');
 									<div class="form-group">
 									<?php 
 									echo form_input(array('name'=>'pickupdatepicker','class'=>'form-control width-60-percent-with-margin-10','id'=>'pickupdatepicker','placeholder'=>'Pick up Date','value'=>$pickupdatepicker)).form_input(array('name'=>'pickuptimepicker','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'pickuptimepicker','placeholder'=>'Pick up time ','value'=>$pickuptimepicker));
-									echo $this->form_functions->form_error_session('pickupdatepicker', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('pickuptimepicker', '<p class="text-red">', '</p>');
+									echo $this->form_functions->form_error_session('pickupdatepicker', '<p class="text-red float-left right-15">', '</p>').$this->form_functions->form_error_session('pickuptimepicker', '<p class="text-red float-left left-65">', '</p>');
 									 ?>
 									</div>
-									<div class="form-group">
+									<div class="form-group float-left">
 									<?php 
 									echo form_input(array('name'=>'dropdatepicker','class'=>'form-control width-60-percent-with-margin-10','id'=>'dropdatepicker','placeholder'=>'Drop Date','value'=>$dropdatepicker)).form_input(array('name'=>'droptimepicker','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'droptimepicker','placeholder'=>'Drop time','value'=>$droptimepicker));
-									echo $this->form_functions->form_error_session('dropdatepicker', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('droptimepicker', '<p class="text-red">', '</p>');
+									echo $this->form_functions->form_error_session('dropdatepicker', '<p class="text-red float-left right-15">', '</p>').$this->form_functions->form_error_session('droptimepicker', '<p class="text-red float-left left-65">', '</p>');
 									 ?>
 									</div>
 									</td>
@@ -377,8 +413,11 @@ $this->mysession->delete('post');
 					<legend class="body-head">Vehicle Information</legend>
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						echo $this->form_functions->populate_dropdown('vehicle_type',$vehicle_types,$vehicle_type,$class,$msg="Select Type");
-						echo $this->form_functions->populate_dropdown('vehicle_ac_type',$vehicle_ac_types,$vehicle_ac_type,$class,$msg="Select AC/Non AC");
+							  $id='vehicle-type';
+						echo $this->form_functions->populate_dropdown('vehicle_type',$vehicle_types,$vehicle_type,$class,$id,$msg="Select Type");
+								$class="form-control row-source-50-percent-width-with-margin-8";	
+								$id='vehicle-ac-type';
+						echo $this->form_functions->populate_dropdown('vehicle_ac_type',$vehicle_ac_types,$vehicle_ac_type,$class,$id,$msg="Select AC/Non AC");
 						echo $this->form_functions->form_error_session('vehicle_type', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('vehicle_ac_types', '<p class="text-red">', '</p>');						
 						echo br(2);
 						 ?>
@@ -437,7 +476,8 @@ $this->mysession->delete('post');
 						</div>
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						echo $this->form_functions->populate_dropdown('tariff',$tariffs='',$tariff,$class,$msg="Select tariffs");
+						$id="tarrif";
+						echo $this->form_functions->populate_dropdown('tariff',$tariffs='',$tariff,$class,$id,$msg="Select tariffs");
 						echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles='',$available_vehicle,$class,$msg="Select Available Vehicles");
 						echo br(2);
 						 ?>
@@ -553,7 +593,11 @@ $this->mysession->delete('post');
 					<legend class="body-head">Rough Estimate</legend>
 						<div class="box no-border-top rough-estimate-body">
                               <div class="box-body no-padding">
-                                    <table class="table table-striped">
+									<div class="float-right form-group customer-type-container">
+										<?php $class="form-control customer-type";
+											echo $this->form_functions->populate_dropdown('customer_type',$customer_types,$customer_type,$class,$msg="Select Customer type").br(4);?>
+									</div>
+                                    <table class="table table-striped rough-estimate-table">
                                         <tbody>
 		                                    <tr>
 		                                        <td class="wdith-30-percent">Time Of Journey<span class="float-right"> : </span></td>
@@ -608,7 +652,38 @@ $this->mysession->delete('post');
 	<div class="second-column-trip-booking">
 		<fieldset class="body-border">
 		<legend class="body-head">Notification</legend>
+		<?php
 
+		if(count($notification)>0){
+		for($notification_index=0;$notification_index<count($notification);$notification_index++){?>
+		
+		<div class="notification"<?php echo $notification_index; ?>>
+			<table>
+				<tr>
+					<td class='notification-trip-id'>
+					<?php echo $notification[$notification_index]->id; ?>
+					</td>
+					<td class='notification-pickup-city'>
+					<?php echo $customers_array[$notification[$notification_index]->customer_id]; ?>
+					</td>
+				</tr>
+				<tr>
+					<td class='notification-trip-id'>
+					<?php echo $notification[$notification_index]->pick_up_city; ?>
+					</td>
+					<td class='notification-pickup-city'>
+					<?php echo $notification[$notification_index]->pick_up_date; ?>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<?php }
+
+
+		}
+
+
+		?>
 		</fieldset>
 	</div>
 </div>

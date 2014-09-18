@@ -53,9 +53,9 @@ class Customers extends CI_Controller {
 		$res=$this->customers_model->addCustomer($data);
 		if(isset($res) && $res!=false){
 			
-			echo true;exit;
+			echo true;
 		}else{
-			echo false;exit;
+			echo false;
 		}
 		}
 		}
@@ -74,6 +74,8 @@ class Customers extends CI_Controller {
 	$this->session->set_userdata($session_data);
 	
 	}
+
+	
 }
 ?>
 	

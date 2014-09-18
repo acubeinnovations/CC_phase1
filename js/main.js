@@ -81,6 +81,9 @@ $('.beacon-radio2-container > .iradio_minimal > .iCheck-helper').trigger('click'
 }
 }
 
+if($("#pickupcity").val()!=''){
+getDistance();
+}
 
 if($("#viacity").val()!='' || $("#viaarea").val()!='' || $("#vialandmark").val()!=''){
 $('.toggle-via').toggle();
@@ -158,8 +161,8 @@ if($('.beacon-light-chek-box').attr('checked')=='checked'){
 
 });
 
-$('#pickupdatepicker').datetimepicker({timepicker:false,format:'d/m/Y',formatDate:'d/m/Y'});
-$('#dropdatepicker').datetimepicker({timepicker:false,format:'d/m/Y',formatDate:'d/m/Y'});
+$('#pickupdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
+$('#dropdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
 $('#pickuptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
 	step:5
@@ -231,8 +234,8 @@ $('.recurrent-radio-container > .div-alternatives > .iradio_minimal > .iCheck-he
 $('.recurrent-container-continues').hide();
 
 $('.recurrent-container-alternatives').show();
-$('#reccurent_alternatives_pickupdatepicker').datetimepicker({timepicker:false,format:'d/m/Y',formatDate:'d/m/Y'});
-$('#reccurent_alternatives_dropdatepicker').datetimepicker({timepicker:false,format:'d/m/Y',formatDate:'d/m/Y'});
+$('#reccurent_alternatives_pickupdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
+$('#reccurent_alternatives_dropdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
 
 
 $('#reccurent_alternatives_pickuptimepicker').datetimepicker({datepicker:false,
@@ -257,8 +260,8 @@ $('.reccurent-container').attr('slider',Number(slider)+1);
 var count = $('.add-reccurent-dates').attr('count');
 var new_content='<div class="form-group"><input name="reccurent_alternatives_pickupdatepicker[]" value="" class="form-control width-60-percent-with-margin-10" id="reccurent_alternatives_pickupdatepicker'+count+'" placeholder="Pick up Date" type="text"><input name="reccurent_alternatives_pickuptimepicker[]" value="" class="form-control width-30-percent-with-margin-left-20" id="reccurent_alternatives_pickuptimepicker'+count+'" placeholder="Pick up Time" type="text"></div><div class="form-group"><input name="reccurent_alternatives_dropdatepicker[]" value="" class="form-control width-60-percent-with-margin-10" id="reccurent_alternatives_dropdatepicker'+count+'" placeholder="Drop Date" type="text"><input name="reccurent_alternatives_droptimepicker[]" value="" class="form-control width-30-percent-with-margin-left-20" id="reccurent_alternatives_droptimepicker'+count+'" placeholder="Drop time " type="text"></div>';
 $('.new-reccurent-date-textbox').append(new_content);
-$('#reccurent_alternatives_pickupdatepicker'+count).datetimepicker({timepicker:false,format:'d/m/Y',formatDate:'d/m/Y'});
-$('#reccurent_alternatives_dropdatepicker'+count).datetimepicker({timepicker:false,format:'d/m/Y',formatDate:'d/m/Y'});
+$('#reccurent_alternatives_pickupdatepicker'+count).datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
+$('#reccurent_alternatives_dropdatepicker'+count).datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
 
 $('#reccurent_alternatives_pickuptimepicker'+count).datetimepicker({datepicker:false,
 	format:'H:i',
@@ -472,6 +475,13 @@ placeAutofillGenerator(viacity,'autofill-viacity','viacity');
 
 $("#pickupcity,#pickuparea,#dropdownlocation,#dropdownarea,#viacity,#viaarea").on('keyup click',function(){
 
+getDistance();
+
+});
+
+
+function getDistance(){
+
 var pickupcity=$("#pickupcity").val();//alert(pickupcity);
 var pickuparea=$("#pickuparea").val();
 var viacity=$("#viacity").val();
@@ -525,12 +535,7 @@ var via='YES';
 var via='NO';
 }
 if(origin!='' && destination!=''){
-getDistance(origin,destination,via);
-}
-});
 
-
-function getDistance(origin,destination,via){
 var url='https://maps.googleapis.com/maps/api/distancematrix/json?origins='+origin+'&destinations='+destination+'&mode=driving&language=	en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
 
 $.post(base_url+'/maps/get-distance',{
@@ -562,7 +567,7 @@ $('.estimated-time-of-journey').html('');
 });
 
 
-
+}
 }
 
 function placeAutofillGenerator(city,ul_class,insert_to){
@@ -659,6 +664,60 @@ alert("Add Customer Informations");
 
 }
 });
+//tarris selecter
+$('#vehicle-type,#vehicle-ac-type').on('change',function(){
+var vehicle_type = $('#vehicle-type').val();
+var vehicle_ac_type = $('#vehicle-ac-type').val();
+
+var pickupdate = $('#pickupdatepicker').val();
+var pickuptime = $('#pickuptimepicker').val();
+var dropdate = $('#dropdatepicker').val();
+var droptime = $('#droptimepicker').val();
+
+if(vehicle_type!=-1 && vehicle_ac_type!=-1 && pickupdate!='' && pickuptime!='' && dropdate!='' && droptime!='' ){
+
+var pickupdatetime = pickupdate+' '+pickuptime;
+var dropdatetime   = dropdate+' '+droptime;
+
+generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,dropdatetime);
+generateTariffs(vehicle_type,vehicle_ac_type);
+
+}else if(vehicle_type!=-1 && vehicle_ac_type!=-1){
+
+generateTariffs(vehicle_type,vehicle_ac_type);
+
+}
+
+
+});
+
+function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,dropdatetime){
+	 $.post(base_url+"/vehicle/getDescription",
+		  {
+			id:$id,
+			tbl:$tbl
+		  },function(data){
+
+		   });
+
+}
+function generateTariffs(vehicle_type,vehicle_ac_type){
+	 $.post(base_url+"/tarrif/tariffSelecter",
+		  {
+			vehicle_type:vehicle_type,
+			vehicle_ac_type:vehicle_ac_type
+		  },function(data){
+			data=jQuery.parseJSON(data);
+			$('#tarrif option:gt(0)').remove();
+			i=0;
+			$.each(data.data[i], function() {
+				
+			  $('#tarrif').append($("<option rate='"+data.data[i].rate+"'></option>").attr("value",data.data[i].id).text(data.data[i].title));
+				i=Number(i)+1;
+			});
+		  });
+
+}
 
 //trip_bookig page-js end
  

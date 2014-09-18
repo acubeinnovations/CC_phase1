@@ -17,18 +17,37 @@ define('FILE_READ_MODE', 0644);
 define('FILE_WRITE_MODE', 0666);
 define('DIR_READ_MODE', 0755);
 define('DIR_WRITE_MODE', 0777);
+
+define('PRODUCT_NAME','CNC PHASE 1');
+
 define('SYSTEM_ADMINISTRATOR',1);
 define('ORGANISATION_ADMINISTRATOR',2);
 define('FRONT_DESK',3);
 define('SYSTEM_EMAIL','cc@cc.com');
+
 define('USER_STATUS_ACTIVE',1);
 define('USER_STATUS_SUSPENDED',2);
 define('USER_STATUS_DISABLED',3);
+
 define('STATUS_ACTIVE',1);
 define('STATUS_INACTIVE',2);
-define('PRODUCT_NAME','CNC PHASE 1');
+
+
 define('CUSTOMER_REG_TYPE_PHONE_CALL',1);
 define('CUSTOMER_REG_TYPE_APP',2);
+
+define('TRIP_STATUS_CONFIRMED',1);
+define('TRIP_STATUS_PENDING',2);
+define('TRIP_STATUS_CANCELLED',3);
+define('TRIP_STATUS_CUSTOMER_CANCELLED',4);
+define('TRIP_STATUS_ON_TRIP',5);
+define('TRIP_STATUS_TRIP_COMPLETED',6);
+define('TRIP_STATUS_TRIP_PAYED',7);
+
+define('BEACON_LIGHT_RED',1);
+define('BEACON_LIGHT_BLUE',2);
+
+define('gINVALID',-1);
 /*
 |--------------------------------------------------------------------------
 | File Stream Modes
