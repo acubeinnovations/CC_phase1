@@ -38,12 +38,6 @@ class User extends CI_Controller {
 		}elseif($param1=='trip-booking'){
 
 		$this->ShowBookTrip($param2);
-		}elseif($param1=='tarrif-masters'){
-		$this->tarrif_masters();
-		}elseif($param1=='tarrif'){
-		$this->tarrif();
-
-		$this->ShowBookTrip();
 		}elseif($param1=='tarrif-masters'&& ($param2== ''|| is_numeric($param2))){
 		$this->tarrif_masters($param1,$param2);
 		}elseif($param1=='tarrif'&& ($param2== ''|| is_numeric($param2))){
