@@ -1,8 +1,7 @@
 <?php
 class Page_model extends CI_Model {
 function getCount($tbl){
-	
-	$arry=$this->session->userdata('condition');
+	$arry=$this->session->userdata('condition'); 
 	if(isset($arry['like'])){
 	if($arry['like']!=''&& count($arry['like']) > 0){
 	$like_arry=$arry['like'];
@@ -22,7 +21,6 @@ function getCount($tbl){
 		}
 	
 		$qry=$this->db->get($tbl);
-		
 		
 		return $qry->num_rows();
 	}
@@ -47,7 +45,7 @@ function getCount($tbl){
 		$this->db->where($where_arry);
 		}
 		$qry= $this->db->get($tbl,$num,$offset);
-		
+		//echo $this->db->last_query();
 	   return $qry->result_array();
 	}
 }

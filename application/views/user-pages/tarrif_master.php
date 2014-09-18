@@ -19,7 +19,7 @@ $minimum_hours=$data['minimum_hours'];
 $this->session->set_userdata('post','');
 }
 
-if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_title') != ''||$this->session->userdata('Err_kilo') != ''||$this->session->userdata('Err_hrs') != '') { ?>
+if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_title') != ''||$this->session->userdata('Err_kilo') != ''||$this->session->userdata('Err_hrs') != ''||$this->session->userdata('Required') != '') { ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -28,10 +28,12 @@ if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_tit
 													echo $this->session->userdata('Err_title').br();
 													echo $this->session->userdata('Err_kilo').br();
 													echo $this->session->userdata('Err_hrs').br();
+													echo $this->session->userdata('Required').br();
 													 $this->session->set_userdata(array('dbvalErr'=>''));
 													 $this->session->set_userdata(array('Err_title'=>''));
 													 $this->session->set_userdata(array('Err_kilo'=>''));
 													 $this->session->set_userdata(array('Err_hrs'=>''));
+													 $this->session->set_userdata(array('Required'=>''));
 										?>
                                     </div>
 <?php  }  if($this->session->userdata('dbSuccess') != '') { ?>
@@ -49,13 +51,34 @@ if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_tit
        <?php    } ?>
 <div class="tarrif_master_body">
 <fieldset class="body-border border-style" >
+<legend class="body-head">Search</legend>
+<table>
+<tr>
+<td><?php echo form_open(base_url()."organization/front-desk/tarrif-masters"); 
+echo form_input(array('name'=>'search_title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>$title1)); ?>
+</td>
+<td><?php $class="form-control";
+		$msg="Select Trip Model";
+		$name="search_trip_model";
+		echo $this->form_functions->populate_dropdown($name,$trip_models,$trip_model_id,$class,$msg)?></td>
+<td><?php  	$class="form-control";
+		$msg="Select AC Type";
+		$name="search_ac_type";
+		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$vehicle_ac_type_id,$class,$msg)?></td>
+<td><?php echo form_submit("search","Search","class='btn btn-primary'");
+echo form_close();?></td>
+</tr>
+</table>
+</fieldset>
+<fieldset class="body-border border-style" >
 <legend class="body-head">ADD</legend>
 <div class="form-group">
 <table>
 <tr>
 <td>
-<?php echo form_open(base_url()."tarrif/tarrif_manage");
-		echo form_input(array('name'=>'title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>$title1)); ?></td>
+<?php echo form_open(base_url()."tarrif/tarrif_master_manage");
+		echo form_input(array('name'=>'title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>$title1)); ?>
+		</td>
 		<td><?php  	$class="form-control";
 		$msg="Select Trip Model";
 		$name="select_trip_model";
@@ -102,7 +125,7 @@ if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_tit
 <td></td>
 </tr>
 <?php 
-foreach ($allDetails as $det):
+foreach($values as $det):
 ?>
 
 <tr>
@@ -130,5 +153,6 @@ $class="form-control";
 </tr>
 <?php endforeach; ?>
 </table>
+<?php echo $page_links;?>
 </fieldset>
 </div>

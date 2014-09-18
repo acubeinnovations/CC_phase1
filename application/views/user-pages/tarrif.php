@@ -21,7 +21,7 @@ $night_halt=$data['night_halt'];
 $this->session->set_userdata('post','');
 }
 
-if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('Err_date') != ''||$this->session->userdata('Err_rate') != ''||$this->session->userdata('Err_add_kilo') != ''||$this->session->userdata('Err_add_hrs') != ''||$this->session->userdata('Err_bata') != ''||$this->session->userdata('Err_halt') != ''){ ?>
+if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('Err_date') != ''||$this->session->userdata('Err_rate') != ''||$this->session->userdata('Err_add_kilo') != ''||$this->session->userdata('Err_add_hrs') != ''||$this->session->userdata('Err_bata') != ''||$this->session->userdata('Err_halt') != ''||$this->session->userdata('Required') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -33,6 +33,7 @@ if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('
 													echo $this->session->userdata('Err_add_hrs').br();
 													echo $this->session->userdata('Err_bata').br();
 													echo $this->session->userdata('Err_halt').br();
+													echo $this->session->userdata('Required').br();
 														$this->session->set_userdata(array('dbvalTarrif_Err'=>''));
 														$this->session->set_userdata(array('Err_date'=>''));
 														$this->session->set_userdata(array('Err_rate'=>''));
@@ -40,6 +41,7 @@ if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('
 														$this->session->set_userdata(array('Err_add_hrs'=>''));
 														$this->session->set_userdata(array('Err_bata'=>''));
 														$this->session->set_userdata(array('Err_halt'=>''));
+														$this->session->set_userdata(array('Required'=>''));
 										?>
                                     </div>
 <?php  }  if($this->session->userdata('dbSuccess') != '') { ?>
@@ -56,6 +58,19 @@ if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('
        </div>
        <?php    } ?>
 <div class="tarrif_master_body">
+<fieldset class="body-border border-style" >
+<legend class="body-head">Search</legend>
+<table>
+<tr>
+<td><?php echo form_open(base_url()."organization/front-desk/tarrif"); 
+ echo form_input(array('name'=>'search_from_date','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up From Date','value'=>$from_date)); ?>
+</td>
+<td><?php  echo form_input(array('name'=>'search_to_date','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up To Date','value'=>$from_date)); ?></td>
+<td><?php echo form_submit("search","Search","class='btn btn-primary'");
+echo form_close();?></td>
+</tr>
+</table>
+</fieldset>
 <fieldset class="body-border border-style" >
 <legend class="body-head">ADD TARIFF</legend>
 <div class="form-group">
@@ -109,7 +124,7 @@ echo $this->form_functions->populate_dropdown($name,$masters,$tariff_master_id,$
 <td></td>
 </tr>
 <?php 
-foreach ($allDetails as $det):
+foreach ($values as $det):
 ?>
 <tr>
 <td><div class="form-group"><?php echo form_open(base_url()."tarrif/tarrif_manage"); $class="form-control";
@@ -131,5 +146,6 @@ echo $this->form_functions->populate_dropdown($name,$masters,$det['tariff_master
 </tr>
 <?php endforeach; ?>
 </table>
+<?php echo $page_links;?>
 </fieldset>
 </div>

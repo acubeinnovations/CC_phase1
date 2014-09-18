@@ -109,6 +109,7 @@ class Tarrif extends CI_Controller {
 				    redirect(base_url().'organization/front-desk/tarrif-masters');
 		}
 	}
+
 	}
 	else{
 			echo 'you are not authorized access this page..';
