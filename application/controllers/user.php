@@ -157,7 +157,7 @@ class User extends CI_Controller {
 	}	//start
 		$condition='';
 	    $per_page=10;
-	    $btw_arry='';
+	    $where_arry='';
 	if(isset($_REQUEST['search'])){
 		$fdate = $this->input->post('search_from_date');
 		$tdate = $this->input->post('search_to_date');
@@ -178,17 +178,18 @@ class User extends CI_Controller {
 	
 	if($_REQUEST['search_from_date']!=null){
 	
-	$btw_arry=array('from_date'=> $_REQUEST['search_from_date']);
+	$where_arry=array('from_date >='=> $_REQUEST['search_from_date']);
 	}
 	if($_REQUEST['search_to_date']!=null){
-	$btw_arry=array('to_date'=> $_REQUEST['search_to_date']);
+	$where_arry=array('to_date <='=> $_REQUEST['search_to_date']);
 	}
 	else{
-	$btw_arry=array('to_date'=> $tdate);
+	$where_arry=array('to_date <='=> $tdate);
 	}
 	
-	$this->session->set_userdata(array('condition'=>array("btw"=>$btw_arry)));
+	$this->session->set_userdata(array('condition'=>array("where"=>$where_arry)));
 	
+	//print_r($where_arry);
 	}
 	}
 	}
