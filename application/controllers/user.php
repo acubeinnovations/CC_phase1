@@ -44,6 +44,10 @@ class User extends CI_Controller {
 		$this->tarrif($param1,$param2);
 
 		}
+		elseif($param1=='driver'){
+
+		$this->ShowDriverView($param1);
+		}
 		}else{
 			echo 'you are not authorized access this page..';
 		}
@@ -175,16 +179,18 @@ class User extends CI_Controller {
 	if($param2==''){
 	$param2=1;
 	}
-	
+	if(($_REQUEST['search_from_date']>= $tdate)){
+	$this->session->set_userdata('Date_err','Not a valid search');
+	}
 	if($_REQUEST['search_from_date']!=null){
 	
-	$where_arry=array('from_date >='=> $_REQUEST['search_from_date']);
+	$where_arry['from_date >=']=$_REQUEST['search_from_date'];
 	}
 	if($_REQUEST['search_to_date']!=null){
-	$where_arry=array('to_date <='=> $_REQUEST['search_to_date']);
+	$where_arry['to_date <=']= $_REQUEST['search_to_date'];
 	}
 	else{
-	$where_arry=array('to_date <='=> $tdate);
+	$where_arry['to_date <=']= $tdate;
 	}
 	
 	$this->session->set_userdata(array('condition'=>array("where"=>$where_arry)));
@@ -273,7 +279,6 @@ class User extends CI_Controller {
 	$data1['new_customer']			=	false;
 	$data1['email']					=	$customer['email'];
 	$data1['mobile']					=	$customer['mobile'];
-	 
 	$data1['booking_source']			=	$result->booking_source_id;	
 	$data1['source']					=	$result->source;
 	$data1['trip_model']				=	$result->trip_model_id;
@@ -461,6 +466,28 @@ public function profile() {
 		if($this->session_check()==true) {
 				$data['title']="Change Password | ".PRODUCT_NAME;  
 				$page='user-pages/change_password';
+				 $this->load_templates($page,$data);
+		}else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+	public function ShowDriverView($param1) {
+		if($this->session_check()==true) {
+			//sample starts
+	$tbl_arry=array('marital_statuses','bank_account_types','id_proof_types');
+	$this->load->model('user_model');
+	for ($i=0;$i<count($tbl_arry);$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data[$tbl_arry[$i]]=$result;
+	}
+	else{
+	$data[$tbl_arry[$i]]='';
+	}
+	}
+			//sample ends
+				$data['title']="Driver Details | ".PRODUCT_NAME;  
+				$page='user-pages/addDrivers';
 				 $this->load_templates($page,$data);
 		}else{
 			echo 'you are not authorized access this page..';

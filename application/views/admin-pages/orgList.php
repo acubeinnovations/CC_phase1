@@ -23,7 +23,7 @@
 					<tr>
 					    <td><?php echo form_input(array('name'=>'sname','class'=>'form-control','id'=>'sname','placeholder'=>'By Name','size'=>30));?> </td>
 					    <td><?php 	$class="form-control";
-									$data=$this->form_functions->populate_dropdown('status',$org_status,$selected='',$class);
+									$data=$this->form_functions->populate_dropdown('status',$org_status,$selected='',$class,$id='',$msg='Select Status');
 									echo $data;?>
 					</td>
 					    <td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
