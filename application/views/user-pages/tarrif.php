@@ -21,19 +21,20 @@ $night_halt=$data['night_halt'];
 $this->session->set_userdata('post','');
 }
 
-if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('Err_date') != ''||$this->session->userdata('Err_rate') != ''||$this->session->userdata('Err_add_kilo') != ''||$this->session->userdata('Err_add_hrs') != ''||$this->session->userdata('Err_bata') != ''||$this->session->userdata('Err_halt') != ''||$this->session->userdata('Required') != ''){ ?>
+if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('Err_date') != ''||$this->session->userdata('Err_rate') != ''||$this->session->userdata('Err_add_kilo') != ''||$this->session->userdata('Err_add_hrs') != ''||$this->session->userdata('Err_bata') != ''||$this->session->userdata('Err_halt') != ''||$this->session->userdata('Required') != ''||$this->session->userdata('Date_err') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                         <b>Alert!</b><br><?php
-													echo $this->session->userdata('dbvalTarrif_Err').br();
-													echo $this->session->userdata('Err_date').br();
-													echo $this->session->userdata('Err_rate').br();
-													echo $this->session->userdata('Err_add_kilo').br();
-													echo $this->session->userdata('Err_add_hrs').br();
-													echo $this->session->userdata('Err_bata').br();
-													echo $this->session->userdata('Err_halt').br();
-													echo $this->session->userdata('Required').br();
+													echo $this->session->userdata('dbvalTarrif_Err').nbs();
+													echo $this->session->userdata('Err_date').nbs();
+													echo $this->session->userdata('Err_rate').nbs();
+													echo $this->session->userdata('Err_add_kilo').nbs();
+													echo $this->session->userdata('Err_add_hrs').nbs();
+													echo $this->session->userdata('Err_bata').nbs();
+													echo $this->session->userdata('Err_halt').nbs();
+													echo $this->session->userdata('Required').nbs();
+													echo $this->session->userdata('Date_err').nbs();
 														$this->session->set_userdata(array('dbvalTarrif_Err'=>''));
 														$this->session->set_userdata(array('Err_date'=>''));
 														$this->session->set_userdata(array('Err_rate'=>''));
@@ -42,6 +43,7 @@ if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('
 														$this->session->set_userdata(array('Err_bata'=>''));
 														$this->session->set_userdata(array('Err_halt'=>''));
 														$this->session->set_userdata(array('Required'=>''));
+														$this->session->set_userdata(array('Date_err'=>''));
 										?>
                                     </div>
 <?php  }  if($this->session->userdata('dbSuccess') != '') { ?>
@@ -83,7 +85,7 @@ echo form_close();?></td>
 		$msg="Select Tariff Master";
 		$name="select_tariff";
 		$selected='';
-echo $this->form_functions->populate_dropdown($name,$masters,$tariff_master_id,$class,$msg); 
+echo $this->form_functions->populate_dropdown($name,$masters,$tariff_master_id,$class,$id='',$msg); 
 ?></div></td>
 		
 		<td><div class="form-group"><?php echo form_input(array('name'=>'fromdatepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up From Date','value'=>$from_date)); ?></div></td>
@@ -131,7 +133,7 @@ foreach ($values as $det):
 		$msg="Select Tariff Master";
 		$name="manage_tariff";
 		
-echo $this->form_functions->populate_dropdown($name,$masters,$det['tariff_master_id'],$class,$msg); ?></div></td>
+echo $this->form_functions->populate_dropdown($name,$masters,$det['tariff_master_id'],$class,$id='',$msg); ?></div></td>
 <td>
 <div class="form-group"><?php echo form_input(array('name'=>'manage_datepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up From Date','value'=> $det['from_date'])); ?></div></td>
 <td><div class="form-group"><?php echo form_input(array('name'=>'manage_rate','class'=>'form-control','id'=>'rate','placeholder'=>'Rate','value'=> $det['rate'])); ?></div></td>

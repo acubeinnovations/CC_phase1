@@ -48,6 +48,12 @@ class User extends CI_Controller {
 		$this->tarrif($param1,$param2);
 
 		}
+		elseif($param1=='driver'){
+
+		$this->ShowDriverView($param1);
+		}elseif($param1=='list-driver'&&($param2== ''|| is_numeric($param2))){
+		$this->ShowDriverList($param1,$param2);
+		}
 		}else{
 			echo 'you are not authorized access this page..';
 		}
@@ -161,7 +167,7 @@ class User extends CI_Controller {
 	}	//start
 		$condition='';
 	    $per_page=10;
-	    $btw_arry='';
+	    $where_arry='';
 	if(isset($_REQUEST['search'])){
 		$fdate = $this->input->post('search_from_date');
 		$tdate = $this->input->post('search_to_date');
@@ -179,20 +185,23 @@ class User extends CI_Controller {
 	if($param2==''){
 	$param2=1;
 	}
-	
+	if(($_REQUEST['search_from_date']>= $tdate)){
+	$this->session->set_userdata('Date_err','Not a valid search');
+	}
 	if($_REQUEST['search_from_date']!=null){
 	
-	$btw_arry=array('from_date'=> $_REQUEST['search_from_date']);
+	$where_arry['from_date >=']=$_REQUEST['search_from_date'];
 	}
 	if($_REQUEST['search_to_date']!=null){
-	$btw_arry=array('to_date'=> $_REQUEST['search_to_date']);
+	$where_arry['to_date <=']= $_REQUEST['search_to_date'];
 	}
 	else{
-	$btw_arry=array('to_date'=> $tdate);
+	$where_arry['to_date <=']= $tdate;
 	}
 	
-	$this->session->set_userdata(array('condition'=>array("btw"=>$btw_arry)));
+	$this->session->set_userdata(array('condition'=>array("where"=>$where_arry)));
 	
+	//print_r($where_arry);
 	}
 	}
 	}
@@ -277,6 +286,7 @@ class User extends CI_Controller {
 	$data1['new_customer']			=	'false';
 	$data1['email']					=	$customer['email'];
 	$data1['mobile']				=	$customer['mobile'];
+
 	$this->session->set_userdata('customer_id',$result->customer_id);
 	$this->session->set_userdata('customer_name',$customer['name']);
 	$this->session->set_userdata('customer_email',$customer['email']);
@@ -541,6 +551,82 @@ public function profile() {
 		}else{
 			echo 'you are not authorized access this page..';
 		}
+	}
+	public function ShowDriverView($param1) {
+		if($this->session_check()==true) {
+			//sample starts
+	$tbl_arry=array('marital_statuses','bank_account_types','id_proof_types');
+	$this->load->model('user_model');
+	for ($i=0;$i<count($tbl_arry);$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data[$tbl_arry[$i]]=$result;
+	}
+	else{
+	$data[$tbl_arry[$i]]='';
+	}
+	}
+			//sample ends
+				$data['title']="Driver Details | ".PRODUCT_NAME;  
+				$page='user-pages/addDrivers';
+				 $this->load_templates($page,$data);
+		}else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+	
+	public function ShowDriverList($param1,$param2) {
+		if($this->session_check()==true) {
+		$condition='';
+	    $per_page=10;
+	    $like_arry='';
+		$org_id=$this->session->userdata('organisation_id');
+		$where_arry=array('organisation_id'=> $org_id);
+		//search starts
+		if(isset($_REQUEST['search'])){
+		$name = $this->input->post('driver_name');
+
+	 if($name==''){
+	 $this->session->set_userdata('Required','Search with Value');
+	 redirect(base_url().'organization/front-desk/list-driver');
+		}
+		else {
+		
+	if(isset($_REQUEST['search'])){
+	if($param2==''){
+	$param2=1;
+	}
+	
+	if($_REQUEST['driver_name']!=null){
+	
+	$like_arry=array('name'=> $_REQUEST['driver_name']); 
+	}
+	$this->session->set_userdata(array('condition'=>array("like"=>$like_arry,"where"=>$where_arry)));
+	$condition=array("like"=>$like_arry,"where"=>$where_arry);
+	
+	}
+	}
+	}
+		//search ends
+        $tbl="drivers";
+		$baseurl=base_url().'organization/front-desk/list-driver/';
+		$uriseg ='4';
+		if($param2==''){
+		$this->session->set_userdata('condition','');
+		}
+		
+		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+		
+		
+	$data['values']=$p_res['values'];
+	$data['page_links']=$p_res['page_links'];
+	$data['title']="List Driver | ".PRODUCT_NAME;  
+	$page="user-pages/driverList";
+	$this->load_templates($page,$data);
+	}
+	else{
+			echo 'you are not authorized access this page..';
+			}
 	}
 	
 }

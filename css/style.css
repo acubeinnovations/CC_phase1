@@ -77,7 +77,12 @@ margin:20px 0 20px 0;
     margin: 0 0 1.5em 0 !important;
     
 }
-
+.body-border-Driver-View {
+    border: 1px groove #ddd !important;
+    padding: 2.2em 4.4em 4.4em 4.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    
+}
 .body-head {
     width:inherit; /* Or auto */
     padding:0 10px; /* To give a bit of padding on the left and right */
@@ -172,6 +177,11 @@ margin:10px;
 float:left;
 width:30%;
 margin:10px 0 10px 20px;
+}
+.width-30-percent-with-margin-left-20-Driver-View{
+float:left;
+width:35%;
+margin:40px 0 46px 115px;
 }
 .row-source-50-percent-width-with-margin-8{
 width:40%;
@@ -328,6 +338,9 @@ height:200px !important;
 .border-style{
 width:80% !important;
 }
+.border-style-Driver-view{
+width:85% !important;
+}
 .form-submit-reset-buttons-group{
 bottom:0px;
 }
@@ -337,7 +350,12 @@ margin-left:500px;
 margin-top:70px;
 
 }
+.driver-details-body{
+width:30%;
+margin-left:500px;
+margin-top:70px;
 
+}
 .delete{
 margin-bottom:23px;
 }

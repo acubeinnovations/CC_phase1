@@ -12,6 +12,7 @@ function getCount($tbl){
 	$where_arry=$arry['where'];
 	}
 	}
+	
 		
 		if(!empty($like_arry) && count($like_arry) > 0){
 		$this->db->like($like_arry);
@@ -19,7 +20,7 @@ function getCount($tbl){
 		if(!empty($where_arry) && count($where_arry) > 0){
 		$this->db->where($where_arry);
 		}
-	
+		
 		$qry=$this->db->get($tbl);
 		
 		return $qry->num_rows();
@@ -45,7 +46,7 @@ function getCount($tbl){
 		$this->db->where($where_arry);
 		}
 		$qry= $this->db->get($tbl,$num,$offset);
-		//echo $this->db->last_query();
+		echo $this->db->last_query();
 	   return $qry->result_array();
 	}
 }
