@@ -149,13 +149,13 @@ width:100%;
 
 }
 .first-column-trip-booking{
-width:80%;
+width:79%;
 float:left;
-margin:10px 3% 10px 1%;
+margin:10px 10px 10px 10px;
 }
 .second-column-trip-booking{
-margin:10px 3% 10px 1%;
-width:12%;
+margin:10px 10px 10px 1%;
+width:15%;
 float:left;
 }
 .div-with-50-percent-width-with-margin-10{
@@ -350,4 +350,14 @@ margin-top: 20px;
 
 }
 
+.notify-link{
+color:#333;
+}
+.no-right-padding{
 
+padding-right:0;
+}
+.notify{
+height:1180px;
+overflow-y:auto;
+}
