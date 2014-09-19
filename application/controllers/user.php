@@ -47,6 +47,8 @@ class User extends CI_Controller {
 		elseif($param1=='driver'){
 
 		$this->ShowDriverView($param1);
+		}elseif($param1=='list-driver'&&($param2== ''|| is_numeric($param2))){
+		$this->ShowDriverList($param1,$param2);
 		}
 		}else{
 			echo 'you are not authorized access this page..';
@@ -492,6 +494,60 @@ public function profile() {
 		}else{
 			echo 'you are not authorized access this page..';
 		}
+	}
+	
+	public function ShowDriverList($param1,$param2) {
+		if($this->session_check()==true) {
+		$condition='';
+	    $per_page=10;
+	    $like_arry='';
+		$org_id=$this->session->userdata('organisation_id');
+		$where_arry=array('organisation_id'=> $org_id);
+		//search starts
+		if(isset($_REQUEST['search'])){
+		$name = $this->input->post('driver_name');
+
+	 if($name==''){
+	 $this->session->set_userdata('Required','Search with Value');
+	 redirect(base_url().'organization/front-desk/list-driver');
+		}
+		else {
+		
+	if(isset($_REQUEST['search'])){
+	if($param2==''){
+	$param2=1;
+	}
+	
+	if($_REQUEST['driver_name']!=null){
+	
+	$like_arry=array('name'=> $_REQUEST['driver_name']); 
+	}
+	$this->session->set_userdata(array('condition'=>array("like"=>$like_arry,"where"=>$where_arry)));
+	$condition=array("like"=>$like_arry,"where"=>$where_arry);
+	
+	}
+	}
+	}
+		//search ends
+        $tbl="drivers";
+		$baseurl=base_url().'organization/front-desk/list-driver/';
+		$uriseg ='4';
+		if($param2==''){
+		$this->session->set_userdata('condition','');
+		}
+		
+		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+		
+		
+	$data['values']=$p_res['values'];
+	$data['page_links']=$p_res['page_links'];
+	$data['title']="List Driver | ".PRODUCT_NAME;  
+	$page="user-pages/driverList";
+	$this->load_templates($page,$data);
+	}
+	else{
+			echo 'you are not authorized access this page..';
+			}
 	}
 	
 }
