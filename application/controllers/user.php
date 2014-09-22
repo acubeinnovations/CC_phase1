@@ -677,7 +677,7 @@ $condition='';
 		}
 	}
 	public function select_Vehicle_Values(){
-	$tbl_arry=array('vehicle_drivers','vehicle_ownership_types','vehicle_types','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_permit_types');
+	$tbl_arry=array('drivers','vehicle_ownership_types','vehicle_types','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_permit_types');
 	$this->load->model('user_model');
 	for ($i=0;$i<count($tbl_arry);$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);

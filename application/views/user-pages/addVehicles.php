@@ -143,7 +143,7 @@ if($this->session->userdata('marital_status_id') != ''||$this->session->userdata
 <fieldset class="body-border-Driver-View border-style-Driver-view" >
 <legend class="body-head">Vehicle Details</legend>
 
-		<?php  echo form_open(base_url()."driver/driver_manage");?>
+		<?php  echo form_open(base_url()."vehicle/");?>
         
 	
 		<div class="form-group">
@@ -219,7 +219,7 @@ if($this->session->userdata('marital_status_id') != ''||$this->session->userdata
         </div>
 	<div class="form-group">
 	<?php echo form_label(' Seating Capacity','usernamelabel'); ?>
-           <?php$class="form-control";
+           <?php $class="form-control";
 		$msg="Select Seating Capacity";
 		$name="seat";
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_capacity'],$vehicle_seat='',$class,$id='',$msg);  ?>
@@ -239,53 +239,56 @@ if($this->session->userdata('marital_status_id') != ''||$this->session->userdata
 <legend class="body-head">Other Details</legend>
 	<div class="form-group">
 		<?php echo form_label('Registration Number','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'name','class'=>'form-control','id'=>'name','placeholder'=>'Enter Name','value'=>$name)); ?>
-	   <?php echo $this->form_functions->form_error_session('name', '<p class="text-red">', '</p>'); ?>
+           <?php echo form_input(array('name'=>'reg_number','class'=>'form-control','id'=>'reg_number','value'=>'')); ?>
+	   <?php echo $this->form_functions->form_error_session('reg_number', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 	<?php echo form_label('Registration Date','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'place_of_birth','class'=>'form-control','id'=>'place_of_birth','placeholder'=>'Enter Place Of Birth','value'=>$place_of_birth)); ?>
-	   <?php echo $this->form_functions->form_error_session('place_of_birth', '<p class="text-red">', '</p>'); ?>
+           <?php echo form_input(array('name'=>'reg_date','class'=>'fromdatepicker form-control' ,'value'=>$date_of_joining));?>
+	   <?php echo $this->form_functions->form_error_session('reg_date', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Engine Number','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'dob','class'=>'fromdatepicker form-control' ,'placeholder'=>'Date','value'=>$dob));?>
-	   <?php echo $this->form_functions->form_error_session('dob', '<p class="text-red">', '</p>'); ?>
+           <?php echo form_input(array('name'=>'eng_num','class'=>'form-control','value'=>$dob));?>
+	   <?php echo $this->form_functions->form_error_session('eng_num', '<p class="text-red">', '</p>'); ?>
         </div>
         <div class="form-group">
 		<?php echo form_label('Chases Number','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'blood_group','class'=>'form-control','id'=>'blood_group','placeholder'=>'Blood Group','value'=>$blood_group)); ?>
-	   <?php echo $this->form_functions->form_error_session('blood_group', '<p class="text-red">', '</p>'); ?>
+           <?php echo form_input(array('name'=>'chases_num','class'=>'form-control','id'=>'chases_num','value'=>$blood_group)); ?>
+	   <?php echo $this->form_functions->form_error_session('chases_num', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('Select Driver','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'blood_group','class'=>'form-control','id'=>'blood_group','placeholder'=>'Blood Group','value'=>$blood_group)); ?>
-	   <?php echo $this->form_functions->form_error_session('blood_group', '<p class="text-red">', '</p>'); ?>
+           <?php $class="form-control";
+		$msg="Select Driver";
+		$name="driver";
+	echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver='',$class,$id='',$msg);  ?>
+	   <?php echo $this->form_functions->form_error_session('driver', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('From Date','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'blood_group','class'=>'form-control','id'=>'blood_group','placeholder'=>'Blood Group','value'=>$blood_group)); ?>
-	   <?php echo $this->form_functions->form_error_session('blood_group', '<p class="text-red">', '</p>'); ?>
+           <?php echo form_input(array('name'=>'from_date','class'=>'fromdatepicker form-control' ,'value'=>$date_of_joining));?>
+	   <?php echo $this->form_functions->form_error_session('from_date', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Permit Renewal Date','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'date_of_joining','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of Joining','value'=>$date_of_joining));?>
-	   <?php echo $this->form_functions->form_error_session('date_of_joining', '<p class="text-red">', '</p>'); ?>
+           <?php  echo form_input(array('name'=>'permit_date','class'=>'fromdatepicker form-control' ,'value'=>$date_of_joining));?>
+	   <?php echo $this->form_functions->form_error_session('permit_renewal', '<p class="text-red">', '</p>'); ?>
         </div>	
 	<div class="form-group">
 	<?php echo form_label('Permit Renewal Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'license_number','class'=>'form-control','id'=>'license_number','placeholder'=>'License Number','value'=>$license_number)); ?>
-	   <?php echo $this->form_functions->form_error_session('license_number', '<p class="text-red">', '</p>'); ?>
+           <?php echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>$license_number)); ?>
+	   <?php echo $this->form_functions->form_error_session('permit_amount', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Tax Renewal Amount ','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'license_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of Renewal','value'=>$license_renewal_date));?>
-	   <?php echo $this->form_functions->form_error_session('license_renewal_date', '<p class="text-red">', '</p>'); ?>
+           <?php  echo form_input(array('name'=>'tax_amount','class'=>'form-control','id'=>'tax_amount','value'=>$license_number));?>
+	   <?php echo $this->form_functions->form_error_session('tax_amount', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Tax Renewal Date','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'badge','class'=>'form-control','id'=>'badge','placeholder'=>'Badge','value'=>$badge)); ?>
-	   <?php echo $this->form_functions->form_error_session('badge', '<p class="text-red">', '</p>'); ?>
+           <?php echo form_input(array('name'=>'tax_date','class'=>'fromdatepicker form-control' ,'value'=>$date_of_joining)); ?>
+	   <?php echo $this->form_functions->form_error_session('tax_date', '<p class="text-red">', '</p>'); ?>
         </div>
 	
 	

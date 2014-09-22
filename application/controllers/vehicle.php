@@ -168,5 +168,28 @@ class Vehicle extends CI_Controller {
 		
 		//return 
 		}
+		public function vehicle_manage(){
+		if($this->session_check()==true) {
+	$data['name']=$this->input->post('name');
+	$data['place_of_birth']=$this->input->post('place_of_birth');
+	$data['dob']=$this->input->post('dob');
+	$data['blood_group']=$this->input->post('blood_group');
+	$data['marital_status_id']=$this->input->post('marital_status_id');
+	$data['children']=$this->input->post('children');
+	$data['present_address']=$this->input->post('present_address');
+	$data['permanent_address']=$this->input->post('permanent_address');
+	$data['district']=$this->input->post('district');
+	$data['state']=$this->input->post('state');
+	$data['pin_code']=$this->input->post('pin_code');
+	$data['phone']=$this->input->post('phone');
+	$data['mobile']=$this->input->post('mobile');
+	$data['email']=$this->input->post('email');
+	$data['license_number']=$this->input->post('license_number');
+		
+		}
+		else{
+			echo 'you are not authorized access this page..';
+			}
+		}
 }
 ?>
