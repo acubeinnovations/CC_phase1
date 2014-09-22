@@ -172,7 +172,7 @@ if($this->session->userdata('marital_status_id') != ''||$this->session->userdata
 		$name="marital_status_id";
 	if(($this->session->userdata('org_id')!=null)&&($this->session->userdata('user_id')!=null)){
 	$marital_status_id=$result[0]['marital_status_id'];
-	echo $marital_status_id;exit;
+	//echo $marital_status_id;exit;
 	echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id,$class,$id='',$msg);
 }	else{
   echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id='',$class,$id='',$msg);

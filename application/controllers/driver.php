@@ -150,11 +150,13 @@ class Driver extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
-	
+	// sample code
 	public function load_demotrip(){
+	//fetch trip details
+	
 	$this->load->view('admin-templates/header');
 		$this->load->view('admin-templates/nav');
 		$this->load->view('user-pages/demoTrip');
 		$this->load->view('admin-templates/footer');
 	}
-	}
+	

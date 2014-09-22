@@ -56,6 +56,10 @@ class User extends CI_Controller {
 		}elseif($param1=='driver-profile'&&($param2== ''|| is_numeric($param2))){
 		$this->ShowDriverProfile($param1,$param2);
 		}
+		elseif($param1=='vehicle'){
+
+		$this->ShowVehicleView($param1);
+		}
 		}else{
 			echo 'you are not authorized access this page..';
 		}
@@ -594,10 +598,12 @@ $condition='';
 	$tbl="drivers";
 		$baseurl=base_url().'organization/front-desk/list-driver/';
 		$uriseg ='4';
-		if($param2==''){
-		$this->session->set_userdata('condition','');
-		}
+		
     $p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+	if($param2==''){
+		$this->mysession->delete('condition');
+		
+		}
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
 	$data['title']='List Driver| '.PRODUCT_NAME;
@@ -627,6 +633,34 @@ $condition='';
 	}
 	public function select_Box_Values(){
 	$tbl_arry=array('marital_statuses','bank_account_types','id_proof_types');
+	$this->load->model('user_model');
+	for ($i=0;$i<count($tbl_arry);$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data[$tbl_arry[$i]]=$result;
+	}
+	else{
+	$data[$tbl_arry[$i]]='';
+	}
+	}
+	return $data;
+	}
+	
+	public function ShowVehicleView($param1) {
+		if($this->session_check()==true) {
+			//sample starts
+				$data['select']=$this->select_Vehicle_Values();
+	
+			//sample ends
+				$data['title']="Vehicle Details | ".PRODUCT_NAME;  
+				$page='user-pages/addVehicles';
+				 $this->load_templates($page,$data);
+		}else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+	public function select_Vehicle_Values(){
+	$tbl_arry=array('vehicle_drivers','vehicle_ownership_types','vehicle_types','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_permit_types');
 	$this->load->model('user_model');
 	for ($i=0;$i<count($tbl_arry);$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);

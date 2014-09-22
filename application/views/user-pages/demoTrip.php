@@ -61,7 +61,7 @@
 </div>
 </fieldset>
 </div>
-//Payments
+
 <div class="page-outer">
 	   <fieldset class="body-border">
 		<legend class="body-head">Payments</legend><div class="form-group">
