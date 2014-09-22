@@ -807,7 +807,10 @@ function generateTariffs(vehicle_type,vehicle_ac_type){
 	$(this).datetimepicker({timepicker:false,format:'Y-m-d'});
 	});
 	
-	
+	//trips page js start
+
+	$('.initialize-date-picker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
+
 
 
  });

@@ -379,3 +379,7 @@ padding-right:0;
 height:1180px;
 overflow-y:auto;
 }
+
+.list-trip-table  tr > td{
+border-top:none !important;
+}
