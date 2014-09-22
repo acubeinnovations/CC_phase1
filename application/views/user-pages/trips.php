@@ -9,29 +9,38 @@
                 ?>
            </div>
        </div>
-       <?php    } ?>
-	  <?php
-	  //search?>
+       <?php    } 
+if(!isset($trip_pick_date)){
+$trip_pick_date='';
+}
+if(!isset($trip_drop_date)){
+$trip_drop_date='';
+}
+if(!isset($customer)){
+$customer='';
+}
+?>
 
 <div class="page-outer">    
 	<fieldset class="body-border">
 		<legend class="body-head">Trips</legend>
 		<div class="box-body table-responsive no-padding">
 			
-			<table class="table list-trip-table">
+			<?php echo form_open(base_url()."organization/front-desk/trips"); ?>
+			<table class="table list-trip-table no-border">
 				<tbody>
 					<tr>
-					    <td> </td>
-					    <td></td>
-					    <td></td>
-					   
-						<td></td>
-						<td></td>
-						<td></td>
+						<!--<td><?php echo form_input(array('name'=>'customer','class'=>'customer form-control' ,'placeholder'=>'Customer name','value'=>$customer)); ?></td>-->
+					    <td><?php echo form_input(array('name'=>'trip_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'Pick up Date','value'=>$trip_pick_date)); ?></td>
+					    <td><?php  echo form_input(array('name'=>'trip_drop_date','class'=>'dropdatepicker initialize-date-picker form-control' ,'placeholder'=>'Drop Date','value'=>$trip_drop_date)); ?></td>
+					    <td><?php echo form_submit("trip_search","Search","class='btn btn-primary'");
+echo form_close();?></td>
+						
 					</tr>
 				</tbody>
 			</table>
 		</div>
+	
 		<div class="box-body table-responsive no-padding">
 			<table class="table table-hover table-bordered">
 				<tbody>

@@ -412,15 +412,37 @@ class User extends CI_Controller {
 			$baseurl=base_url().'organization/front-desk/trips/';
 			$per_page=10;
 			$uriseg ='4';
-			if($param2==''){
-			$this->session->set_userdata('condition','');
+			$tdate=date('Y-m-d');
+			$where_arry['organisation_id']=$this->session->userdata('organisation_id');
+			if((isset($_REQUEST['trip_pick_date'])|| isset($_REQUEST['trip_drop_date']))&& isset($_REQUEST['trip_search'])){
+				if($param2==''){
+				$param2=1;
+				}
+				
+				if(($_REQUEST['trip_pick_date']>= $tdate)){
+				$this->mysession->set('Date_err','Not a valid search');
+				}
+				if($_REQUEST['trip_drop_date']!=null){
+
+				$where_arry['pick_up_date >=']=$_REQUEST['trip_pick_date'];
+				}
+				if($_REQUEST['trip_drop_date']!=null){
+				$where_arry['drop_date <=']= $_REQUEST['trip_drop_date'];
+				}
+				
+
+				$this->mysession->set('condition',array("where"=>$where_arry));
+
+				//print_r($where_arry);
 			}
-		
+			if($param2==''){
+				$this->mysession->delete('condition');
+			}
 			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
 			$data['page_links']=$paginations['page_links'];
 			$data['trips']=$paginations['values'];//echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
 			//$data['trips']=$this->trip_booking_model->getDetails($conditon='');echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
-			$data['status_class']=array(TRIP_STATUS_CONFIRMED=>'btn-success',TRIP_STATUS_PENDING=>'label-warning',TRIP_STATUS_CANCELLED=>'label-danger',TRIP_STATUS_CUSTOMER_CANCELLED=>'label-danger',TRIP_STATUS_ON_TRIP=>'label-primary',TRIP_STATUS_TRIP_COMPLETED=>'label-success',TRIP_STATUS_TRIP_PAYED=>'label-info');
+			$data['status_class']=array(TRIP_STATUS_CONFIRMED=>'label-success',TRIP_STATUS_PENDING=>'label-warning',TRIP_STATUS_CANCELLED=>'label-danger',TRIP_STATUS_CUSTOMER_CANCELLED=>'label-danger',TRIP_STATUS_ON_TRIP=>'label-primary',TRIP_STATUS_TRIP_COMPLETED=>'label-success',TRIP_STATUS_TRIP_PAYED=>'label-info');
 			$data['trip_statuses']=$this->user_model->getArray('trip_statuses');
 			$data['customers']=$this->customers_model->getArray();
 			$data['title']="Trips | ".PRODUCT_NAME;  
