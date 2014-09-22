@@ -53,6 +53,8 @@ class User extends CI_Controller {
 		$this->ShowDriverView($param1);
 		}elseif($param1=='list-driver'&&($param2== ''|| is_numeric($param2))){
 		$this->ShowDriverList($param1,$param2);
+		}elseif($param1=='driver-profile'&&($param2== ''|| is_numeric($param2))){
+		$this->ShowDriverProfile($param1,$param2);
 		}
 		}else{
 			echo 'you are not authorized access this page..';
@@ -577,17 +579,8 @@ public function profile() {
 	public function ShowDriverView($param1) {
 		if($this->session_check()==true) {
 			//sample starts
-	$tbl_arry=array('marital_statuses','bank_account_types','id_proof_types');
-	$this->load->model('user_model');
-	for ($i=0;$i<count($tbl_arry);$i++){
-	$result=$this->user_model->getArray($tbl_arry[$i]);
-	if($result!=false){
-	$data[$tbl_arry[$i]]=$result;
-	}
-	else{
-	$data[$tbl_arry[$i]]='';
-	}
-	}
+				$data['select']=$this->select_Box_Values();
+	
 			//sample ends
 				$data['title']="Driver Details | ".PRODUCT_NAME;  
 				$page='user-pages/addDrivers';
@@ -599,57 +592,74 @@ public function profile() {
 	
 	public function ShowDriverList($param1,$param2) {
 		if($this->session_check()==true) {
-		$condition='';
-	    $per_page=10;
-	    $like_arry='';
-		$org_id=$this->session->userdata('organisation_id');
-		$where_arry=array('organisation_id'=> $org_id);
-		//search starts
-		if(isset($_REQUEST['search'])){
-		$name = $this->input->post('driver_name');
-
-	 if($name==''){
-	 $this->session->set_userdata('Required','Search with Value');
-	 redirect(base_url().'organization/front-desk/list-driver');
-		}
-		else {
-		
-	if(isset($_REQUEST['search'])){
+$condition='';
+	$per_page=5;
+	$like_arry=''; 
+	$org_id=$this->session->userdata('organisation_id');
+	$where_arry['organisation_id']=$org_id;
+	//for search
+    if(isset($_REQUEST['driver_name'])&& isset($_REQUEST['search'])){
 	if($param2==''){
 	$param2=1;
 	}
-	
 	if($_REQUEST['driver_name']!=null){
-	
-	$like_arry=array('name'=> $_REQUEST['driver_name']); 
+	$like_arry['name']=$_REQUEST['driver_name'];
 	}
-	$this->session->set_userdata(array('condition'=>array("like"=>$like_arry,"where"=>$where_arry)));
-	$condition=array("like"=>$like_arry,"where"=>$where_arry);
-	
+
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+	$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
 	}
-	}
-	}
-		//search ends
-        $tbl="drivers";
+	//$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
+	//print_r($condition);exit;
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+	//print_r($this->mysession->get('condition'));exit;
+	$tbl="drivers";
 		$baseurl=base_url().'organization/front-desk/list-driver/';
 		$uriseg ='4';
 		if($param2==''){
 		$this->session->set_userdata('condition','');
 		}
-		
-		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
-		
-		
+    $p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
-	$data['title']="List Driver | ".PRODUCT_NAME;  
-	$page="user-pages/driverList";
-	$this->load_templates($page,$data);
+	$data['title']='List Driver| '.PRODUCT_NAME;
+	$page='user-pages/driverList';
+	$this->load_templates($page,$data);	
 	}
 	else{
 			echo 'you are not authorized access this page..';
 			}
 	}
 	
+	public function ShowDriverProfile($param1,$param2){
+	if($this->session_check()==true) {
+	$data['result']=$this->user_model->getDriverDetails($param2);
+	$data['title']='Driver Profile| '.PRODUCT_NAME;
+	$page='user-pages/addDrivers';
+	$org_id=$this->session->userdata('organisation_id');
+	$this->session->set_userdata(array('org_id'=>$org_id,'user_id'=>$param2));
+	$data['select']=$this->select_Box_Values();
+	$this->load_templates($page,$data);
+	
+	
+	}
+	else{
+			echo 'you are not authorized access this page..';
+			}
+	}
+	public function select_Box_Values(){
+	$tbl_arry=array('marital_statuses','bank_account_types','id_proof_types');
+	$this->load->model('user_model');
+	for ($i=0;$i<count($tbl_arry);$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data[$tbl_arry[$i]]=$result;
+	}
+	else{
+	$data[$tbl_arry[$i]]='';
+	}
+	}
+	return $data;
+	}
 }
 ?>
