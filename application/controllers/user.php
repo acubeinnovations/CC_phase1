@@ -420,27 +420,22 @@ class User extends CI_Controller {
 				if($param2==''){
 				$param2=1;
 				}
-				
-				if(($_REQUEST['trip_pick_date']>= $tdate)){
-				$this->mysession->set('Date_err','Not a valid search');
-				}
-				if($_REQUEST['trip_drop_date']!=null){
+				if($_REQUEST['trip_pick_date']!=null && $_REQUEST['trip_drop_date']!=null){
+					$where_arry['pick_up_date >=']=$_REQUEST['trip_pick_date'];
+					$where_arry['drop_date <=']= $_REQUEST['trip_drop_date'];
+				}else if($_REQUEST['trip_pick_date']!=null){
 
-				$where_arry['pick_up_date >=']=$_REQUEST['trip_pick_date'];
-				}
-				if($_REQUEST['trip_drop_date']!=null){
-				$where_arry['drop_date <=']= $_REQUEST['trip_drop_date'];
+				$where_arry['pick_up_date =']=$_REQUEST['trip_pick_date'];
+				}else if($_REQUEST['trip_drop_date']!=null){
+				$where_arry['drop_date =']= $_REQUEST['trip_drop_date'];
 				}
 				
-
-				$this->mysession->set('condition',array("where"=>$where_arry));
-
-				//print_r($where_arry);
 			}
+			$this->mysession->set('condition',array("where"=>$where_arry));
+			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
 			if($param2==''){
 				$this->mysession->delete('condition');
 			}
-			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
 			$data['page_links']=$paginations['page_links'];
 			$data['trips']=$paginations['values'];//echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
 			//$data['trips']=$this->trip_booking_model->getDetails($conditon='');echo '<pre>';print_r($data['trips']);echo '</pre>';exit;

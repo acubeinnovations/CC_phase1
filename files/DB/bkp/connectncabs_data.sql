@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.6deb1
+-- version 4.1.14
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Sep 22, 2014 at 09:27 AM
--- Server version: 5.5.37-0ubuntu0.13.10.1
--- PHP Version: 5.5.3-1ubuntu2.6
+-- Host: 127.0.0.1
+-- Generation Time: Sep 09, 2014 at 08:44 AM
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -151,8 +151,8 @@ INSERT INTO `trip_models` (`id`, `name`, `description`, `value`, `organisation_i
 --
 
 INSERT INTO `trip_statuses` (`id`, `name`, `description`, `value`, `organisation_id`, `user_id`, `created`, `updated`) VALUES
-(1, 'Pending', 'Pending', NULL, 1, 5, '2014-09-09 06:36:20', '2014-09-09 06:36:31'),
-(2, 'Confirmed', 'Confirmed', NULL, 1, 5, '2014-09-09 06:36:51', '0000-00-00 00:00:00'),
+(1, 'Booked', 'Booked', NULL, 1, 5, '2014-09-09 06:36:20', '2014-09-09 06:36:31'),
+(2, 'BookingApproved', 'BookingApproved', NULL, 1, 5, '2014-09-09 06:36:51', '0000-00-00 00:00:00'),
 (3, 'Canceled', 'Canceled', NULL, 1, 5, '2014-09-09 06:37:07', '0000-00-00 00:00:00'),
 (4, 'CustomerCanceled', 'CustomerCanceled', NULL, 1, 5, '2014-09-09 06:37:25', '0000-00-00 00:00:00'),
 (5, 'OnTrip', 'OnTrip', NULL, 1, 5, '2014-09-09 06:37:43', '0000-00-00 00:00:00'),

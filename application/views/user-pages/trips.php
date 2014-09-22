@@ -41,6 +41,7 @@ echo form_close();?></td>
 			</table>
 		</div>
 	
+	
 		<div class="box-body table-responsive no-padding">
 			<table class="table table-hover table-bordered">
 				<tbody>

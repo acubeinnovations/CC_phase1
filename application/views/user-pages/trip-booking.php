@@ -687,8 +687,8 @@ $this->mysession->delete('post');
 		<fieldset class="body-border notify">
 		<legend class="body-head">Notification</legend>
 		<?php
-
-		if(count($notification)>0){
+	print_r($notification);
+		if(count($notification)>0 && $notification!=''){
 		for($notification_index=0;$notification_index<count($notification);$notification_index++){?>
 		<a href="<?php echo base_url().'organization/front-desk/trip-booking/'.$notification[$notification_index]->id;?>" class="notify-link">
 		<div class="callout callout-warning no-right-padding">
