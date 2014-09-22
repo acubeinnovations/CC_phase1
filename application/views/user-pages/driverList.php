@@ -1,4 +1,6 @@
-<?php    if($this->session->userdata('dbSuccess') != '') { ?>
+<?php    if($this->session->userdata('dbSuccess') != '') { 
+?>
+
         <div class="success-message">
             <div class="alert alert-success alert-dismissable">
                 <i class="fa fa-check"></i>
@@ -17,7 +19,7 @@
 	<fieldset class="body-border">
 		<legend class="body-head">List Drivers</legend>
 		<div class="box-body table-responsive no-padding">
-			<?php echo form_open(base_url().'organization/front-desk/driver');?>
+			<?php echo form_open(base_url().'organization/front-desk/list-driver');?>
 			<table class="table list-org-table">
 				<tbody>
 					<tr>
@@ -27,7 +29,7 @@
 					    <?php echo form_close();?>
 						<td><?php echo nbs(55); ?></td>
 						<td><?php echo nbs(35); ?></td>
-						<td><?php echo nbs(25); ?></td>
+						<td><?php echo form_submit("add","Add","class='btn btn-primary'");?></td>
 					</tr>
 				</tbody>
 			</table>

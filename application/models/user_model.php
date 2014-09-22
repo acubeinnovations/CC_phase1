@@ -87,5 +87,10 @@ class user_model extends CI_Model {
 	return $qry->result_array();
 	 
 }
+   public function getDriverDetails($id){
+   $qry=$this->db->where('id',$id);
+   $qry=$this->db->get('drivers');
+   return $qry->result_array();
    
+   }
 }
