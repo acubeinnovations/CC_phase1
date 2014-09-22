@@ -10,7 +10,8 @@ class User extends CI_Controller {
 	$this->load->model('customers_model');
 	$this->load->model('trip_booking_model');
 	$this->load->model('customers_model');
-    no_cache();
+    $this->load->model('tarrif_model');
+	no_cache();
 
 	}
 	public function session_check() {
@@ -38,6 +39,9 @@ class User extends CI_Controller {
 		}elseif($param1=='trip-booking'){
 
 		$this->ShowBookTrip($param2);
+		}elseif($param1=='trips'){
+
+		$this->Trips($param2);
 		}elseif($param1=='tarrif-masters'&& ($param2== ''|| is_numeric($param2))){
 		$this->tarrif_masters($param1,$param2);
 		}elseif($param1=='tarrif'&& ($param2== ''|| is_numeric($param2))){
@@ -231,7 +235,7 @@ class User extends CI_Controller {
 	if($this->session_check()==true) {
 	
 	$tbl_arry=array('booking_sources','trip_models','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
-	$this->load->model('user_model');
+	
 	for ($i=0;$i<count($tbl_arry);$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
 	if($result!=false){
@@ -241,15 +245,15 @@ class User extends CI_Controller {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
-
-	$data['notification']=$this->trip_booking_model->getDetails($conditon = '');
+	$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING);
+	$data['notification']=$this->trip_booking_model->getDetails($conditon);
 	$data['customers_array']=$this->customers_model->getArray();
 
 	if($trip_id!='' && $trip_id > 0) {
 	$conditon = array('id'=>$trip_id);
 	$result=$this->trip_booking_model->getDetails($conditon);
 	$result=$result[0];
-	$data1['id']=$result->id;
+	$data1['trip_id']=$result->id;
 	$data1['recurrent_continues']='';
 	$data1['recurrent_alternatives']='';
 	if(isset($result->customer_group_id) && $result->customer_group_id > 0){
@@ -260,11 +264,12 @@ class User extends CI_Controller {
 		$data1['customer_group']='';
 	}
 
-
+	
 	if(isset($result->guest_id) && $result->guest_id > 0){
 	$dbdata=array('id'=>$result->guest_id);
 	$guest 	=	$this->customers_model->getCustomerDetails($dbdata);
 	$guest 	=$guest[0];
+	$data1['guest_id']	= $result->guest_id;
 	$data1['guest']	=	TRUE;
 	$data1['guestname']=	$guest['name'];
 	$data1['guestemail']=$guest['email'];
@@ -280,9 +285,15 @@ class User extends CI_Controller {
 	$customer 	=	$this->customers_model->getCustomerDetails($dbdata);
 	$customer=$customer[0];
 	$data1['customer']				=	$customer['name'];
-	$data1['new_customer']			=	false;
+	$data1['new_customer']			=	'false';
 	$data1['email']					=	$customer['email'];
-	$data1['mobile']					=	$customer['mobile'];
+	$data1['mobile']				=	$customer['mobile'];
+
+	$this->session->set_userdata('customer_id',$result->customer_id);
+	$this->session->set_userdata('customer_name',$customer['name']);
+	$this->session->set_userdata('customer_email',$customer['email']);
+	$this->session->set_userdata('customer_mobile',$customer['mobile']);
+	
 	$data1['booking_source']			=	$result->booking_source_id;	
 	$data1['source']					=	$result->source;
 	$data1['trip_model']				=	$result->trip_model_id;
@@ -306,6 +317,8 @@ class User extends CI_Controller {
 	$data1['dropdatepicker']			=	$result->drop_date;
 	$data1['pickuptimepicker']		=	$result->pick_up_time;
 	$data1['droptimepicker']			=	$result->drop_time;
+	$pickupdatetime			= $result->pick_up_date.' '.$result->pick_up_time;
+	$dropdatetime			= $result->drop_date.' '.$result->drop_time;
 	$data1['vehicle_type']			=	$result->vehicle_type_id;
 	$data1['vehicle_ac_type']		=	$result->vehicle_ac_type_id;
 	$data1['recurrent_yes']			= 	'';
@@ -341,7 +354,32 @@ class User extends CI_Controller {
 	$data1['language']				=	$result->driver_language_id;
 	$data1['tariff']				=	$result->tariff_id;
 	$data1['available_vehicle']		=	$result->vehicle_id;
+	$this->session->set_userdata('driver_id',$result->driver_id);
 	$data1['customer_type']			=	$result->customer_type_id;
+	}
+	if(isset($data1['vehicle_type']) && isset($data1['vehicle_ac_type']) && isset( $pickupdatetime) && isset($dropdatetime)){
+	$available=array('vehicle_type'=>$data1['vehicle_type'],'vehicle_ac_type'=>$data1['vehicle_ac_type'],'pickupdatetime'=>$pickupdatetime,'dropdatetime'=>$dropdatetime,'organisation_id'=>$this->session->userdata('organisation_id'));
+	$res_vehicles=$this->getAvailableVehicle($available);
+	$res_tariffs=$this->tariffSelecter($available);
+	$available_vehicles='';
+	$available_tarif='';
+	if(count($res_vehicles[0])>0){
+	for($index_vehicles=0;$index_vehicles<count($res_vehicles);$index_vehicles++){
+		$available_vehicles[$res_vehicles[$index_vehicles]['vehicle_id']]=$res_vehicles[$index_vehicles]['registration_number'];
+	}
+	}
+	for($index_tarif=0;$index_tarif<count($res_tariffs);$index_tarif++){
+		$available_tarif[$res_tariffs[$index_tarif]['id']]=$res_tariffs[$index_tarif]['title'];
+	}
+	$data['tariffs']=$available_tarif;
+	$data['available_vehicles']=$available_vehicles;
+	}else if(isset($data1['vehicle_type']) && isset($data1['vehicle_ac_type'])){
+	$available=array('vehicle_type'=>$data1['vehicle_type'],'vehicle_ac_type'=>$data1['vehicle_ac_type'],'organisation_id'=>$this->session->userdata('organisation_id'));
+	$res_tariffs=$this->tariffSelecter($available);
+	$data['available_vehicles']='';
+	}else{
+	$data['tariffs']='';
+	$data['available_vehicles']='';
 	}
 	if(isset($data1) && count($data1)>0){
 	$data['information']=$data1;
@@ -356,6 +394,47 @@ class User extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
+
+	public function getAvailableVehicle($available){
+	
+	
+	return $this->trip_booking_model->selectAvailableVehicles($available);
+
+	}
+	public function tariffSelecter($data){
+	
+	return $this->tarrif_model->selectAvailableTariff($data);
+
+	
+
+	}
+	public function Trips($param2){
+		if($this->session_check()==true) {
+			$tbl="trips";
+			$baseurl=base_url().'organization/front-desk/trips/';
+			$per_page=10;
+			$uriseg ='4';
+			if($param2==''){
+			$this->session->set_userdata('condition','');
+			}
+		
+			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+			$data['page_links']=$paginations['page_links'];
+			$data['trips']=$paginations['values'];//echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
+			//$data['trips']=$this->trip_booking_model->getDetails($conditon='');echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
+			$data['status_class']=array(TRIP_STATUS_CONFIRMED=>'btn-success',TRIP_STATUS_PENDING=>'label-warning',TRIP_STATUS_CANCELLED=>'label-danger',TRIP_STATUS_CUSTOMER_CANCELLED=>'label-danger',TRIP_STATUS_ON_TRIP=>'label-primary',TRIP_STATUS_TRIP_COMPLETED=>'label-success',TRIP_STATUS_TRIP_PAYED=>'label-info');
+			$data['trip_statuses']=$this->user_model->getArray('trip_statuses');
+			$data['customers']=$this->customers_model->getArray();
+			$data['title']="Trips | ".PRODUCT_NAME;  
+			$page='user-pages/trips';
+		    $this->load_templates($page,$data);
+		    }
+			else{
+				echo 'you are not authorized access this page..';
+			}
+		
+	}	
+	
 	public function load_templates($page='',$data=''){
 	if($this->session_check()==true) {
 		$this->load->view('admin-templates/header',$data);
@@ -370,7 +449,7 @@ class User extends CI_Controller {
 	
 public function profile() {
 	   if($this->session_check()==true) {
-		$this->load->model('user_model');
+		
 		$dbdata = '';
               if(isset($_REQUEST['user-profile-update'])){
 			  $dbdata['first_name'] = $this->input->post('firstname');

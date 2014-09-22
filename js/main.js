@@ -34,6 +34,7 @@ $(this).siblings().find(':submit').trigger('click');
 
 
 function Trim(strInput) {
+	
     while (true) {
         if (strInput.substring(0, 1) != " ")
             break;
@@ -45,6 +46,7 @@ function Trim(strInput) {
         strInput = strInput.substring(0, strInput.length - 1);
     }
    return strInput;
+	
 }
 
 $(document).ready(function(){
@@ -52,8 +54,9 @@ $(document).ready(function(){
 var base_url=window.location.origin;
 
 //trip_bookig page-js start
+var pathname = window.location.pathname.split("/");
 
-if(window.location=="http://cc.local/organization/front-desk/trip-booking"){
+if(pathname[3]=="trip-booking" || pathname[4]=="trip-booking"){
 
 if($('.advanced-chek-box').attr('checked')=='checked'){
 
@@ -66,6 +69,7 @@ if($('.guest-chek-box').attr('checked')=='checked'){
 $('.guest-toggle').toggle();
 
 }
+
 if($('.beacon-light-chek-box').attr('checked')=='checked'){
 var radio_button_to_be_checked = $('.beacon-light-chek-box').attr('radio_to_be_selected');
 if(radio_button_to_be_checked=='red'){
@@ -82,6 +86,16 @@ $('.beacon-radio2-container > .iradio_minimal > .iCheck-helper').trigger('click'
 
 }
 }
+
+if($("#trip_id").val() > -1) {
+
+$('#email').attr('disabled','');
+$('#customer').attr('disabled','');
+$('#mobile').attr('disabled','');
+
+}
+
+
 
 if($("#pickupcity").val()!=''){
 getDistance();
@@ -238,15 +252,15 @@ $('.recurrent-radio-container > .div-alternatives > .iradio_minimal > .iCheck-he
 $('.recurrent-container-continues').hide();
 
 $('.recurrent-container-alternatives').show();
-$('#reccurent_alternatives_pickupdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
-$('#reccurent_alternatives_dropdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
+$('#reccurent_alternatives_pickupdatepicker0').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
+$('#reccurent_alternatives_dropdatepicker0').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
 
 
-$('#reccurent_alternatives_pickuptimepicker').datetimepicker({datepicker:false,
+$('#reccurent_alternatives_pickuptimepicker0').datetimepicker({datepicker:false,
 	format:'H:i',
 	step:5
 });
-$('#reccurent_alternatives_droptimepicker').datetimepicker({datepicker:false,
+$('#reccurent_alternatives_droptimepicker0').datetimepicker({datepicker:false,
 	format:'H:i',
 	step:5
 });
@@ -309,7 +323,8 @@ var mobile=$('#mobile').val();
 	if(Trim(mobile)!="" || Trim(email)!=""){
 	$.post(base_url+'/customers/customer-check',{
 	email:email,
-	mobile:mobile
+	mobile:mobile,
+	customer:'yes'
 	},function(data){
 	if(data!=false){
 		data=jQuery.parseJSON(data);
@@ -354,7 +369,8 @@ var mobile=$('#guestmobile').val();
 	if(Trim(mobile)!="" || Trim(email)!=""){
 	$.post(base_url+'/customers/customer-check',{
 	email:email,
-	mobile:mobile
+	mobile:mobile,
+	customer:'no'
 	},function(data){
 	if(data!=false){
 		data=jQuery.parseJSON(data);
@@ -642,7 +658,8 @@ $('#'+text_box_class+'lng').attr('value',data.lng);
 var test = 1;
 window.onbeforeunload = function(){
 	var redirect=$('.book-trip-validate').attr('enable_redirect');
-	if(window.location=="http://cc.local/organization/front-desk/trip-booking" && redirect!='true'){
+	var pathname = window.location.pathname.split("/");
+	if(pathname[3]=="trip-booking" && redirect!='true'){
     setTimeout(function(){
         test = 2;
     },500)
@@ -668,6 +685,19 @@ alert("Add Customer Informations");
 
 }
 });
+
+$('.cancel-trip-validate').on('click',function(){
+
+if($('.new-customer').val()=='false'){//alert('clciked');
+$('.book-trip-validate').attr('enable_redirect','true');
+$('.cancel-trip').trigger('click');
+}else{
+
+alert("Add Customer Informations");
+
+}
+});
+
 //tarris selecter
 $('#vehicle-type,#vehicle-ac-type').on('change',function(){
 var vehicle_type = $('#vehicle-type').val();
@@ -680,8 +710,8 @@ var droptime = $('#droptimepicker').val();
 
 if(vehicle_type!=-1 && vehicle_ac_type!=-1 && pickupdate!='' && pickuptime!='' && dropdate!='' && droptime!='' ){
 
-var pickupdatetime = pickupdate+' '+pickuptime;
-var dropdatetime   = dropdate+' '+droptime;
+var pickupdatetime = pickupdate+' '+pickuptime+':00';
+var dropdatetime   = dropdate+' '+droptime+':00';
 
 generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,dropdatetime);
 generateTariffs(vehicle_type,vehicle_ac_type);
@@ -696,7 +726,7 @@ generateTariffs(vehicle_type,vehicle_ac_type);
 });
 
 function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,dropdatetime){
-	alert(vehicle_type);alert(vehicle_ac_type);alert(pickupdatetime);alert(dropdatetime);
+	//alert(vehicle_type);alert(vehicle_ac_type);alert(pickupdatetime);alert(dropdatetime);
 	 $.post(base_url+"/trip-booking/getAvailableVehicles",
 		  {
 			vehicle_type:vehicle_type,
@@ -704,7 +734,20 @@ function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,d
 			pickupdatetime:pickupdatetime,
 			dropdatetime:dropdatetime
 		  },function(data){
+			if(data!='false'){
+			data=jQuery.parseJSON(data);
+			$('#available_vehicle option:gt(0)').remove();
+			i=0;
+			$.each(data.data[i], function() {
+				
+			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"'></option>").text(data.data[i].registration_number));
+				i=Number(i)+1;
+			});
+			}else{
+		
+					alert('No Available Vehicles');
 
+			}
 		   });
 
 }

@@ -37,7 +37,9 @@ class Customers extends CI_Controller {
 		$res=$this->customers_model->getCustomerDetails($data);
 		if(!empty($res)){
 		echo json_encode($res);
+		if(isset($_REQUEST['customer']) && $_REQUEST['customer']=='yes'){
 		$this->set_customer_session($res);
+		}
 		}else{
 		return false;
 		}
