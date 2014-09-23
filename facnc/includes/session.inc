@@ -478,7 +478,7 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 
 		}
 	}else{
-		$_SESSION["wa_current_user"]->logged = false;
+		//$_SESSION["wa_current_user"]->logged = false;
 	}
 
 

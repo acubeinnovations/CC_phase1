@@ -10,7 +10,7 @@
     See the License here <http://www.gnu.org/licenses/gpl-3.0.html>.
 ***********************************************************************/
 
-	header("Location:http://cc.local");exit;
+	//header("Location:http://cc.local");exit;
 
 
 	$path_to_root=".";

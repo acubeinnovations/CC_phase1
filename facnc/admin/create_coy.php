@@ -18,9 +18,20 @@ include_once($path_to_root . "/admin/db/company_db.inc");
 include_once($path_to_root . "/admin/db/maintenance_db.inc");
 include_once($path_to_root . "/includes/ui.inc");
 
-page(_($help_context = "Create/Update Company"));
+include_once($path_to_root . "/includes/db/cnc_session_db.inc");
+
 
 $comp_subdirs = array('images', 'pdf_files', 'backup','js_cache', 'reporting', 'attachments');
+
+$cnc_organization = false;
+if(isset($_GET['NewCompany']))
+	$cnc_organization = get_cnc_organization($_GET['NewCompany']);
+
+if($cnc_organization)
+	page(_($help_context = "Add Account for ".$cnc_organization['name']));
+else
+	page(_($help_context = "Create/Update Company"));
+
 
 //---------------------------------------------------------------------------------------------
 if (isset($_GET['selected_id']))
@@ -133,9 +144,12 @@ function handle_submit()
 			} 
 			else
 			{
-				if (!isset($_POST['admpassword']) || $_POST['admpassword'] == "")
+				/*if (!isset($_POST['admpassword']) || $_POST['admpassword'] == "")
 					$_POST['admpassword'] = "password";
-				update_admin_password($conn, md5($_POST['admpassword']));
+				update_admin_password($conn, md5($_POST['admpassword']));*/
+				$cnc_org_admin = get_cnc_org_admin($_POST['cnc_org_id']);
+				if($cnc_org_admin)
+					sync_cnc_org_login($conn, $cnc_org_admin['username'],$cnc_org_admin['password']);
 			}	
 		}
 		set_global_connection();
@@ -364,6 +378,66 @@ function display_company_edit($selected_id)
 
 
 //---------------------------------------------------------------------------------------------
+function display_cnc_company_edit($cnc_organization=false)
+{
+	global $def_coy, $db_connections, $tb_pref_counter;
+
+	start_form();
+
+	start_table(TABLESTYLE2);
+
+	if ($cnc_organization)
+	{
+		$_POST['tbpref'] = $cnc_organization['id']."_";
+		// Insert the current settings as default
+		$conn = $db_connections[user_company()];
+		$_POST['name'] = $cnc_organization['name'];
+		$_POST['host']  = $conn['host'];
+		$_POST['dbuser']  = $conn['dbuser'];
+		$_POST['dbpassword']  = $conn['dbpassword'];
+		$_POST['dbname']  = $conn['dbname'];
+		$_POST['cnc_org_id']  = $cnc_organization['id'];
+
+
+	}
+	else
+	{
+		
+	}
+
+	text_row_ex(_("Company"), 'name', 50, null, null, null, null, null, true);
+
+	if ($cnc_organization)
+	{
+		text_row_ex(_("Host"), 'host', 30, 60, null, null, null, null, true);
+		text_row_ex(_("Database User"), 'dbuser', 30, null, null, null, null, null, true);
+		text_row_ex(_("Database Password"), 'dbpassword', 30, null, null, null, null, null, true);
+		text_row_ex(_("Database Name"), 'dbname', 30, null, null, null, null, null, true);
+		text_row_ex(_("Table Pref"), 'tbpref', 30, null, null, null, null, null, true);
+		
+
+	} else {
+		
+	}
+
+	//yesno_list_row(_("Default"), 'def', null, "", "", false);
+	hidden('cnc_org_id');
+	hidden('def',0);
+	hidden('coa','en_US-new.sql');
+
+	/*if ($cnc_organization)
+	{
+		coa_list_row(_("Database Script"), 'coa','en_US-new.sql');
+		text_row_ex(_("New script Admin Password"), 'admpassword', 20);
+	}*/
+	end_table(1);
+
+	submit_center('save', _("Continue"));
+
+	end_form();
+}
+//---------------------------------------------------------------------------------------------
+
 
 if (isset($_GET['c']) && $_GET['c'] == 'df') {
 	handle_delete();
@@ -376,12 +450,15 @@ if (get_post('save')) {
 }
 
 //---------------------------------------------------------------------------------------------
+if($cnc_organization){
+	display_cnc_company_edit($cnc_organization);
+}else{
+	display_companies();
 
-display_companies();
+	hyperlink_no_params($_SERVER['PHP_SELF'], _("Create a new company"));
 
-hyperlink_no_params($_SERVER['PHP_SELF'], _("Create a new company"));
-
-display_company_edit($selected_id);
+	display_company_edit($selected_id);
+}
 
 //---------------------------------------------------------------------------------------------
 end_page();

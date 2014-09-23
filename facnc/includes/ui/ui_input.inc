@@ -511,7 +511,7 @@ function text_cells($label, $name, $value=null, $size="", $max="", $title=false,
 }
 
 function text_cells_ex($label, $name, $size, $max=null, $init=null, $title=null,
-	$labparams=null, $post_label=null, $submit_on_change=false)
+	$labparams=null, $post_label=null, $submit_on_change=false,$readonly=false)
 {
   	global $Ajax;
 
@@ -532,7 +532,8 @@ function text_cells_ex($label, $name, $size, $max=null, $init=null, $title=null,
 	echo "<td>";
 	$class = $submit_on_change ? 'class="searchbox"' : '';
 	echo "<input $class type=\"text\" name=\"$name\" size=\"$size\" maxlength=\"$max\" value=\"" . $_POST[$name]. "\""
-	 .($title ? " title='$title'": '')." >";
+	 .($title ? " title='$title'": '').($readonly ? " readonly='readonly'": '')." >";
+
 
 	if ($post_label)
 		echo " " . $post_label;
@@ -551,10 +552,10 @@ function text_row($label, $name, $value, $size, $max, $title=null, $params="", $
 
 //-----------------------------------------------------------------------------------
 
-function text_row_ex($label, $name, $size, $max=null, $title=null, $value=null, $params=null, $post_label=null)
+function text_row_ex($label, $name, $size, $max=null, $title=null, $value=null, $params=null, $post_label=null,$readonly=false)
 {
 	echo "<tr><td class='label'>$label</td>";
-	text_cells_ex(null, $name, $size, $max, $value, $title, $params, $post_label);
+	text_cells_ex(null, $name, $size, $max, $value, $title, $params, $post_label,false,$readonly);
 
 	echo "</tr>\n";
 }
