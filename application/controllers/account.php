@@ -19,6 +19,7 @@ class Account extends CI_Controller {
 	{
 		if($this->admin_session_check()==true) {
 			$data['url'] = "facnc/admin/create_coy.php?NewCompany=".$org_id."&cnc_token=".$this->session->userdata('session_id');
+			$data['title']="Home | Create company account";	
 			$page='fa-modules/module';
 			$this->load_admin_templates($page,$data);
 			

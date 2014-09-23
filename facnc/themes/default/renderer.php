@@ -33,7 +33,7 @@
 			end_page(false, true);
 		}
 
-		function menu_header($title, $no_menu, $is_index)
+		/*function menu_header($title, $no_menu, $is_index)
 		{
 			global $path_to_root, $help_base_url, $db_connections;
 			echo "<table class='callout_main' border='0' cellpadding='0' cellspacing='0'>\n";
@@ -139,7 +139,32 @@
 				}
 				echo "</table><br><br>\n";
 			}
+		}*/
+
+		function menu_header($title, $no_menu, $is_index)
+		{
+			global $path_to_root, $help_base_url, $db_connections;
+			echo "<table class='callout_main' border='0' cellpadding='0' cellspacing='0'>\n";
+			echo "<tr>\n";
+			echo "<td colspan='2' rowspan='2'>\n";
+
+			echo "<table class='main_page' border='0' cellpadding='0' cellspacing='0'>\n";
+			echo "<tr>\n";
+			echo "<td>\n";
+			
+
+			if ($no_menu)
+				echo "<br>";
+			elseif ($title && !$is_index)
+			{
+				echo "<center><table id='title'><tr><td width='100%' class='titletext'>$title</td>"
+				."<td align=right>"
+				.(user_hints() ? "<span id='hints'></span>" : '')
+				."</td>"
+				."</tr></table></center>";
+			}
 		}
+		
 
 		function display_applications(&$waapp)
 		{

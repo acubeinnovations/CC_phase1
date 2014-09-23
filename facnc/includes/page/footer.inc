@@ -18,7 +18,7 @@ function page_footer($no_menu=false, $is_index=false)
 
 	include_once($path_to_root."/themes/".user_theme()."/renderer.php");
 	$rend = new renderer();
-	$rend->menu_footer($no_menu, $is_index);
+	//$rend->menu_footer($no_menu, $is_index);
 
 	$edits = "editors = ".$Ajax->php2js($Editors).";";
 	$Ajax->addScript('editors', $edits);
