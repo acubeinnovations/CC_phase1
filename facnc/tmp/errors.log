@@ -1,0 +1,6 @@
+[17-Sep-2014 07:16:08 UTC] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[17-Sep-2014 07:16:08 UTC] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear')
+[17-Sep-2014 07:17:53 UTC] 0::session.inc:401: include_once(./tmp/faillog.php): failed to open stream: No such file or directory
+[17-Sep-2014 07:17:53 UTC] 0::session.inc:401: include_once(): Failed opening './tmp/faillog.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear')
+[18-Sep-2014 06:50:23 UTC] 0:admin:connect_db.inc:60:[before upgrade] mysql_query() expects parameter 2 to be resource, null given
+[19-Sep-2014 07:42:45 UTC] 0:admin:session.inc:550: Object of class current_user could not be converted to string
