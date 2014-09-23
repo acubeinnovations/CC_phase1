@@ -465,7 +465,7 @@ var mobile=$('#guestmobile').val();
 
 $("#pickupcity").on('keyup',function(){
 var pickupcity=$("#pickupcity").val();
-if(pickupcity!=''){
+if(pickupcity!='' && pickupcity.length>3){
 
 placeAutofillGenerator(pickupcity,'autofill-pickupcity','pickupcity');
 
@@ -475,7 +475,7 @@ placeAutofillGenerator(pickupcity,'autofill-pickupcity','pickupcity');
 $("#dropdownlocation").on('keyup',function(){
 
 var dropdownlocation=$("#dropdownlocation").val();
-if(dropdownlocation!=''){
+if(dropdownlocation!='' && dropdownlocation.length>3){
 
 placeAutofillGenerator(dropdownlocation,'autofill-dropdownlocation','dropdownlocation');
 
@@ -484,7 +484,7 @@ placeAutofillGenerator(dropdownlocation,'autofill-dropdownlocation','dropdownloc
 
 $("#viacity").on('keyup',function(){
 var viacity=$("#viacity").val();
-if(viacity!=''){
+if(viacity!='' && viacity.length>3){
 
 placeAutofillGenerator(viacity,'autofill-viacity','viacity');
 
@@ -494,9 +494,12 @@ placeAutofillGenerator(viacity,'autofill-viacity','viacity');
 
 
 $("#pickupcity,#pickuparea,#dropdownlocation,#dropdownarea,#viacity,#viaarea").on('keyup click',function(){
-
+var pickupcity=$("#pickupcity").val();
+var dropdownlocation=$("#dropdownlocation").val();
+var viacity=$("#viacity").val();
+if(pickupcity!='' && pickupcity.length>3 && dropdownlocation!='' && dropdownlocation.length>3 || viacity!='' && viacity.length>3){
 getDistance();
-
+}
 });
 
 
@@ -768,6 +771,106 @@ function generateTariffs(vehicle_type,vehicle_ac_type){
 		  });
 
 }
+
+
+
+function diffDateTime(startDT, endDT){
+ 
+  if(typeof startDT == 'string' && startDT.match(/^[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}[amp ]{0,3}$/i)){
+    startDT = startDT.match(/^[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/);
+    startDT = startDT.toString().split(':');
+    var obstartDT = new Date();
+    obstartDT.setHours(startDT[0]);
+    obstartDT.setMinutes(startDT[1]);
+    obstartDT.setSeconds(startDT[2]);
+  }
+  else if(typeof startDT == 'string' && startDT.match(/^now$/i)) var obstartDT = new Date();
+  else if(typeof startDT == 'string' && startDT.match(/^tomorrow$/i)){
+    var obstartDT = new Date();
+    obstartDT.setHours(24);
+    obstartDT.setMinutes(0);
+    obstartDT.setSeconds(1);
+  }
+  else var obstartDT = new Date(startDT);
+
+  if(typeof endDT == 'string' && endDT.match(/^[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}[amp ]{0,3}$/i)){
+    endDT = endDT.match(/^[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/);
+    endDT = endDT.toString().split(':');
+    var obendDT = new Date();
+    obendDT.setHours(endDT[0]);
+    obendDT.setMinutes(endDT[1]);
+    obendDT.setSeconds(endDT[2]);  
+  }
+  else if(typeof endDT == 'string' && endDT.match(/^now$/i)) var obendDT = new Date();
+  else if(typeof endDT == 'string' && endDT.match(/^tomorrow$/i)){
+    var obendDT = new Date();
+    obendDT.setHours(24);
+    obendDT.setMinutes(0);
+    obendDT.setSeconds(1);
+  }
+  else var obendDT = new Date(endDT);
+
+  // gets the difference in number of seconds
+  // if the difference is negative, the hours are from different days, and adds 1 day (in sec.)
+  var secondsDiff = (obendDT.getTime() - obstartDT.getTime()) > 0 ? (obendDT.getTime() - obstartDT.getTime()) / 1000 :  (86400000 + obendDT.getTime() - obstartDT.getTime()) / 1000;
+  secondsDiff = Math.abs(Math.floor(secondsDiff));
+
+  var oDiff = {};     // object that will store data returned by this function
+
+  oDiff.days = Math.floor(secondsDiff/86400);
+  oDiff.totalhours = Math.floor(secondsDiff/3600);      // total number of hours in difference
+  oDiff.totalmin = Math.floor(secondsDiff/60);      // total number of minutes in difference
+  oDiff.totalsec = secondsDiff;      // total number of seconds in difference
+
+  secondsDiff -= oDiff.days*86400;
+  oDiff.hours = Math.floor(secondsDiff/3600);     // number of hours after days
+
+  secondsDiff -= oDiff.hours*3600;
+  oDiff.minutes = Math.floor(secondsDiff/60);     // number of minutes after hours
+
+  secondsDiff -= oDiff.minutes*60;
+  oDiff.seconds = Math.floor(secondsDiff);     // number of seconds after minutes
+
+  return oDiff;
+}
+
+$('#pickuptimepicker,#droptimepicker,#pickupdatepicker,#dropdatepicker').on('blur',function(){
+var pickupdatepicker = $('#pickupdatepicker').val();
+var dropdatepicker = $('#dropdatepicker').val();
+var pickuptimepicker = $('#pickuptimepicker').val();
+var droptimepicker =$('#droptimepicker').val();
+if(pickupdatepicker!='' && dropdatepicker!='' && pickuptimepicker!='' && droptimepicker!=''){
+pickupdatepicker=pickupdatepicker.split('-');
+dropdatepicker=dropdatepicker.split('-');
+var new_pickupdatetime = pickupdatepicker[1]+'/'+pickupdatepicker[0]+'/'+pickupdatepicker[2]+' '+pickuptimepicker+':00';
+var new_dropdatetime = dropdatepicker[1]+'/'+dropdatepicker[0]+'/'+dropdatepicker[2]+' '+droptimepicker+':00';
+var objDiff = diffDateTime(new_pickupdatetime, new_dropdatetime);
+var dtdiff = objDiff.days+ ' days, '+ objDiff.hours+ ' hours, '+ objDiff.minutes+ ' minutes, '+ objDiff.seconds+ ' seconds';
+var total_hours = 'Total Hours: '+ objDiff.totalhours;
+var total_min = objDiff.totalmin;
+if(total_min>60){
+var h = Math.floor(total_min/60); //Get whole hours
+    total_min -= h*60;
+	}else{
+	var h = 0;
+	}
+    var m = total_min; //Get remaining minutes
+   
+  var calculated_time=Number(h+"."+(m < 10 ? '0'+m : m));
+  var estimated_time=$('.estimated-time-of-journey').html();
+	estimated_time=estimated_time.replace(/\hours\b/g, '.');
+	estimated_time=estimated_time.replace(/\mins\b/g, '');
+	estimated_time=estimated_time.split(' ');
+	estimated_time=estimated_time[0]+estimated_time[1]+estimated_time[2];
+	if(Number(calculated_time) < Number(estimated_time)){
+		alert('Correct drop time');
+	}
+}
+
+});
+
+
+
 
 //trip_bookig page-js end
  
