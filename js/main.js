@@ -814,4 +814,9 @@ function generateTariffs(vehicle_type,vehicle_ac_type){
 
 
  });
-
+//for next previous button
+$(document).ready(function(){
+$('.prev1').click(function(){
+$('#tab_1').trigger('click');
+});
+});

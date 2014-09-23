@@ -383,3 +383,12 @@ overflow-y:auto;
 .list-trip-table  tr > td{
 border-top:none !important;
 }
+.next1 ,.next2{
+margin:2px 95px -11px 473px;
+}
+.prev1, .prev2{
+margin:14px 65px -42px -34px;
+}
+.insurance{
+margin:50px 50px 51px 144px;
+}

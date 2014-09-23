@@ -120,7 +120,7 @@ class User extends CI_Controller {
 		
 	if((isset($_REQUEST['search_title'])|| isset($_REQUEST['search_trip_model'])||isset($_REQUEST['search_ac_type']))&& isset($_REQUEST['search'])){
 	if($param2==''){
-	$param2=1;
+	$param2=0;
 	}
 	
 	if($_REQUEST['search_title']!=null){
@@ -189,7 +189,7 @@ class User extends CI_Controller {
 		
 	if((isset($_REQUEST['search_from_date'])|| isset($_REQUEST['search_to_date']))&& isset($_REQUEST['search'])){
 	if($param2==''){
-	$param2=1;
+	$param2=0;
 	}
 	if(($_REQUEST['search_from_date']>= $tdate)){
 	$this->session->set_userdata('Date_err','Not a valid search');
@@ -422,7 +422,7 @@ class User extends CI_Controller {
 			$where_arry['organisation_id']=$this->session->userdata('organisation_id');
 			if((isset($_REQUEST['trip_pick_date'])|| isset($_REQUEST['trip_drop_date']))&& isset($_REQUEST['trip_search'])){
 				if($param2==''){
-				$param2=1;
+				$param2=0;
 				}
 				if($_REQUEST['trip_pick_date']!=null && $_REQUEST['trip_drop_date']!=null){
 					$where_arry['pick_up_date >=']=$_REQUEST['trip_pick_date'];
@@ -599,7 +599,7 @@ $condition='';
 	//for search
     if(isset($_REQUEST['driver_name'])&& isset($_REQUEST['search'])){
 	if($param2==''){
-	$param2=1;
+	$param2=0;
 	}
 	if($_REQUEST['driver_name']!=null){
 	$like_arry['name']=$_REQUEST['driver_name'];
