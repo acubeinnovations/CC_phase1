@@ -32,7 +32,7 @@
 		{
 			end_page(false, true);
 		}
-
+/*
 		function menu_header($title, $no_menu, $is_index)
 		{
 			global $path_to_root, $help_base_url, $db_connections;
@@ -96,7 +96,7 @@
 				."</td>"
 				."</tr></table></center>";
 			}
-		}/*
+		}
 
 		function menu_footer($no_menu, $is_index)
 		{
@@ -141,7 +141,7 @@
 			}
 		}*/
 
-		/*function menu_header($title, $no_menu, $is_index)
+		function menu_header($title, $no_menu, $is_index)
 		{
 			global $path_to_root, $help_base_url, $db_connections;
 			echo "<table class='callout_main' border='0' cellpadding='0' cellspacing='0'>\n";
@@ -163,7 +163,7 @@
 				."</td>"
 				."</tr></table></center>";
 			}
-		}*/
+		}
 		
 
 		function display_applications(&$waapp)

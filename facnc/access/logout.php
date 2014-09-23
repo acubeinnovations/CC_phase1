@@ -18,6 +18,7 @@ include($path_to_root . "/includes/session.inc");
 add_js_file('login.js');
 
 include($path_to_root . "/includes/page/header.inc");
+
 page_header(_("Logout"), true, false, '');
 
 echo "<table width='100%' border='0'>
@@ -48,6 +49,15 @@ echo "</div></td>
 end_page(false, true);
 session_unset();
 @session_destroy();
+
+if(isset($_GET['ret'])){
+	switch($_GET['ret']){
+		case 1:header('Location:http://cc.local/syslogin');break;
+		case 2:header('Location:http://cc.local/organization/login');break;
+		default:header('Location:http://cc.local');break;
+	}
+}
+
 ?>
 
 
