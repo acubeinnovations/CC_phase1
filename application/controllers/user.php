@@ -592,7 +592,7 @@ public function profile() {
 	public function ShowDriverList($param1,$param2) {
 		if($this->session_check()==true) {
 $condition='';
-	$per_page=5;
+	$per_page=2;
 	$like_arry=''; 
 	$org_id=$this->session->userdata('organisation_id');
 	$where_arry['organisation_id']=$org_id;

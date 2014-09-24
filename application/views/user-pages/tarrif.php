@@ -21,12 +21,13 @@ $night_halt=$data['night_halt'];
 $this->session->set_userdata('post','');
 }
 
-if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('Err_date') != ''||$this->session->userdata('Err_rate') != ''||$this->session->userdata('Err_add_kilo') != ''||$this->session->userdata('Err_add_hrs') != ''||$this->session->userdata('Err_bata') != ''||$this->session->userdata('Err_halt') != ''||$this->session->userdata('Required') != ''||$this->session->userdata('Date_err') != ''){ ?>
+if($this->session->userdata('select_tariff') != ''||$this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('Err_date') != ''||$this->session->userdata('Err_rate') != ''||$this->session->userdata('Err_add_kilo') != ''||$this->session->userdata('Err_add_hrs') != ''||$this->session->userdata('Err_bata') != ''||$this->session->userdata('Err_halt') != ''||$this->session->userdata('Required') != ''||$this->session->userdata('Date_err') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                         <b>Alert!</b><br><?php
 													echo $this->session->userdata('dbvalTarrif_Err').nbs();
+													echo $this->session->userdata('select_tariff').nbs();
 													echo $this->session->userdata('Err_date').nbs();
 													echo $this->session->userdata('Err_rate').nbs();
 													echo $this->session->userdata('Err_add_kilo').nbs();
@@ -36,6 +37,7 @@ if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('
 													echo $this->session->userdata('Required').nbs();
 													echo $this->session->userdata('Date_err').nbs();
 														$this->session->set_userdata(array('dbvalTarrif_Err'=>''));
+														$this->session->set_userdata(array('select_tariff'=>''));
 														$this->session->set_userdata(array('Err_date'=>''));
 														$this->session->set_userdata(array('Err_rate'=>''));
 														$this->session->set_userdata(array('Err_add_kilo'=>''));
