@@ -38,7 +38,14 @@ class user_model extends CI_Model {
    	}
 
 	public function getArray($tbl){
+	if($tbl=='drivers'){
+	$org_id=$this->session->userdata('organisation_id');
+	$qry=$this->db->where(array('organisation_id'=>$org_id));
+	$qry=$this->db->get($tbl);
+	}
+	else{
 		$qry=$this->db->get($tbl);
+		}
 		$count=$qry->num_rows();
 			$l= $qry->result_array();
 		
@@ -53,14 +60,7 @@ class user_model extends CI_Model {
 			}
 	}
    
-	public function getAllDetails(){
-	$qry=$this->db->get('tariff_masters');
-	$count=$qry->num_rows();
-	$result=$qry->result_array();
-	return $result;
 	
-	
-	}
 	public function getAll_tarrifDetails(){
 	$qry=$this->db->get('tariffs');
 	$count=$qry->num_rows();
@@ -85,5 +85,19 @@ class user_model extends CI_Model {
 			return false;
 			}
 	}
+	
+	public function getDriverList($organisation_id){
+	$qry=$this->db->select('id,name,phone,mobile');
+	$qry=$this->db->where('organisation_id',$organisation_id);
+	$qry=$this->db->get('drivers');
+	$count=$qry->num_rows();
+	return $qry->result_array();
+	 
+}
+   public function getDriverDetails($id){
+   $qry=$this->db->where('id',$id);
+   $qry=$this->db->get('drivers');
+   return $qry->result_array();
    
+   }
 }

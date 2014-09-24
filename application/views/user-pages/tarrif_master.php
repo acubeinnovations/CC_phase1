@@ -19,7 +19,7 @@ $minimum_hours=$data['minimum_hours'];
 $this->session->set_userdata('post','');
 }
 
-if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_title') != ''||$this->session->userdata('Err_kilo') != ''||$this->session->userdata('Err_hrs') != '') { ?>
+if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_title') != ''||$this->session->userdata('Err_kilo') != ''||$this->session->userdata('Err_hrs') != ''||$this->session->userdata('Required') != '') { ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -28,10 +28,12 @@ if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_tit
 													echo $this->session->userdata('Err_title').br();
 													echo $this->session->userdata('Err_kilo').br();
 													echo $this->session->userdata('Err_hrs').br();
+													echo $this->session->userdata('Required').br();
 													 $this->session->set_userdata(array('dbvalErr'=>''));
 													 $this->session->set_userdata(array('Err_title'=>''));
 													 $this->session->set_userdata(array('Err_kilo'=>''));
 													 $this->session->set_userdata(array('Err_hrs'=>''));
+													 $this->session->set_userdata(array('Required'=>''));
 										?>
                                     </div>
 <?php  }  if($this->session->userdata('dbSuccess') != '') { ?>
@@ -49,26 +51,47 @@ if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_tit
        <?php    } ?>
 <div class="tarrif_master_body">
 <fieldset class="body-border border-style" >
+<legend class="body-head">Search</legend>
+<table>
+<tr>
+<td><?php echo form_open(base_url()."organization/front-desk/tarrif-masters"); 
+echo form_input(array('name'=>'search_title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>$title1)); ?>
+</td>
+<td><?php $class="form-control";
+		$msg="Select Trip Model";
+		$name="search_trip_model";
+		echo $this->form_functions->populate_dropdown($name,$trip_models,$trip_model_id,$class,$id='',$msg)?></td>
+<td><?php  	$class="form-control";
+		$msg="Select AC Type";
+		$name="search_ac_type";
+		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$vehicle_ac_type_id,$class,$id='',$msg)?></td>
+<td><?php echo form_submit("search","Search","class='btn btn-primary'");
+echo form_close();?></td>
+</tr>
+</table>
+</fieldset>
+<fieldset class="body-border border-style" >
 <legend class="body-head">ADD</legend>
 <div class="form-group">
 <table>
 <tr>
 <td>
-<?php echo form_open(base_url()."tarrif/tarrif_manage");
-		echo form_input(array('name'=>'title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>$title1)); ?></td>
+<?php echo form_open(base_url()."tarrif/tarrif_master_manage");
+		echo form_input(array('name'=>'title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>$title1)); ?>
+		</td>
 		<td><?php  	$class="form-control";
 		$msg="Select Trip Model";
 		$name="select_trip_model";
-		echo $this->form_functions->populate_dropdown($name,$trip_models,$trip_model_id,$class,$msg)?></td>
+		echo $this->form_functions->populate_dropdown($name,$trip_models,$trip_model_id,$class,$id='',$msg)?></td>
 		
 		<td><?php  	$class="form-control";
 		$msg="Select Vehicle Make";
 		$name="select_vehicle_makes";
-		echo $this->form_functions->populate_dropdown($name,$vehicle_makes,$vehicle_make_id,$class,$msg)?></td>
+		echo $this->form_functions->populate_dropdown($name,$vehicle_makes,$vehicle_make_id,$class,$id='',$msg)?></td>
 		<td><?php  	$class="form-control";
 		$msg="Select AC Type";
 		$name="select_ac_type";
-		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$vehicle_ac_type_id,$class,$msg)?></td>
+		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$vehicle_ac_type_id,$class,$id='',$msg)?></td>
 		<td><?php echo form_input(array('name'=>'min_kilo','class'=>'form-control','id'=>'min_kilo','placeholder'=>'Minimum Kilometers','value'=>$minimum_kilometers)); ?></td>
 		<td><?php echo form_input(array('name'=>'min_hours','class'=>'form-control','id'=>'min_hours','placeholder'=>'Minimum Hours','value'=>$minimum_hours)); ?></td>
 		<td><div  class="tarrif-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("add","Add","id=tarrif-add-id","class=btn");?></div
@@ -102,7 +125,7 @@ if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_tit
 <td></td>
 </tr>
 <?php 
-foreach ($allDetails as $det):
+foreach($values as $det):
 ?>
 
 <tr>
@@ -112,15 +135,15 @@ $class="form-control";
 		$msg="Select Trip Model";
 		$name="manage_select_trip_model";
 		$selected='';
-		echo $this->form_functions->populate_dropdown($name,$trip_models,$det['trip_model_id'],$class,$msg)?></div></td>
+		echo $this->form_functions->populate_dropdown($name,$trip_models,$det['trip_model_id'],$class,$id='',$msg)?></div></td>
 <td><div class="form-group"><?php  	$class="form-control";
 		$msg="Select Vehicle Make";
 		$name="manage_select_vehicle_makes";
-		echo $this->form_functions->populate_dropdown($name,$vehicle_makes,$det['vehicle_make_id'],$class,$msg)?></div></td>
+		echo $this->form_functions->populate_dropdown($name,$vehicle_makes,$det['vehicle_make_id'],$class,$id='',$msg)?></div></td>
 <td><div class="form-group"><?php  	$class="form-control";
 		$msg="Select AC Type";
 		$name="manage_select_ac_type";
-		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$det['vehicle_ac_type_id'],$class,$msg)?></div></td>
+		echo $this->form_functions->populate_dropdown($name,$vehicle_ac_types,$det['vehicle_ac_type_id'],$class,$id='',$msg)?></div></td>
 <td><div class="form-group"><?php echo form_input(array('name'=>'manage_min_kilo','class'=>'form-control','id'=>'manage_min_kilo','placeholder'=>'Minimum Kilometers','value'=> $det['minimum_kilometers'])); ?></div></td>
 <td><div class="form-group"><?php echo form_input(array('name'=>'manage_min_hours','class'=>'form-control','id'=>'min_hours','placeholder'=>'Minimum Hours','value'=> $det['minimum_hours'] )); ?>
            <div class="hide-me"><?php echo form_input(array('name'=>'manage_id','class'=>'form-control','id'=>'manage_id','value'=> $det['id'],'trigger'=>'true' ));?></div></td>
@@ -130,5 +153,6 @@ $class="form-control";
 </tr>
 <?php endforeach; ?>
 </table>
+<?php echo $page_links;?>
 </fieldset>
 </div>

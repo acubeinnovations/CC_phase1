@@ -32,7 +32,7 @@ class Maps extends CI_Controller {
 		if(isset($_REQUEST['url']) && $_REQUEST['via']=='NO') {
 		$target_url=$_REQUEST['url'];
 			$data=file_get_contents($target_url);
-			$decode = json_decode($data);print_r($data);exit;
+			$decode = json_decode($data);//print_r($data);exit;
 			if(isset($decode->rows[0]->elements[0]->status) && $decode->rows[0]->elements[0]->status!='NOT_FOUND') {
 			$jsondata['distance']=$decode->rows[0]->elements[0]->distance->text;
 			$jsondata['duration']=$decode->rows[0]->elements[0]->duration->text;

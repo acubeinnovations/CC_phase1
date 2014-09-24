@@ -109,6 +109,7 @@ class Tarrif extends CI_Controller {
 				    redirect(base_url().'organization/front-desk/tarrif-masters');
 		}
 	}
+
 	}
 	else{
 			echo 'you are not authorized access this page..';
@@ -221,5 +222,20 @@ class Tarrif extends CI_Controller {
 			echo 'you are not authorized access this page..';
 			}
 	}
+
+	public function tariffSelecter(){
+	if(isset($_REQUEST['vehicle_type']) && isset($_REQUEST['vehicle_ac_type'])){
+
+	$data['vehicle_type']=$_REQUEST['vehicle_type'];
+	$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
+	$data['organisation_id']=$this->session->userdata('organisation_id');
+
+	$res['data']=$this->tarrif_model->selectAvailableTariff($data);
+
+	echo json_encode($res);
+
+	}	
+	}
+	
 }
 ?>

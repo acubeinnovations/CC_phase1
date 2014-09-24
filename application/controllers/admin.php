@@ -50,9 +50,9 @@ class Admin extends CI_Controller {
 		$this->form_validation->set_rules('addr','Address','trim|required|min_length[10]|xss_clean');
 		$this->form_validation->set_rules('uname','Username','trim|required|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
 		$this->form_validation->set_rules('pwd','Password','trim|required|min_length[5]|max_length[12]|matches[cpwd]|xss_clean');
-		$this->form_validation->set_rules('cpwd','Confirmation','trim|required|min_length[5]|max_length[12]|xss_clean|is_unique[users.email]');
-		$this->form_validation->set_rules('mail','Mail','trim|required|valid_email');
-		$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+		$this->form_validation->set_rules('cpwd','Confirmation','trim|required|min_length[5]|max_length[12]|xss_clean');
+		$this->form_validation->set_rules('mail','Mail','trim|required|valid_email|is_unique[users.email]');
+		$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean|is_unique[users.phone]');
 		
       if($this->form_validation->run()==False){
         $data=array('title'=>'Add New Organization | '.PRODUCT_NAME,'name'=>$name,'fname'=>$fname,'lname'=>$lname,'uname'=>$uname,'pwd'=>$pwd,'addr'=>$addr,'mail'=>$mail,'phn'=>$phn,'cpwd'=>'');
@@ -91,6 +91,9 @@ class Admin extends CI_Controller {
 	$where_arry='';
 	//for search
     if((isset($_REQUEST['sname'])|| isset($_REQUEST['status']))&& isset($_REQUEST['search'])){
+	if($secondaction==''){
+	$secondaction=0;
+	}
 	$this->session->unset_userdata('condition');
 	if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
 	$like_arry=array('name'=> $_REQUEST['sname']);
@@ -103,12 +106,15 @@ class Admin extends CI_Controller {
 	$like_arry=array('name'=> $_REQUEST['sname']);
 	}
 	$this->session->set_userdata(array('condition'=>array("like"=>$like_arry,"where"=>$where_arry)));
-	//print_r($where_arry);exit;
+
 	}
 	$tbl='organisations';
 	$data['org_status']=$this->admin_model->getStatus();
 	$baseurl=base_url().'admin/organization/list/';
     $uriseg ='4';
+	if($secondaction==''){
+		$this->session->set_userdata('condition','');
+		}
     $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
@@ -178,6 +184,7 @@ class Admin extends CI_Controller {
 		    $data['mail']  = $this->input->post('mail');
 			$data['hmail']  = trim($this->input->post('hmail'));
 		    $data['phn'] = $this->input->post('phn');
+			$data['hphone']  = trim($this->input->post('hphone'));
 			$data['user_id'] = $this->input->post('user_id');
 			$data['org_id'] = $this->input->post('org_id');
 			$data['status'] = $this->input->post('status');
@@ -194,8 +201,12 @@ class Admin extends CI_Controller {
 		}else{
 			$this->form_validation->set_rules('mail','Mail','trim|required|valid_email|is_unique[users.email]');
 		}
+		if($data['phn'] == $data['hphone']){
+			$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+		}else{
+			$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean||is_unique[users.phone]');
+		}
 		
-		$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 		if($this->form_validation->run()!=False){
 
 		$res    		   = $this->admin_model->updateOrganization($data);
@@ -236,6 +247,7 @@ class Admin extends CI_Controller {
 		$data['mail']=$user_res['email'];
 		$data['hmail']  = $user_res['email'];
 		$data['phn']=$user_res['phone'];
+		$data['hphone']=$user_res['phone'];
 		$data['status']=$user_res['user_status_id'];
 		$this->showAddOrg($data);
 		}

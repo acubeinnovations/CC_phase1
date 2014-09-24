@@ -1,11 +1,15 @@
-<?php if(isset($values)){
+<?php 
+
+if(isset($values)){
+	$user_id=$this->session->userdata('id');
 	$username	=	$values[0]->username;
 	$Firstname	= 	$values[0]->first_name; 
 	$Lasttname	= 	$values[0]->last_name; 
 	$email		= 	$values[0]->email; 
-	$phone		= 	$values[0]->phone; 
+	$phone		= 	$values[0]->phone;	
 	$address	= 	$values[0]->address; 
 }else if(isset($postvalues)){
+ $user_id=$this->session->userdata('id');
 	$username	=	$postvalues['username'];
 	$Firstname	= 	$postvalues['first_name']; 
 	$Lasttname	= 	$postvalues['last_name']; 
@@ -45,12 +49,14 @@
 				</div>
 				<div class="form-group">
 					<?php echo form_label('Email','emaillabel'); ?>
-				    <?php echo form_input(array('name'=>'email','class'=>'form-control','placeholder'=>'Enter email','value'=>$email)); ?>
+				    <?php echo form_input(array('name'=>'email','class'=>'form-control','placeholder'=>'Enter email','value'=>$email)); 
+					if( isset($user_id)) {  echo form_hidden('hmail',$email); } ?>
 					<?php echo form_error('email', '<p class="text-red">', '</p>'); ?>
 				</div>
 				<div class="form-group">
 					<?php echo form_label('Phone','phonelabel'); ?>
-				    <?php echo form_input(array('name'=>'phone','class'=>'form-control','placeholder'=>'Enter Phone','value'=>$phone)); ?>
+				    <?php echo form_input(array('name'=>'phone','class'=>'form-control','placeholder'=>'Enter Phone','value'=>$phone)); 
+					if (isset($user_id)) {  echo form_hidden('hphone',$phone); }?>
 					<?php echo form_error('phone', '<p class="text-red">', '</p>'); ?>
 				</div>
 				<div class="form-group">

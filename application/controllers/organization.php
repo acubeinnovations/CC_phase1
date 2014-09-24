@@ -104,6 +104,7 @@ public function __construct()
 		    $data['mail']  = $this->input->post('mail');
 			$data['hmail']  = $this->input->post('hmail');
 		    $data['phn'] = $this->input->post('phn');
+			$data['hphone']  = $this->input->post('hphone');
 			$data['user_id'] = $this->input->post('user_id');
 			$data['org_id'] = $this->input->post('org_id');
 			
@@ -120,7 +121,12 @@ public function __construct()
 		}else{
 			$this->form_validation->set_rules('mail','Mail','trim|required|valid_email|is_unique[users.email]');
 		}
-		$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+		if($data['phn'] == $data['hphone']){
+			$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+		}else{
+			$this->form_validation->set_rules('phn','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean|is_unique[users.phone]');
+		}
+	
 		if($this->form_validation->run()!=False){
 		
 		$res    		   = $this->organization_model->update($data);
@@ -151,6 +157,7 @@ public function __construct()
 		$data['mail']=$user_res['email'];
 		$data['hmail']=$user_res['email'];
 		$data['phn']=$user_res['phone'];
+		$data['hphone']=$user_res['phone'];
 		$data['status']=$user_res['user_status_id'];
 		$this->profile($data);
 	}
@@ -219,14 +226,14 @@ public function __construct()
 		    $email  = $this->input->post('email');
 		    $phone = $this->input->post('phone');
 	        
-		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean|numeric');
+		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
 		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
 		$this->form_validation->set_rules('address','Address','trim|required|min_length[10]|xss_clean');
 		$this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
 		$this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|matches[cpassword]|xss_clean');
 		$this->form_validation->set_rules('cpassword','Confirmation','trim|required|min_length[5]|max_length[12]|xss_clean');
 		$this->form_validation->set_rules('email','Mail','trim|required|valid_email|is_unique[users.email]');
-		$this->form_validation->set_rules('phone','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+		$this->form_validation->set_rules('phone','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean|is_unique[users.phone]');
 		
       if($this->form_validation->run()==False){ 
         $data=array('title'=>'Add New Organization | '.PRODUCT_NAME,'firstname'=>$firstname,'lastname'=>$lastname,'username'=>$username,'password'=>$password,'address'=>$address,'email'=>$email,'phone'=>$phone);
@@ -368,7 +375,13 @@ public function __construct()
 			else{
 			$this->form_validation->set_rules('email','Email','trim|required|valid_email|xss_clean|is_unique[users.email]');
 			}
-		$this->form_validation->set_rules('phone','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+		if($this->input->post('phone')==$this->input->post('hphone')){
+			$this->form_validation->set_rules('phone','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+			
+			}else{
+			$this->form_validation->set_rules('phone','Contact Info','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean|is_unique[users.phone]');
+			}
+		
 		if($this->form_validation->run()!=False){
 		
 		$res    		   = $this->organization_model->updateUser($data);

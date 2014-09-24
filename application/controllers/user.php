@@ -2,12 +2,16 @@
 
 class User extends CI_Controller {
 
-		public function __construct()
+	public function __construct()
 	{
     parent::__construct();
     $this->load->helper('my_helper');
 	$this->load->model('user_model');
-    no_cache();
+	$this->load->model('customers_model');
+	$this->load->model('trip_booking_model');
+	$this->load->model('customers_model');
+    $this->load->model('tarrif_model');
+	no_cache();
 
 	}
 	public function session_check() {
@@ -19,6 +23,7 @@ class User extends CI_Controller {
 	}   
 	public function index(){
 		$param1=$this->uri->segment(3);
+		$param2=$this->uri->segment(4);
         if($this->session_check()==true) {
 		if($param1==''){
 		$data['title']="Home | CC Phase1";    
@@ -32,11 +37,28 @@ class User extends CI_Controller {
 		elseif($param1=='settings'){
 		$this->settings();
 		}elseif($param1=='trip-booking'){
-		$this->ShowBookTrip();
-		}elseif($param1=='tarrif-masters'){
-		$this->tarrif_masters();
-		}elseif($param1=='tarrif'){
-		$this->tarrif();
+
+		$this->ShowBookTrip($param2);
+		}elseif($param1=='trips'){
+
+		$this->Trips($param2);
+		}elseif($param1=='tarrif-masters'&& ($param2== ''|| is_numeric($param2))){
+		$this->tarrif_masters($param1,$param2);
+		}elseif($param1=='tarrif'&& ($param2== ''|| is_numeric($param2))){
+		$this->tarrif($param1,$param2);
+
+		}
+		elseif($param1=='driver'){
+
+		$this->ShowDriverView($param1);
+		}elseif($param1=='list-driver'&&($param2== ''|| is_numeric($param2))){
+		$this->ShowDriverList($param1,$param2);
+		}elseif($param1=='driver-profile'&&($param2== ''|| is_numeric($param2))){
+		$this->ShowDriverProfile($param1,$param2);
+		}
+		elseif($param1=='vehicle'){
+
+		$this->ShowVehicleView($param1);
 		}
 		}else{
 			echo 'you are not authorized access this page..';
@@ -65,7 +87,7 @@ class User extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
-	public function tarrif_masters() {
+	public function tarrif_masters($param1,$param2) {
 	if($this->session_check()==true) {
 	$tbl_arry=array('trip_models','vehicle_makes','vehicle_ac_types');
 	$this->load->model('user_model');
@@ -80,17 +102,67 @@ class User extends CI_Controller {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
-	$data['allDetails']=$this->user_model->getAllDetails();
+	
+		$condition='';
+	    $per_page=10;
+	    $like_arry='';
+	    $where_arry='';
+	if(isset($_REQUEST['search'])){
+		$title = $this->input->post('search_title');
+		$trip_model_id = $this->input->post('search_trip_model');
+		$vehicle_ac_type_id = $this->input->post('search_ac_type');
+	 if(($title=='')&& ($trip_model_id == -1) && ($vehicle_ac_type_id ==-1)){
+	 $this->session->set_userdata('Required','Choose Any Category');
+	 redirect(base_url().'organization/front-desk/tarrif-masters');
+		}
+		else {
+		//show search results
+		
+	if((isset($_REQUEST['search_title'])|| isset($_REQUEST['search_trip_model'])||isset($_REQUEST['search_ac_type']))&& isset($_REQUEST['search'])){
+	if($param2==''){
+	$param2=0;
+	}
+	
+	if($_REQUEST['search_title']!=null){
+	
+	$like_arry=array('title'=> $_REQUEST['search_title']);
+	}
+	if($_REQUEST['search_trip_model']>0){
+	$where_arry['trip_model_id']=$_REQUEST['search_trip_model'];
+	}
+	if($_REQUEST['search_ac_type']>0){
+	$where_arry['vehicle_ac_type_id']=$_REQUEST['search_ac_type'];
+	}
+	$this->session->set_userdata(array('condition'=>array("like"=>$like_arry,"where"=>$where_arry)));
+	
+	}
+	}
+	}
+	    
+		$tbl="tariff_masters";
+		$baseurl=base_url().'organization/front-desk/tarrif-masters/';
+		$uriseg ='4';
+		if($param2==''){
+		$this->session->set_userdata('condition','');
+		}
+		
+		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+		
+		
+	$data['values']=$p_res['values'];
+	$data['page_links']=$p_res['page_links'];
 	$data['title']="Tarrif Masters | ".PRODUCT_NAME;  
 	$page='user-pages/tarrif_master';
 	$this->load_templates($page,$data);
+	
+	
 	}
 	else{
 			echo 'you are not authorized access this page..';
 		}
 	
 	}
-	public function tarrif(){
+	public function tarrif($param1,$param2){
 	if($this->session_check()==true) {
 	$result=$this->user_model->getTarrif_masters();
 	if($result!=false){
@@ -98,8 +170,62 @@ class User extends CI_Controller {
 	}else
 	{
 	$data['masters']='';
+	}	//start
+		$condition='';
+	    $per_page=10;
+	    $where_arry='';
+	if(isset($_REQUEST['search'])){
+		$fdate = $this->input->post('search_from_date');
+		$tdate = $this->input->post('search_to_date');
+		if($fdate!=''&& $tdate==''){
+		$tdate=date('Y-m-d');
+		}
+	 if(($fdate=='')&& ($tdate =='')){
+	 $this->session->set_userdata('Required','Choose Date');
+	 redirect(base_url().'organization/front-desk/tarrif');
+		}
+		else {
+		//show search results
+		
+	if((isset($_REQUEST['search_from_date'])|| isset($_REQUEST['search_to_date']))&& isset($_REQUEST['search'])){
+	if($param2==''){
+	$param2=0;
 	}
-	$data['allDetails']=$this->user_model->getAll_tarrifDetails();
+	if(($_REQUEST['search_from_date']>= $tdate)){
+	$this->session->set_userdata('Date_err','Not a valid search');
+	}
+	if($_REQUEST['search_from_date']!=null){
+	
+	$where_arry['from_date >=']=$_REQUEST['search_from_date'];
+	}
+	if($_REQUEST['search_to_date']!=null){
+	$where_arry['to_date <=']= $_REQUEST['search_to_date'];
+	}
+	else{
+	$where_arry['to_date <=']= $tdate;
+	}
+	
+	$this->session->set_userdata(array('condition'=>array("where"=>$where_arry)));
+	
+	//print_r($where_arry);
+	}
+	}
+	}
+	    
+		$tbl="tariffs";
+		$baseurl=base_url().'organization/front-desk/tarrif/';
+		$uriseg ='4';
+		if($param2==''){
+		$this->session->set_userdata('condition','');
+		}
+		
+		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+		
+		
+	$data['values']=$p_res['values'];
+	$data['page_links']=$p_res['page_links'];
+	//end
+	//$data['allDetails']=$this->user_model->getAll_tarrifDetails();
 	$data['title']="Tarrif| ".PRODUCT_NAME; 
 	$page='user-pages/tarrif';
 	$this->load_templates($page,$data);
@@ -109,11 +235,11 @@ class User extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
-	public function ShowBookTrip(){
+	public function ShowBookTrip($trip_id =''){
 	if($this->session_check()==true) {
 	
 	$tbl_arry=array('booking_sources','trip_models','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
-	$this->load->model('user_model');
+	
 	for ($i=0;$i<count($tbl_arry);$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
 	if($result!=false){
@@ -123,7 +249,147 @@ class User extends CI_Controller {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
+	$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING);
+	$data['notification']=$this->trip_booking_model->getDetails($conditon);
+	$data['customers_array']=$this->customers_model->getArray();
+
+	if($trip_id!='' && $trip_id > 0) {
+	$conditon = array('id'=>$trip_id);
+	$result=$this->trip_booking_model->getDetails($conditon);
+	$result=$result[0];
+	$data1['trip_id']=$result->id;
+	$data1['recurrent_continues']='';
+	$data1['recurrent_alternatives']='';
+	if(isset($result->customer_group_id) && $result->customer_group_id > 0){
+		$data1['advanced']=TRUE;
+		$data1['customer_group']=$result->customer_group_id;
+	}else{
+		$data1['advanced']='';
+		$data1['customer_group']='';
+	}
+
 	
+	if(isset($result->guest_id) && $result->guest_id > 0){
+	$dbdata=array('id'=>$result->guest_id);
+	$guest 	=	$this->customers_model->getCustomerDetails($dbdata);
+	$guest 	=$guest[0];
+	$data1['guest_id']	= $result->guest_id;
+	$data1['guest']	=	TRUE;
+	$data1['guestname']=	$guest['name'];
+	$data1['guestemail']=$guest['email'];
+	$data1['guestmobile']=$guest['mobile'];
+	}else{
+	$data1['guest']='';
+	$data1['guestname']='';
+	$data1['guestemail']='';
+	$data1['guestmobile']='';
+	}
+	
+	$dbdata=array('id'=>$result->customer_id);	
+	$customer 	=	$this->customers_model->getCustomerDetails($dbdata);
+	$customer=$customer[0];
+	$data1['customer']				=	$customer['name'];
+	$data1['new_customer']			=	'false';
+	$data1['email']					=	$customer['email'];
+	$data1['mobile']				=	$customer['mobile'];
+
+	$this->session->set_userdata('customer_id',$result->customer_id);
+	$this->session->set_userdata('customer_name',$customer['name']);
+	$this->session->set_userdata('customer_email',$customer['email']);
+	$this->session->set_userdata('customer_mobile',$customer['mobile']);
+	
+	$data1['booking_source']			=	$result->booking_source_id;	
+	$data1['source']					=	$result->source;
+	$data1['trip_model']				=	$result->trip_model_id;
+	$data1['no_of_passengers']		=	$result->no_of_passengers;
+	$data1['pickupcity']				=	$result->pick_up_city;
+	$data1['pickupcitylat']			=	$result->pick_up_lat;
+	$data1['pickupcitylng']			=	$result->pick_up_lng;
+	$data1['pickuparea']				=	$result->pick_up_area;
+	$data1['pickuplandmark']			=	$result->pick_up_landmark;
+	$data1['viacity']				=	$result->via_city;
+	$data1['viacitylat']				=	$result->via_lat;
+	$data1['viacitylng']				=	$result->via_lng;
+	$data1['viaarea']				=	$result->via_area;
+	$data1['vialandmark']			=	$result->via_landmark;
+	$data1['dropdownlocation']		=	$result->drop_city;
+	$data1['dropdownlocationlat']	=	$result->drop_lat;
+	$data1['dropdownlocationlng']	=	$result->drop_lng;
+	$data1['dropdownarea']			=	$result->drop_area;
+	$data1['dropdownlandmark']		=	$result->drop_landmark;
+	$data1['pickupdatepicker']		=	$result->pick_up_date;
+	$data1['dropdatepicker']			=	$result->drop_date;
+	$data1['pickuptimepicker']		=	$result->pick_up_time;
+	$data1['droptimepicker']			=	$result->drop_time;
+	$pickupdatetime			= $result->pick_up_date.' '.$result->pick_up_time;
+	$dropdatetime			= $result->drop_date.' '.$result->drop_time;
+	$data1['vehicle_type']			=	$result->vehicle_type_id;
+	$data1['vehicle_ac_type']		=	$result->vehicle_ac_type_id;
+	$data1['recurrent_yes']			= 	'';
+	if(isset($result->vehicle_beacon_light_option_id) && $result->vehicle_beacon_light_option_id > 0){
+		$data1['beacon_light']=TRUE;
+		if($result->vehicle_beacon_light_option_id==BEACON_LIGHT_RED){
+
+			$data1['beacon_light_radio']='red';
+					
+		}else{
+	
+			$data1['beacon_light_radio']='blue';
+			
+		}
+	}else{
+
+		$data1['beacon_light']='';
+		$data1['beacon_light_radio']='';
+		$data1['beacon_light_id'] = '';
+
+	}
+	if(isset($result->pluckcard) && $result->pluckcard==true){
+		$data1['pluck_card']=TRUE;
+	}else{
+		$data1['pluck_card']='';
+	}
+	if(isset($result->uniform) && $result->uniform==true){
+		$data1['uniform']=TRUE;
+	}else{
+		$data1['uniform']='';
+	}
+	$data1['seating_capacity']		=	$result->vehicle_seating_capacity_id;
+	$data1['language']				=	$result->driver_language_id;
+	$data1['tariff']				=	$result->tariff_id;
+	$data1['available_vehicle']		=	$result->vehicle_id;
+	$this->session->set_userdata('driver_id',$result->driver_id);
+	$data1['customer_type']			=	$result->customer_type_id;
+	}
+	if(isset($data1['vehicle_type']) && isset($data1['vehicle_ac_type']) && isset( $pickupdatetime) && isset($dropdatetime)){
+	$available=array('vehicle_type'=>$data1['vehicle_type'],'vehicle_ac_type'=>$data1['vehicle_ac_type'],'pickupdatetime'=>$pickupdatetime,'dropdatetime'=>$dropdatetime,'organisation_id'=>$this->session->userdata('organisation_id'));
+	$res_vehicles=$this->getAvailableVehicle($available);
+	$res_tariffs=$this->tariffSelecter($available);
+	$available_vehicles='';
+	$available_tarif='';
+	if(count($res_vehicles[0])>0){
+	for($index_vehicles=0;$index_vehicles<count($res_vehicles);$index_vehicles++){
+		$available_vehicles[$res_vehicles[$index_vehicles]['vehicle_id']]=$res_vehicles[$index_vehicles]['registration_number'];
+	}
+	}
+	for($index_tarif=0;$index_tarif<count($res_tariffs);$index_tarif++){
+		$available_tarif[$res_tariffs[$index_tarif]['id']]=$res_tariffs[$index_tarif]['title'];
+	}
+	$data['tariffs']=$available_tarif;
+	$data['available_vehicles']=$available_vehicles;
+	}else if(isset($data1['vehicle_type']) && isset($data1['vehicle_ac_type'])){
+	$available=array('vehicle_type'=>$data1['vehicle_type'],'vehicle_ac_type'=>$data1['vehicle_ac_type'],'organisation_id'=>$this->session->userdata('organisation_id'));
+	$res_tariffs=$this->tariffSelecter($available);
+	$data['available_vehicles']='';
+	}else{
+	$data['tariffs']='';
+	$data['available_vehicles']='';
+	}
+	if(isset($data1) && count($data1)>0){
+	$data['information']=$data1;
+	}else{
+	$data['information']=false;
+	}
 	$data['title']="Trip Booking | ".PRODUCT_NAME;  
 	$page='user-pages/trip-booking';
 	$this->load_templates($page,$data);
@@ -132,6 +398,64 @@ class User extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
+
+	public function getAvailableVehicle($available){
+	
+	
+	return $this->trip_booking_model->selectAvailableVehicles($available);
+
+	}
+	public function tariffSelecter($data){
+	
+	return $this->tarrif_model->selectAvailableTariff($data);
+
+	
+
+	}
+	public function Trips($param2){
+		if($this->session_check()==true) {
+			$tbl="trips";
+			$baseurl=base_url().'organization/front-desk/trips/';
+			$per_page=10;
+			$uriseg ='4';
+			$tdate=date('Y-m-d');
+			$where_arry['organisation_id']=$this->session->userdata('organisation_id');
+			if((isset($_REQUEST['trip_pick_date'])|| isset($_REQUEST['trip_drop_date']))&& isset($_REQUEST['trip_search'])){
+				if($param2==''){
+				$param2=0;
+				}
+				if($_REQUEST['trip_pick_date']!=null && $_REQUEST['trip_drop_date']!=null){
+					$where_arry['pick_up_date >=']=$_REQUEST['trip_pick_date'];
+					$where_arry['drop_date <=']= $_REQUEST['trip_drop_date'];
+				}else if($_REQUEST['trip_pick_date']!=null){
+
+				$where_arry['pick_up_date =']=$_REQUEST['trip_pick_date'];
+				}else if($_REQUEST['trip_drop_date']!=null){
+				$where_arry['drop_date =']= $_REQUEST['trip_drop_date'];
+				}
+				
+			}
+			$this->mysession->set('condition',array("where"=>$where_arry));
+			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+			if($param2==''){
+				$this->mysession->delete('condition');
+			}
+			$data['page_links']=$paginations['page_links'];
+			$data['trips']=$paginations['values'];//echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
+			//$data['trips']=$this->trip_booking_model->getDetails($conditon='');echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
+			$data['status_class']=array(TRIP_STATUS_CONFIRMED=>'label-success',TRIP_STATUS_PENDING=>'label-warning',TRIP_STATUS_CANCELLED=>'label-danger',TRIP_STATUS_CUSTOMER_CANCELLED=>'label-danger',TRIP_STATUS_ON_TRIP=>'label-primary',TRIP_STATUS_TRIP_COMPLETED=>'label-success',TRIP_STATUS_TRIP_PAYED=>'label-info');
+			$data['trip_statuses']=$this->user_model->getArray('trip_statuses');
+			$data['customers']=$this->customers_model->getArray();
+			$data['title']="Trips | ".PRODUCT_NAME;  
+			$page='user-pages/trips';
+		    $this->load_templates($page,$data);
+		    }
+			else{
+				echo 'you are not authorized access this page..';
+			}
+		
+	}	
+	
 	public function load_templates($page='',$data=''){
 	if($this->session_check()==true) {
 		$this->load->view('admin-templates/header',$data);
@@ -146,22 +470,34 @@ class User extends CI_Controller {
 	
 public function profile() {
 	   if($this->session_check()==true) {
-		$this->load->model('user_model');
+		
 		$dbdata = '';
               if(isset($_REQUEST['user-profile-update'])){
+			  $dbdata['first_name'] = $this->input->post('firstname');
+			$dbdata['last_name']  = $this->input->post('lastname');
+		    $dbdata['email'] 	   = $this->input->post('email');
+			$hmail 	   = $this->input->post('hmail');
+			$dbdata['phone'] 	   = $this->input->post('phone');
+			$hphone 	   = $this->input->post('hphone');
+		    $dbdata['address']   = $this->input->post('address');
+			$dbdata['username']   = $this->input->post('husername');
 			//$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean');
 			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
 			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
-			$this->form_validation->set_rules('email','Email','trim|required|valid_email|xss_clean');
+			if($dbdata['email'] == $hmail){
+			$this->form_validation->set_rules('email','Mail','trim|required|valid_email');
+		}else{
+			$this->form_validation->set_rules('email','Mail','trim|required|valid_email|is_unique[users.email]');
+		}
+			if($dbdata['phone'] == $hphone){
 			$this->form_validation->set_rules('phone','Phone','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+		}else{
+			$this->form_validation->set_rules('phone','Phone','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean||is_unique[users.phone]');
+		}
+			
 			$this->form_validation->set_rules('address','Address','trim|required|min_length[10]|xss_clean');
 			//$dbdata['username']  = $this->input->post('username');
-		   	$dbdata['first_name'] = $this->input->post('firstname');
-			$dbdata['last_name']  = $this->input->post('lastname');
-		    $dbdata['email'] 	   = $this->input->post('email');
-			$dbdata['phone'] 	   = $this->input->post('phone');
-		    $dbdata['address']   = $this->input->post('address');
-			$dbdata['username']   = $this->input->post('husername');
+		   	
 			
 			if($this->form_validation->run() != False) {
 				$val    		   = $this->user_model->updateProfile($dbdata);
@@ -239,6 +575,120 @@ public function profile() {
 			echo 'you are not authorized access this page..';
 		}
 	}
+	public function ShowDriverView($param1) {
+		if($this->session_check()==true) {
+			//sample starts
+				$data['select']=$this->select_Box_Values();
 	
+			//sample ends
+				$data['title']="Driver Details | ".PRODUCT_NAME;  
+				$page='user-pages/addDrivers';
+				 $this->load_templates($page,$data);
+		}else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+	
+	public function ShowDriverList($param1,$param2) {
+		if($this->session_check()==true) {
+$condition='';
+	$per_page=5;
+	$like_arry=''; 
+	$org_id=$this->session->userdata('organisation_id');
+	$where_arry['organisation_id']=$org_id;
+	//for search
+    if(isset($_REQUEST['driver_name'])&& isset($_REQUEST['search'])){
+	if($param2==''){
+	$param2=0;
+	}
+	if($_REQUEST['driver_name']!=null){
+	$like_arry['name']=$_REQUEST['driver_name'];
+	}
+
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+	$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
+	}
+	//$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
+	//print_r($condition);exit;
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+	//print_r($this->mysession->get('condition'));exit;
+	$tbl="drivers";
+		$baseurl=base_url().'organization/front-desk/list-driver/';
+		$uriseg ='4';
+		
+    $p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+	if($param2==''){
+		$this->mysession->delete('condition');
+		
+		}
+	$data['values']=$p_res['values'];
+	$data['page_links']=$p_res['page_links'];
+	$data['title']='List Driver| '.PRODUCT_NAME;
+	$page='user-pages/driverList';
+	$this->load_templates($page,$data);	
+	}
+	else{
+			echo 'you are not authorized access this page..';
+			}
+	}
+	
+	public function ShowDriverProfile($param1,$param2){
+	if($this->session_check()==true) {
+	$data['result']=$this->user_model->getDriverDetails($param2);
+	$data['title']='Driver Profile| '.PRODUCT_NAME;
+	$page='user-pages/addDrivers';
+	$org_id=$this->session->userdata('organisation_id');
+	$this->session->set_userdata(array('org_id'=>$org_id,'user_id'=>$param2));
+	$data['select']=$this->select_Box_Values();
+	$this->load_templates($page,$data);
+	
+	
+	}
+	else{
+			echo 'you are not authorized access this page..';
+			}
+	}
+	public function select_Box_Values(){
+	$tbl_arry=array('marital_statuses','bank_account_types','id_proof_types');
+	$this->load->model('user_model');
+	for ($i=0;$i<count($tbl_arry);$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data[$tbl_arry[$i]]=$result;
+	}
+	else{
+	$data[$tbl_arry[$i]]='';
+	}
+	}
+	return $data;
+	}
+	
+	public function ShowVehicleView($param1) {
+		if($this->session_check()==true) {
+			//sample starts
+				$data['select']=$this->select_Vehicle_Values();
+	
+			//sample ends
+				$data['title']="Vehicle Details | ".PRODUCT_NAME;  
+				$page='user-pages/addVehicles';
+				 $this->load_templates($page,$data);
+		}else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+	public function select_Vehicle_Values(){
+	$tbl_arry=array('drivers','vehicle_ownership_types','vehicle_types','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_permit_types');
+	$this->load->model('user_model');
+	for ($i=0;$i<count($tbl_arry);$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data[$tbl_arry[$i]]=$result;
+	}
+	else{
+	$data[$tbl_arry[$i]]='';
+	}
+	}
+	return $data;
+	}
 }
 ?>
