@@ -147,6 +147,7 @@ function handle_submit()
 				/*if (!isset($_POST['admpassword']) || $_POST['admpassword'] == "")
 					$_POST['admpassword'] = "password";
 				update_admin_password($conn, md5($_POST['admpassword']));*/
+				update_fa_account_in_organisations($_POST['cnc_org_id']);
 				$cnc_org_admin = get_cnc_org_admin($_POST['cnc_org_id']);
 				if($cnc_org_admin)
 					sync_cnc_org_login($conn, $cnc_org_admin['username'],$cnc_org_admin['password']);
