@@ -61,6 +61,10 @@ class User extends CI_Controller {
 		}elseif($param1=='driver-profile'&&($param2== ''|| is_numeric($param2))){
 		$this->ShowDriverProfile($param1,$param2);
 		}
+		elseif($param1=='vehicle'){
+
+		$this->ShowVehicleView($param1);
+		}
 		}else{
 			echo 'you are not authorized access this page..';
 		}
@@ -121,7 +125,7 @@ class User extends CI_Controller {
 		
 	if((isset($_REQUEST['search_title'])|| isset($_REQUEST['search_trip_model'])||isset($_REQUEST['search_ac_type']))&& isset($_REQUEST['search'])){
 	if($param2==''){
-	$param2=1;
+	$param2=0;
 	}
 	
 	if($_REQUEST['search_title']!=null){
@@ -190,7 +194,7 @@ class User extends CI_Controller {
 		
 	if((isset($_REQUEST['search_from_date'])|| isset($_REQUEST['search_to_date']))&& isset($_REQUEST['search'])){
 	if($param2==''){
-	$param2=1;
+	$param2=0;
 	}
 	if(($_REQUEST['search_from_date']>= $tdate)){
 	$this->session->set_userdata('Date_err','Not a valid search');
@@ -644,43 +648,46 @@ public function profile() {
 		}
 	}
 	
-	public function ShowDriverList($param1,$param2) {
+	 public function ShowDriverList($param1,$param2) {
 		if($this->session_check()==true) {
-			$condition='';
-			$per_page=5;
-			$like_arry=''; 
-			$org_id=$this->session->userdata('organisation_id');
-			$where_arry['organisation_id']=$org_id;
-			//for search
-			if(isset($_REQUEST['driver_name'])&& isset($_REQUEST['search'])){
-			if($param2==''){
-			$param2=1;
-			}
-			if($_REQUEST['driver_name']!=null){
-			$like_arry['name']=$_REQUEST['driver_name'];
-			}
+		$condition='';
+		$per_page=10;
+		$like_arry='';
+		$org_id=$this->session->userdata('organisation_id');
+		$where_arry['organisation_id']=$org_id;
+		//for search
+		   if(isset($_REQUEST['driver_name'])&& isset($_REQUEST['search'])){
+		if($param2==''){
+		$param2=0;
+		}
+		if($_REQUEST['driver_name']!=null){
+		$like_arry['name']=$_REQUEST['driver_name'];
+		}
 
-			$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
-			$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
-			}
-			//$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
-			//print_r($condition);exit;
-			$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
-			//print_r($this->mysession->get('condition'));exit;
-			$tbl="drivers";
-				$baseurl=base_url().'organization/front-desk/list-driver/';
-				$uriseg ='4';
-				if($param2==''){
-				$this->session->set_userdata('condition','');
-				}
-			$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
-			$data['values']=$p_res['values'];
-			$data['page_links']=$p_res['page_links'];
-			$data['title']='List Driver| '.PRODUCT_NAME;
-			$page='user-pages/driverList';
-			$this->load_templates($page,$data);	
-		}else{
-			echo 'you are not authorized access this page..';
+		$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+		$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
+		}
+		//$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
+		//print_r($condition);exit;
+		$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+		//print_r($this->mysession->get('condition'));exit;
+		$tbl="drivers";
+		$baseurl=base_url().'organization/front-desk/list-driver/';
+		$uriseg ='4';
+
+		   $p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+		if($param2==''){
+		$this->mysession->delete('condition');
+
+		}
+		$data['values']=$p_res['values'];
+		$data['page_links']=$p_res['page_links'];
+		$data['title']='List Driver| '.PRODUCT_NAME;
+		$page='user-pages/driverList';
+		$this->load_templates($page,$data);
+		}
+		else{
+		echo 'you are not authorized access this page..';
 		}
 	}
 	
@@ -713,6 +720,34 @@ public function profile() {
 		}
 		}
 		return $data;
+	}
+	
+	public function ShowVehicleView($param1) {
+		if($this->session_check()==true) {
+			//sample starts
+				$data['select']=$this->select_Vehicle_Values();
+	
+			//sample ends
+				$data['title']="Vehicle Details | ".PRODUCT_NAME;  
+				$page='user-pages/addVehicles';
+				 $this->load_templates($page,$data);
+		}else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+	public function select_Vehicle_Values(){
+	$tbl_arry=array('drivers','vehicle_ownership_types','vehicle_types','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_permit_types');
+	$this->load->model('user_model');
+	for ($i=0;$i<count($tbl_arry);$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data[$tbl_arry[$i]]=$result;
+	}
+	else{
+	$data[$tbl_arry[$i]]='';
+	}
+	}
+	return $data;
 	}
 }
 ?>

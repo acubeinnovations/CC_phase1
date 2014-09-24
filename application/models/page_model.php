@@ -46,7 +46,6 @@ function getCount($tbl){
 		$this->db->where($where_arry);
 		}	
 		$qry= $this->db->get($tbl,$num,$offset);
-		echo $this->db->last_query();
 	   return $qry->result_array();
 	}
 }

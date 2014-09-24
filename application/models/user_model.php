@@ -38,7 +38,14 @@ class user_model extends CI_Model {
    	}
 
 	public function getArray($tbl){
+	if($tbl=='drivers'){
+	$org_id=$this->session->userdata('organisation_id');
+	$qry=$this->db->where(array('organisation_id'=>$org_id));
+	$qry=$this->db->get($tbl);
+	}
+	else{
 		$qry=$this->db->get($tbl);
+		}
 		$count=$qry->num_rows();
 			$l= $qry->result_array();
 		

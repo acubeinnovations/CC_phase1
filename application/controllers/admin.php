@@ -92,7 +92,7 @@ class Admin extends CI_Controller {
 	//for search
     if((isset($_REQUEST['sname'])|| isset($_REQUEST['status']))&& isset($_REQUEST['search'])){
 	if($secondaction==''){
-	$secondaction=1;
+	$secondaction=0;
 	}
 	$this->session->unset_userdata('condition');
 	if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){

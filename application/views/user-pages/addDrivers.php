@@ -1,4 +1,5 @@
  <?php
+ 
  if(($this->session->userdata('org_id')!=null)&&($this->session->userdata('user_id')!=null)){
     $name=$result[0]['name'];
 	$place_of_birth=$result[0]['place_of_birth'];
@@ -101,8 +102,35 @@ $data=$this->session->userdata('post');
 	$name_on_id_proof=$data['name_on_id_proof'];
 $this->session->set_userdata('post','');
 }
+?>
+<?php if($this->session->userdata('dbSuccess') != '') { ?>
+        <div class="success-message">
+			
+            <div class="alert alert-success alert-dismissable">
+                <i class="fa fa-check"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <?php 
+                echo $this->session->userdata('dbSuccess');
+                $this->session->set_userdata(array('dbSuccess'=>''));
+                ?>
+           </div>
+       </div>
+       <?php    } ?>
+		<div class="page-outer">
+	   <fieldset class="body-border">
+		<legend class="body-head">Manage Drivers</legend>
+	<div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
+        <li class=""><a href="#tab_2" data-toggle="tab">Trip</a></li>
+         <li class=""><a href="#tab_3" data-toggle="tab">Payments</a></li>
+       <li class=""><a href="#tab_4" data-toggle="tab">Accounts</a></li>
+    </ul>
+    <div class="tab-content">
+        
+        <div class="tab-pane active" id="tab_1">
 
-if($this->session->userdata('marital_status_id') != ''||$this->session->userdata('bank_account_type_id') != ''||$this->session->userdata('id_proof_type_id') != ''||$this->session->userdata('Err_sal') != ''||$this->session->userdata('Err_blood_group') != ''){ ?>
+    <?php if($this->session->userdata('marital_status_id') != ''||$this->session->userdata('bank_account_type_id') != ''||$this->session->userdata('id_proof_type_id') != ''||$this->session->userdata('Err_sal') != ''||$this->session->userdata('Err_blood_group') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -121,24 +149,8 @@ if($this->session->userdata('marital_status_id') != ''||$this->session->userdata
 														
 										?>
                                     </div>
-<?php  }  if($this->session->userdata('dbSuccess') != '') { ?>
-        <div class="success-message">
-			
-            <div class="alert alert-success alert-dismissable">
-                <i class="fa fa-check"></i>
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php 
-                echo $this->session->userdata('dbSuccess');
-                $this->session->set_userdata(array('dbSuccess'=>''));
-                ?>
-           </div>
-       </div>
-       <?php    } ?>
-		<div class="page-outer">
-	   <fieldset class="body-border">
-		<legend class="body-head">Manage Drivers</legend>
-		
-<div class="width-30-percent-with-margin-left-20-Driver-View">
+<?php  } ?>        
+			 <div class="width-30-percent-with-margin-left-20-Driver-View">
 
 <fieldset class="body-border-Driver-View border-style-Driver-view" >
 <legend class="body-head">Personal Details</legend>
@@ -172,7 +184,7 @@ if($this->session->userdata('marital_status_id') != ''||$this->session->userdata
 		$name="marital_status_id";
 	if(($this->session->userdata('org_id')!=null)&&($this->session->userdata('user_id')!=null)){
 	$marital_status_id=$result[0]['marital_status_id'];
-	echo $marital_status_id;exit;
+	//echo $marital_status_id;exit;
 	echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id,$class,$id='',$msg);
 }	else{
   echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id='',$class,$id='',$msg);
@@ -227,7 +239,8 @@ if($this->session->userdata('marital_status_id') != ''||$this->session->userdata
 	   <?php echo $this->form_functions->form_error_session('email', '<p class="text-red">', '</p>'); ?>
         </div>
 		</fieldset> </div>
-<div class="width-30-percent-with-margin-left-20-Driver-View">
+		
+	<div class="width-30-percent-with-margin-left-20-Driver-View">
 <fieldset class="body-border-Driver-View border-style-Driver-view" >
 <legend class="body-head">Other Details</legend>
 
@@ -341,6 +354,138 @@ if($this->session->userdata('marital_status_id') != ''||$this->session->userdata
 	</fieldset>
 
 
+</div>	
+        </div>
+		<div class="tab-pane" id="tab_2">
+           <div class="page-outer">
+	   <fieldset class="body-border">
+		<legend class="body-head">Trip</legend><div class="form-group">
+	<div class="box-body table-responsive no-padding">
+			<table class="table table-hover table-bordered">
+				<tbody>
+					<tr>
+					    <th>Date</th>
+					    <th>Route</th>
+						<th>Total Kilometers</th>
+						<th>No Of Days</th>
+						<th>Unit Bata</th>
+						<th>Bata Amount</th>
+						<th>Releasing Place</th>
+						<th>Parking</th>
+						<th>Toll</th>
+						<th>State Tax</th>
+						<th>Night Halt</th>
+						<th>Fuel extra</th>
+					    
+					</tr>
+					<?php
+					//if(isset($values)){
+					//foreach ($values as $det):
+					?>
+					<tr>
+					    <td><?php //echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$det['name']).nbs(3);?></td>
+					    <td><?php // echo $det['phone'].",".$det['mobile']?></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						
+					</tr>
+					<tr>
+					<td>Total</td>
+					<td></td>
+					<td></td>
+					<td>X</td>
+					<td></td>
+					<td>X</td>
+					<td></td>
+					<td>X</td>
+					<td>X</td>
+					<td>X</td>
+					<td>X</td>
+					<td>X</td>
+					</tr>
+					<?php //endforeach;
+					//}
+					?>
+				</tbody>
+			</table><?php //echo $page_links;?>
+		</div>
 </div>
+</fieldset>
+</div>
+        </div>
+        <div class="tab-pane" id="tab_3">
+         
+
+<div class="page-outer">
+	   <fieldset class="body-border">
+		<legend class="body-head">Payments</legend><div class="form-group">
+	<div class="box-body table-responsive no-padding">
+			<table class="table table-hover table-bordered">
+				<tbody>
+					<tr>
+					    <th>Date</th>
+					    <th>Particulars</th>
+						<th>Trip Detail</th>
+						<th>Memo/Particulars</th>
+						<th>Credit</th>
+						<th>Debit</th>
+						<th>Cash/Bank</th>
+						<th>Advances</th>
+						<th>Loans</th>
+					</tr>
+					<?php
+					//if(isset($values)){
+					//foreach ($values as $det):
+					?>
+					<tr>
+					    <td><?php //echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$det['name']).nbs(3);?></td>
+					    <td><?php // echo $det['phone'].",".$det['mobile']?></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						</tr>
+					<tr>
+					<td>Total</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>X</td>
+					<td>X</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					</tr>
+					<?php //endforeach;
+					//}
+					?>
+				</tbody>
+			</table><?php //echo $page_links;?>
+		</div>
+</div>
+</fieldset>
+</div>
+        </div>
+		<div class="tab-pane" id="tab_4">
+         accounts
+        </div>
+    </div>
+</div>	
+
+
 </fieldset>
 </div>

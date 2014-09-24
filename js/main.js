@@ -917,4 +917,9 @@ var h = Math.floor(total_min/60); //Get whole hours
 
 
  });
-
+//for next previous button
+$(document).ready(function(){
+$('.prev1').click(function(){
+$('#tab_1').trigger('click');
+});
+});
