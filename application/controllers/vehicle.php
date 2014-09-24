@@ -4,6 +4,7 @@ class Vehicle extends CI_Controller {
 		{
 		parent::__construct();
 		$this->load->model("settings_model");
+		$this->load->model("vehicle_model");
 		$this->load->helper('my_helper');
 		no_cache();
 
@@ -181,8 +182,8 @@ class Vehicle extends CI_Controller {
 			$data['vehicle_ac_type_id']=$this->input->post('ac');
 			$data['vehicle_fuel_type_id']=$this->input->post('fuel');
 			$data['vehicle_seating_capacity_id']=$this->input->post('seat');
-			$data['driver']=$this->input->post('driver');
-			$data['from_date']=$this->input->post('from_date');
+			$driver_data['driver']=$this->input->post('driver');
+			$driver_data['from_date']=$this->input->post('from_date');
 			$data['registration_number']=$this->input->post('reg_number');
 			$data['registration_date']=$this->input->post('reg_date');
 			$data['engine_number']=$this->input->post('eng_num');
@@ -196,7 +197,7 @@ class Vehicle extends CI_Controller {
 			$data['user_id']=$this->session->userdata('id');
 			
 			
-					$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
+					//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
 					$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
 					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean|alpha_numeric');
 					 $this->form_validation->set_rules('from_date','From Date ','trim|required|xss_clean');
@@ -209,62 +210,76 @@ class Vehicle extends CI_Controller {
 					 $this->form_validation->set_rules('tax_date','Tax Date','trim|required|xss_clean');
 					 //for insurance
 $err=True;
-	if(preg_match('#[^0-9\.]#', $data['permit_amount'])){
+	if(preg_match('#[^0-9\.]#', $data['vehicle_permit_renewal_amount'])){
 			$this->mysession->set('Err_permit_amt','Invalid Characters on Permit Amount field!');
-			$err=false;
+			$err=False;
 			}
-	if(preg_match('#[^0-9\.]#', $data['tax_amount'])){
+	if(preg_match('#[^0-9\.]#', $data['tax_renewal_amount'])){
 			$this->mysession->set('Err_tax_amt','Invalid Characters on Tax Amount field!');
-			$err=false;
+			$err=False;
 			}
-	if($data['ownership'] ==-1){
-	 $data['ownership'] ='';
+	if($data['vehicle_ownership_types_id'] ==-1){
+	 $data['vehicle_ownership_types_id'] ='';
 	 $err=False;
 	 $this->mysession->set('ownership','Choose Ownership Type');
 	 }
-	 if($data['vehicle_type'] ==-1){
-	 $data['vehicle_type'] ='';
+	 if($data['vehicle_type_id'] ==-1){
+	 $data['vehicle_type_id'] ='';
 	 $err=False;
 	 $this->mysession->set('vehicle_type','Choose Vehicle Type');
 	 }
-	 if($data['make'] ==-1){
-	 $data['make'] ='';
+	 if($data['vehicle_make_id'] ==-1){
+	 $data['vehicle_make_id'] ='';
 	 $err=False;
 	 $this->mysession->set('make','Choose Vehicle Make');
 	 }
-	 if($data['ac'] ==-1){
-	 $data['ac'] ='';
+	 if($data['vehicle_ac_type_id'] ==-1){
+	 $data['vehicle_ac_type_id'] ='';
 	 $err=False;
 	 $this->mysession->set('ac','Choose AC Type');
 	 }
-	 if($data['fuel'] ==-1){
-	 $data['fuel'] ='';
+	 if($data['vehicle_fuel_type_id'] ==-1){
+	 $data['vehicle_fuel_type_id'] ='';
 	 $err=False;
 	 $this->mysession->set('fuel','Choose Fuel Type');
 	 }
-	  if($data['seat'] ==-1){
-	 $data['seat'] ='';
+	  if($data['vehicle_seating_capacity_id'] ==-1){
+	 $data['vehicle_seating_capacity_id'] ='';
 	 $err=False;
 	 $this->mysession->set('seat','Choose Seat Capacity');
 	 }
-	  if($data['permit'] ==-1){
-	 $data['permit'] ='';
+	  if($data['vehicle_permit_type_id'] ==-1){
+	 $data['vehicle_permit_type_id'] ='';
 	 $err=False;
 	 $this->mysession->set('permit','Choose Permit Type');
 	 }
-	  if($data['driver'] ==-1){
-	 $data['driver'] ='';
+	  if($driver_data['driver'] ==-1){
+	 $driver_data['driver'] ='';
 	 $err=False;
 	 $this->mysession->set('Driver','Choose Any Driver');
-	 }
+	 } 
+
 	 if($this->form_validation->run()==False|| $err==False){
-		$this->mysession->set('post',$data);
+
+		$this->mysession->set('post_all',$data);
+		$this->mysession->set('post_driver',$driver_data);
 		redirect(base_url().'organization/front-desk/vehicle',$data);	
 	 }
+	 
 	  else{
 	  //database insertion for vehicle
-	  echo "hi";exit;
-	  $result=$this->vehicle_model->insertVehicle($data);
+
+	  $result=$this->vehicle_model->insertVehicle($data,$driver_data);
+	  if($result==true){
+		$this->mysession->set('dbSuccess',' Added Succesfully..!');
+				    $this->mysession->set('dbError','');
+				    redirect(base_url().'organization/front-desk/vehicle');
+		}
+		else{
+		$this->mysession->set('post_all',$data);
+		$this->mysession->set('post_driver',$driver_data);
+		redirect(base_url().'organization/front-desk/vehicle');
+		}
 	  }
 		}
 		else{

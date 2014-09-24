@@ -37,4 +37,11 @@
 
 		return db_fetch_assoc($result);
 	}
+
+	function update_fa_account_in_organisations($org_id = -1)
+	{
+		$sql = "UPDATE organisations SET fa_account = 1"
+			." WHERE id=".db_escape($org_id);
+		db_query($sql, "Organisation updated");
+	}
 ?>
