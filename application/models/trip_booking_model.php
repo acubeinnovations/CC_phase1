@@ -27,13 +27,16 @@ class Trip_booking_model extends CI_Model {
 	return true;
 	}
 
-	function getDetails($conditon =''){
+	function getDetails($conditon ='',$orderby=''){
 
 	$this->db->from('trips');
 	if($conditon!=''){
 		$this->db->where($conditon);
 	}
- 	$results = $this->db->get()->result();
+	if($orderby!=''){
+		$this->db->order_by($orderby);
+	}
+ 	$results = $this->db->get()->result();//echo $this->db->last_query();
 		if(count($results)>0){
 		return $results;
 
@@ -50,6 +53,26 @@ class Trip_booking_model extends CI_Model {
 	}else{
 	return false;
 	}
+
+	}
+	function getVehiclesArray($condion=''){
+	$this->db->from('vehicle_drivers');
+	if($condion!=''){
+    $this->db->where($condion);
+	}
+    $results = $this->db->get()->result();
+	
+			
+		
+			for($i=0;$i<count($results);$i++){
+			$values[$results[$i]['id']]=$results[$i]['registration_number'];
+			}
+			if(!empty($values)){
+			return $values;
+			}
+			else{
+			return false;
+			}
 
 	}
 

@@ -3,7 +3,7 @@ class Customers_model extends CI_Model {
 	
 	
 	public function getCustomerDetails($data){ 
-	$this->db->select('id,name,email,mobile');
+	//$this->db->select('id,name,email,mobile');
 	$this->db->from('customers');
 	$this->db->where($data);
 	return $this->db->get()->result_array();
@@ -11,7 +11,7 @@ class Customers_model extends CI_Model {
 	}
 
 	public function addCustomer($data){
- 
+ 		
 		$condition=array('mobile'=>$data['mobile']);
 		$res=$this->getCustomerDetails($condition);
 		if(count($res)==0){
@@ -28,6 +28,12 @@ class Customers_model extends CI_Model {
 			return $res[0]['id'];
 		}
 	
+	}
+	function  updateCustomers($data,$id) {
+	$this->db->where('id',$id );
+	$this->db->set('updated', 'NOW()', FALSE);
+	$this->db->update("customers",$data);
+	return true;
 	}
 	
 	public function getArray(){

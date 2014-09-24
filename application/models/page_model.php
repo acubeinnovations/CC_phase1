@@ -44,7 +44,7 @@ function getCount($tbl){
 		}
 		if(!empty($where_arry) && count($where_arry) > 0){
 		$this->db->where($where_arry);
-		}
+		}	
 		$qry= $this->db->get($tbl,$num,$offset);
 	   return $qry->result_array();
 	}

@@ -135,6 +135,12 @@ class Tarrif extends CI_Controller {
 	 $this->form_validation->set_rules('additional_hour_rate','Hour Rate','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('driver_bata','Driver Bata','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('night_halt','Night Halt','trim|required|xss_clean|numeric');
+	 $err=true;
+	 if($data['tariff_master_id'] ==-1){
+	 $data['tariff_master_id'] ='';
+	 $err=False;
+	 $this->session->set_userdata('select_tariff','Choose Tariff Master');
+	 }
 	 if($this->form_validation->run()==False){
 		$this->session->set_userdata('post',$data);
 		redirect(base_url().'organization/front-desk/tarrif',$data);	
