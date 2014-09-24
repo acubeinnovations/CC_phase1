@@ -73,7 +73,8 @@ class Organization_model extends CI_Model {
 				'username'=>$this->details->username,
 				'organisation_id'=>$this->details->organisation_id,
 				'type'=>$this->details->user_type_id,
-                'isLoggedIn'=>true
+                'isLoggedIn'=>true,
+		'token_pass' =>$this->details->password
             )
         );
     }

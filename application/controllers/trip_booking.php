@@ -364,7 +364,8 @@ class Trip_booking extends CI_Controller {
 				$customer_mobile 	= $this->session->userdata('customer_mobile');
 
 				$driver_id			=$this->session->userdata('driver_id');	
-				//$driver = $
+				$condition=array('id'=>$driver_id);
+				$driver				=$this->driver_model->getDriverDetails($condition);
 				$data['trip_status_id']=TRIP_STATUS_CANCELLED;
 				$res = $this->trip_booking_model->updateTrip($data,$trip_id);
 				if($res==true){

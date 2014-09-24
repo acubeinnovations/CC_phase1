@@ -23,11 +23,14 @@ class Logout extends CI_Controller {
 	{ $this->load->helper('url');
 	  if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){
 			$logout_redirect_url=base_url().'syslogin';
+		$ret = 1;
 	  }else if($this->session->userdata('isLoggedIn')==true && ($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR ||$this->session->userdata('type')==FRONT_DESK)){
 			$logout_redirect_url=base_url().'organization/login';
+		$ret = 2;
 	  }
       $this->session->sess_destroy();
-      redirect($logout_redirect_url);
+	redirect("http://cc.local/facnc/access/logout.php?ret=".$ret);
+     // redirect($logout_redirect_url);
     }
 }
 

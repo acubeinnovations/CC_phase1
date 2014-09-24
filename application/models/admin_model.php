@@ -10,7 +10,8 @@ class admin_model extends CI_Model {
 		$this->db->where( 'user_type_id',SYSTEM_ADMINISTRATOR );
         $this->db->where( 'password', md5($password) );
         $login = $this->db->get()->result();
-
+	
+	
         
         if ( is_array($login) && count($login) == 1 ) {
             
@@ -23,13 +24,15 @@ class admin_model extends CI_Model {
     }
 
     function set_session() {
+	
         $this->session->set_userdata( array(
                 'id'=>$this->details->id,
                 'name'=> $this->details->first_name . ' ' . $this->details->last_name,
                 'email'=>$this->details->email,
-				'username'=>$this->details->username,
-				'type'=>$this->details->user_type_id,
-                'isLoggedIn'=>true
+		'username'=>$this->details->username,
+		'type'=>$this->details->user_type_id,
+                'isLoggedIn'=>true,
+		'token_pass' =>$this->details->password
             )
         );
     }
