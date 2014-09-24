@@ -8,10 +8,5 @@
 }
 
 
-function fa_create_company_link($id= -1)
-{
-	return nbs(3).anchor(base_url().'account/add_accounts/'.$id,'Add Accounts','class="btn btn-primary"');
-}
-
 
 ?>
