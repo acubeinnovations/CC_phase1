@@ -83,6 +83,7 @@ class Admin extends CI_Controller {
 		
 		}
     else if($action=='list' && ($secondaction == ''|| is_numeric($secondaction))) {
+	
 	$this->load->model('admin_model');
 	$data['status']=$this->admin_model->getStatus();
 	$condition='';
@@ -116,6 +117,8 @@ class Admin extends CI_Controller {
 		$this->session->set_userdata('condition','');
 		}
     $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
+	
+	//check company exists in fa. If exists then remove link add account for this organisation
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
 	$data['title']='Organization List| '.PRODUCT_NAME;
