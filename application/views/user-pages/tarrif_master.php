@@ -4,6 +4,7 @@ $title1='';
 $trip_model_id='';
 $vehicle_make_id='';
 $vehicle_ac_type_id='';
+$vehicle_type_id='';
 $minimum_kilometers='';
 $minimum_hours='';
 }
@@ -12,6 +13,7 @@ else
 $data=$this->session->userdata('post');
 $title1=$data['title'];
 $trip_model_id=$data['trip_model_id'];
+$vehicle_type_id=$data['vehicle_type_id'];
 $vehicle_make_id=$data['vehicle_make_id'];
 $vehicle_ac_type_id=$data['vehicle_ac_type_id'];
 $minimum_kilometers=$data['minimum_kilometers'];
@@ -61,6 +63,7 @@ echo form_input(array('name'=>'search_title','class'=>'form-control','id'=>'titl
 		$msg="Select Trip Model";
 		$name="search_trip_model";
 		echo $this->form_functions->populate_dropdown($name,$trip_models,$trip_model_id,$class,$id='',$msg)?></td>
+
 <td><?php  	$class="form-control";
 		$msg="Select AC Type";
 		$name="search_ac_type";
@@ -83,7 +86,10 @@ echo form_close();?></td>
 		$msg="Select Trip Model";
 		$name="select_trip_model";
 		echo $this->form_functions->populate_dropdown($name,$trip_models,$trip_model_id,$class,$id='',$msg)?></td>
-		
+		<td><?php $class="form-control";
+		$msg="Select Vehicle Type";
+		$name="search_vehicle_type";
+		echo $this->form_functions->populate_dropdown($name,$vehicle_types,$vehicle_type_id,$class,$id='',$msg)?></td>
 		<td><?php  	$class="form-control";
 		$msg="Select Vehicle Make";
 		$name="select_vehicle_makes";
@@ -101,6 +107,7 @@ echo form_close();?></td>
 		<tr>
 		<td><?php echo  $this->form_functions->form_error_session('title','<p class="text-red">', '</p>');?></td>
 		<td><?php echo  $this->form_functions->form_error_session('select_trip_model','<p class="text-red">', '</p>');?></td>
+		<td><?php echo  $this->form_functions->form_error_session('search_vehicle_type','<p class="text-red">', '</p>');?></td>
 		<td><?php echo  $this->form_functions->form_error_session('select_vehicle_makes','<p class="text-red">', '</p>');?></td>
 		<td><?php echo  $this->form_functions->form_error_session('select_ac_type','<p class="text-red">', '</p>');?></td>
 		<td><?php echo  $this->form_functions->form_error_session('min_kilo','<p class="text-red">', '</p>');?></td>
@@ -116,6 +123,7 @@ echo form_close();?></td>
 <tr>
 <td><?php echo form_label('Master Title ','master_Title'); ?></td>
 <td><?php echo form_label('Trip Model','trip_Model'); ?></td>
+<td><?php echo form_label('Vehicle Types','vehicle_types'); ?></td>
 <td><?php echo form_label('Vehicle Makes','vehicle_Makes'); ?></td>
 <td><?php echo form_label('Ac Type','ac_Type'); ?></td>
 <td><?php echo form_label('Minimum Kilometers','min_Kilometers'); ?></td>
@@ -136,6 +144,12 @@ $class="form-control";
 		$name="manage_select_trip_model";
 		$selected='';
 		echo $this->form_functions->populate_dropdown($name,$trip_models,$det['trip_model_id'],$class,$id='',$msg)?></div></td>
+		<td><div class="form-group"><?php 
+$class="form-control";
+		$msg="Select Vehicle Type";
+		$name="manage_select_vehicle_type";
+		$selected='';
+		echo $this->form_functions->populate_dropdown($name,$vehicle_types,$det['vehicle_type_id'],$class,$id='',$msg)?></div></td>
 <td><div class="form-group"><?php  	$class="form-control";
 		$msg="Select Vehicle Make";
 		$name="manage_select_vehicle_makes";

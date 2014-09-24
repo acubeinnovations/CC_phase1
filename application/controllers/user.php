@@ -94,9 +94,9 @@ class User extends CI_Controller {
 	}
 	public function tarrif_masters($param1,$param2) {
 	if($this->session_check()==true) {
-	$tbl_arry=array('trip_models','vehicle_makes','vehicle_ac_types');
+	$tbl_arry=array('trip_models','vehicle_makes','vehicle_ac_types','vehicle_types');
 	$this->load->model('user_model');
-		for ($i=0;$i<3;$i++){
+		for ($i=0;$i<4;$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
 	if($result!=false){
 	$data[$tbl_arry[$i]]=$result;

@@ -40,8 +40,13 @@ class user_model extends CI_Model {
 	public function getArray($tbl){
 	if($tbl=='drivers'){
 	$org_id=$this->session->userdata('organisation_id');
-	$qry=$this->db->where(array('organisation_id'=>$org_id));
-	$qry=$this->db->get($tbl);
+	echo $this->db->select('*')->from('drivers');exit;
+	$qry=$this->db->where('`id` NOT IN (SELECT `driver_id` FROM `vehicle_drivers`)', NULL, FALSE);
+	echo $this->db->last_query();exit;
+	//$qry=$this->db->where(array('organisation_id'=>$org_id));
+	//$qry=$this->db->get($tbl);
+	//get drivers who not get assigned for any vehicle
+	
 	}
 	else{
 		$qry=$this->db->get($tbl);
