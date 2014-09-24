@@ -85,6 +85,25 @@
                                 
                             </ul>
                         </li>
+
+
+
+
+			<li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-wrench"></i>
+                                <span>FA Account Settings</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo base_url().'account/organization';?>"><i class="fa fa-angle-double-right"></i> Bank Payment</a></li>
+				<li><a href="http://cc.local/facnc/gl/gl_bank.php?NewDeposit=Yes"><i class="fa fa-angle-double-right"></i> Bank Deposit</a></li>
+                                <li><a href="<?php echo base_url().'organization/front-desk/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
+                                
+                            </ul>
+                        </li>
+
+
                         
 						 <li class="treeview">
                             <a href="#">
