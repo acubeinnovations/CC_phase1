@@ -237,8 +237,11 @@ class Tarrif extends CI_Controller {
 	$data['organisation_id']=$this->session->userdata('organisation_id');
 
 	$res['data']=$this->tarrif_model->selectAvailableTariff($data);
-
+	if(count($res['data'])>0){
 	echo json_encode($res);
+	}else{
+	echo 'false';
+	}
 
 	}	
 	}

@@ -28,9 +28,10 @@ if(isset($values)){
 }
 ?>
 	
-		 <div class="profile-body">
+		 <div class="profile-body width-80-percent-and-margin-auto">
 			<fieldset class="body-border">
    			 <legend class="body-head">Profile</legend>
+				<div class="div-with-50-percent-width-with-margin-10">
 				<?php echo form_open(base_url().'organization/front-desk/profile');?>
 				<div class="form-group">
 				   <?php echo form_label('Username','usernamelabel'); ?>
@@ -53,6 +54,8 @@ if(isset($values)){
 					if( isset($user_id)) {  echo form_hidden('hmail',$email); } ?>
 					<?php echo form_error('email', '<p class="text-red">', '</p>'); ?>
 				</div>
+			</div>
+			<div class="div-with-50-percent-width-with-margin-10">
 				<div class="form-group">
 					<?php echo form_label('Phone','phonelabel'); ?>
 				    <?php echo form_input(array('name'=>'phone','class'=>'form-control','placeholder'=>'Enter Phone','value'=>$phone)); 
@@ -68,6 +71,7 @@ if(isset($values)){
 				<?php echo form_submit("user-profile-update","Update","class='btn btn-primary'");  ?>  
 				</div>
 			 <?php echo form_close(); ?>
+			</div>
 			</fieldset>
 		</div><!-- body -->
 	

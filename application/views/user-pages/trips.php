@@ -25,6 +25,9 @@ $driver='';
 if(!isset($vehicle)){
 $vehicle='';
 }
+if(!isset($trip_status_id)){
+$trip_status_id='';
+}
 ?>
 
 <div class="page-outer">    
@@ -45,6 +48,9 @@ $vehicle='';
 						 <td><?php $class="form-control";
 							  $id='drivers';
 						echo $this->form_functions->populate_dropdown('drivers',$drivers,$driver,$class,$id,$msg="Select Driver");?></td>
+						<td><?php $class="form-control";
+							  $id='trip-status';
+						echo $this->form_functions->populate_dropdown('trip_status_id',$trip_statuses,$trip_status_id,$class,$id,$msg="Select Trip Status");?></td>
 					    <td><?php echo form_submit("trip_search","Search","class='btn btn-primary'");
 echo form_close();?></td>
 						
