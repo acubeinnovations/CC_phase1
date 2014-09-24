@@ -28,11 +28,11 @@ class Account extends CI_Controller {
 		}
 	}
 
-	public function organization(){
-
-		if($this->org_session_check()==true) {
-			$data['url'] = "facnc/gl/gl_bank.php?NewPayment=Yes&token=".$this->session->userdata('session_id');
-		$data['url'] = "facnc/sync_cnc.php?NewBankPayment=Yes&cnc_token=".$this->session->userdata('session_id');
+	public function organization($action='None'){
+		
+		if($this->org_admin_session_check()==true) {
+		$data['title'] = "Home | ".$action;
+		$data['url'] = "facnc/sync_cnc.php?".$action."=Yes&cnc_token=".$this->session->userdata('session_id');
 			$page='fa-modules/module';
 			$this->load_admin_templates($page,$data);
 		}
@@ -44,7 +44,7 @@ class Account extends CI_Controller {
 	//admin templates
 	public function load_admin_templates($page='',$data=''){
 	
-		if($this->admin_session_check()==true) {
+		if($this->admin_session_check()==true || $this->org_admin_session_check()==true) {
 		    	$this->load->view('admin-templates/header',$data);
 			$this->load->view('admin-templates/nav');
 			$this->load->view($page,$data);
@@ -65,7 +65,7 @@ class Account extends CI_Controller {
 	}
 	
 	//check organization administrator logged in 
-	public function org_session_check() {
+	public function org_admin_session_check() {
 		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')== ORGANISATION_ADMINISTRATOR) ) {
 			return true;
 		} else {

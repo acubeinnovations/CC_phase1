@@ -451,11 +451,14 @@ html_cleanup($_SERVER);
 // logout.php is the only page we should have always 
 // accessable regardless of access level and current login status.
 if (!defined('FA_LOGOUT_PHP_FILE')){
+
 	
 	$isCNCLoggedIn = false;
 	if(isset($_GET['cnc_token'])){
+		
 
 		if (!$_SESSION["wa_current_user"]->logged_in()){
+			
 		
 			$cnc_session = get_cnc_session($_GET['cnc_token']);
 		
@@ -463,19 +466,21 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 				$_SESSION['cnc_token'] = $_GET['cnc_token'];
 				$cnc_data = unserialize($cnc_session['user_data']);
 
-				$_POST["company_login_name"] = (isset($cnc_data['organization_id']))?$cnc_data['organization_id']:0;
+				$_POST["company_login_name"] = (isset($cnc_data['organisation_id']))?$cnc_data['organisation_id']:0;
 				$_POST["user_name_entry_field"] = $cnc_data['username'];
 				$_POST["password"] = $cnc_data['token_pass'];
-
+//print_r($_POST);exit;
 
 			}else{
 				$_SESSION["wa_current_user"]->logged = false;
 			}
 		
 		}elseif(isset($_SESSION['cnc_token']) && $_SESSION['cnc_token'] != $_GET['cnc_token']){
-
+			
 			echo 'You are not authorized access this page..';exit;
 
+		}else{
+			
 		}
 	}else{
 		//$_SESSION["wa_current_user"]->logged = false;
@@ -579,7 +584,6 @@ $SysPrefs = &$_SESSION['SysPrefs'];
 // POST vars cleanup needed for direct reuse.
 // We quote all values later with db_escape() before db update.
 $_POST = strip_quotes($_POST);
-
 
 
 
