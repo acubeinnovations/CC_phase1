@@ -137,8 +137,8 @@ function meta_forward($forward_to, $params="")
 {
     global $Ajax;
 	echo "<meta http-equiv='Refresh' content='0; url=$forward_to?$params'>\n";
-	echo "<center><br>" . _("You should automatically be forwarded.");
-	echo " " . _("If this does not happen") . " " . "<a href='$forward_to?$params'>" . _("click here") . "</a> " . _("to continue") . ".<br><br></center>\n";
+	//echo "<center><br>" . _("You should automatically be forwarded.");
+	//echo " " . _("If this does not happen") . " " . "<a href='$forward_to?$params'>" . _("click here") . "</a> " . _("to continue") . ".<br><br></center>\n";
 	if ($params !='') $params = '?'.$params;
 	$Ajax->redirect($forward_to.$params);
 	exit;
