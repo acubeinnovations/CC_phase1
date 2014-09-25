@@ -831,7 +831,7 @@ function small_qty_cells($label, $name, $init=null, $params=null, $post_label=nu
 
 //-----------------------------------------------------------------------------------
 
-function textarea_cells($label, $name, $value, $cols, $rows, $title = null, $params="")
+function textarea_cells($label, $name, $value, $cols, $rows, $title = null, $params="",$readonly=false)
 {
   	global $Ajax;
 
@@ -840,16 +840,16 @@ function textarea_cells($label, $name, $value, $cols, $rows, $title = null, $par
 		echo "<td $params>$label</td>\n";
 	if ($value == null)
 		$value = (!isset($_POST[$name]) ? "" : $_POST[$name]);
-	echo "<td><textarea name='$name' cols='$cols' rows='$rows'"
+	echo "<td><textarea name='$name' cols='$cols' rows='$rows'".($readonly ? " readonly" : '')
 	.($title ? " title='$title'" : '')
 	.">$value</textarea></td>\n";
 	$Ajax->addUpdate($name, $name, $value);
 }
 
-function textarea_row($label, $name, $value, $cols, $rows, $title=null, $params="")
+function textarea_row($label, $name, $value, $cols, $rows, $title=null, $params="",$readonly=false)
 {
 	echo "<tr><td class='label'>$label</td>";
-	textarea_cells(null, $name, $value, $cols, $rows, $title, $params);
+	textarea_cells(null, $name, $value, $cols, $rows, $title, $params,$readonly);
 	echo "</tr>\n";
 }
 

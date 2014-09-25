@@ -19,6 +19,7 @@ include_once($path_to_root . "/includes/date_functions.inc");
 include_once($path_to_root . "/includes/ui.inc");
 
 include_once($path_to_root . "/admin/db/company_db.inc");
+include_once($path_to_root . "/includes/db/cnc_session_db.inc");
 //-------------------------------------------------------------------------------------------------
 
 if (isset($_POST['update']) && $_POST['update'] != "")
@@ -126,14 +127,23 @@ if (get_company_pref('bcc_email') === null) { // available from 2.3.14, can be n
 }
 
 start_form(true);
-$myrow = get_company_prefs();
 
-$_POST['coy_name'] = $myrow["coy_name"];
+$cnc_org = get_cnc_organization($_SESSION['wa_current_user']->company);
+
+$myrow = get_company_prefs();
+if($cnc_org){
+	$_POST['coy_name'] = $cnc_org["name"];
+	$_POST['postal_address']  = $cnc_org["address"];
+}else{
+	$_POST['coy_name'] = $myrow["coy_name"];
+	$_POST['postal_address']  = $myrow["postal_address"];
+}
+
 $_POST['gst_no'] = $myrow["gst_no"];
 $_POST['tax_prd'] = $myrow["tax_prd"];
 $_POST['tax_last'] = $myrow["tax_last"];
 $_POST['coy_no']  = $myrow["coy_no"];
-$_POST['postal_address']  = $myrow["postal_address"];
+
 $_POST['phone']  = $myrow["phone"];
 $_POST['fax']  = $myrow["fax"];
 $_POST['email']  = $myrow["email"];
@@ -161,8 +171,8 @@ start_outer_table(TABLESTYLE2);
 
 table_section(1);
 
-text_row_ex(_("Name (to appear on reports):"), 'coy_name', 42, 50);
-textarea_row(_("Address:"), 'postal_address', $_POST['postal_address'], 35, 6);
+text_row_ex(_("Name (to appear on reports):"), 'coy_name', 42, 50, null, null, null, false, true);
+textarea_row(_("Address:"), 'postal_address', $_POST['postal_address'], 35, 6,null,'',true);
 text_row_ex(_("Domicile:"), 'domicile', 25, 55);
 
 text_row_ex(_("Phone Number:"), 'phone', 25, 55);
@@ -199,7 +209,8 @@ check_row(_("Search Supplier List"), 'no_supplier_list', null);
 label_row("", "&nbsp;");
 check_row(_("Automatic Revaluation Currency Accounts"), 'auto_curr_reval', $_POST['auto_curr_reval']);
 check_row(_("Time Zone on Reports"), 'time_zone', $_POST['time_zone']);
-text_row_ex(_("Login Timeout:"), 'login_tout', 10, 10, '', null, null, _('seconds'));
+//text_row_ex(_("Login Timeout:"), 'login_tout', 10, 10, '', null, null, _('seconds'));
+text_row_ex(_("Login Timeout:"), 'login_tout', 10, 10, 'Session timeout', null, null, _('seconds'),true);
 label_row(_("Version Id"), $_POST['version_id']);
 
 end_outer_table(1);

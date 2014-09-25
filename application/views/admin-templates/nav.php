@@ -63,6 +63,7 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
+				 <li><a href="<?php echo base_url().'account/organization/CompanySetup';?>"><i class="fa fa-angle-double-right"></i> Company Setup</a></li>
                                 <li><a href="<?php echo base_url().'account/organization/NewBankPayment';?>"><i class="fa fa-angle-double-right"></i> Bank Payment</a></li>
 				<li><a href="<?php echo base_url().'account/organization/NewBankDeposit';?>"><i class="fa fa-angle-double-right"></i> Bank Deposit</a></li>
                                 <li><a href="<?php echo base_url().'organization/front-desk/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>

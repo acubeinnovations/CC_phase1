@@ -10,9 +10,13 @@
 
 		meta_forward('gl/gl_bank.php','NewPayment=Yes');
 	}
-	if(isset($_GET['NewBankDeposit'])){
+	elseif(isset($_GET['NewBankDeposit'])){
 
 		meta_forward('gl/gl_bank.php','NewDeposit=Yes');
+	}
+	elseif(isset($_GET['CompanySetup'])){
+		meta_forward('admin/company_preferences.php');
+		
 	}
 
 	
