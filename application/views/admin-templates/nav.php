@@ -63,9 +63,15 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'account/organization/NewBankPayment';?>"><i class="fa fa-angle-double-right"></i> Bank Payment</a></li>
-				<li><a href="<?php echo base_url().'account/organization/NewBankDeposit';?>"><i class="fa fa-angle-double-right"></i> Bank Deposit</a></li>
-                                <li><a href="<?php echo base_url().'organization/front-desk/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
+				 <li><a href="<?php echo base_url().'account/organization/CompanySetup';?>"><i class="fa fa-angle-double-right"></i> Company Setup</a></li>
+                                <li><a href="<?php echo base_url().'account/organization/DisplaySetup';?>"><i class="fa fa-angle-double-right"></i> Display Setup</a></li>
+				<li><a href="<?php echo base_url().'account/organization/FormSetup';?>"><i class="fa fa-angle-double-right"></i> Forms Setup</a></li>
+				<li><a href="<?php echo base_url().'account/organization/PaymentTerms';?>"><i class="fa fa-angle-double-right"></i> Payment Terms</a></li>
+				<li><a href="<?php echo base_url().'account/organization/FiscalYear';?>"><i class="fa fa-angle-double-right"></i> Fiscal Year</a></li>
+				<li><a href="<?php echo base_url().'account/organization/SystemGl';?>"><i class="fa fa-angle-double-right"></i> System and GL Setup</a></li>
+				<li><a href="<?php echo base_url().'account/organization/VoidTransaction';?>"><i class="fa fa-angle-double-right"></i> Void Transaction</a></li>
+				<li><a href="<?php echo base_url().'account/organization/Backup';?>"><i class="fa fa-angle-double-right"></i> Backup and Restore</a></li>
+                                
                                 
                             </ul>
                         </li>
@@ -99,6 +105,21 @@
                                 <li><a href="<?php echo base_url().'organization/front-desk/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
                                 
                             </ul>
+                        </li>
+		
+			<li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-wrench"></i>
+                                <span>FA Account Settings</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <!--><ul class="treeview-menu">
+				 
+                                <li><a href="<?php echo base_url().'account/organization/NewBankPayment';?>"><i class="fa fa-angle-double-right"></i> Bank Payment</a></li>
+				<li><a href="<?php echo base_url().'account/organization/NewBankDeposit';?>"><i class="fa fa-angle-double-right"></i> Bank Deposit</a></li>
+                                
+                                
+                            </ul>-->
                         </li>
 
 

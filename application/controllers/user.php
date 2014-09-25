@@ -65,9 +65,18 @@ class User extends CI_Controller {
 		}elseif($param1=='driver-profile'&&($param2== ''|| is_numeric($param2))){
 		$this->ShowDriverProfile($param1,$param2);
 		}
-		elseif($param1=='vehicle'){
+		elseif($param1=='vehicle' && $param2==''){
 
-		$this->ShowVehicleView($param1);
+		$this->ShowVehicleView($param1,$param2);
+		}
+		elseif($param1=='vehicle' && $param2=='insurance'){
+		$this->ShowVehicleView($param1,$param2);
+		}
+		elseif($param1=='vehicle' && $param2=='loan'){
+		$this->ShowVehicleView($param1,$param2);
+		}
+		elseif($param1=='vehicle' && $param2=='owner'){
+		$this->ShowVehicleView($param1,$param2);
 		}
 		}else{
 			echo 'you are not authorized access this page..';
@@ -798,9 +807,21 @@ public function profile() {
 		return $data;
 	}
 	
-	public function ShowVehicleView($param1) {
+	public function ShowVehicleView($param1,$param2) {
 		if($this->session_check()==true) {
 			//sample starts
+				if($param2==''){
+				$data['vehicle_tab']='active';
+				}
+				if($param2=='insurance'){
+				$data['insurance_tab']='active';
+				}
+				if($param2=='loan'){
+				$data['loan_tab']='active';
+				}
+				if($param2=='owner'){
+				$data['owner_tab']='active';
+				}
 				$data['select']=$this->select_Vehicle_Values();
 	
 			//sample ends

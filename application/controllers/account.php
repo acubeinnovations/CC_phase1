@@ -27,7 +27,8 @@ class Account extends CI_Controller {
 				echo 'you are not authorized access this page..';
 		}
 	}
-
+	
+	//organisation admin pages from fa
 	public function organization($action='None'){
 		
 		if($this->org_admin_session_check()==true) {
