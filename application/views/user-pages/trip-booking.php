@@ -492,10 +492,11 @@ $this->mysession->delete('post');
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
 						$id="tarrif";
 						echo $this->form_functions->populate_dropdown('tariff',$tariffs,$tariff,$class,$id,$msg="Select tariffs");
-						$id="available_vehicle";echo $available_vehicle;
+						$id="available_vehicle";
 						echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Select Available Vehicles");
 						echo br(2);
 						 ?>
+						<div class="hide-me vehicle-tarif-checker" tariff_id="<?php echo $tariff;?>" available_vehicle_id="<?php echo $available_vehicle;?>"></div>
 						</div>
 					</fieldset>
 				</div>
@@ -508,7 +509,7 @@ $this->mysession->delete('post');
 								<legend class="body-head">Recurrent</legend>
 									<div class="form-group float-right recurrent-yes-container">
 											<?php
-												echo form_checkbox(array('name'=> 'recurrent_yes','class'=>'recurrent-yes-chek-box flat-red','checked'=>$recurrent_yes,'radio_button_to_be_checked'=>$recurrent,'disabled'=>true));
+												echo form_checkbox(array('name'=> 'recurrent_yes','class'=>'recurrent-yes-chek-box flat-red','checked'=>$recurrent_yes,'radio_button_to_be_checked'=>$recurrent));
 								
 												echo nbs(5).form_label('Yes');
 											?>
@@ -766,5 +767,20 @@ $this->mysession->delete('post');
 	</div>
     <!-- end loading -->
 </div>	
+</div>
+
+<div class="hide-me">
+<div class="trip-models">
+<?php
+	$i=0;
+ foreach ($vehicle_types as $value) {
+echo $value;
+	if($i<count($vehicle_types)-1){
+echo ',';
+	}
+	$i++;
+}
+?>
+</div>
 </div>
 
