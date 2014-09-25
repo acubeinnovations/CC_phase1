@@ -30,7 +30,7 @@ if(isset($_GET['NewCompany']))
 if($cnc_organization)
 	page(_($help_context = "Add Account for ".$cnc_organization['name']));
 else
-	page(_($help_context = "Create/Update Company"));
+	page(_($help_context = "List Company Accounts"));
 
 
 //---------------------------------------------------------------------------------------------
@@ -263,10 +263,12 @@ function display_companies()
 			document.location.replace('create_coy.php?c=df&id='+id)
 		}
 		</script>";
-	start_table(TABLESTYLE);
+	start_table(TABLESTYLE2);
 
-	$th = array(_("Company"), _("Database Host"), _("Database User"),
-		_("Database Name"), _("Table Pref"), _("Default"), "", "");
+	//$th = array(_("Company"), _("Database Host"), _("Database User"),
+		//_("Database Name"), _("Table Pref"), _("Default"), "", "");
+	$th = array(_("Company"), _("Table Pref"), _("Default"));
+
 	table_header($th);
 
 	$k=0;
@@ -283,12 +285,12 @@ function display_companies()
     	else
     		alt_table_row_color($k);
 
-		label_cell($conn[$i]['name']);
-		label_cell($conn[$i]['host']);
-		label_cell($conn[$i]['dbuser']);
-		label_cell($conn[$i]['dbname']);
-		label_cell($conn[$i]['tbpref']);
-		label_cell($what);
+		label_cell($conn[$i]['name'],'width=300');
+		//label_cell($conn[$i]['host']);
+		//label_cell($conn[$i]['dbuser']);
+		//label_cell($conn[$i]['dbname']);
+		label_cell($conn[$i]['tbpref'],'width=100');
+		label_cell($what,'width=150');
 		$edit = _("Edit");
 		$delete = _("Delete");
 		if (user_graphic_links())
@@ -296,16 +298,17 @@ function display_companies()
 			$edit = set_icon(ICON_EDIT, $edit);
 			$delete = set_icon(ICON_DELETE, $delete);
 		}
-    	label_cell("<a href='" . $_SERVER['PHP_SELF']. "?selected_id=$i'>$edit</a>");
+    	//label_cell("<a href='" . $_SERVER['PHP_SELF']. "?selected_id=$i'>$edit</a>");
     	$name = "\"".$conn[$i]['name']."\"";
-		label_cell( $i == $coyno ? '' :
-			"<a href='javascript:deleteCompany($i, $name)'>$delete</a>");
+		//label_cell( $i == $coyno ? '' :
+			//"<a href='javascript:deleteCompany($i, $name)'>$delete</a>");
 		end_row();
 	}
 
 	end_table();
-    display_note(_("The marked company is the current company which cannot be deleted."), 0, 0, "class='currentfg'");
-    display_note(_("If no Admin Password is entered, the new Admin Password will be '<b>password</b>' by default "), 1, 0, "class='currentfg'");
+    display_note(_("The marked company is the current company."), 0, 0, "class='currentfg'");
+//display_note(_("The marked company is the current company which cannot be deleted."), 0, 0, "class='currentfg'");
+   // display_note(_("If no Admin Password is entered, the new Admin Password will be '<b>password</b>' by default "), 1, 0, "class='currentfg'");
 }
 
 //---------------------------------------------------------------------------------------------
@@ -410,9 +413,12 @@ function display_cnc_company_edit($cnc_organization=false)
 
 	if ($cnc_organization)
 	{
-		text_row_ex(_("Host"), 'host', 30, 60, null, null, null, null, true);
-		text_row_ex(_("Database User"), 'dbuser', 30, null, null, null, null, null, true);
-		text_row_ex(_("Database Password"), 'dbpassword', 30, null, null, null, null, null, true);
+		//text_row_ex(_("Host"), 'host', 30, 60, null, null, null, null, true);
+		hidden('host');
+		hidden('dbuser');
+		hidden('dbpassword');
+		//text_row_ex(_("Database User"), 'dbuser', 30, null, null, null, null, null, true);
+		//text_row_ex(_("Database Password"), 'dbpassword', 30, null, null, null, null, null, true);
 		text_row_ex(_("Database Name"), 'dbname', 30, null, null, null, null, null, true);
 		text_row_ex(_("Table Pref"), 'tbpref', 30, null, null, null, null, null, true);
 		
@@ -456,9 +462,9 @@ if($cnc_organization){
 }else{
 	display_companies();
 
-	hyperlink_no_params($_SERVER['PHP_SELF'], _("Create a new company"));
+	//hyperlink_no_params($_SERVER['PHP_SELF'], _("Create a new company"));
 
-	display_company_edit($selected_id);
+	//display_company_edit($selected_id);
 }
 
 //---------------------------------------------------------------------------------------------
