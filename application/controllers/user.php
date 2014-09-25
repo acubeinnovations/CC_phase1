@@ -47,6 +47,10 @@ class User extends CI_Controller {
 
 		$this->Customer($param2);
 
+		}elseif($param1=='customers'){
+
+		$this->Customers($param2);
+
 		}elseif($param1=='tarrif-masters'&& ($param2== ''|| is_numeric($param2))){
 		$this->tarrif_masters($param1,$param2);
 		}elseif($param1=='tarrif'&& ($param2== ''|| is_numeric($param2))){
@@ -94,9 +98,9 @@ class User extends CI_Controller {
 	}
 	public function tarrif_masters($param1,$param2) {
 	if($this->session_check()==true) {
-	$tbl_arry=array('trip_models','vehicle_makes','vehicle_ac_types');
+	$tbl_arry=array('trip_models','vehicle_makes','vehicle_ac_types','vehicle_types');
 	$this->load->model('user_model');
-		for ($i=0;$i<3;$i++){
+		for ($i=0;$i<4;$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
 	if($result!=false){
 	$data[$tbl_arry[$i]]=$result;
@@ -445,14 +449,30 @@ class User extends CI_Controller {
 				$data['trip_drop_date']=$_REQUEST['trip_drop_date'];
 				}
 				if($_REQUEST['vehicles']!=null && $_REQUEST['vehicles']!=gINVALID){
+					$data['vehicle_id']= $_REQUEST['vehicles'];
 					$where_arry['vehicle_id']= $_REQUEST['vehicles'];
 				}
 				if($_REQUEST['drivers']!=null && $_REQUEST['drivers']!=gINVALID){
+					$data['driver_id']= $_REQUEST['drivers'];
 					$where_arry['driver_id']= $_REQUEST['drivers'];
+				}
+				if($_REQUEST['trip_status_id']!=null && $_REQUEST['trip_status_id']!=gINVALID){
+					$data['trip_status_id']= $_REQUEST['trip_status_id'];
+					$where_arry['trip_status_id']= $_REQUEST['trip_status_id'];
 				}
 				
 			}
-			
+			$tbl_arry=array('trip_statuses');
+	
+			for ($i=0;$i<count($tbl_arry);$i++){
+			$result=$this->user_model->getArray($tbl_arry[$i]);
+			if($result!=false){
+			$data[$tbl_arry[$i]]=$result;
+			}
+			else{
+			$data[$tbl_arry[$i]]='';
+			}
+			}
 			$data['vehicles']=$this->trip_booking_model->getVehiclesArray($condition='');
 			$data['drivers']=$this->driver_model->getDriversArray($condition='');
 			$this->mysession->set('condition',array("where"=>$where_arry));
@@ -526,6 +546,62 @@ class User extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
+
+public function	Customers($param2){
+			if($this->session_check()==true) {
+			$tbl_arry=array('customer_types');
+	
+			for ($i=0;$i<count($tbl_arry);$i++){
+			$result=$this->user_model->getArray($tbl_arry[$i]);
+			if($result!=false){
+			$data[$tbl_arry[$i]]=$result;
+			}
+			else{
+			$data[$tbl_arry[$i]]='';
+			}
+			}
+			
+			$tbl="customers";
+			$baseurl=base_url().'organization/front-desk/customers/';
+			$per_page=10;
+			$uriseg ='4';
+			//$like_arry='';
+			
+			$where_arry['organisation_id']=$this->session->userdata('organisation_id');
+			if((isset($_REQUEST['customer'])|| isset($_REQUEST['mobile']) || isset($_REQUEST['customer_type_id']))&& isset($_REQUEST['customer_search'])){				$like_arry='';
+				if($param2==''){
+				$param2=0;
+				}
+				if($_REQUEST['customer']!=null){
+					$data['customer']=$_REQUEST['customer'];
+					$like_arry['name']=$_REQUEST['customer'];
+				}
+				if($_REQUEST['mobile']!=null){
+					$data['mobile']=$_REQUEST['mobile'];
+					$like_arry['mobile']=$_REQUEST['mobile'];
+				}
+				if($_REQUEST['customer_type_id']!=null && $_REQUEST['customer_type_id']!=gINVALID){
+				$data['customer_type_id']=$_REQUEST['customer_type_id'];
+				$where_arry['customer_type_id']=$_REQUEST['customer_type_id'];
+				}
+				$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
+			}
+			
+			
+			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+			if($param2==''){
+				$this->mysession->delete('condition');
+			}
+			$data['page_links']=$paginations['page_links'];
+			$data['customers']=$paginations['values'];			
+	
+			$data['title']="Customers | ".PRODUCT_NAME;  
+			$page='user-pages/customers';
+		    $this->load_templates($page,$data);
+		}else{
+			echo 'you are not authorized access this page..';
+		}
+}
 	
 public function profile() {
 	   if($this->session_check()==true) {

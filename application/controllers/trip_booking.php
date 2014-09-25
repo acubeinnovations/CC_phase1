@@ -234,7 +234,7 @@ class Trip_booking extends CI_Controller {
 				if(isset($_REQUEST['guest'])){
 				if(isset($_REQUEST['guest_id']) && $_REQUEST['guest_id']==gINVALID){
 				
-				$dbdata1=array('name'=>$data['guestname'],'guestemail'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id']);
+				$dbdata1=array('name'=>$data['guestname'],'email'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id']);
 				$data['guest_id']=$this->customers_model->addCustomer($dbdata1);
 				}else{
 				$data['guest_id']=$_REQUEST['guest_id'];
@@ -329,11 +329,13 @@ class Trip_booking extends CI_Controller {
 							$dbdata['drop_time']					=$reccurent_continues_droptimepicker;
 							$dbdata['vehicle_id']					=gINVALID;
 							$dbdata['trip_status_id']				=TRIP_STATUS_PENDING;
+							if($dbdata['pick_up_date']!='' && $dbdata['pick_up_time']!='' && $dbdata['drop_date']!='' &&  $dbdata['drop_time']!=''){
 							$res = $this->trip_booking_model->bookTrip($dbdata);
 								if($res==true){
 									$this->session->set_userdata(array('dbSuccess'=>'Trips Booked Succesfully..!!'));
 									$this->session->set_userdata(array('dbError'=>''));
 								}
+							}
 						}
 					}else if($this->input->post('recurrent')=='alternatives'){
 						for($index=0;$index<count($reccurent_alternatives_pickupdatepicker);$index++){
@@ -343,11 +345,13 @@ class Trip_booking extends CI_Controller {
 							$dbdata['drop_time']					=$reccurent_alternatives_droptimepicker[$index];
 							$dbdata['vehicle_id']					=gINVALID;
 							$dbdata['trip_status_id']				=TRIP_STATUS_PENDING;
+							if($dbdata['pick_up_date']!='' && $dbdata['pick_up_time']!='' && $dbdata['drop_date']!='' &&  $dbdata['drop_time']!=''){	 
 							$res = $this->trip_booking_model->bookTrip($dbdata);
 									if($res==true){
 										$this->session->set_userdata(array('dbSuccess'=>'Trips Booked Succesfully..!!'));
 										$this->session->set_userdata(array('dbError'=>''));
 									}
+							}
 						}
 					}
 				}
@@ -357,11 +361,11 @@ class Trip_booking extends CI_Controller {
 		}else if(isset($_REQUEST['cancel_trip'])){
 			if(isset($_REQUEST['trip_id'])){
 			
-				$trip_id			=$this->input->post('trip_id');
+				$trip_id			=	$this->input->post('trip_id');
 				
-				$customer_id 		=$this->session->userdata('customer_id');
-				$customer_name 		=$this->session->userdata('customer_name');
-				$customer_mobile 	= $this->session->userdata('customer_mobile');
+				$customer_id 		=	$this->session->userdata('customer_id');
+				$customer_name 		=	$this->session->userdata('customer_name');
+				$customer_mobile 	= 	$this->session->userdata('customer_mobile');
 
 				$driver_id			=$this->session->userdata('driver_id');	
 				$condition=array('id'=>$driver_id);
@@ -395,7 +399,7 @@ class Trip_booking extends CI_Controller {
 	
 	$res['data']=$this->trip_booking_model->selectAvailableVehicles($data);
 	if($res['data']==false){
-	echo 'false';
+	echo false;
 	}else{
 	echo json_encode($res);
 	}

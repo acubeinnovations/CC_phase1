@@ -182,9 +182,10 @@ $this->mysession->delete('post');
 ?>
 
 
+<div class="trips-booking-div">
 
-
-
+<div class="box">
+    <div class="box-body">
 <div class="trip-booking-body">
 <?php    if($this->session->userdata('dbSuccess') != '') { ?>
         <div class="success-message">
@@ -499,109 +500,122 @@ $this->mysession->delete('post');
 					</fieldset>
 				</div>
 				<?php $count=count($reccurent_alternatives_pickupdatepicker);?>
-				<div class="reccurent-container" slider="<?php echo $count; ?>">
-					<fieldset class="body-border ">
-					<legend class="body-head">Recurrent</legend>
-						<div class="form-group float-right recurrent-yes-container">
-								<?php
-									echo form_checkbox(array('name'=> 'recurrent_yes','class'=>'recurrent-yes-chek-box flat-red','checked'=>$recurrent_yes,'radio_button_to_be_checked'=>$recurrent));
+				<div class="reccurent-lok">
+					<div class="box">
+	   					 <div class="box-body">
+							<div class="reccurent-container" slider="<?php echo $count; ?>">
+								<fieldset class="body-border ">
+								<legend class="body-head">Recurrent</legend>
+									<div class="form-group float-right recurrent-yes-container">
+											<?php
+												echo form_checkbox(array('name'=> 'recurrent_yes','class'=>'recurrent-yes-chek-box flat-red','checked'=>$recurrent_yes,'radio_button_to_be_checked'=>$recurrent,'disabled'=>true));
 								
-									echo nbs(5).form_label('Yes');
-								?>
-						</div>
-						<div class="form-group float-right recurrent-radio-container">
-						<div class="div-continues">
-						<?php
-									echo nbs(1).form_radio(array('name' => 'recurrent','id' => 'continues-recurrent','value'=>'continues','checked'=>$recurrent_continues));
+												echo nbs(5).form_label('Yes');
+											?>
+									</div>
+									<div class="form-group float-right recurrent-radio-container">
+									<div class="div-continues">
+									<?php
+												echo nbs(1).form_radio(array('name' => 'recurrent','id' => 'continues-recurrent','value'=>'continues','checked'=>$recurrent_continues));
 								
-								    echo nbs(5).form_label('Continues').nbs(5);
-									?></div> <div class="div-alternatives"><?php
-								    echo form_radio(array('name' => 'recurrent','id' => 'alternative-recurrent','value'=>'alternatives','checked'=>$recurrent_alternatives));
+												echo nbs(5).form_label('Continues').nbs(5);
+												?></div> <div class="div-alternatives"><?php
+												echo form_radio(array('name' => 'recurrent','id' => 'alternative-recurrent','value'=>'alternatives','checked'=>$recurrent_alternatives));
 								
-								echo nbs(5).form_label('Alternatives');
-								?>
-						</div>
-						</div>
-						<div class="recurrent-container-continues">
-							<div class="form-group">
+											echo nbs(5).form_label('Alternatives');
+											?>
+									</div>
+									</div>
+									<div class="recurrent-container-continues">
+										<div class="form-group">
 									
-									<?php 
+												<?php 
 								
-									echo form_input(array('name'=>'reccurent_continues_pickupdatepicker','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_continues_pickupdatepicker','placeholder'=>'Pick up Date ','value'=>$reccurent_continues_pickupdatepicker)).form_input(array('name'=>'reccurent_continues_pickuptimepicker','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_continues_pickuptimepicker','placeholder'=>'Pick up time ','value'=>$reccurent_continues_pickuptimepicker));
-									echo br(3).$this->form_functions->form_error_session('reccurent_continues_pickupdatepicker', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_continues_pickuptimepicker', '<p class="text-red">', '</p>');
-									 ?>
+												echo form_input(array('name'=>'reccurent_continues_pickupdatepicker','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_continues_pickupdatepicker','placeholder'=>'Pick up Date ','value'=>$reccurent_continues_pickupdatepicker)).form_input(array('name'=>'reccurent_continues_pickuptimepicker','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_continues_pickuptimepicker','placeholder'=>'Pick up time ','value'=>$reccurent_continues_pickuptimepicker));
+												echo br(3).$this->form_functions->form_error_session('reccurent_continues_pickupdatepicker', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_continues_pickuptimepicker', '<p class="text-red">', '</p>');
+												 ?>
 									
-								</div>
-								<div class="form-group">
-								<?php 
-								echo form_input(array('name'=>'reccurent_continues_dropdatepicker','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_continues_dropdatepicker','placeholder'=>'Drop Date','value'=>$reccurent_continues_dropdatepicker)).form_input(array('name'=>'reccurent_continues_droptimepicker','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_continues_droptimepicker','placeholder'=>'Drop time ','value'=>$reccurent_continues_droptimepicker));
-								echo $this->form_functions->form_error_session('reccurent_continues_dropdatepicker', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_continues_droptimepicker', '<p class="text-red">', '</p>');
-								 ?>
-								</div>
-							</div>
-							<div class="recurrent-container-alternatives">
-								<table class="alternative-table">
-									<tr>
-										<td class="width-80-percent">
+											</div>
 											<div class="form-group">
 											<?php 
-											if(isset($reccurent_alternatives_pickupdatepicker[0]) && $reccurent_alternatives_pickupdatepicker[0]!=''){
-											$alternative_pickupdatepicker=$reccurent_alternatives_pickupdatepicker[0];
-											}
-											if(isset($reccurent_alternatives_pickuptimepicker[0]) && $reccurent_alternatives_pickuptimepicker[0]!=''){
-											$alternative_pickuptimepicker=$reccurent_alternatives_pickuptimepicker[0];
-											}
-											
-											echo form_input(array('name'=>'reccurent_alternatives_pickupdatepicker[]','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_alternatives_pickupdatepicker0','placeholder'=>'Pick up Date and time ','value'=>$alternative_pickupdatepicker)).form_input(array('name'=>'reccurent_alternatives_pickuptimepicker[]','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_alternatives_pickuptimepicker0','placeholder'=>'Pick up time ','value'=>$alternative_pickuptimepicker));
-											echo $this->form_functions->form_error_session('reccurent_alternatives_pickupdatepicker', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_alternatives_pickuptimepicker', '<p class="text-red">', '</p>');
+											echo form_input(array('name'=>'reccurent_continues_dropdatepicker','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_continues_dropdatepicker','placeholder'=>'Drop Date','value'=>$reccurent_continues_dropdatepicker)).form_input(array('name'=>'reccurent_continues_droptimepicker','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_continues_droptimepicker','placeholder'=>'Drop time ','value'=>$reccurent_continues_droptimepicker));
+											echo $this->form_functions->form_error_session('reccurent_continues_dropdatepicker', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_continues_droptimepicker', '<p class="text-red">', '</p>');
 											 ?>
 											</div>
+										</div>
+										<div class="recurrent-container-alternatives">
+											<table class="alternative-table">
+												<tr>
+													<td class="width-80-percent">
+														<div class="form-group">
+														<?php 
+														if(isset($reccurent_alternatives_pickupdatepicker[0]) && $reccurent_alternatives_pickupdatepicker[0]!=''){
+														$alternative_pickupdatepicker=$reccurent_alternatives_pickupdatepicker[0];
+														}
+														if(isset($reccurent_alternatives_pickuptimepicker[0]) && $reccurent_alternatives_pickuptimepicker[0]!=''){
+														$alternative_pickuptimepicker=$reccurent_alternatives_pickuptimepicker[0];
+														}
+											
+														echo form_input(array('name'=>'reccurent_alternatives_pickupdatepicker[]','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_alternatives_pickupdatepicker0','placeholder'=>'Pick up Date and time ','value'=>$alternative_pickupdatepicker)).form_input(array('name'=>'reccurent_alternatives_pickuptimepicker[]','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_alternatives_pickuptimepicker0','placeholder'=>'Pick up time ','value'=>$alternative_pickuptimepicker));
+														echo $this->form_functions->form_error_session('reccurent_alternatives_pickupdatepicker', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_alternatives_pickuptimepicker', '<p class="text-red">', '</p>');
+														 ?>
+														</div>
 								
-											<div class="form-group">
-											<?php 
-											if(isset($reccurent_alternatives_dropdatepicker[0]) && $reccurent_alternatives_dropdatepicker[0]!=''){
-											$alternative_dropdatepicker=$reccurent_alternatives_dropdatepicker[0];
-											}
-											if(isset($reccurent_alternatives_droptimepicker[0]) && $reccurent_alternatives_droptimepicker[0]!=''){
-											$alternative_droptimepicker=$reccurent_alternatives_droptimepicker[0];
-											}
+														<div class="form-group">
+														<?php 
+														if(isset($reccurent_alternatives_dropdatepicker[0]) && $reccurent_alternatives_dropdatepicker[0]!=''){
+														$alternative_dropdatepicker=$reccurent_alternatives_dropdatepicker[0];
+														}
+														if(isset($reccurent_alternatives_droptimepicker[0]) && $reccurent_alternatives_droptimepicker[0]!=''){
+														$alternative_droptimepicker=$reccurent_alternatives_droptimepicker[0];
+														}
 											
-											echo form_input(array('name'=>'reccurent_alternatives_dropdatepicker[]','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_alternatives_dropdatepicker0','placeholder'=>'Drop Date and time ','value'=>$alternative_dropdatepicker)).form_input(array('name'=>'reccurent_alternatives_droptimepicker[]','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_alternatives_droptimepicker0','placeholder'=>'Drop time ','value'=>$alternative_droptimepicker));
-											echo $this->form_functions->form_error_session('reccurent_alternatives_dropdatepicker[]', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_alternatives_droptimepicker[]', '<p class="text-red">', '</p>');
-											 ?>
-											</div>
-										</td>
-										<td>
-										<?php
-										 if(count($reccurent_alternatives_dropdatepicker)==0){
-											 $count=0;
-										}else{
-											$count=count($reccurent_alternatives_dropdatepicker);
-										} 
-										?>
-											<div class="float-left margin-15"><a class="btn btn-info btn-lg add-reccurent-dates" count="<?php echo$count; ?>">ADD</a></div>
-										</td>
-									</tr>
-								</table>
-								<div class="new-reccurent-date-textbox reccurent-slider">
-								<?php
-								 if(count($reccurent_alternatives_dropdatepicker)>1){
-									$count=count($reccurent_alternatives_dropdatepicker);
-								for($date_time_index=1;$date_time_index<$count;$date_time_index++){
-								?>
-								<div class="form-group"><input name="reccurent_alternatives_pickupdatepicker[]" class="form-control width-60-percent-with-margin-10" id="reccurent_alternatives_pickupdatepicker<?php echo $date_time_index; ?>" placeholder="Pick up Date" type="text" value="<?php echo $reccurent_alternatives_pickupdatepicker[$date_time_index]; ?>"><input name="reccurent_alternatives_pickuptimepicker[]" value="<?php echo $reccurent_alternatives_pickuptimepicker[$date_time_index]; ?>" class="form-control width-30-percent-with-margin-left-20" id="reccurent_alternatives_pickuptimepicker<?php echo $date_time_index; ?>" placeholder="Pick up Time" type="text"></div><div class="form-group"><input name="reccurent_alternatives_dropdatepicker[]" value="<?php echo $reccurent_alternatives_dropdatepicker[$date_time_index]; ?>" class="form-control width-60-percent-with-margin-10" id="reccurent_alternatives_dropdatepicker<?php echo $date_time_index; ?>" placeholder="Drop Date" type="text"><input name="reccurent_alternatives_droptimepicker[]" value="<?php echo $reccurent_alternatives_droptimepicker[$date_time_index]; ?>" class="form-control width-30-percent-with-margin-left-20" id="reccurent_alternatives_droptimepicker<?php echo $date_time_index; ?>" placeholder="Drop time " type="text"></div>
-								<?php
+														echo form_input(array('name'=>'reccurent_alternatives_dropdatepicker[]','class'=>'form-control width-60-percent-with-margin-10','id'=>'reccurent_alternatives_dropdatepicker0','placeholder'=>'Drop Date and time ','value'=>$alternative_dropdatepicker)).form_input(array('name'=>'reccurent_alternatives_droptimepicker[]','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'reccurent_alternatives_droptimepicker0','placeholder'=>'Drop time ','value'=>$alternative_droptimepicker));
+														echo $this->form_functions->form_error_session('reccurent_alternatives_dropdatepicker[]', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('reccurent_alternatives_droptimepicker[]', '<p class="text-red">', '</p>');
+														 ?>
+														</div>
+													</td>
+													<td>
+													<?php
+													 if(count($reccurent_alternatives_dropdatepicker)==0){
+														 $count=0;
+													}else{
+														$count=count($reccurent_alternatives_dropdatepicker);
+													} 
+													?>
+														<div class="float-left margin-15"><a class="btn btn-info btn-lg add-reccurent-dates" count="<?php echo$count; ?>">ADD</a></div>
+													</td>
+												</tr>
+											</table>
+											<div class="new-reccurent-date-textbox reccurent-slider">
+											<?php
+											 if(count($reccurent_alternatives_dropdatepicker)>1){
+												$count=count($reccurent_alternatives_dropdatepicker);
+											for($date_time_index=1;$date_time_index<$count;$date_time_index++){
+											?>
+											<div class="form-group"><input name="reccurent_alternatives_pickupdatepicker[]" class="form-control width-60-percent-with-margin-10" id="reccurent_alternatives_pickupdatepicker<?php echo $date_time_index; ?>" placeholder="Pick up Date" type="text" value="<?php echo $reccurent_alternatives_pickupdatepicker[$date_time_index]; ?>"><input name="reccurent_alternatives_pickuptimepicker[]" value="<?php echo $reccurent_alternatives_pickuptimepicker[$date_time_index]; ?>" class="form-control width-30-percent-with-margin-left-20" id="reccurent_alternatives_pickuptimepicker<?php echo $date_time_index; ?>" placeholder="Pick up Time" type="text"></div><div class="form-group"><input name="reccurent_alternatives_dropdatepicker[]" value="<?php echo $reccurent_alternatives_dropdatepicker[$date_time_index]; ?>" class="form-control width-60-percent-with-margin-10" id="reccurent_alternatives_dropdatepicker<?php echo $date_time_index; ?>" placeholder="Drop Date" type="text"><input name="reccurent_alternatives_droptimepicker[]" value="<?php echo $reccurent_alternatives_droptimepicker[$date_time_index]; ?>" class="form-control width-30-percent-with-margin-left-20" id="reccurent_alternatives_droptimepicker<?php echo $date_time_index; ?>" placeholder="Drop time " type="text"></div>
+											<?php
 
-								}
+											}
 				
-								}								
-								?>
+											}								
+											?>
 								
-								</div>
-							</div>
+											</div>
+										</div>
 							
-					</fieldset>
-				</div>
+								</fieldset>
+							</div>
+						</div><!-- /.box-body -->
+	   					<?php if($trip_id!='' && $trip_id!=gINVALID){?>
+						<div class='overlay-container' style="display:block;">
+					   		<div class="overlay"></div>
+							<div class="lok-img"></div>
+						</div>
+						<?php } ?>
+						<!-- end loading -->
+					</div>
+				</div>	
 				<div class="booking-source">
 					<fieldset class="body-border">
 					<legend class="body-head">Rough Estimate</legend>
@@ -629,10 +643,16 @@ $this->mysession->delete('post');
 		                                        
 		                                    </tr>
 											<tr>
-		                                        <td>Service Tax<span class="float-right"> : </span></td>
-		                                        <td><div class="service-tax"></div></td>
+		                                        <td>Additional Charge<span class="float-right"> : </span></td>
+		                                        <td><div class="additional-charge-per-km"></div></td>
 		                                        
 		                                    </tr>
+											<tr>
+		                                        <td>Minimum Kilometers<span class="float-right"> : </span></td>
+		                                        <td><div class="mini-km"></div></td>
+		                                        
+		                                    </tr>
+											
 											<tr>
 		                                        <td>Total Amount<span class="float-right"> : </span></td>
 		                                        <td><div class="estimated-total-amount"></div></td>
@@ -738,5 +758,13 @@ $this->mysession->delete('post');
 	</div>
 </div>
 
-	
+</div><!-- /.box-body -->
+   
+	<div class='overlay-container'>
+   		<div class="overlay"></div>
+		<div class="loading-img"></div>
+	</div>
+    <!-- end loading -->
+</div>	
+</div>
 

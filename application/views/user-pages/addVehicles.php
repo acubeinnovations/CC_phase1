@@ -32,7 +32,8 @@
 	$name_on_id_proof=$result[0]['name_on_id_proof'];
 $this->session->set_userdata('org_id','');
 $this->session->set_userdata('user_id','');
- }elseif($this->mysession->get('post')==null){
+ }elseif($this->mysession->get('post_all')==null && $this->mysession->get('post_driver')==null){
+
            $ownership ="";
 			$vehicle_type="";
 			$make="";
@@ -56,7 +57,8 @@ $this->session->set_userdata('user_id','');
 }
 else
 {
-$data=$this->mysession->get('post');
+$data=$this->mysession->get('post_all');
+$driver_data=$this->mysession->get('post_driver');
            $ownership =$data['vehicle_ownership_types_id'];
 			$vehicle_type=$data['vehicle_type_id'];
 			$make=$data['vehicle_make_id'];
@@ -64,8 +66,8 @@ $data=$this->mysession->get('post');
 			$ac=$data['vehicle_ac_type_id'];
 			$fuel=$data['vehicle_fuel_type_id'];
 			$seat=$data['vehicle_seating_capacity_id'];
-			$driver=$data['driver'];
-			$from_date=$data['from_date'];
+			$driver=$driver_data['driver'];
+			$from_date=$driver_data['from_date'];
 			$reg_number=$data['registration_number'];
 			$reg_date=$data['registration_date'];
 			$eng_num=$data['engine_number'];
@@ -75,19 +77,20 @@ $data=$this->mysession->get('post');
 			$permit_amount=$data['vehicle_permit_renewal_amount'];
 			$tax_amount=$data['tax_renewal_amount'];
 			$tax_date=$data['tax_renewal_date'];	
-$this->mysession->delete('post');
+$this->mysession->delete('post_all');
+$this->mysession->delete('post_driver');
 }
 
 ?>
-<?php if($this->session->userdata('dbSuccess') != '') { ?>
+<?php if($this->mysession->get('dbSuccess') != '') { ?>
         <div class="success-message">
 			
             <div class="alert alert-success alert-dismissable">
                 <i class="fa fa-check"></i>
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <?php 
-                echo $this->session->userdata('dbSuccess');
-                $this->session->set_userdata(array('dbSuccess'=>''));
+                echo $this->mysession->get('dbSuccess');
+                $this->mysession->set('dbSuccess','');
                 ?>
            </div>
        </div>
@@ -105,7 +108,7 @@ $this->mysession->delete('post');
        
     </ul>
     <div class="tab-content">
-	<?php if($this->mysession->get('Err_permit_amt') != ''||$this->mysession->get('Err_tax_amt') != ''||$this->mysession->get('ownership') != ''||$this->mysession->get('vehicle_type') != ''||$this->mysession->get('make') != ''||$this->mysession->get('fuel') != ''||$this->mysession->get('seat') != ''||$this->mysession->get('permit') != ''||$this->mysession->get('driver') != ''||$this->mysession->get('ac') != ''){ ?>
+	<?php if($this->mysession->get('Err_permit_amt') != ''||$this->mysession->get('Err_tax_amt') != ''||$this->mysession->get('ownership') != ''||$this->mysession->get('vehicle_type') != ''||$this->mysession->get('make') != ''||$this->mysession->get('fuel') != ''||$this->mysession->get('seat') != ''||$this->mysession->get('permit') != ''||$this->mysession->get('Driver') != ''||$this->mysession->get('ac') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -119,7 +122,7 @@ $this->mysession->delete('post');
 													echo $this->mysession->get('fuel').br();
 													echo $this->mysession->get('seat').br();
 													echo $this->mysession->get('permit').br();
-													echo $this->mysession->get('driver').br();
+													echo $this->mysession->get('Driver').br();
 										
 														$this->mysession->delete('Err_permit_amt');
 														$this->mysession->delete('Err_tax_amt');
@@ -130,7 +133,7 @@ $this->mysession->delete('post');
 														$this->mysession->delete('fuel');
 														$this->mysession->delete('seat');
 														$this->mysession->delete('permit');
-														$this->mysession->delete('driver');
+														$this->mysession->delete('Driver');
 														
 														
 										?>
@@ -155,7 +158,7 @@ $this->mysession->delete('post');
 	else{
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_ownership_types'],$ownership='',$class,$id='',$msg);
 	}?>
-	   <?php echo $this->form_functions->form_error_session('ownership', '<p class="text-red">', '</p>'); ?>
+	  
         </div>
 	
 	<div class="form-group">
@@ -175,7 +178,7 @@ $this->mysession->delete('post');
 //}	else{
   //echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id='',$class,$id='',$msg);
 //} ?>
-	   <?php echo $this->form_functions->form_error_session('permanent_address', '<p class="text-red">', '</p>'); ?>
+	   
         </div>
 	<div class="form-group">
 	<?php echo form_label('Vehicle Make','usernamelabel'); 
@@ -187,7 +190,7 @@ $this->mysession->delete('post');
 	}else{
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_makes'],$make='',$class,$id='',$msg);
 	}?>
-	   <?php echo $this->form_functions->form_error_session('make', '<p class="text-red">', '</p>'); ?>
+	   
         </div>
 	<div class="form-group">
 	<?php echo form_label(' Manufacturing Year','usernamelabel'); ?>
@@ -204,7 +207,7 @@ $this->mysession->delete('post');
 	}else{
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_ac_types'],$ac='',$class,$id='',$msg); 
 	}?>
-	   <?php echo $this->form_functions->form_error_session('ac', '<p class="text-red">', '</p>'); ?>
+	   
         </div>	
 	<div class="form-group">
 	<?php echo form_label(' Fuel Type','usernamelabel'); ?>
@@ -216,7 +219,7 @@ $this->mysession->delete('post');
      }else{
    echo $this->form_functions->populate_dropdown($name,$select['vehicle_fuel_types'],$fuel='',$class,$id='',$msg);
 }	?>
-	   <?php echo $this->form_functions->form_error_session('fuel', '<p class="text-red">', '</p>'); ?>
+	  
         </div>
 	<div class="form-group">
 	<?php echo form_label(' Seating Capacity','usernamelabel'); ?>
@@ -228,7 +231,7 @@ $this->mysession->delete('post');
 }else{
 echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_capacity'],$seat='',$class,$id='',$msg); 
 }	?>
-	   <?php echo $this->form_functions->form_error_session('seat', '<p class="text-red">', '</p>'); ?>
+	   
         </div>
 		<div class="form-group">
 		<?php echo form_label('Select Driver','usernamelabel'); ?>
@@ -240,7 +243,7 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
 }else{
 echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver='',$class,$id='',$msg); 
 }	?>
-	   <?php echo $this->form_functions->form_error_session('driver', '<p class="text-red">', '</p>'); ?>
+	   
         </div>
 		<div class="form-group">
 		<?php echo form_label('From Date','usernamelabel'); ?>
@@ -284,7 +287,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver='
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_permit_types'],$permit='',$class,$id='',$msg);
 	}
 	?>
-	   <?php echo $this->form_functions->form_error_session('permit', '<p class="text-red">', '</p>'); ?>
+	  
         </div>
 	<div class="form-group">
 	<?php echo form_label('Permit Renewal Date','usernamelabel'); ?>
@@ -319,7 +322,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver='
 
 	</fieldset>
 
-<?php echo form_submit("submit-one","Next >>","class='btn btn-primary next'");?>
+<?php echo form_submit("submit-one","Save","class='btn btn-primary next'");?>
 </div>
         </div>
         <div class="tab-pane" id="tab_2">
@@ -380,8 +383,8 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver='
         </div>
 			</fieldset>
 			<?php 
-			echo form_submit("driver-submit","<< Previous","class='btn btn-primary prev1'");
-			echo form_submit("driver-submit","Next >>","class='btn btn-primary next1'");?>
+			//echo form_submit("driver-submit","<< Previous","class='btn btn-primary prev1'");
+			echo form_submit("driver-submit","Save","class='btn btn-primary next1'");?>
 			</div>
         </div>
         <div class="tab-pane" id="tab_3">

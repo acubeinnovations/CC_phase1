@@ -211,7 +211,10 @@ $('.guest-toggle').toggle();
 
 });
 
+if($('#tarrif').val()!=-1){//alert($('#tarrif').val());
 
+$("#tarrif").val('3').change();
+}
 
 $('.recurrent-yes-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
 
@@ -594,9 +597,13 @@ $('.estimated-time-of-journey').html('');
 }
 
 function placeAutofillGenerator(city,ul_class,insert_to){
+var insert_to=insert_to;
+$('#'+insert_to).prop('disabled', true);
+
+$('.overlay-container').css('display','block');
 
 var 
-url='https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&country=IN&language=en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
+url='https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&components=country:IN&language=en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
 
 $.post(base_url+'/maps/get-places',{
 	url:url,
@@ -605,6 +612,8 @@ $.post(base_url+'/maps/get-places',{
 if(data!='false'){
 $('.'+ul_class).html(data);
 $('.'+ul_class).parent().addClass('open');
+$('.overlay-container').css('display','none');
+$('#'+insert_to).prop('disabled', false);
 }
 
 });
@@ -642,7 +651,7 @@ function replaceCommas(place){
 
 function getLatLng(city,text_box_class){
 
-var url='https://maps.googleapis.com/maps/api/geocode/json?address='+city+'&country:IN&language=en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
+var url='https://maps.googleapis.com/maps/api/geocode/json?address='+city+'&&components=country:IN&language=en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
 var text_box_class = text_box_class;
 $.post(base_url+'/maps/get-latlng',{
 	url:url
@@ -700,8 +709,30 @@ alert("Add Customer Informations");
 
 }
 });
+//rate display
+$('#tarrif').on('change',function(){
+var additional_kilometer_rate = $('option:selected', this).attr('additional_kilometer_rate');
+var minimum_kilometers = $('option:selected', this).attr('minimum_kilometers');
+var rate = $('option:selected', this).attr('rate');
+var estimated_distance = $('.estimated-distance-of-journey').html();
+var extra_charge=0;
+estimated_distance=Trim(estimated_distance.replace(/\km\b/g, ''));
+if(Number(estimated_distance) > minimum_kilometers){
+var extra_distance=Number(estimated_distance)-Number(minimum_kilometers);
+charge=Number(minimum_kilometers)*Number(rate);
+extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
+total=Number(charge)+Number(extra_charge);
 
-//tarris selecter
+}else{
+total=Number(estimated_distance)*Number(rate);
+
+}
+$('.additional-charge-per-km').html('RS . '+additional_kilometer_rate);
+$('.mini-km').html(minimum_kilometers+' Km');
+$('.charge-per-km').html('RS . '+rate);
+$('.estimated-total-amount').html('RS . '+total);
+});
+//tarrif selecter
 $('#vehicle-type,#vehicle-ac-type').on('change',function(){
 var vehicle_type = $('#vehicle-type').val();
 var vehicle_ac_type = $('#vehicle-ac-type').val();
@@ -715,12 +746,12 @@ if(vehicle_type!=-1 && vehicle_ac_type!=-1 && pickupdate!='' && pickuptime!='' &
 
 var pickupdatetime = pickupdate+' '+pickuptime+':00';
 var dropdatetime   = dropdate+' '+droptime+':00';
-
+$('.overlay-container').css('display','block');
 generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,dropdatetime);
 generateTariffs(vehicle_type,vehicle_ac_type);
 
 }else if(vehicle_type!=-1 && vehicle_ac_type!=-1){
-
+$('.overlay-container').css('display','block');
 generateTariffs(vehicle_type,vehicle_ac_type);
 
 }
@@ -737,20 +768,23 @@ function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,d
 			pickupdatetime:pickupdatetime,
 			dropdatetime:dropdatetime
 		  },function(data){
-			if(data!='false'){
+			if(data!=false){
 			data=jQuery.parseJSON(data);
-			$('#available_vehicle option:gt(0)').remove();
-			i=0;
-			$.each(data.data[i], function() {
+			$('#available_vehicle option').remove();
+			$('#available_vehicle').append($("<option value='-1'></option>").text('--Select Vehicle--'));
+			for(var i=0;i<data.data.length;i++){
 				
 			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"'></option>").text(data.data[i].registration_number));
 				i=Number(i)+1;
-			});
-			}else{
-		
-					alert('No Available Vehicles');
-
 			}
+		
+			}else{
+					$('#available_vehicle option').remove();
+					$('#available_vehicle').append($("<option value='-1'></option>").text('--Select Vehicle--'));
+					alert('No Available Vehicles');
+					
+			}
+			$('.overlay-container').css('display','none');
 		   });
 
 }
@@ -760,17 +794,25 @@ function generateTariffs(vehicle_type,vehicle_ac_type){
 			vehicle_type:vehicle_type,
 			vehicle_ac_type:vehicle_ac_type
 		  },function(data){
+			if(data!='false'){
 			data=jQuery.parseJSON(data);
-			$('#tarrif option:gt(0)').remove();
-			i=0;
-			$.each(data.data[i], function() {
+			$('#tarrif option').remove();
+			 $('#tarrif ').append($("<option rate='-1' additional_kilometer_rate='-1' minimum_kilometers='-1'></option>").attr("value",'-1').text('--Select Tariffs--'));
+			i=0;//alert(data.data.length);
+			for(var i=0;i<data.data.length;i++){
+			  $('#tarrif').append($("<option rate='"+data.data[i].rate+"' additional_kilometer_rate='"+data.data[i].additional_kilometer_rate+"' minimum_kilometers='"+data.data[i].minimum_kilometers+"'></option>").attr("value",data.data[i].id).text(data.data[i].title));
 				
-			  $('#tarrif').append($("<option rate='"+data.data[i].rate+"'></option>").attr("value",data.data[i].id).text(data.data[i].title));
-				i=Number(i)+1;
-			});
+			}
+			$('.overlay-container').css('display','none');
+			}else{
+			 $('#tarrif option').remove();
+			 $('#tarrif').append($("<option rate='-1' additional_kilometer_rate='-1' minimum_kilometers='-1'></option>").attr("value",'-1').text('--Select Tariffs--'));
+				$('.overlay-container').css('display','none');
+			}
+			
 		  });
-
-}
+		
+}	
 
 
 

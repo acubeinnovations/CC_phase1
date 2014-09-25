@@ -56,6 +56,10 @@ class Customers extends CI_Controller {
 			$data['email']=$_REQUEST['email'];
 			$data['name']=$_REQUEST['name'];
 			$data['registration_type_id']=CUSTOMER_REG_TYPE_PHONE_CALL;	
+			$data['organisation_id']=$this->session->userdata('organisation_id');
+			$data['user_id']=$this->session->userdata('id');
+			$data['customer_type_id']=gINVALID;
+			$data['customer_group_id']=gINVALID;
 		$res=$this->customers_model->addCustomer($data);
 		if(isset($res) && $res!=false){
 			
@@ -86,14 +90,14 @@ class Customers extends CI_Controller {
 			$this->form_validation->set_rules('name','Name','trim|required|min_length[2]|xss_clean');
 			
 			if($customer_id!=gINVALID && $data['email'] == $hmail){
-			$this->form_validation->set_rules('email','Mail','trim|required|valid_email');
+			$this->form_validation->set_rules('email','Mail','trim|valid_email');
 			}else{
-				$this->form_validation->set_rules('email','Mail','trim|required|valid_email|is_unique[users.email]');
+				$this->form_validation->set_rules('email','Mail','trim|valid_email|is_unique[customers.email]');
 			}
-			if($customer_id!=gINVALID && $data['phone'] == $hphone){
-			$this->form_validation->set_rules('phone','Phone','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
+			if($customer_id!=gINVALID && $data['mobile'] == $hphone){
+			$this->form_validation->set_rules('mobile','Mobile','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 			}else{
-			$this->form_validation->set_rules('phone','Phone','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean||is_unique[users.phone]');
+			$this->form_validation->set_rules('mobile','Mobile','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean||is_unique[customers.mobile]');
 			}
 			$data['registration_type_id']=CUSTOMER_REG_TYPE_PHONE_CALL;	
 			$data['organisation_id']=$this->session->userdata('organisation_id');	
@@ -102,21 +106,22 @@ class Customers extends CI_Controller {
 				if($customer_id>gINVALID) {
 				$res=$this->customers_model->updateCustomers($data,$customer_id);
 					if(isset($res) && $res!=false){
-			
-						
-					}else{
-						
+						$this->session->set_userdata(array('dbSuccess'=>'Customer details Updated Successfully'));
+						redirect(base_url().'organization/front-desk/customers');	
 					}
 				}else if($customer_id==gINVALID){ 
 				$res=$this->customers_model->addCustomer($data);
-					if(isset($res) && $res!=false){
-				
+					if(isset($res) && $res!=false  && $res>0){
+					 $this->session->set_userdata(array('dbSuccess'=>'Customer details Added Successfully'));
 					redirect(base_url().'organization/front-desk/customers');	
 					}
 				}
 				}else{
 				$data['customer_id']=$customer_id;
 				$this->mysession->set('post',$data);
+				if($customer_id==gINVALID){
+				$customer_id='';
+				}
 				redirect(base_url().'organization/front-desk/customer/'.$customer_id);
 
 				}

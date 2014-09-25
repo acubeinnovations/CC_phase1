@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 22, 2014 at 09:26 AM
+-- Generation Time: Sep 24, 2014 at 10:25 AM
 -- Server version: 5.5.37-0ubuntu0.13.10.1
 -- PHP Version: 5.5.3-1ubuntu2.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `cc`
@@ -91,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
   KEY `organisation_id` (`organisation_id`),
   KEY `customer_type_id` (`customer_type_id`),
   KEY `customer_group_id` (`customer_group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -189,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   `name` varchar(50) NOT NULL,
   `place_of_birth` varchar(30) NOT NULL,
   `dob` date NOT NULL,
-  `blood group` varchar(5) NOT NULL,
+  `blood_group` varchar(5) NOT NULL,
   `marital_status_id` int(11) NOT NULL,
   `children` varchar(5) NOT NULL,
   `present_address` text NOT NULL,
@@ -207,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   `badge_renewal_date` date NOT NULL,
   `mother_tongue` int(11) NOT NULL,
   `pan_number` varchar(40) NOT NULL,
-  `bank_account number` varchar(30) NOT NULL,
+  `bank_account_ number` varchar(30) NOT NULL,
   `name_on_bank_pass_book` varchar(60) NOT NULL,
   `bank_name` varchar(50) NOT NULL,
   `branch` varchar(50) NOT NULL,
@@ -433,7 +427,7 @@ CREATE TABLE IF NOT EXISTS `tariffs` (
   KEY `tariff_master_id` (`tariff_master_id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -449,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `tariff_masters` (
   `vehicle_type_id` int(11) NOT NULL,
   `vehicle_ac_type_id` int(11) NOT NULL,
   `minimum_kilometers` double NOT NULL,
-  `minimum_hours` time NOT NULL,
+  `minimum_hours` double NOT NULL,
   `organisation_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -463,7 +457,7 @@ CREATE TABLE IF NOT EXISTS `tariff_masters` (
   KEY `vehicle_ac_type_id` (`vehicle_ac_type_id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -549,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `trips` (
   KEY `vehicle_id` (`vehicle_id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 -- --------------------------------------------------------
 
@@ -909,8 +903,8 @@ CREATE TABLE IF NOT EXISTS `vehicle_drivers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vehicle_id` int(11) NOT NULL,
   `driver_id` int(11) NOT NULL,
-  `from_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `to_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `from_date` date NOT NULL,
+  `to_date` date NOT NULL,
   `organisation_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -1147,6 +1141,3 @@ CREATE TABLE IF NOT EXISTS `vehicle_types` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

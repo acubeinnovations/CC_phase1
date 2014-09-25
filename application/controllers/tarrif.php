@@ -21,6 +21,7 @@ class Tarrif extends CI_Controller {
 	 $data['title'] = $this->input->post('title');
 	 $data['trip_model_id'] = $this->input->post('select_trip_model');
 	 $data['vehicle_make_id'] = $this->input->post('select_vehicle_makes');
+	 $data['vehicle_type_id'] = $this->input->post('search_vehicle_type');
 	 $data['vehicle_ac_type_id'] = $this->input->post('select_ac_type');
 	 $data['minimum_kilometers'] = $this->input->post('min_kilo');
 	 $data['minimum_hours'] = $this->input->post('min_hours');
@@ -44,6 +45,11 @@ class Tarrif extends CI_Controller {
 	 $err=False;
 	 $this->session->set_userdata('select_ac_type','Choose Any AC Type');
 	 }
+	 if($data['vehicle_type_id']==-1){
+	 $data['vehicle_type_id'] ='';
+	 $err=False;
+	 $this->session->set_userdata('search_vehicle_type','Choose Any Vehicle Type');
+	 }
 	 $this->form_validation->set_rules('min_kilo','Minimum Kilometers','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('min_hours','Minimum Hours','trim|required|xss_clean|numeric');
 	
@@ -64,6 +70,7 @@ class Tarrif extends CI_Controller {
 	 $id= $this->input->post('manage_id');
 	 $data['title'] = $this->input->post('manage_title');
 	 $data['trip_model_id'] = $this->input->post('manage_select_trip_model');
+	 $data['vehicle_type_id'] = $this->input->post('manage_select_vehicle_type');
 	 $data['vehicle_make_id'] = $this->input->post('manage_select_vehicle_makes');
 	 $data['vehicle_ac_type_id'] = $this->input->post('manage_select_ac_type');
 	 $data['minimum_kilometers'] = $this->input->post('manage_min_kilo');
@@ -237,8 +244,11 @@ class Tarrif extends CI_Controller {
 	$data['organisation_id']=$this->session->userdata('organisation_id');
 
 	$res['data']=$this->tarrif_model->selectAvailableTariff($data);
-
+	if(count($res['data'])>0){
 	echo json_encode($res);
+	}else{
+	echo 'false';
+	}
 
 	}	
 	}
