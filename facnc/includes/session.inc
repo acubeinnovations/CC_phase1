@@ -399,7 +399,6 @@ $Session_manager->sessionStart('FA'.md5(dirname(__FILE__)));
 
 
 
-
 // this is to fix the "back-do-you-want-to-refresh" issue - thanx PHPFreaks
 header("Cache-control: private");
 
@@ -477,7 +476,7 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 		
 		}elseif(isset($_SESSION['cnc_token']) && $_SESSION['cnc_token'] != $_GET['cnc_token']){
 			
-			echo 'You are not authorized access this page..';exit;
+			$_SESSION['cnc_token'] = $_GET['cnc_token'];
 
 		}else{
 			

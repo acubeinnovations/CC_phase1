@@ -82,7 +82,8 @@ function page_header($title, $no_menu=false, $is_index=false, $onload="", $js=""
 //	if (file_exists($_SERVER['DOCUMENT_ROOT'].$jsext))
 //		add_js_ufile($jsext);
 
-	$theme = user_theme();
+	//$theme = user_theme();
+	$theme = 'cnc';
 
 	if ($help_base_url != null && $use_popup_windows && $js == '')
 	{
@@ -142,7 +143,7 @@ function page_header($title, $no_menu=false, $is_index=false, $onload="", $js=""
 
 	include_once($path_to_root . "/themes/$theme/renderer.php");
 	$rend = new renderer();
-	$rend->menu_header($title, $no_menu, $is_index);
+	$rend->menu_header($title);
 	error_box();
 }
 

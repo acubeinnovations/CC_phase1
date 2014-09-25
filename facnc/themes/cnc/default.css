@@ -1,5 +1,5 @@
 /*--------------------------------------------------\
-| aqua         |               | default.css        |
+| default       |               | default.css       |
 |---------------------------------------------------|
 | For use with:                                     |
 | FrontAccounting 									|
@@ -17,15 +17,15 @@
 \--------------------------------------------------*/
 
 body {
-	font-family: Verdana, Arial, Helvetica;
-	background: #518fad;
-	font-size: 10px;
+	/*font-family: Verdana, Arial, Helvetica;*/
+	font-family: 'Source Sans Pro',sans-serif;
+	font-size: 12px;
 	margin: 5px 0 0 5px;
 	padding: 0;
 }
 
 tr, td, th {
-	font-size: 11px;
+	font-size: 12px;
 	line-height: 19px;
 }
 
@@ -112,14 +112,14 @@ button img, span {
 }
 
 .quick_menu {
-	background-color: #518fad;
+	background-color: #285b86;
 	border: 0;
 	margin: 0;
 	padding: 0;
 	/*text-align: right;*/
 }
 
-.quick_menu_selected{
+.quick_menu_selected {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 13px;
 	border: none;
@@ -132,7 +132,7 @@ button img, span {
 
 .logoutBar {
 	padding-right: 1em;
-	background: #a7d6ce;
+	background: #dee7ec;
 	color: black;
 	border-bottom: 1px solid #8cacbb;
 	width: 100%;
@@ -140,7 +140,7 @@ button img, span {
 
 .bottomBar {
 	padding-right: 1em;
-	background: #a7d6ce;
+	background: #dee7ec;
 	color: black;
 	border-bottom: 1px solid #8cacbb;
 	width: 100%;
@@ -153,7 +153,7 @@ button img, span {
 
 .bottomBar2 {
 	padding-right: 1em;
-	background: #a7d6ce;
+	background: #dee7ec;
 	color: black;
 	border-top: 1px solid #8cacbb;
 	border-bottom: 1px solid #8cacbb;
@@ -166,7 +166,7 @@ button img, span {
 
 div.logoutBar {
 	padding-right: 1em;
-	background: #a7d6ce;
+	background: #dee7ec;
 	color: black;
 	border-bottom: 1px solid #8cacbb;
 	text-align: right;
@@ -195,20 +195,20 @@ div.tabs a {
 	font-weight: normal;
 	background: white scroll repeat 0% 0%;
 	color: #436976;
-	margin-right: 0.0em;
-	height: 1.0em;
+	margin-right: 0;
+	height: 10px;
 }
 div.tabs a.selected {
 	border-top: 1px solid #8cacbb;
 	border-right: 1px solid #8cacbb;
-	border-bottom:  1px solid #a7d6ce;
+	border-bottom:  1px solid #dee7ec;
 	border-left: 1px solid #8cacbb;
 	font-weight: normal;
-	background: #a7d6ce;
+	background: #dee7ec;
 	color: #436976;
 }
 div.tabs a:hover {
-	background: #a7d6ce;
+	background: #dee7ec;
 	color: #436976;
 }
 
@@ -216,7 +216,7 @@ div.tabs a:hover {
 	font-size: 13px;
 	padding: 0px;
 	color: #000000;
-	background-color: #a7d6ce;
+	background-color: #dee7ec;
 	padding-left: 3px;
 	font-weight: bold;
 }
@@ -238,6 +238,11 @@ div.tabs a:hover {
 	bottom: -3px;
 }
 
+.footer td a {
+	color: #666666;
+	font-size: 9px;
+}
+
 .footer {
 	font-family: Verdana, Arial, Helvetica;
 	color: #cccccc;
@@ -247,28 +252,18 @@ div.tabs a:hover {
 	width: 100%;
 }
 
-.footer td a {
-	color: #666666;
-	font-size: 9px;
-}
-
-
 .tableheader {
 	font-weight: bold;
-	background-color: #d5cea7;
+	background-color: #dee7ec;
 	color: black;
 	text-align: center;
 }
 
 .tableheader2 {
 	font-weight: bold;
-	background-color: #d5cea7;
+	background-color: #dee7ec;
 	color: black;
 	text-align: left;
-}
-
-.tableseparator {
-	border-left: 1px solid #444466;
 }
 
 .titletext {
@@ -303,15 +298,54 @@ div.tabs a:hover {
 }
 
 .inputsubmit {
-	font-size: 11px;
-	border: 1px solid #0066cc;
-	padding: 1px 4px;
+	/*font-size: 11px;
+	border: 1px #0066cc solid;
+	padding: 1px 4px;*/
+	display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.428571429;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+       -o-user-select: none;
+          user-select: none;
 }
 
 .ajaxsubmit {
-	font-size: 11px;
+	/*font-size: 11px;
 	border: 1px #0066cc solid;
-	padding: 1px 4px;
+	padding: 1px 4px;*/
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.428571429;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+       -o-user-select: none;
+          user-select: none;
+ color: #ffffff;
+  background-color: #428bca;
+  border-color: #357ebd;
 }
 
 .oddrow {
@@ -392,7 +426,7 @@ table.tablestyle_inner td {
 }
 
 .label {
-	background-color: #efefef;
+	font-weight:normal;
 	color: black;
 }
 
@@ -432,7 +466,8 @@ input.amount {
 
 .navibutton[disabled], .navibutton[disabled] span {
   color:#808080;
-  cursor: inherit;
+  text-decoration: none;
+  cursor: auto;
 }
 
 button.navibutton {
@@ -453,9 +488,8 @@ button.navibutton {
 .navibar {
     padding: 0 3px;
 	color: #000;
-	border: 1px solid #8cacbb;
     border-collapse: collapse;
-    background-color: #d5cea7;
+    background-color: #dee7ec;
 }
 
 .navibar tr td {
@@ -563,7 +597,7 @@ ul.ajaxtabs li button.current, ul.ajaxtabs li button.current:hover{
 	text-align: center;
 }
 #CC .header {
-	background-color: #518fad;
+	background-color: #285b86;
 }
 #CC .weekday {
 	background-color: #eee;
@@ -574,12 +608,12 @@ ul.ajaxtabs li button.current, ul.ajaxtabs li button.current:hover{
 	color: #000;
 }
 #CC .weekno {
-	background-color: #d5cea7;
+	background-color: #c0daf8;
 	color: #555;
 }
 #CC .current {
 	border: 1px solid #339;
-	background-color: #518fad;
+	background-color: #285b86;
 	color: #FFF;
 }
 #CC .weekday, #CC .weekend, #CC .current {
@@ -590,7 +624,7 @@ ul.ajaxtabs li button.current, ul.ajaxtabs li button.current:hover{
 }
 #CC .weekday:hover, #CC .weekend:hover, #CC .current:hover {
 	color: #FFF;
-	background-color: #518fad;
+	background-color: #285b86;
 	border: 1px solid #999;
 }
 #CC .previous {
@@ -637,7 +671,7 @@ div.warn_msg {
 }
 
 div.note_msg {
-	margin: 10px;
+	margin: 10px; 
 	padding: 3px;
 	border: 1px solid #33cc00;
 	background-color: #ccffcc;
@@ -646,6 +680,32 @@ div.note_msg {
 }
 
 #title {
-	margin-bottom: 10px; 
+	margin-bottom: 10px;
 	width: 100%;
 }
+
+
+/*from cnc style.css*/
+.page-outer{
+	width:95%;
+	margin:0 auto;
+}
+.body-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    
+}
+.body-head {
+    width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+	margin:10px;
+	font-size:24px;
+	background:#F9F9F9
+
+}
+
+
+
+
