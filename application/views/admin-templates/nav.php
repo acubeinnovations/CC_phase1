@@ -113,7 +113,13 @@
                                 <span>FA Account Settings</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
-                            
+                            <ul class="treeview-menu">
+				 
+                                <li><a href="<?php echo base_url().'account/front_desk/NewBankPayment';?>"><i class="fa fa-angle-double-right"></i> Bank Payment</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/NewBankDeposit';?>"><i class="fa fa-angle-double-right"></i> Bank Deposit</a></li>
+                                
+                                
+                            </ul>
                         </li>
 
 
