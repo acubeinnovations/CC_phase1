@@ -40,6 +40,9 @@
         <![endif]-->
     </head>
     <body class="skin-blue">
+		 <!--modal-->
+		
+		
         <!-- header logo: style can be found in header.less -->
         <header class="header">
             <a href="<?php echo base_url();?>" class="logo">

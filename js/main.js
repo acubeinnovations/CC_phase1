@@ -978,6 +978,23 @@ var h = Math.floor(total_min/60); //Get whole hours
 
 
 //trip_bookig page-js end
+
+//trips paje js start
+$('.voucher').on('click',function(){
+$('.overlay-container').css('display','block');
+
+});
+$('.modal-close').on('click',function(){
+$('.overlay-container').css('display','	none');
+
+});
+
+$(document).keydown(function(e) {
+  
+  if (e.keyCode == 27) { $('.overlay-container').css('display','	none'); }   // esc
+});
+
+//trips page js end
  
 	$('select').change(function(){ 
 	 var edit=$('.edit').attr('for_edit');
