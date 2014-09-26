@@ -209,11 +209,11 @@ public function __construct()
 	}
 	
 
-			public function show_change_password($data = '') {
-					$data['title']="Change Password | ".PRODUCT_NAME;  
-					$page='organization-pages/change-password';
-					$this->load_templates($page,$data);
-			}
+	public function show_change_password($data = '') {
+			$data['title']="Change Password | ".PRODUCT_NAME;  
+			$page='organization-pages/change-password';
+			$this->load_templates($page,$data);
+	}
 	public function front_desk($action ='',$secondaction = '') {
 		 if ($action =='new' && $secondaction == ''){
       
@@ -272,12 +272,15 @@ public function __construct()
 	$like_arry='';
 	$where_arry['user_type_id']=FRONT_DESK;
 	$where_arry['organisation_id']=$this->session->userdata('organisation_id');
-	if(isset($where_arry) && count($where_arry)>0){
-	$this->session->set_userdata(array('condition'=>array('where'=>$where_arry)));
+	if(isset($where_arry) && count($where_arry)>0) {
+		$this->mysession->set('condition',array('where'=>$where_arry));
 	}
 	//for search
     if((isset($_REQUEST['sname'])|| isset($_REQUEST['status']))&& isset($_REQUEST['search'])){
-	$this->session->unset_userdata('condition');
+	if($secondaction==''){
+		$secondaction=0;
+	}
+	$this->mysession->delete('condition');
 	if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
 	$like_arry['name']= $_REQUEST['sname'];
 	$where_arry['status_id']=$_REQUEST['status'];
@@ -288,12 +291,15 @@ public function __construct()
 	if($_REQUEST['sname']!=null&& $_REQUEST['status']==-1){
 	$like_arry['username']= $_REQUEST['sname'];
 	}
-	$this->session->set_userdata(array('condition'=>array('like'=>$like_arry,'where'=>$where_arry)));
+		$this->mysession->set('condition',array('like'=>$like_arry,'where'=>$where_arry));
 	}
 	$tbl='users';
 	$baseurl=base_url().'organization/admin/front-desk/list/';
 	$uriseg ='5';
     $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
+	if($secondaction==''){
+		$this->mysession->delete('condition');
+	}
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
 	$data['title']='User List| '.PRODUCT_NAME;
