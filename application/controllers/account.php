@@ -42,10 +42,41 @@ class Account extends CI_Controller {
 		}
 	}
 
+	//organisation user pages from fa
+	public function front_desk($action='None'){
+		
+		if($this->org_user_session_check()==true) {
+		$data['title'] = "Home | ".$action;
+		$data['url'] = "facnc/sync_cnc.php?".$action."=Yes&cnc_token=".$this->session->userdata('session_id');
+			$page='fa-modules/module';
+			$this->load_admin_templates($page,$data);
+		}
+	  	else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+
+
+	//cnc organization user create user account in fa
+	public function add_user($user_id = -1)
+	{
+		if($this->org_admin_session_check()==true) {
+			$data['url'] = "facnc/admin/users.php?cnc_token=".$this->session->userdata('session_id');
+			if($user_id > 0)
+				$data['url'] .= "&NewUser=".$user_id;
+			$data['title']="Home | Create User account";	
+			$page='fa-modules/module';
+			$this->load_admin_templates($page,$data);
+			
+		}else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+
 	//admin templates
 	public function load_admin_templates($page='',$data=''){
 	
-		if($this->admin_session_check()==true || $this->org_admin_session_check()==true) {
+		if($this->admin_session_check()==true || $this->org_admin_session_check()==true || $this->org_user_session_check()==true) {
 		    	$this->load->view('admin-templates/header',$data);
 			$this->load->view('admin-templates/nav');
 			$this->load->view($page,$data);
@@ -73,6 +104,14 @@ class Account extends CI_Controller {
 			return false;
 		}
 	}
+
+	public function org_user_session_check() {
+		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==FRONT_DESK)) 	{
+			return true;
+		} else {
+			return false;
+		}
+	} 
 
 }
 ?>

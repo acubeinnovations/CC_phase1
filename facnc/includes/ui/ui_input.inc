@@ -189,6 +189,36 @@ function submit_center_last($name, $value, $title=false, $async=false, $icon=fal
 	'both' - use both Ctrl-Enter and Escape hotkeys 
 	'cancel' - apply to 'RESET' button
 */
+
+function submit_continue($add=true, $title=false, $async=false, $clone=false)
+{
+	$cancel = $async;
+
+	if ($async === 'both') {
+		$async = 'default'; $cancel = 'cancel';
+	} 
+	else if ($async === 'default')
+		$cancel = true;
+	else if ($async === 'cancel')
+		$async = true;
+	
+	if ($add)
+		submit('ADD_ITEM', _("Continue"), true, $title, $async);
+	else {
+		submit('UPDATE_ITEM', _("Continue"), true, _('Submit changes'), $async);
+		if ($clone) submit('CLONE', _("Clone"), true, 
+			_('Edit new record with current data'), $async);
+		submit('RESET', _("Cancel"), true, _('Cancel edition'), $cancel);
+	}
+}
+
+function submit_continue_center($add=true, $title=false, $async=false, $clone=false)
+{
+	echo "<center>";
+	submit_continue($add, $title, $async, $clone);
+	echo "</center>";
+}
+
 function submit_add_or_update($add=true, $title=false, $async=false, $clone=false)
 {
 	$cancel = $async;
@@ -568,11 +598,11 @@ function email_row($label, $name, $value, $size, $max, $title=null, $params="", 
 	text_row($label, $name, $value, $size, $max, $title, $params, $post_label);
 }
 
-function email_row_ex($label, $name, $size, $max=null, $title=null, $value=null, $params=null, $post_label=null)
+function email_row_ex($label, $name, $size, $max=null, $title=null, $value=null, $params=null, $post_label=null,$readonly=false)
 {
 	if (get_post($name)) 
 		$label = "<a href='Mailto:".$_POST[$name]."'>$label</a>";
-	text_row_ex($label, $name, $size, $max, $title, $value, $params, $post_label);
+	text_row_ex($label, $name, $size, $max, $title, $value, $params, $post_label,$readonly);
 }
 
 function link_row($label, $name, $value, $size, $max, $title=null, $params="", $post_label="")
