@@ -13,11 +13,11 @@ class Vehicle extends CI_Controller {
 
 	
 		if($this->session_check()==true) {
-	
 		$tbl=array('vehicle-ownership'=>'vehicle_ownership_types','vehicle-types'=>'vehicle_types','ac-types'=>'vehicle_ac_types','fuel-types'=>'vehicle_fuel_types','seating-capacity'=>'vehicle_seating_capacity','beacon-light-options'=>'vehicle_beacon_light_options ','vehicle-makes'=>'vehicle_makes','driver-bata-percentages'=>'vehicle_driver_bata_percentages ','permit-types'=>'vehicle_permit_types');
-			if($param1=='getDescription') {
-			$this->getDescription();
-			}
+            if($param1=='getDescription') {
+            $this->getDescription();
+            }
+			
 			if($param1==''){ 
 			if(isset($_REQUEST['submit-vehicle'])){
 				$this->vehicle_validation();
@@ -27,6 +27,9 @@ class Vehicle extends CI_Controller {
 				}
 			if(isset($_REQUEST['submit-loan'])){
 				$this->loan_validation();
+				}
+			if(isset($_REQUEST['submit-owner'])){
+				$this->owner_validation();
 				}
 			}
 			if($param1) {
@@ -194,6 +197,7 @@ class Vehicle extends CI_Controller {
 			$data['vehicle_ownership_types_id']=$this->input->post('ownership');
 			$data['vehicle_type_id']=$this->input->post('vehicle_type');
 			$data['vehicle_make_id']=$this->input->post('make');
+
 			$data['vehicle_manufacturing_year']=$this->input->post('year');
 			$data['vehicle_ac_type_id']=$this->input->post('ac');
 			$data['vehicle_fuel_type_id']=$this->input->post('fuel');
@@ -368,7 +372,7 @@ $err=True;
 			}
 		}
 		
-			public function loan_validation(){
+		public function loan_validation(){
 		if($this->session_check()==true) {
 			$data['vehicle_id']=$this->mysession->get('vehicle_id');
 			$data['total_amount']=$this->input->post('total_amt');
@@ -399,7 +403,7 @@ $err=True;
 					 
 					 //for insurance
 $err=True;
-	if(preg_match('#[^0-9\.]#', $data['total_amount'])){
+	if(preg_match('#[^0-9\.]#', $data['total_amountt'])){
 			$this->mysession->set('Err_loan_amt','Invalid Characters on Total Amount field!');
 			$err=False;
 			}
@@ -436,5 +440,58 @@ $err=True;
 			echo 'you are not authorized access this page..';
 			}
 		}
+		
+			public function owner_validation(){
+		if($this->session_check()==true) {
+		    $data['vehicle_id']=$this->mysession->get('vehicle_id');
+			$data['name']=$this->input->post('owner_name');
+			$data['address']=$this->input->post('address');
+			$data['mobile']=$this->input->post('mobile');
+			$data['email']=$this->input->post('mail');
+			$data['dob']=$this->input->post('dob');
+			$data['organisation_id']=$this->session->userdata('organisation_id');
+			$data['user_id']=$this->session->userdata('id');
+			
+			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
+	
+
+					 $this->form_validation->set_rules('owner_name','Owner Name ','trim|required|xss_clean|alpha_numeric');
+					 $this->form_validation->set_rules('address','Address','trim|required|xss_clean');
+					 $this->form_validation->set_rules('mobile','Mobile','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicle_owners.mobile]');
+					 $this->form_validation->set_rules('mail','Mail','trim|required|valid_email|is_unique[vehicle_owners.email]');
+					 $this->form_validation->set_rules('dob','Date of Birth','trim|required|xss_clean');
+					 
+					 //for owner
+
+	 if($this->form_validation->run()==False){
+		
+		$this->mysession->set('owner_post_all',$data);
+		
+		redirect(base_url().'organization/front-desk/vehicle/owner',$data);	
+	 }
+	 
+	  else{
+	  //database insertion for vehicle
+
+	  $result=$this->vehicle_model->insertOwner($data);
+	 
+	  if($result==true){
+		$this->mysession->set('owner_Success',' Added Succesfully..!');
+				    $this->mysession->set('owner_Error','');
+				    redirect(base_url().'organization/front-desk/vehicle/owner');
+		}
+		else{
+		$this->mysession->set('owner_post_all',$data);
+		
+		redirect(base_url().'organization/front-desk/vehicle/owner');
+		}
+	  }
+		}
+		else{
+			echo 'you are not authorized access this page..';
+			}
+		}
+		
+		
 }
 ?>

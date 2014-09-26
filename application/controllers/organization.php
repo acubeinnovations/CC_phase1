@@ -266,6 +266,7 @@ public function __construct()
 		}
     else if($action=='list' && ($secondaction == ''|| is_numeric($secondaction))) {
 	$this->load->model('organization_model');
+	$this->load->model('account_model');
 	$data['user_status']=$this->organization_model->getUserStatus();//print_r($user_status);
 	$condition='';
 	$per_page=5;

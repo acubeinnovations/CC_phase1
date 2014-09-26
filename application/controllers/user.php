@@ -78,6 +78,9 @@ class User extends CI_Controller {
 		elseif($param1=='vehicle' && $param2=='owner'){
 		$this->ShowVehicleView($param1,$param2);
 		}
+		elseif($param1=='list-vehicle'&&($param2== ''|| is_numeric($param2))){
+		$this->ShowVehicleList($param1,$param2);
+		}
 		}else{
 			echo 'you are not authorized access this page..';
 		}
@@ -86,9 +89,9 @@ class User extends CI_Controller {
 	
 	public function settings() {
 	if($this->session_check()==true) {
-	$tbl_arry=array('vehicle_ownership_types','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','vehicle_makes','vehicle_driver_bata_percentages','vehicle_permit_types','languages','language_proficiency','driver_type','payment_type','customer_types','customer_groups','customer_registration_types','marital_statuses','bank_account_types','id_proof_types','trip_models','trip_statuses','booking_sources','trip_expense_type');
+	$tbl_arry=array('vehicle_ownership_types','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','vehicle_makes','vehicle_driver_bata_percentages','vehicle_permit_types','languages','language_proficiency','driver_type','payment_type','customer_types','customer_groups','customer_registration_types','marital_statuses','bank_account_types','id_proof_types','trip_models','trip_statuses','booking_sources','trip_expense_type','vehicle_models');
 	
-	for ($i=0;$i<23;$i++){
+	for ($i=0;$i<24;$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
 	if($result!=false){
 	$data[$tbl_arry[$i]]=$result;
@@ -833,7 +836,7 @@ public function profile() {
 		}
 	}
 	public function select_Vehicle_Values(){
-	$tbl_arry=array('drivers','vehicle_ownership_types','vehicle_types','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_permit_types');
+	$tbl_arry=array('vehicle_models','drivers','vehicle_ownership_types','vehicle_types','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_permit_types');
 	$this->load->model('user_model');
 	for ($i=0;$i<count($tbl_arry);$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
@@ -845,6 +848,60 @@ public function profile() {
 	}
 	}
 	return $data;
+	}
+	
+	public function ShowVehicleList($param1,$param2) {
+	if($this->session_check()==true) {
+	$condition='';
+	$per_page=10;
+	$like_arry=''; 
+	$org_id=$this->session->userdata('organisation_id');
+	$where_arry['organisation_id']=$org_id;
+	//for search
+	   if(isset($_REQUEST['driver_name'])&& isset($_REQUEST['search'])){
+	if($param2==''){
+	$param2=0;
+	}
+	if($_REQUEST['driver_name']!=null){
+	$like_arry['name']=$_REQUEST['driver_name'];
+	}
+
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+	$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
+	}
+	//$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
+	//print_r($condition);exit;
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+	//print_r($this->mysession->get('condition'));exit;
+	$tbl="vehicles";
+	$baseurl=base_url().'organization/front-desk/list-driver/';
+	$uriseg ='4';
+
+	   $p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+	if($param2==''){
+	$this->mysession->delete('condition');
+
+	}
+	$data['values']=$p_res['values'];
+	$data['page_links']=$p_res['page_links'];
+	$tbl_arry=array('vehicle_models','vehicle_types');
+	for ($i=0;$i<2;$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data[$tbl_arry[$i]]=$result;
+	}
+	else{
+	$data[$tbl_arry[$i]]='';
+	}
+	}
+	$data['title']='List Driver| '.PRODUCT_NAME;
+	$page='user-pages/vehicleList';
+	
+	$this->load_templates($page,$data);	
+	}
+	else{
+	echo 'you are not authorized access this page..';
+	}
 	}
 }
 ?>

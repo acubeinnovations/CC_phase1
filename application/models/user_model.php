@@ -107,4 +107,7 @@ class user_model extends CI_Model {
    return $qry->result_array();
    
    }
+   public function getType($id){
+   $qry=$this->db->select('id,name,phone,mobile');
+   }
 }
