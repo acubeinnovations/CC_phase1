@@ -40,6 +40,9 @@ public function date_check($date){
 	
 public function insertInsurance($data){
 $qry=$this->db->insert('vehicles_insurance',$data);
+$in_id=mysql_insert_id();
+$map_qry=$this->db->set('vehicles_insurance_id', $in_id);
+$map_qry=$this->db->update('vehicles');
 return true;
 
 }
@@ -48,8 +51,17 @@ $qry=$this->db->set('created', 'NOW()', FALSE);
 $qry=$this->db->insert('vehicle_loans',$data);
 $l_id=mysql_insert_id();
 $map_qry=$this->db->set('vehicle_loan_id', $l_id);
-$map_qry=$this->db->insert('vehicles');
-echo $this->db->last_query();
+$map_qry=$this->db->update('vehicles');
+return true;
+
+}
+
+public function insertOwner($data){
+$qry=$this->db->set('created', 'NOW()', FALSE);
+$qry=$this->db->insert('vehicle_owners',$data);
+$o_id=mysql_insert_id();
+$map_qry=$this->db->set('vehicle_owner_id', $o_id);
+$map_qry=$this->db->update('vehicles');
 return true;
 
 }

@@ -87,6 +87,7 @@ $this->session->set_userdata('user_id','');
            $ownership ="";
 			$vehicle_type="";
 			$make="";
+			$model="";
 			$year="";
 			$ac="";
 			$fuel="";
@@ -112,6 +113,7 @@ $driver_data=$this->mysession->get('post_driver');
            $ownership =$data['vehicle_ownership_types_id'];
 			$vehicle_type=$data['vehicle_type_id'];
 			$make=$data['vehicle_make_id'];
+			$model=$data['vehicle_model_id'];
 			$year=$data['vehicle_manufacturing_year'];
 			$ac=$data['vehicle_ac_type_id'];
 			$fuel=$data['vehicle_fuel_type_id'];
@@ -224,6 +226,18 @@ $this->mysession->delete('post_driver');
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_makes'],$make,$class,$id='',$msg);
 	}else{
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_makes'],$make='',$class,$id='',$msg);
+	}?>
+	   
+        </div>
+		<div class="form-group">
+	<?php echo form_label('Vehicle Model','usernamelabel'); 
+	 $class="form-control";
+		$msg="Select Vehicle Model";
+		$name="model";
+		if($model!=null){
+	echo $this->form_functions->populate_dropdown($name,$select['vehicle_models'],$model,$class,$id='',$msg);
+	}else{
+	echo $this->form_functions->populate_dropdown($name,$select['vehicle_models'],$model='',$class,$id='',$msg);
 	}?>
 	   
         </div>
@@ -716,101 +730,79 @@ $this->mysession->delete('loan_post_all');
 	$name_on_id_proof=$result[0]['name_on_id_proof'];
 $this->session->set_userdata('org_id','');
 $this->session->set_userdata('user_id','');
- }elseif($this->mysession->get('ins_post_all')==null ){
+ }elseif($this->mysession->get('owner_post_all')==null ){
 
-			$ins_number ="";
-			$ins_date="";
-			$ins_renewal_date="";
-			$ins_prem_amt="";
-			$ins_amt="";
-			$ins_agency="";
-			$ins_address="";
-			$ins_phn="";
-			$ins_mail="";
-			$ins_web="";
+			$own_name='';
+			$own_address='';
+			$own_mob='';
+			$own_mail='';
+			$own_dob='';
 	
 
 }
 else
 {
-$data=$this->mysession->get('ins_post_all');
-           $ins_number =$data['insurance_number'];
-			$ins_date=$data['insurance_date'];
-			$ins_renewal_date=$data['insurance_renewal_date'];
-			$ins_prem_amt=$data['insurance_premium_amount'];
-			$ins_amt=$data['insurance_amount'];
-			$ins_agency=$data['Insurance_agency'];
-			$ins_address=$data['Insurance_agency_address'];
-			$ins_phn=$data['Insurance_agency_phone'];
-			$ins_mail=$data['Insurance_agency_email'];
-			$ins_web=$data['Insurance_agency_web'];
-$this->mysession->delete('ins_post_all');
+$data=$this->mysession->get('owner_post_all');
+//echo $data['name'];exit;
+			$own_name=$data['name'];
+			$own_address=$data['address'];
+			$own_mob=$data['mobile'];
+			$own_mail=$data['email'];
+			$own_dob=$data['dob'];
+			
+$this->mysession->delete('owner_post_all');
 
 }
 
 ?>
 
-				<?php if($this->mysession->get('ins_Success') != '') { ?>
+				<?php if($this->mysession->get('owner_Success') != '') { ?>
         <div class="success-message">
 			
             <div class="alert alert-success alert-dismissable">
                 <i class="fa fa-check"></i>
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <?php 
-                echo $this->mysession->get('ins_Success');
-                $this->mysession->set('ins_Success','');
+                echo $this->mysession->get('owner_Success');
+                $this->mysession->set('owner_Success','');
                 ?>
            </div>
        </div>
        <?php    } ?>
 	   
-	  			<?php if($this->mysession->get('Err_insurance_amt') != ''||$this->mysession->get('Err_insurance_pre_amt') != ''){ ?>
-	<div class="alert alert-danger alert-dismissable">
-                                        <i class="fa fa-ban"></i>
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                        <b>Alert!</b><br><?php
-													echo $this->mysession->get('Err_insurance_amt').br();
-													echo $this->mysession->get('Err_insurance_pre_amt').br();
-													
-														$this->mysession->delete('Err_insurance_amt');
-														$this->mysession->delete('Err_insurance_pre_amt');
-														
-														
-										?>
-                                    </div>
-<?php  } ?>
+
 		                    <div class="width-30-percent-with-margin-left-20-Driver-View insurance ">
 			<fieldset class="body-border-Driver-View border-style-Driver-view" >
 			<legend class="body-head">Owner Details</legend>
 				<div class="form-group">
 		<?php echo form_label('Name','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'owner_name','class'=>'form-control','id'=>'total_amt','value'=>'')); ?>
+           <?php echo form_input(array('name'=>'owner_name','class'=>'form-control','id'=>'total_amt','value'=>$own_name)); ?>
 	   <?php echo $this->form_functions->form_error_session('owner_name', '<p class="text-red">', '</p>'); ?>
         </div>
 
 		<div class="form-group">
 		<?php echo form_label(' Address','usernamelabel'); ?>
-           <?php echo form_textarea(array('name'=>'address','class'=>'form-control','id'=>'address','value'=>'','rows'=>4)); ?>
+           <?php echo form_textarea(array('name'=>'address','class'=>'form-control','id'=>'address','value'=>$own_address,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('address', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('Mobile','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'mobile','class'=>'form-control','id'=>'mobile','value'=>'','rows'=>4)); ?>
+           <?php echo form_input(array('name'=>'mobile','class'=>'form-control','id'=>'mobile','value'=>$own_mob,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('mobile', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 		<?php echo form_label(' Email','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'mail','class'=>'form-control','id'=>'mail','value'=>'','rows'=>4)); ?>
+           <?php echo form_input(array('name'=>'mail','class'=>'form-control','id'=>'mail','value'=>$own_mail,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('mail', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 	<?php echo form_label('Date of Birth','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'dob','class'=>'fromdatepicker form-control' ,'value'=>$date_of_joining)); ?>
+           <?php echo form_input(array('name'=>'dob','class'=>'fromdatepicker form-control' ,'value'=>$own_dob)); ?>
 	   <?php echo $this->form_functions->form_error_session('dob', '<p class="text-red">', '</p>'); ?>
         </div>
 		
 			</fieldset>
-			<?php echo form_submit("vehicle-submit","Save","class='btn btn-primary next'");?>
+			<?php echo form_submit("submit-owner","Save","class='btn btn-primary next'");?>
 			</div>
 		</div>
     </div>

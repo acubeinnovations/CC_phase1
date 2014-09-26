@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 24, 2014 at 10:25 AM
+-- Generation Time: Sep 26, 2014 at 06:45 AM
 -- Server version: 5.5.37-0ubuntu0.13.10.1
 -- PHP Version: 5.5.3-1ubuntu2.6
 
@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   `license_renewal_date` date NOT NULL,
   `badge` varchar(5) NOT NULL,
   `badge_renewal_date` date NOT NULL,
-  `mother_tongue` int(11) NOT NULL,
+  `mother_tongue` text NOT NULL,
   `pan_number` varchar(40) NOT NULL,
   `bank_account_ number` varchar(30) NOT NULL,
   `name_on_bank_pass_book` varchar(60) NOT NULL,
@@ -440,6 +440,7 @@ CREATE TABLE IF NOT EXISTS `tariff_masters` (
   `title` text NOT NULL,
   `trip_model_id` int(11) NOT NULL,
   `vehicle_make_id` int(11) NOT NULL,
+  `vehicle_model_id` int(11) NOT NULL,
   `vehicle_type_id` int(11) NOT NULL,
   `vehicle_ac_type_id` int(11) NOT NULL,
   `minimum_kilometers` double NOT NULL,
@@ -456,7 +457,8 @@ CREATE TABLE IF NOT EXISTS `tariff_masters` (
   KEY `vehicle_type_id_2` (`vehicle_type_id`),
   KEY `vehicle_ac_type_id` (`vehicle_ac_type_id`),
   KEY `organisation_id` (`organisation_id`),
-  KEY `user_id` (`user_id`)
+  KEY `user_id` (`user_id`),
+  KEY `vehicle_model_id` (`vehicle_model_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
@@ -543,7 +545,7 @@ CREATE TABLE IF NOT EXISTS `trips` (
   KEY `vehicle_id` (`vehicle_id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 -- --------------------------------------------------------
 
@@ -774,6 +776,7 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   `vehicle_ownership_types_id` int(11) NOT NULL,
   `vehicle_type_id` int(11) NOT NULL,
   `vehicle_make_id` int(11) NOT NULL,
+  `vehicle_model_id` int(11) NOT NULL,
   `vehicle_manufacturing_year` date NOT NULL,
   `vehicle_ac_type_id` int(11) NOT NULL,
   `vehicle_fuel_type_id` int(11) NOT NULL,
@@ -800,7 +803,8 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   KEY `vehicle_seating_capacity_id` (`vehicle_seating_capacity_id`),
   KEY `vehicle_permit_type_id` (`vehicle_permit_type_id`),
   KEY `organisation_id` (`organisation_id`),
-  KEY `user_id` (`user_id`)
+  KEY `user_id` (`user_id`),
+  KEY `vehicle_model_id` (`vehicle_model_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -1030,7 +1034,28 @@ CREATE TABLE IF NOT EXISTS `vehicle_makes` (
   KEY `id` (`id`),
   KEY `user_id` (`user_id`),
   KEY `organisation_id` (`organisation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vehicle_models`
+--
+
+CREATE TABLE IF NOT EXISTS `vehicle_models` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `description` text,
+  `value` int(11) DEFAULT NULL,
+  `organisation_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`),
+  KEY `organisation_id` (`organisation_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1140,4 +1165,3 @@ CREATE TABLE IF NOT EXISTS `vehicle_types` (
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
