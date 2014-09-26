@@ -43,4 +43,14 @@ $qry=$this->db->insert('vehicles_insurance',$data);
 return true;
 
 }
+public function insertLoan($data){
+$qry=$this->db->set('created', 'NOW()', FALSE);
+$qry=$this->db->insert('vehicle_loans',$data);
+$l_id=mysql_insert_id();
+$map_qry=$this->db->set('vehicle_loan_id', $l_id);
+$map_qry=$this->db->insert('vehicles');
+echo $this->db->last_query();
+return true;
+
+}
 }?>

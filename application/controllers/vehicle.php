@@ -377,7 +377,7 @@ $err=True;
 			$data['number_of_paid_emi']=$this->input->post('no_paid_emi');
 			$data['emi_payment_date']=$this->input->post('emi_date');
 			$data['loan_agency']=$this->input->post('loan_agency');
-			$data['loan_agency_address	']=$this->input->post('loan_agency_address');
+			$data['loan_agency_address']=$this->input->post('loan_agency_address');
 			$data['loan_agency_phone']=$this->input->post('loan_agency_phn');
 			$data['loan_agency_email']=$this->input->post('loan_agency_mail');
 			$data['loan_agency_web']=$this->input->post('loan_agency_web');
@@ -399,7 +399,7 @@ $err=True;
 					 
 					 //for insurance
 $err=True;
-	if(preg_match('#[^0-9\.]#', $data['total_amountt'])){
+	if(preg_match('#[^0-9\.]#', $data['total_amount'])){
 			$this->mysession->set('Err_loan_amt','Invalid Characters on Total Amount field!');
 			$err=False;
 			}

@@ -164,6 +164,22 @@ $('#reccurent_alternatives_droptimepicker'+i).datetimepicker({datepicker:false,
 
 }
 
+
+if($('.vehicle-tarif-checker').attr('tariff_id')!='' && $('.vehicle-tarif-checker').attr('available_vehicle_id')!=''){
+
+tariff_id=$('.vehicle-tarif-checker').attr('tariff_id');
+available_vehicle_id=$('.vehicle-tarif-checker').attr('available_vehicle_id');
+GenerateVehiclesAndTarif(tariff_id,available_vehicle_id);
+//$('#tarrif option[value='+tarif_id+']').attr('selected', 'selected');
+}else if($('.vehicle-tarif-checker').attr('available_vehicle_id')!=''){
+available_vehicle_id=$('.vehicle-tarif-checker').attr('available_vehicle_id');
+GenerateVehiclesAndTarif(tariff_id='',available_vehicle_id);
+}else if($('.vehicle-tarif-checker').attr('tariff_id')!=''){
+tariff_id=$('.vehicle-tarif-checker').attr('tariff_id');
+GenerateVehiclesAndTarif(tariff_id,available_vehicle_id='');
+}
+
+
 }
 
 $('.beacon-light-chk-box-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
@@ -213,21 +229,6 @@ $('.guest-toggle').toggle();
 if($('#vehicle-type').val()!=-1 && $('#vehicle-ac-type').val()!=-1){
 
 
-}
-
-
-if($('.vehicle-tarif-checker').attr('tarif_id')!='' && $('.vehicle-tarif-checker').attr('available_vehicle_id')!=''){
-
-tarif_id=$('.vehicle-tarif-checker').attr('tariff_id');
-available_vehicle_id=$('.vehicle-tarif-checker').attr('available_vehicle_id');
-GenerateVehiclesAndTarif(tariff_id,available_vehicle_id);
-//$('#tarrif option[value='+tarif_id+']').attr('selected', 'selected');
-}else if($('.vehicle-tarif-checker').attr('available_vehicle_id')!=''){
-available_vehicle_id=$('.vehicle-tarif-checker').attr('available_vehicle_id');
-GenerateVehiclesAndTarif(tariff_id='',available_vehicle_id);
-}else if($('.vehicle-tarif-checker').attr('tariff_id')!=''){
-tariff_id=$('.vehicle-tarif-checker').attr('tariff_id');
-GenerateVehiclesAndTarif(tariff_id,available_vehicle_id='');
 }
 
 
