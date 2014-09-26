@@ -563,7 +563,7 @@ $this->session->set_userdata('user_id','');
 			$l_no_paid_emi="";
 			$l_payment_date="";
 			$l_agency="";
-			$l_address="";
+			$l_addrs="";
 			$l_phn="";
 			$l_mail="";
 			$l_web="";
@@ -573,13 +573,14 @@ $this->session->set_userdata('user_id','');
 else
 {
 $data=$this->mysession->get('loan_post_all');
+			$l_addrs=$data['loan_agency_address'];
            $l_amt =$data['total_amount'];
 			$l_emi_no=$data['number_of_emi'];
 			$l_emi_amt=$data['emi_amount'];
 			$l_no_paid_emi=$data['number_of_paid_emi'];
 			$l_payment_date=$data['emi_payment_date'];
 			$l_agency=$data['loan_agency'];
-			$l_address=$data['loan_agency_address'];
+			//$l_address=$data['loan_agency_address'];
 			$l_phn=$data['loan_agency_phone'];
 			$l_mail=$data['loan_agency_email'];
 			$l_web=$data['loan_agency_web'];
@@ -623,54 +624,54 @@ $this->mysession->delete('loan_post_all');
 			<legend class="body-head">Loan Details</legend>
 				<div class="form-group">
 		<?php echo form_label('Total Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'total_amt','class'=>'form-control','id'=>'total_amt','value'=>'')); ?>
+           <?php echo form_input(array('name'=>'total_amt','class'=>'form-control','id'=>'total_amt','value'=>$l_amt)); ?>
 	   <?php echo $this->form_functions->form_error_session('total_amt', '<p class="text-red">', '</p>'); ?>
         </div>
 		
 			<div class="form-group">
 		<?php echo form_label('Number of EMI','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'emi_number','class'=>'form-control','id'=>'emi_number','value'=>'')); ?>
+           <?php echo form_input(array('name'=>'emi_number','class'=>'form-control','id'=>'emi_number','value'=>$l_emi_no)); ?>
 	   <?php echo $this->form_functions->form_error_session('emi_number', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('EMI Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'emi_amt','class'=>'form-control','id'=>'emi_amt','value'=>'')); ?>
+           <?php echo form_input(array('name'=>'emi_amt','class'=>'form-control','id'=>'emi_amt','value'=>$l_emi_amt)); ?>
 	   <?php echo $this->form_functions->form_error_session('emi_amt', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('Number of Paid EMI','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'no_paid_emi','class'=>'form-control','id'=>'no_paid_emi','value'=>'')); ?>
+           <?php echo form_input(array('name'=>'no_paid_emi','class'=>'form-control','id'=>'no_paid_emi','value'=>$l_no_paid_emi)); ?>
 	   <?php echo $this->form_functions->form_error_session('no_paid_emi', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 	<?php echo form_label('EMI Payment Date','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'emi_date','class'=>'fromdatepicker form-control' ,'value'=>$date_of_joining)); ?>
+	 <?php echo form_input(array('name'=>'emi_date','class'=>'fromdatepicker form-control' ,'value'=>$l_payment_date)); ?>
 	   <?php echo $this->form_functions->form_error_session('emi_date', '<p class="text-red">', '</p>'); ?>
         </div>
 		
 		<div class="form-group">
 		<?php echo form_label('Loan Agency','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'loan_agency','class'=>'form-control','id'=>'loan_agency','value'=>'')); ?>
+           <?php echo form_input(array('name'=>'loan_agency','class'=>'form-control','id'=>'loan_agency','value'=>$l_agency)); ?>
 	   <?php echo $this->form_functions->form_error_session('loan_agency', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('Loan Agency Address','usernamelabel'); ?>
-           <?php echo form_textarea(array('name'=>'loan_agency_address','class'=>'form-control','id'=>'loan_agency_address','value'=>'','rows'=>4)); ?>
+           <?php echo form_textarea(array('name'=>'loan_agency_address','class'=>'form-control','id'=>'loan_agency_address','value'=>$l_addrs,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('loan_agency_address', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('Loan Agency Phone','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'loan_agency_phn','class'=>'form-control','id'=>'loan_agency_phn','value'=>'','rows'=>4)); ?>
+           <?php echo form_input(array('name'=>'loan_agency_phn','class'=>'form-control','id'=>'loan_agency_phn','value'=>$l_phn,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('loan_agency_phn', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('Loan Agency Email','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'loan_agency_mail','class'=>'form-control','id'=>'loan_agency_mail','value'=>'','rows'=>4)); ?>
+           <?php echo form_input(array('name'=>'loan_agency_mail','class'=>'form-control','id'=>'loan_agency_mail','value'=>$l_mail,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('loan_agency_mail', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('Loan Agency Web','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'loan_agency_web','class'=>'form-control','id'=>'loan_agency_web','value'=>'','rows'=>4)); ?>
+           <?php echo form_input(array('name'=>'loan_agency_web','class'=>'form-control','id'=>'loan_agency_web','value'=>$l_web,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('loan_agency_web', '<p class="text-red">', '</p>'); ?>
         </div>
 			</fieldset>
