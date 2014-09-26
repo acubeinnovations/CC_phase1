@@ -20,7 +20,12 @@ if($qry>0){
 	//$this->db->set('to_date', $to_date);
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert($tbl,$arry);
+	$this->mysession->set('vehicle_id',$v_id);
 	return true;
+	}
+	else
+	{
+	$this->mysession->set('date_err','Invalid Date');
 	}
 
 
@@ -32,4 +37,20 @@ public function date_check($date){
 	return true;
 	}	
 	}
+	
+public function insertInsurance($data){
+$qry=$this->db->insert('vehicles_insurance',$data);
+return true;
+
+}
+public function insertLoan($data){
+$qry=$this->db->set('created', 'NOW()', FALSE);
+$qry=$this->db->insert('vehicle_loans',$data);
+$l_id=mysql_insert_id();
+$map_qry=$this->db->set('vehicle_loan_id', $l_id);
+$map_qry=$this->db->insert('vehicles');
+echo $this->db->last_query();
+return true;
+
+}
 }?>

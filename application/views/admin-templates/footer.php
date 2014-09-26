@@ -22,7 +22,8 @@
         <!-- AdminLTE App -->
         <script src="<?php echo base_url();?>js/AdminLTE/app.js" type="text/javascript"></script>
         
-       
+       <script type="text/javascript" src="<?php echo base_url();?>js/pdfViewer/jquery.media.js"></script> 
+	   <script type="text/javascript" src="<?php echo base_url();?>js/pdfViewer/jquery.metadata.js"></script> 
        
         
         <!-- AdminLTE for demo purposes -->

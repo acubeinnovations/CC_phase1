@@ -10,6 +10,7 @@ class Vehicle extends CI_Controller {
 
 		}
 	public function index($param1 ='',$param2='',$param3=''){
+
 	
 		if($this->session_check()==true) {
 	
@@ -17,8 +18,19 @@ class Vehicle extends CI_Controller {
 			if($param1=='getDescription') {
 			$this->getDescription();
 			}
+			if($param1==''){ 
+			if(isset($_REQUEST['submit-vehicle'])){
+				$this->vehicle_validation();
+				}
+			if(isset($_REQUEST['submit-insurance'])){
+				$this->insurance_validation();
+				}
+			if(isset($_REQUEST['submit-loan'])){
+				$this->loan_validation();
+				}
+			}
 			if($param1) {
-			
+				
 				if(isset($_REQUEST['add'])){
 					$this->add($tbl,$param1);
 					}
@@ -28,10 +40,14 @@ class Vehicle extends CI_Controller {
 				if(isset($_REQUEST['delete'])){
 					$this->delete($tbl,$param1);
 					}
-				if(isset($_REQUEST['submit-one'])){
-				$this->vehicle_validation();
-				}
+				//if(isset($_REQUEST['submit-vehicle'])){
+				//$this->vehicle_validation();
+				//}
+				//if(isset($_REQUEST['submit-insurance'])){
+				//$this->insurance_validation();
+				//}
 		}
+		
 		
 	}
 		
@@ -271,6 +287,7 @@ $err=True;
 
 	  $result=$this->vehicle_model->insertVehicle($data,$driver_data);
 	  if($result==true){
+		$v_id=
 		$this->mysession->set('dbSuccess',' Added Succesfully..!');
 				    $this->mysession->set('dbError','');
 				    redirect(base_url().'organization/front-desk/vehicle');
@@ -279,6 +296,139 @@ $err=True;
 		$this->mysession->set('post_all',$data);
 		$this->mysession->set('post_driver',$driver_data);
 		redirect(base_url().'organization/front-desk/vehicle');
+		}
+	  }
+		}
+		else{
+			echo 'you are not authorized access this page..';
+			}
+		}
+		public function insurance_validation(){
+		if($this->session_check()==true) {
+			$data['vehicle_id']=$this->mysession->get('vehicle_id');
+			$data['insurance_number']=$this->input->post('insurance_number');
+			$data['insurance_date']=$this->input->post('insurance_date');
+			$data['insurance_renewal_date']=$this->input->post('insurance_renewal_date');
+			$data['insurance_premium_amount']=$this->input->post('insurance_pre-amount');
+			$data['insurance_amount']=$this->input->post('insurance_amount');
+			$data['Insurance_agency']=$this->input->post('insurance_agency');
+			$data['Insurance_agency_address']=$this->input->post('insurance_agency_address');
+			$data['Insurance_agency_phone']=$this->input->post('insurance_agency_phn');
+			$data['Insurance_agency_email']=$this->input->post('insurance_agency_mail');
+			$data['Insurance_agency_web']=$this->input->post('insurance_agency_web');
+			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
+					$this->form_validation->set_rules('insurance_number','Insurance Number','trim|required|xss_clean|numeric');
+					 $this->form_validation->set_rules('insurance_date','Insurance Date','trim|required|xss_clean');
+					 $this->form_validation->set_rules('insurance_renewal_date','Insurance Renewal Date ','trim|required|xss_clean');
+					 $this->form_validation->set_rules('insurance_amount','Insurance Amount','trim|required|xss_clean');
+					 $this->form_validation->set_rules('insurance_pre-amount','Insurance Pre Amount','trim|required|xss_clean');
+					 $this->form_validation->set_rules('insurance_agency','Insurance Agency','trim|required|xss_clean|alpha_numeric');
+					 $this->form_validation->set_rules('insurance_agency_address','Address','trim|required|xss_clean|alpha_numeric');
+					 $this->form_validation->set_rules('insurance_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicles_insurance.Insurance_agency_phone]');
+					 $this->form_validation->set_rules('insurance_agency_mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicles_insurance.Insurance_agency_email]');
+					 $this->form_validation->set_rules('insurance_agency_web','Web Address','trim|required|xss_clean|alpha_numeric');
+					 
+					 //for insurance
+$err=True;
+	if(preg_match('#[^0-9\.]#', $data['insurance_amount'])){
+			$this->mysession->set('Err_insurance_amt','Invalid Characters on  Amount field!');
+			$err=False;
+			}
+	if(preg_match('#[^0-9\.]#', $data['insurance_premium_amount'])){
+			$this->mysession->set('Err_insurance_pre_amt','Invalid Characters on Pre Amount field!');
+			$err=False;
+			}
+
+	 if($this->form_validation->run()==False|| $err==False){
+		
+		$this->mysession->set('ins_post_all',$data);
+		
+		redirect(base_url().'organization/front-desk/vehicle/insurance',$data);	
+	 }
+	 
+	  else{
+	  //database insertion for vehicle
+
+	  $result=$this->vehicle_model->insertInsurance($data);
+	 
+	  if($result==true){
+		$this->mysession->set('ins_Success',' Added Succesfully..!');
+				    $this->mysession->set('ins_Error','');
+				    redirect(base_url().'organization/front-desk/vehicle/insurance');
+		}
+		else{
+		$this->mysession->set('ins_post_all',$data);
+		
+		redirect(base_url().'organization/front-desk/vehicle/insurance');
+		}
+	  }
+		}
+		else{
+			echo 'you are not authorized access this page..';
+			}
+		}
+		
+			public function loan_validation(){
+		if($this->session_check()==true) {
+			$data['vehicle_id']=$this->mysession->get('vehicle_id');
+			$data['total_amount']=$this->input->post('total_amt');
+			$data['number_of_emi']=$this->input->post('emi_number');
+			$data['emi_amount']=$this->input->post('emi_amt');
+			$data['number_of_paid_emi']=$this->input->post('no_paid_emi');
+			$data['emi_payment_date']=$this->input->post('emi_date');
+			$data['loan_agency']=$this->input->post('loan_agency');
+			$data['loan_agency_address']=$this->input->post('loan_agency_address');
+			$data['loan_agency_phone']=$this->input->post('loan_agency_phn');
+			$data['loan_agency_email']=$this->input->post('loan_agency_mail');
+			$data['loan_agency_web']=$this->input->post('loan_agency_web');
+			$data['organisation_id']=$this->session->userdata('organisation_id');
+			$data['user_id']=$this->session->userdata('id');
+			
+			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
+	
+					 $this->form_validation->set_rules('total_amt','Total Amount','trim|required|xss_clean');
+					 $this->form_validation->set_rules('emi_number','EMI Number ','trim|required|xss_clean|alpha_numeric');
+					 $this->form_validation->set_rules('emi_amt','EMI Amount ','trim|required|xss_clean');
+					 $this->form_validation->set_rules('no_paid_emi','Number of Paid EMI','trim|required|xss_clean|numeric');
+					 $this->form_validation->set_rules('emi_date','EMI Payment Date','trim|required|xss_clean');
+					 $this->form_validation->set_rules('loan_agency','Loan Agency','trim|required|xss_clean|alpha');
+					 $this->form_validation->set_rules('loan_agency_address','Address','trim|required|xss_clean|alpha_numeric');
+					 $this->form_validation->set_rules('loan_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicle_loans.loan_agency_phone]');
+					 $this->form_validation->set_rules('loan_agency_mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicle_loans.loan_agency_email]');
+					 $this->form_validation->set_rules('loan_agency_web','Web Address','trim|required|xss_clean|alpha_numeric');
+					 
+					 //for insurance
+$err=True;
+	if(preg_match('#[^0-9\.]#', $data['total_amount'])){
+			$this->mysession->set('Err_loan_amt','Invalid Characters on Total Amount field!');
+			$err=False;
+			}
+	if(preg_match('#[^0-9\.]#', $data['emi_amount'])){
+			$this->mysession->set('Err_loan_emi_amt','Invalid Characters on EMI Amount field!');
+			$err=False;
+			}
+
+	 if($this->form_validation->run()==False|| $err==False){
+		
+		$this->mysession->set('loan_post_all',$data);
+		
+		redirect(base_url().'organization/front-desk/vehicle/loan',$data);	
+	 }
+	 
+	  else{
+	  //database insertion for vehicle
+
+	  $result=$this->vehicle_model->insertLoan($data);
+	 
+	  if($result==true){
+		$this->mysession->set('loan_Success',' Added Succesfully..!');
+				    $this->mysession->set('loan_Error','');
+				    redirect(base_url().'organization/front-desk/vehicle/loan');
+		}
+		else{
+		$this->mysession->set('loan_post_all',$data);
+		
+		redirect(base_url().'organization/front-desk/vehicle/loan');
 		}
 	  }
 		}
