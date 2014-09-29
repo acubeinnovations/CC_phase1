@@ -106,14 +106,30 @@ class Customers extends CI_Controller {
 				if($customer_id>gINVALID) {
 				$res=$this->customers_model->updateCustomers($data,$customer_id);
 					if(isset($res) && $res!=false){
+						
+						//------------fa module integration code starts here-----
+						//save customer in fa table
+			
+						$this->load->model("account_model");
+						$fa_customer = $this->account_model->edit_fa_customer($data);
+			
+						//-----------fa code ends here---------------------------
+
 						$this->session->set_userdata(array('dbSuccess'=>'Customer details Updated Successfully'));
 						redirect(base_url().'organization/front-desk/customers');	
 					}
 				}else if($customer_id==gINVALID){ 
 				$res=$this->customers_model->addCustomer($data);
 					if(isset($res) && $res!=false  && $res>0){
-					 $this->session->set_userdata(array('dbSuccess'=>'Customer details Added Successfully'));
-					redirect(base_url().'organization/front-desk/customers');	
+						//------------fa module integration code starts here-----
+						//save customer in fa table
+			
+						$this->load->model("account_model");
+						$fa_customer = $this->account_model->add_fa_customer($data);
+			
+						//-----------fa code ends here---------------------------
+					 	$this->session->set_userdata(array('dbSuccess'=>'Customer details Added Successfully'));
+						redirect(base_url().'organization/front-desk/customers');	
 					}
 				}
 				}else{
