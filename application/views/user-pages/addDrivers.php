@@ -1,39 +1,5 @@
  <?php
- 
- if(($this->session->userdata('org_id')!=null)&&($this->session->userdata('user_id')!=null)){
-    $name=$result[0]['name'];
-	$place_of_birth=$result[0]['place_of_birth'];
-	$dob=$result[0]['dob'];
-	$blood_group=$result[0]['blood_group'];
-	$marital_status_id=$result[0]['marital_status_id'];
-	$children=$result[0]['children'];
-	$present_address=$result[0]['present_address'];
-	$permanent_address=$result[0]['permanent_address'];
-	$district=$result[0]['district'];
-	$state=$result[0]['state'];
-	$pin_code=$result[0]['pin_code'];
-	$phone=$result[0]['phone'];
-	$mobile=$result[0]['mobile'];
-	$email=$result[0]['email'];
-	$date_of_joining=$result[0]['date_of_joining'];
-	$badge=$result[0]['badge'];
-	$license_number=$result[0]['license_number'];
-	$license_renewal_date=$result[0]['license_renewal_date'];
-	$badge_renewal_date=$result[0]['badge_renewal_date'];
-	$mother_tongue=$result[0]['mother_tongue'];
-	$pan_number=$result[0]['pan_number'];
-	$bank_account_number=$result[0]['bank_account_number'];
-	$name_on_bank_pass_book=$result[0]['name_on_bank_pass_book'];
-	$bank_name=$result[0]['bank_name'];
-	$branch=$result[0]['branch'];
-	$bank_account_type_id=$result[0]['bank_account_type_id'];
-	$ifsc_code=$result[0]['ifsc_code'];
-	$id_proof_type_id=$result[0]['id_proof_type_id'];
-	$id_proof_document_number=$result[0]['id_proof_document_number'];
-	$name_on_id_proof=$result[0]['name_on_id_proof'];
-$this->session->set_userdata('org_id','');
-$this->session->set_userdata('user_id','');
- }elseif($this->session->userdata('post')==null){
+ $driver_id=gINVALID;
 	$name='';
 	$place_of_birth='';
 	$dob='';
@@ -66,10 +32,10 @@ $this->session->set_userdata('user_id','');
 	$name_on_id_proof='';
 	
 
-}
-else
-{
-$data=$this->session->userdata('post');
+ if($this->mysession->get('post')!=null){
+ //echo $result[''];
+ $data=$this->mysession->get('post');
+	$driver_id=$data['id'];
 	$name=$data['name'];
 	$place_of_birth=$data['place_of_birth'];
 	$dob=$data['dob'];
@@ -100,7 +66,42 @@ $data=$this->session->userdata('post');
 	$id_proof_type_id=$data['id_proof_type_id'];
 	$id_proof_document_number=$data['id_proof_document_number'];
 	$name_on_id_proof=$data['name_on_id_proof'];
-$this->session->set_userdata('post','');
+
+$this->mysession->delete('post');
+}
+ else if(isset($result)&&$result!=null){ 
+   $driver_id=$result['id'];
+	$name=$result['name'];
+	$place_of_birth=$result['place_of_birth'];
+	$dob=$result['dob'];
+	$blood_group=$result['blood_group'];
+	$marital_status_id=$result['marital_status_id'];
+	$children=$result['children'];
+	$present_address=$result['present_address'];
+	$permanent_address=$result['permanent_address'];
+	$district=$result['district'];
+	$state=$result['state'];
+	$pin_code=$result['pin_code'];
+	$phone=$result['phone'];
+	$mobile=$result['mobile'];
+	$email=$result['email'];
+	$date_of_joining=$result['date_of_joining'];
+	$badge=$result['badge'];
+	$license_number=$result['license_number'];
+	$license_renewal_date=$result['license_renewal_date'];
+	$badge_renewal_date=$result['badge_renewal_date'];
+	$mother_tongue=$result['mother_tongue'];
+	$pan_number=$result['pan_number'];
+	$bank_account_number=$result['bank_account_number'];
+	$name_on_bank_pass_book=$result['name_on_bank_pass_book'];
+	$bank_name=$result['bank_name'];
+	$branch=$result['branch'];
+	$bank_account_type_id=$result['bank_account_type_id'];
+	$ifsc_code=$result['ifsc_code'];
+	$id_proof_type_id=$result['id_proof_type_id'];
+	$id_proof_document_number=$result['id_proof_document_number'];
+	$name_on_id_proof=$result['name_on_id_proof'];
+
 }
 ?>
 <?php if($this->session->userdata('dbSuccess') != '') { ?>
@@ -158,7 +159,7 @@ $this->session->set_userdata('post','');
 		<?php  echo form_open(base_url()."driver/driver_manage");?>
         <div class="form-group">
 		<?php echo form_label('Enter Name','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'name','class'=>'form-control','id'=>'name','placeholder'=>'Enter Name','value'=>$name)); ?>
+           <?php echo form_input(array('name'=>'driver_name','class'=>'form-control','id'=>'name','placeholder'=>'Enter Name','value'=>$name)); ?>
 	   <?php echo $this->form_functions->form_error_session('name', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
@@ -182,13 +183,9 @@ $this->session->set_userdata('post','');
 		$class="form-control";
 		$msg="Select Marital Status";
 		$name="marital_status_id";
-	if(($this->session->userdata('org_id')!=null)&&($this->session->userdata('user_id')!=null)){
-	$marital_status_id=$result[0]['marital_status_id'];
-	//echo $marital_status_id;exit;
+	
 	echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id,$class,$id='',$msg);
-}	else{
-  echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id='',$class,$id='',$msg);
-}
+
 	
 	
 	?></div>
@@ -232,11 +229,13 @@ $this->session->set_userdata('post','');
 	<?php echo form_label('Mobile','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'mobile','class'=>'form-control','id'=>'mobile','placeholder'=>'Mobile','value'=>$mobile)); ?>
 	   <?php echo $this->form_functions->form_error_session('mobile', '<p class="text-red">', '</p>'); ?>
-        </div>
+       <div class="hide-me" > <?php echo form_input(array('name'=>"hmob",'value'=>$mobile));?></div>
+		</div>
 	<div class="form-group">
 	<?php echo form_label('E-mail ID','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'email','class'=>'form-control','id'=>'email','placeholder'=>'E-mail ID','value'=>$email)); ?>
 	   <?php echo $this->form_functions->form_error_session('email', '<p class="text-red">', '</p>'); ?>
+	 <div class="hide-me" >  <?php echo form_input(array('name'=>"hmail",'value'=>$email));?></div>
         </div>
 		</fieldset> </div>
 		
@@ -305,8 +304,9 @@ $this->session->set_userdata('post','');
 		$class="form-control";
 		$msg="Select Bank Account";
 		$name="bank_account_type_id";
-		
-	echo $this->form_functions->populate_dropdown($name,$select['bank_account_types'],$bank_account_type_id='',$class,$id='',$msg); 
+
+	echo $this->form_functions->populate_dropdown($name,$select['bank_account_types'],$bank_account_type_id,$class,$id='',$msg); 
+	
 	?></div>
 	<div class="form-group">
 	<?php echo form_label('IFSC Code','usernamelabel'); ?>
@@ -319,8 +319,8 @@ $this->session->set_userdata('post','');
 		$class="form-control";
 		$msg="Select ID Proof Type";
 		$name="id_proof_type_id";
-		
-	echo $this->form_functions->populate_dropdown($name,$select['id_proof_types'],$id_proof_type_id='',$class,$id='',$msg); 
+
+	echo $this->form_functions->populate_dropdown($name,$select['id_proof_types'],$id_proof_type_id,$class,$id='',$msg); 
 	?></div>
 	<div class="form-group">
 	<?php echo form_label('ID Proof Document Number','usernamelabel'); ?>
@@ -342,13 +342,17 @@ $this->session->set_userdata('post','');
            <?php echo form_input(array('name'=>'minimum_working_days','class'=>'form-control','id'=>'minimum_working_days','placeholder'=>'Minimum Working Days','value'=>' 25','readonly'=>'readonly')); ?>
 	   <?php echo $this->form_functions->form_error_session('minimum_working_days', '<p class="text-red">', '</p>'); ?>
         </div>
+		<div class='hide-me'><?php  
+		echo form_input(array('name'=>'hidden_id','class'=>'form-control','value'=>$driver_id));?></div>
    		<div class="box-footer">
 		<?php // echo validation_errors();?>
-		<?php //if(!isset($org_id) && !isset($user_id)) {
-		echo form_submit("driver-submit","Save","class='btn btn-primary'");
-		 //}else {
-		
-		// echo form_submit("driver-detail-update","Update","class='btn btn-primary'");}  ?>  
+		<?php 
+		 if($driver_id==gINVALID || $driver_id==null){
+			$btn_name='Save';
+		 }else {
+			$btn_name='Update';
+			}
+		echo form_submit("driver-submit",$btn_name,"class='btn btn-primary'"); ?>  
         </div>
 	 <?php echo form_close(); ?>
 	</fieldset>

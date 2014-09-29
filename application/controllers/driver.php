@@ -20,7 +20,7 @@ class Driver extends CI_Controller {
 	public function driver_manage(){
 	if($this->session_check()==true) {
 	if(isset($_REQUEST['driver-submit'])){
-	$data['name']=$this->input->post('name');
+	$data['name']=$this->input->post('driver_name');
 	$data['place_of_birth']=$this->input->post('place_of_birth');
 	$data['dob']=$this->input->post('dob');
 	$data['blood_group']=$this->input->post('blood_group');
@@ -33,7 +33,9 @@ class Driver extends CI_Controller {
 	$data['pin_code']=$this->input->post('pin_code');
 	$data['phone']=$this->input->post('phone');
 	$data['mobile']=$this->input->post('mobile');
+	$hmob=$this->input->post('hmob'); 
 	$data['email']=$this->input->post('email');
+	$hmail=$this->input->post('hmail');
 	$data['license_number']=$this->input->post('license_number');
 	$data['date_of_joining']=$this->input->post('date_of_joining');
 	$data['badge']=$this->input->post('badge');
@@ -50,10 +52,10 @@ class Driver extends CI_Controller {
 	$data['id_proof_type_id']=$this->input->post('id_proof_type_id');
 	$data['id_proof_document_number']=$this->input->post('id_proof_document_number');
 	$data['name_on_id_proof']=$this->input->post('name_on_id_proof');
-	
+	$data['id']=$this->input->post('hidden_id');
 	$data['organisation_id']=$this->session->userdata('organisation_id'); 
 	$data['user_id']=$this->session->userdata('id');
-	$err=True;
+		$err=True;
 	if($data['marital_status_id'] ==-1){
 	 $data['marital_status_id'] ='';
 	 $err=False;
@@ -75,7 +77,7 @@ class Driver extends CI_Controller {
 			$err=true;
 			}
 	$this->form_validation->set_rules('blood_group','Blood group','trim|required|xss_clean');
-	 $this->form_validation->set_rules('name','Name','trim|required|xss_clean|alpha');
+	 $this->form_validation->set_rules('driver_name','Name','trim|required|xss_clean|alpha');
 	 $this->form_validation->set_rules('place_of_birth','Place Of Birth','trim|required|xss_clean|alpha');
 	 $this->form_validation->set_rules('dob','Date of Birth ','trim|required|xss_clean');
 	 $this->form_validation->set_rules('children','children','trim|required|xss_clean|alpha_numeric');
@@ -86,8 +88,16 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('pin_code','Pin Code','trim|required|xss_clean|regex_match[/^[0-9]{6}$/]');
 	 $this->form_validation->set_rules('license_number','License Number','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('phone','Phone','trim|required|xss_clean|regex_match[/^[0-9]{11}$/]');
+		if($data['mobile']==$hmob){
+		$this->form_validation->set_rules('mobile','Mobile','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
+	 }else{
 	 $this->form_validation->set_rules('mobile','Mobile','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[drivers.mobile]');
+	 }if($data['email']==$hmail){
+	 $this->form_validation->set_rules('email','Email','trim|required|xss_clean|valid_email');
+	 }
+	 else{
 	 $this->form_validation->set_rules('email','Email','trim|required|xss_clean|valid_email|is_unique[drivers.email]');
+	 }
 	 $this->form_validation->set_rules('date_of_joining','Date of Joining ','trim|required|xss_clean');
 	 $this->form_validation->set_rules('badge','Badge','trim|required|xss_clean|alpha_numeric');
 	 $this->form_validation->set_rules('license_renewal_date','License Renewal Date','trim|required|xss_clean');
@@ -104,29 +114,39 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('name_on_id_proof','ID Proof Holder','trim|required|xss_clean|alpha');
 	
 	 if($this->form_validation->run()==False|| $err==False){
-		$this->session->set_userdata('post',$data);
+		$this->mysession->set('post',$data);
 		redirect(base_url().'organization/front-desk/driver',$data);	
 	 }
-	  else{//to do
-	   $res=$this->driver_model->addDriverdetails($data);
+	 else{
+		if($data['id']==gINVALID){
+		$res=$this->driver_model->addDriverdetails($data);
 		if($res==true){
 		$this->session->set_userdata(array('dbSuccess'=>' Added Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
 				    redirect(base_url().'organization/front-desk/driver');
 		}
-		else{
-		$this->session->set_userdata('post',$data);
-		redirect(base_url().'organization/front-desk/driver');
 		}
+		else{
+		$res=$this->driver_model->UpdateDriverdetails($data);
+		if($res==true){
+		$this->session->set_userdata(array('dbSuccess'=>' Updated Succesfully..!'));
+				    $this->session->set_userdata(array('dbError'=>''));
+				    redirect(base_url().'organization/front-desk/driver');
+		}
+		}
+	
 	 }
+	
+	
 	}
+	
 	}
 	else{
 			echo 'you are not authorized access this page..';
 			}
 	}
 	
-	public function list_driver(){
+	/*public function list_driver(){
 	if($this->session_check()==true) {
 	$organisation_id=$this->session->userdata('organisation_id'); 
 	$data['values']=$this->driver_model->getDriverList($organisation_id);
@@ -137,7 +157,7 @@ class Driver extends CI_Controller {
 	else{
 			echo 'you are not authorized access this page..';
 			}
-	}
+	}*/
 	
 	public function load_templates($page='',$data=''){
 	if($this->session_check()==true) {

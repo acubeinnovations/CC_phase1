@@ -65,4 +65,11 @@ $map_qry=$this->db->update('vehicles');
 return true;
 
 }
+public function updateVehicle($data,$driver_data){
+print_r($data);exit;
+$qry=$this->db->set('updated', 'NOW()', FALSE);
+$qry=$this->db->update('vehicles',$data);
+
+}
+
 }?>

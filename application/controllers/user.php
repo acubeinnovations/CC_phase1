@@ -25,6 +25,7 @@ class User extends CI_Controller {
 	public function index(){
 		$param1=$this->uri->segment(3);
 		$param2=$this->uri->segment(4);
+		$param3=$this->uri->segment(5);
         if($this->session_check()==true) {
 		if($param1==''){
 		$data['title']="Home | CC Phase1";    
@@ -65,21 +66,21 @@ class User extends CI_Controller {
 		}elseif($param1=='driver-profile'&&($param2== ''|| is_numeric($param2))){
 		$this->ShowDriverProfile($param1,$param2);
 		}
-		elseif($param1=='vehicle' && $param2==''){
+		elseif($param1=='vehicle' && ($param2== ''|| is_numeric($param2)) &&($param3== ''|| is_numeric($param3))){
 
-		$this->ShowVehicleView($param1,$param2);
+		$this->ShowVehicleView($param1,$param2,$param3);
 		}
-		elseif($param1=='vehicle' && $param2=='insurance'){
-		$this->ShowVehicleView($param1,$param2);
+		elseif($param1=='vehicle' && $param2=='insurance'&& ($param3== ''|| is_numeric($param3))){
+		$this->ShowVehicleView($param1,$param2,$param3);
 		}
-		elseif($param1=='vehicle' && $param2=='loan'){
-		$this->ShowVehicleView($param1,$param2);
+		elseif($param1=='vehicle' && $param2=='loan' && ($param3== ''|| is_numeric($param3))){
+		$this->ShowVehicleView($param1,$param2,$param3);
 		}
-		elseif($param1=='vehicle' && $param2=='owner'){
-		$this->ShowVehicleView($param1,$param2);
+		elseif($param1=='vehicle' && $param2=='owner' && ($param3== ''|| is_numeric($param3))){
+		$this->ShowVehicleView($param1,$param2,$param3);
 		}
-		elseif($param1=='list-vehicle'&&($param2== ''|| is_numeric($param2))){
-		$this->ShowVehicleList($param1,$param2);
+		elseif($param1=='list-vehicle'&&($param2== ''|| is_numeric($param2)) && ($param3== ''|| is_numeric($param3))){
+		$this->ShowVehicleList($param1,$param2,$param3);
 		}
 		}else{
 			echo 'you are not authorized access this page..';
@@ -781,14 +782,17 @@ public function profile() {
 		
 		public function ShowDriverProfile($param1,$param2){
 			if($this->session_check()==true) {
-			$data['result']=$this->user_model->getDriverDetails($param2);
-			$data['title']='Driver Profile| '.PRODUCT_NAME;
-			$page='user-pages/addDrivers';
+			
+			if($param2!=null&& $param2!=gINVALID){
 			$org_id=$this->session->userdata('organisation_id');
-			$this->session->set_userdata(array('org_id'=>$org_id,'user_id'=>$param2));
+			$arry=array('id'=>$param2,'organisation_id'=>$org_id);
+			$data['result']=$this->user_model->getDriverDetails($arry);
+			
+			
+		}   $data['title']='Driver Profile| '.PRODUCT_NAME;
+			$page='user-pages/addDrivers';
 			$data['select']=$this->select_Box_Values();
 			$this->load_templates($page,$data);
-		
 		
 			}
 			else{
@@ -810,23 +814,57 @@ public function profile() {
 		return $data;
 	}
 	
-	public function ShowVehicleView($param1,$param2) {
+	public function ShowVehicleView($param1,$param2,$param3) {
 		if($this->session_check()==true) {
+		
+		if($param2!=null&& $param2!=gINVALID){
+		$data['vehicle_tab']='active';
+		$tbl='vehicles';
+		$id=$param2;
+		}  
 			//sample starts
-				if($param2==''){
+				if($param2==''||is_numeric($param2)){
 				$data['vehicle_tab']='active';
+				$tbl='vehicles';
+				$id=$param2;
+				if($id!=null){
+			
+				$this->mysession->set('vehicle_id',$id);
+				
 				}
+				}
+				
 				if($param2=='insurance'){
+				
 				$data['insurance_tab']='active';
+				$tbl='vehicles_insurance';
+				$id=$param3;
+				if($id!=null){
+			
+				$this->mysession->set('vehicle_id',$id);
+				
 				}
-				if($param2=='loan'){
+				
+				}
+				if($param2=='loan'&&($param3== ''|| is_numeric($param3))){
 				$data['loan_tab']='active';
+				$tbl='vehicle_loans';
+				$id=$param3;
 				}
-				if($param2=='owner'){
+				if($param2=='owner'&&($param3== ''|| is_numeric($param3))) {
 				$data['owner_tab']='active';
+				$tbl='vehicle_owners';
+				$id=$param3;
 				}
+				$org_id=$this->session->userdata('organisation_id');
+				$arry=array('id'=>$id,'organisation_id'=>$org_id);
 				$data['select']=$this->select_Vehicle_Values();
-	
+				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);
+				//print_r($data['record_values']);
+				$data['driver']=$data['record_values']['driver'];
+				$data['vehicle']=$data['record_values']['vehicle'];
+				
+				
 			//sample ends
 				$data['title']="Vehicle Details | ".PRODUCT_NAME;  
 				$page='user-pages/addVehicles';

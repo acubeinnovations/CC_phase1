@@ -58,8 +58,9 @@
 						<td><?php echo $det['vehicle_owner_id'];?></td>
 						<td><?php echo $det['vehicle_type_id'];?></td>
 						<td><?php echo $det['vehicle_model_id'];?></td>
-						<td><div  class="tarrif-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=tarrif-edit-id","class=btn");?></div></td>
-						<td><div  class="tarrif-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=tarrif-delete-id","class=btn");?></div></td>
+						<td><?php echo anchor(base_url().'organization/front-desk/vehicle/'.$det['id'], 'Edit', 'title="News title"','class="btn btn-primary"');?></td>
+						<td><?php ?></td>
+					
 					    	
 						
 					</tr>
@@ -70,4 +71,5 @@
 			</table><?php echo $page_links;?>
 		</div>
 	</fieldset>
+	<?php echo form_close(); ?>
 </div>
