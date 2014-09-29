@@ -51,6 +51,54 @@ class account_model extends CI_Model {
 		
 	}
 
+	function add_fa_customer($data = array())
+	{
+		$fa_customer_table = $this->session->userdata('organisation_id')."_debtors_master";
+
+		if($this->check_fa_table_exists($fa_customer_table))
+		{
+
+			$prefs = $this->get_company_prefs();
+			$data = array(
+				'name'=>$data['name'],
+				'debtor_ref'=>$data['description'],
+				'curr_code'=>@$prefs['curr_default'],
+				'payment_terms'=>@$prefs['default_payment_terms'],
+				'credit_limit'=>@$prefs['default_credit_limit'],
+				'sales_type'=>@$prefs['base_sales']
+				);
+
+			$this->db->insert($fa_customer_table,$data);
+			return true;
+
+		}else{
+			return false;//could not insert in fa , customer table not set for this organisation
+		}
+	}
+
+	function get_company_prefs($name = false)
+	{
+		$fa_pref_table = $this->session->userdata('organisation_id')."_sys_prefs";
+
+		if($this->check_fa_table_exists($fa_pref_table))
+		{
+			$this->db->from($fa_pref_table);
+	
+			$result = $this->db->get()->result_array();
+			$prefs = array();
+			foreach($result as $row){
+				$prefs[$row['name']] = $row['value'];
+			}
+			
+			if($name)
+				return $prefs[$name];
+			else
+				return $prefs;
+		}else{
+			return false;
+		}
+	}
+
 
 }
 ?>
