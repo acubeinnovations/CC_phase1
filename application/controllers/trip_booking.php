@@ -21,7 +21,14 @@ class Trip_booking extends CI_Controller {
 		
 			$this->getAvailableVehicles();
 			
-		}
+		}else if($param2=='tripVoucher') {
+		
+			$this->tripVoucher();
+			
+		}else if($param2=='getVouchers') {
+		
+			$this->getVouchers();
+		}	
 		}
 	}else{
 			echo 'you are not authorized access this page..';
@@ -388,7 +395,57 @@ class Trip_booking extends CI_Controller {
 			}
 		} 
 	}
-	
+	public function tripVoucher(){
+	if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['garageclosingkm'] && $_REQUEST['garageclosingtime'] && $_REQUEST['trip_id']){
+	$data['start_km_reading']=$_REQUEST['startkm'];
+	$data['end_km_reading']=$_REQUEST['endkm'];
+	$data['driver_id']=$_REQUEST['driver_id'];
+	$data['garage_closing_kilometer_reading']=$_REQUEST['garageclosingkm'];
+	$data['garage_closing_time']=$_REQUEST['garageclosingtime'];
+	$data['releasing_place']=$_REQUEST['releasingplace'];
+	$data['parking_fees']=$_REQUEST['parkingfee'];
+	$data['toll_fees']=$_REQUEST['tollfee'];
+	$data['state_tax']=$_REQUEST['statetax'];
+	$data['night_halt_charges']=$_REQUEST['nighthalt'];
+	$data['fuel_extra_charges']=$_REQUEST['extrafuel'];
+	$data['user_id']=$this->session->userdata('id');
+	$data['trip_id']=$_REQUEST['trip_id'];
+	$data['organisation_id']=$this->session->userdata('organisation_id');
+
+	$voucher=$this->getVouchers($data['trip_id'],$ajax='NO');
+	if($voucher==false){
+	$res=$this->trip_booking_model->generateTripVoucher($data);
+	}else{
+	$res=$this->trip_booking_model->updateTripVoucher($data,$voucher[0]->id);
+	}
+	if($res==false){
+	echo 'false';
+	}else{
+	echo 'true';
+	}
+
+	}
+
+	}	
+
+	public function getVouchers($trip_id='',$ajax='NO'){
+	if(isset($_REQUEST['trip_id']) && isset($_REQUEST['ajax'])){
+	$trip_id=$_REQUEST['trip_id'];
+	$ajax=$_REQUEST['ajax'];
+	}
+	$voucher=$this->trip_booking_model->checkTripVoucherEntry($trip_id);
+	if($voucher==gINVALID){
+		echo 'false';
+	}else{
+		if($ajax=='NO'){
+		return $voucher;
+		}else{
+		header('Content-Type: application/json');
+		echo json_encode($voucher);
+		}
+	}
+	}
+
 	public function getAvailableVehicles(){
 	if($_REQUEST['vehicle_type'] && $_REQUEST['vehicle_ac_type'] && $_REQUEST['pickupdatetime'] && $_REQUEST['dropdatetime']){
 	$data['vehicle_type']=$_REQUEST['vehicle_type'];

@@ -12,13 +12,49 @@ class Trip_booking_model extends CI_Model {
 	}
 	}
 
+	function checkTripVoucherEntry($trip_id){
+
+	$this->db->from('trip_vouchers');
+    $this->db->where('trip_id',$trip_id);
+	
+    $results = $this->db->get()->result();
+	if(count($results)>0){//print_r($results);
+	return $results;
+	}else{
+	return gINVALID;
+	}
+	}
+
 	function  bookTrip($data) {
 	
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('trips',$data);
 	return true;
 	 
+    }	
+
+	function  generateTripVoucher($data) {
+	
+	$this->db->set('created', 'NOW()', FALSE);
+	$this->db->insert('trip_vouchers',$data);
+	
+	$id=$data['trip_id'];
+	$updatedata=array('trip_status_id'=>TRIP_STATUS_TRIP_BILLED);
+	$res=$this->updateTrip($updatedata,$id);	
+	if($res=true){
+	return true;
+	}else{
+	return false;
+	}
     }
+
+	
+	function  updateTripVoucher($data,$id) {
+	$this->db->where('id',$id );
+	$this->db->set('updated', 'NOW()', FALSE);
+	$this->db->update("trip_vouchers",$data);
+	return true;
+	}
 
 	function  updateTrip($data,$id) {
 	$this->db->where('id',$id );

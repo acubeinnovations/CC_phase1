@@ -981,19 +981,116 @@ var h = Math.floor(total_min/60); //Get whole hours
 
 //trips paje js start
 $('.voucher').on('click',function(){
+var trip_id=$(this).attr('trip_id');
+var driver_id=$(this).attr('driver_id');
 $('.overlay-container').css('display','block');
+$('.trip-voucher-save').attr('trip_id',trip_id);
+$('.trip-voucher-save').attr('driver_id',driver_id);
+	$.post(base_url+"/trip-booking/getVouchers",
+		  {
+			trip_id:trip_id,
+			ajax:'YES'
+			
+		},function(data){
+		  if(data=='false'){
 
+			}else{
+			
+			$('.startkm').val(data[0].start_km_reading);
+			$('.endkm').val(data[0].end_km_reading);
+			$('.garageclosingkm').val(data[0].garage_closing_kilometer_reading);
+			$('.garageclosingtime').val(data[0].garage_closing_time);
+			$('.releasingplace').val(data[0].releasing_place);
+			$('.parkingfee').val(data[0].parking_fees);
+			$('.tollfee').val(data[0].toll_fees);
+			$('.statetax').val(data[0].state_tax);
+			$('.nighthalt').val(data[0].night_halt_charges);
+			$('.extrafuel').val(data[0].fuel_extra_charges);
+			}
+		});
 });
 $('.modal-close').on('click',function(){
 $('.overlay-container').css('display','	none');
-
+$('.start-km-error').html('');
+$('.end-km-error').html('');
+$('.garage-km-error').html('');
+$('.garage-time-error').html('');
 });
+
+
+
 
 $(document).keydown(function(e) {
   
-  if (e.keyCode == 27) { $('.overlay-container').css('display','	none'); }   // esc
+  if (e.keyCode == 27) { $('.overlay-container').css('display','	none');
+$('.start-km-error').html('');
+$('.end-km-error').html('');
+$('.garage-km-error').html('');
+$('.garage-time-error').html('');
+ }   // esc
+
 });
 
+
+$('.trip-voucher-save').on('click',function(){
+var startkm=$('.startkm').val();
+var endkm=$('.endkm').val();
+var garageclosingkm=$('.garageclosingkm').val();
+var garageclosingtime=$('.garageclosingtime').val();
+var releasingplace=$('.releasingplace').val();
+var parkingfee=$('.parkingfee').val();
+var tollfee=$('.tollfee').val();
+var statetax=$('.statetax').val();
+var nighthalt=$('.nighthalt').val();
+var extrafuel=$('.extrafuel').val();
+var trip_id=$(this).attr('trip_id');
+var driver_id=$(this).attr('driver_id');
+var error=false;
+if(startkm==''){
+$('.start-km-error').html('Start km Field is required');
+error=true;
+}
+if(endkm==''){
+$('.end-km-error').html('End km Field is required');
+error=true;
+}
+
+if(garageclosingkm==''){
+$('.garage-km-error').html('Garage closing km Field is required');
+error=true;
+}
+if(garageclosingtime==''){
+$('.garage-time-error').html('Garage closing time Field is required');
+error=true;
+}
+
+if(error==false){
+	 $.post(base_url+"/trip-booking/tripVoucher",
+		  {
+			trip_id:trip_id,
+			startkm:startkm,
+			endkm:endkm,
+			garageclosingkm:garageclosingkm,
+			garageclosingtime:garageclosingtime,
+			releasingplace:releasingplace,
+			parkingfee:parkingfee,
+			tollfee:tollfee,
+			statetax:statetax,
+			nighthalt:nighthalt,
+			extrafuel:extrafuel,
+			driver_id:driver_id
+		},function(data){
+		  if(data='true'){
+				window.location.replace(base_url+'/organization/front-desk/trips');
+			}else{
+
+
+			}
+		});
+}else{
+return false;
+}
+});
 //trips page js end
  
 	$('select').change(function(){ 
@@ -1035,6 +1132,8 @@ $(document).keydown(function(e) {
 	//trips page js start
 
 	$('.initialize-date-picker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
+	$('.initialize-time-picker').datetimepicker({datepicker:false,format:'H:i',step:5});
+
 
 
 

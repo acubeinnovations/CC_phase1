@@ -51,7 +51,12 @@ class User extends CI_Controller {
 
 		$this->Customers($param2);
 
-		}elseif($param1=='tarrif-masters'&& ($param2== ''|| is_numeric($param2))){
+		}elseif($param1=='device'){
+
+		$this->Device($param2);
+
+		}
+		elseif($param1=='tarrif-masters'&& ($param2== ''|| is_numeric($param2))){
 		$this->tarrif_masters($param1,$param2);
 		}elseif($param1=='tarrif'&& ($param2== ''|| is_numeric($param2))){
 		$this->tarrif($param1,$param2);
@@ -256,6 +261,65 @@ class User extends CI_Controller {
 			echo 'you are not authorized access this page..';
 		}
 	}
+
+	public function Device(){
+		if($this->session_check()==true) {
+	
+		$condition='';
+	    $per_page=10;
+	    $where_arry='';
+	
+	$where_arry['organisation_id']=$this->session->userdata('organisation_id');
+		
+	if((isset($_REQUEST['imei'])|| isset($_REQUEST['sim_no']))&& isset($_REQUEST['search'])){
+	if($param2==''){
+	$param2=0;
+	}
+	
+	if($_REQUEST['imei']!=null){
+	
+	$where_arry['imei']=$_REQUEST['imei'];
+	}
+	if($_REQUEST['sim_no']!=null){
+	$where_arry['sim_no'] = $_REQUEST['sim_no'];
+	}
+	
+	$this->mysession->set('condition',array("where"=>$where_arry));
+	}
+	if($param2==''){
+		$this->mysession->set('condition',array("where"=>$where_arry));
+	}
+	
+	    
+		$tbl="devices";
+		$baseurl=base_url().'organization/front-desk/device/';
+		$uriseg ='4';
+		
+		
+		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+		if($param2==''){
+		$this->session->set_userdata('condition','');
+		}
+		
+	$data['values']=$p_res['values'];
+	$data['page_links']=$p_res['page_links'];
+	
+	$data['title']="Tarrif| ".PRODUCT_NAME; 
+	$page='user-pages/device';
+	$this->load_templates($page,$data);
+	
+	}
+	else{
+			echo 'you are not authorized access this page..';
+		}
+
+
+
+	}
+
+
+
+
 	public function ShowBookTrip($trip_id =''){
 	if($this->session_check()==true) {
 	
@@ -279,6 +343,8 @@ class User extends CI_Controller {
 	$conditon = array('id'=>$trip_id);
 	$result=$this->trip_booking_model->getDetails($conditon);
 	$result=$result[0];
+	if($result->trip_status_id==TRIP_STATUS_PENDING || $result->trip_status_id==TRIP_STATUS_CONFIRMED){
+		
 	$data1['trip_id']=$result->id;
 	$data1['recurrent_continues']='';
 	$data1['recurrent_alternatives']='';
@@ -382,6 +448,10 @@ class User extends CI_Controller {
 	$data1['available_vehicle']		=	$result->vehicle_id;
 	$this->session->set_userdata('driver_id',$result->driver_id);
 	$data1['customer_type']			=	$result->customer_type_id;
+	}else{
+
+	redirect(base_url().'organization/front-desk/trips');
+	}
 	}
 	if(isset($data1['vehicle_type']) && isset($data1['vehicle_ac_type']) && isset($pickupdatetime) && isset($dropdatetime)){
 	$available=array('vehicle_type'=>$data1['vehicle_type'],'vehicle_ac_type'=>$data1['vehicle_ac_type'],'pickupdatetime'=>$pickupdatetime,'dropdatetime'=>$dropdatetime,'organisation_id'=>$this->session->userdata('organisation_id'));
@@ -416,6 +486,7 @@ class User extends CI_Controller {
 	$data['title']="Trip Booking | ".PRODUCT_NAME;  
 	$page='user-pages/trip-booking';
 	$this->load_templates($page,$data);
+	
 	}
 	else{
 			echo 'you are not authorized access this page..';
@@ -441,7 +512,9 @@ class User extends CI_Controller {
 			$tbl="trips";
 			$baseurl=base_url().'organization/front-desk/trips/';
 			$per_page=10;
+			$data['slno_per_page']=10;
 			$uriseg ='4';
+			$data['urlseg']=4;
 			$tdate=date('Y-m-d');
 			$where_arry['organisation_id']=$this->session->userdata('organisation_id');
 			if((isset($_REQUEST['trip_pick_date'])|| isset($_REQUEST['trip_drop_date']))&& isset($_REQUEST['trip_search'])){
@@ -485,6 +558,9 @@ class User extends CI_Controller {
 			$data[$tbl_arry[$i]]='';
 			}
 			}
+			if($param2=='1'){
+				$param2=0;
+			}
 			$data['vehicles']=$this->trip_booking_model->getVehiclesArray($condition='');
 			$data['drivers']=$this->driver_model->getDriversArray($condition='');
 			$this->mysession->set('condition',array("where"=>$where_arry));
@@ -495,7 +571,7 @@ class User extends CI_Controller {
 			$data['page_links']=$paginations['page_links'];
 			$data['trips']=$paginations['values'];//echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
 			//$data['trips']=$this->trip_booking_model->getDetails($conditon='');echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
-			$data['status_class']=array(TRIP_STATUS_PENDING=>'label-warning',TRIP_STATUS_CONFIRMED=>'label-success',TRIP_STATUS_CANCELLED=>'label-danger',TRIP_STATUS_CUSTOMER_CANCELLED=>'label-danger',TRIP_STATUS_ON_TRIP=>'label-primary',TRIP_STATUS_TRIP_COMPLETED=>'label-success',TRIP_STATUS_TRIP_PAYED=>'label-info');
+			$data['status_class']=array(TRIP_STATUS_PENDING=>'label-warning',TRIP_STATUS_CONFIRMED=>'label-success',TRIP_STATUS_CANCELLED=>'label-danger',TRIP_STATUS_CUSTOMER_CANCELLED=>'label-danger',TRIP_STATUS_ON_TRIP=>'label-primary',TRIP_STATUS_TRIP_COMPLETED=>'label-success',TRIP_STATUS_TRIP_PAYED=>'label-info',TRIP_STATUS_TRIP_BILLED=>'label-success');
 			$data['trip_statuses']=$this->user_model->getArray('trip_statuses');
 			$data['customers']=$this->customers_model->getArray();
 			$data['title']="Trips | ".PRODUCT_NAME;  

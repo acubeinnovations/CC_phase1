@@ -69,7 +69,7 @@ echo form_close();?></td>
 					    <td><?php echo $customers[$customer_index]['dob'];?></td>
 					    <td><?php echo $customers[$customer_index]['email']; ?></td>
 						 <td><?php echo $customers[$customer_index]['mobile'];?></td>	
-						 <td><?php if($customers[$customer_index]['customer_type_id']==gINVALID){ echo "Not set";}else{echo $customer_types[$customers[$customer_index]['customer_type_id']];}?></td>
+						 <td><?php if($customers[$customer_index]['customer_type_id']==gINVALID || $customers[$customer_index]['customer_type_id']==0){ echo "Not set";}else{echo $customer_types[$customers[$customer_index]['customer_type_id']];}?></td>
 						<td><?php echo anchor(base_url().'organization/front-desk/customer/'.$customers[$customer_index]['id'],'Edit','class="btn btn-primary"'); ?></td>
 					</tr>
 					<?php 
