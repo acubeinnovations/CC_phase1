@@ -465,4 +465,24 @@ display:none;
 .hide-me-temp{
 display:none;
 }
+.modal{
+  
+    background: none repeat scroll 0% 0% #ccc !important;
+    
+}
+
+.trips > .box > .overlay-container > .loading-img {
+    z-index: 1020;
+    background: #ccc;
+	opacity:.7;
+}
+
+.modal-body{
+ z-index: 1030;
+width:80%;
+margin:auto;
+top:-700px;
+background:#fff;
+}
+
 

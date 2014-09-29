@@ -30,6 +30,10 @@ $trip_status_id='';
 }
 ?>
 
+<div class="trips">
+
+<div class="box">
+    <div class="box-body1">
 <div class="page-outer">    
 	<fieldset class="body-border">
 		<legend class="body-head">Trips</legend>
@@ -92,7 +96,7 @@ echo form_close();?></td>
 						</td>	
 						<td><?php if($trips[$trip_index]['vehicle_id']==gINVALID){ echo 'Vehicle not allocated';}else{echo $vehicles[$trips[$trip_index]['vehicle_id']]; }?></td>
 						 <td><?php if($trips[$trip_index]['driver_id']==gINVALID){ echo 'Driver not allocated';}else{echo $drivers[$trips[$trip_index]['driver_id']]; }?></td>
-						<td><?php echo anchor(base_url().'organization/front-desk/trip-booking/'.$trips[$trip_index]['id'],'Edit','class="btn btn-primary"'); ?></td>
+						<td><?php echo anchor(base_url().'organization/front-desk/trip-booking/'.$trips[$trip_index]['id'],'Edit','class="btn btn-primary"').nbs(5)."<a href=".base_url().'trip/view/'.$trips[$trip_index]['id']." class='btn btn-primary' target='_blank'>View</a>".nbs(5)."<button class='btn btn-primary voucher' type='button'>Voucher</button>"; ?></td>
 					</tr>
 					<?php 
 						}
@@ -101,5 +105,85 @@ echo form_close();?></td>
 			</table><?php echo $page_links;?>
 		</div>
 	</fieldset>
+</div>
+
+</div><!-- /.box-body -->
+   
+	<div class='overlay-container'>
+   		<div class="overlay modal"></div>
+		<div class="loading-img"></div>
+		<div class="modal-body">
+			<div class="profile-body width-80-percent-and-margin-auto">
+			<fieldset class="body-border">
+   			 <legend class="body-head">Trip Voucher</legend>
+				<div class="div-with-50-percent-width-with-margin-10">
+					<div class="form-group">
+					   <?php echo form_label('Start KM Reading','startkm'); ?>
+					   <?php echo form_input(array('name'=>'startkm','class'=>'form-control','id'=>'startkm','placeholder'=>'Enter Start K M')); ?>			
+					
+					</div>
+					<div class="form-group">
+						<?php echo form_label('End Km Reading','endkm'); ?>
+						<?php echo form_input(array('name'=>'endkm','class'=>'form-control','placeholder'=>'Enter End KM')); ?>
+					
+					</div>
+					<div class="form-group">
+						<?php echo form_label('Gariage Clossing KM Reading','gariageclosingkm'); ?>
+						<?php echo form_input(array('name'=>'gariageclosingkm','class'=>'form-control','placeholder'=>'Enter Gariage closing km')); ?>
+					
+					</div>
+					<div class="form-group">
+						<?php echo form_label('Gariage Closing Time','gariageclosingtime'); ?>
+						<?php echo form_input(array('name'=>'gariageclosingtime','class'=>'form-control','placeholder'=>'Enter Gariage Closing Time')); 
+						?>
+					</div>
+			
+			
+					<div class="form-group">
+						<?php echo form_label('Releasing Place','releasingplace'); ?>
+						<?php echo form_input(array('name'=>'releasingplace','class'=>'form-control','placeholder'=>'Enter Releasing Place')); 
+						?>
+					</div>
+				</div>
+				<div class="div-with-50-percent-width-with-margin-10">
+					<div class="form-group">
+						<?php echo form_label('Parking Fee','parking'); ?>
+						<?php echo form_input(array('name'=>'parkingfee','class'=>'form-control','placeholder'=>'Enter Parking Fee')); ?>
+					
+					</div>
+					<div class="form-group">
+						<?php echo form_label('Toll Fee','tollfee'); ?>
+						<?php echo form_input(array('name'=>'tollfee','class'=>'form-control','placeholder'=>'Enter Toll Fee')); ?>
+					
+					</div>
+					<div class="form-group">
+						<?php echo form_label('State Tax','statetax'); ?>
+						<?php echo form_input(array('name'=>'statetax','class'=>'form-control','placeholder'=>'Enter State Tax')); 
+						?>
+					</div>
+			
+			
+					<div class="form-group">
+						<?php echo form_label('Night Halt','nighthalt'); ?>
+						<?php echo form_input(array('name'=>'nighthalt','class'=>'form-control','placeholder'=>'Enter Night Halt')); 
+						?>
+					</div>
+					<div class="form-group">
+						<?php echo form_label('Extra Fuel Charge','extrafuel'); ?>
+						<?php echo form_input(array('name'=>'extrafuel','class'=>'form-control','placeholder'=>'Enter Extra Fuel Charge')); ?>
+					
+					</div>
+			   		<div class="box-footer">
+					<?php echo form_submit("trip-voucher-save","SAVE","class='btn btn-success'").nbs(5);  ?><button class='btn btn-danger modal-close' type='button'>CLOSE</button>  
+					</div>
+				</div>
+			</div>
+			</fieldset>
+		</div><!-- body -->
+
+		</div>
+	</div>
+    <!-- end loading -->
+</div>	
 </div>
 
