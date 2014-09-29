@@ -61,19 +61,26 @@ class account_model extends CI_Model {
 			$prefs = $this->get_company_prefs();
 			$data = array(
 				'name'=>$data['name'],
-				'debtor_ref'=>$data['description'],
+				'debtor_ref'=>(isset($data['description']))?$data['description']:$data['name'],
 				'curr_code'=>@$prefs['curr_default'],
 				'payment_terms'=>@$prefs['default_payment_terms'],
 				'credit_limit'=>@$prefs['default_credit_limit'],
-				'sales_type'=>@$prefs['base_sales']
+				'sales_type'=>@$prefs['base_sales'],
 				);
-
+			if(isset($data['address']))
+				$data['address'] = $data['address'];
+			//print_r($data);exit;
 			$this->db->insert($fa_customer_table,$data);
 			return true;
 
 		}else{
 			return false;//could not insert in fa , customer table not set for this organisation
 		}
+	}
+	
+	function edit_fa_customer($data = array())
+	{
+		return true;
 	}
 
 	function get_company_prefs($name = false)
