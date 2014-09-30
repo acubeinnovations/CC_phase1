@@ -294,7 +294,7 @@ $err=True;
 
 	 if($this->form_validation->run()==False|| $err==False){
 	 
-	 
+	
 
 		$this->mysession->set('post_all',$data);
 		$this->mysession->set('post_driver',$driver_data);
@@ -302,6 +302,7 @@ $err=True;
 	 }
 	 
 	  else{
+	   echo "hi";exit;
 	  if($data['id']==gINVALID){
 		$res=$this->vehicle_model->insertVehicle($data,$driver_data);
 		if($res==true){
