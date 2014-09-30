@@ -19,15 +19,7 @@ class Vehicle extends CI_Controller {
             }
 			
 			if($param1==''){ 
-			if(isset($_REQUEST['submit-vehicle']) || isset($_REQUEST['update-vehicle'])){
-				if(isset($_REQUEST['submit-vehicle'])){
-				$flag='save';
-				}
-				else{
-				$flag='update';
-				}
-				
-				$this->vehicle_validation($flag);
+				$this->vehicle_validation();
 				}
 			if(isset($_REQUEST['submit-insurance'])){
 				$this->insurance_validation();
@@ -38,7 +30,7 @@ class Vehicle extends CI_Controller {
 			if(isset($_REQUEST['submit-owner'])){
 				$this->owner_validation();
 				}
-			}
+			
 			if($param1) {
 				
 				if(isset($_REQUEST['add'])){
@@ -59,8 +51,8 @@ class Vehicle extends CI_Controller {
 		}
 		
 		
-	}
-		
+	
+		}
 		else{
 			echo 'you are not authorized access this page..';
 			}
@@ -198,10 +190,11 @@ class Vehicle extends CI_Controller {
 		
 		//return 
 		}
-		public function vehicle_validation($flag){
+		public function vehicle_validation(){
 		if($this->session_check()==true) {
 		if(isset($_REQUEST['vehicle-submit'])){
-			$data['id']=$this->input->post('hidden_id');
+		
+			$v_id=$this->input->post('hidden_id');
 			$data['vehicle_ownership_types_id']=$this->input->post('ownership');
 			$data['vehicle_type_id']=$this->input->post('vehicle_type');
 			$data['vehicle_make_id']=$this->input->post('make');
@@ -210,7 +203,7 @@ class Vehicle extends CI_Controller {
 			$data['vehicle_ac_type_id']=$this->input->post('ac');
 			$data['vehicle_fuel_type_id']=$this->input->post('fuel');
 			$data['vehicle_seating_capacity_id']=$this->input->post('seat');
-			$driver_data['driver']=$this->input->post('driver');
+			$driver_data['driver_id']=$this->input->post('driver');
 			$driver_data['from_date']=$this->input->post('from_date');
 			$data['registration_number']=$this->input->post('reg_number');
 			$data['registration_date']=$this->input->post('reg_date');
@@ -286,7 +279,7 @@ $err=True;
 	 $err=False;
 	 $this->mysession->set('model','Choose Model Type');
 	 }
-	  if($driver_data['driver'] ==-1){
+	  if($driver_data['driver_id'] ==-1){
 	 $driver_data['driver'] ='';
 	 $err=False;
 	 $this->mysession->set('Driver','Choose Any Driver');
@@ -302,20 +295,22 @@ $err=True;
 	 }
 	 
 	  else{
-	   echo "hi";exit;
-	  if($data['id']==gINVALID){
+	  
+	  if($v_id==gINVALID){ 
+		
 		$res=$this->vehicle_model->insertVehicle($data,$driver_data);
+		
 		if($res==true){
-		$this->session->set_userdata(array('dbSuccess'=>' Added Succesfully..!'));
-				    $this->session->set_userdata(array('dbError'=>''));
+		$this->mysession->set('dbSuccess',' Added Succesfully..!');
+				    $this->mysession->set('dbError','');
 				    redirect(base_url().'organization/front-desk/vehicle');
 		}
 		}
 		else{
-		$res=$this->vehicle_model->UpdateVehicledetails($all_data);
+		$res=$this->vehicle_model->UpdateVehicledetails($data,$driver_data,$v_id); 
 		if($res==true){
-		$this->session->set_userdata(array('dbSuccess'=>' Updated Succesfully..!'));
-				    $this->session->set_userdata(array('dbError'=>''));
+		$this->mysession->set('dbSuccess',' Updated Succesfully..!');
+				    $this->mysession->set('dbError','');
 				    redirect(base_url().'organization/front-desk/vehicle');
 		}
 		}

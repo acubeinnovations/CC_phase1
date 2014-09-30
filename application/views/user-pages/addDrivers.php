@@ -35,7 +35,7 @@
  if($this->mysession->get('post')!=null){
  //echo $result[''];
  $data=$this->mysession->get('post');
-	$driver_id=$data['id'];
+	$driver_id='';
 	$name=$data['name'];
 	$place_of_birth=$data['place_of_birth'];
 	$dob=$data['dob'];
@@ -347,7 +347,7 @@ $this->mysession->delete('post');
    		<div class="box-footer">
 		<?php // echo validation_errors();?>
 		<?php 
-		 if($driver_id==gINVALID || $driver_id==null){
+		 if($driver_id==gINVALID){
 			$btn_name='Save';
 		 }else {
 			$btn_name='Update';
