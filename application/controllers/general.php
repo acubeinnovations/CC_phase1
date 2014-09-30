@@ -12,7 +12,7 @@ class General extends CI_Controller {
 	
 		if($this->session_check()==true) {
 	
-		$tbl=array('languages'=>'languages','language-proficiency'=>'language_proficiency','driver-type'=>'driver_type','payment-type'=>'payment_type','customer-type'=>'customer_types','customer-groups'=>'customer-group','registration-types'=>'customer_registration_types ','marital-statuses'=>'marital_statuses','bank-account-types'=>'bank_account_types','id-proof-types'=>'id_proof_types');
+		$tbl=array('languages'=>'languages','language-proficiency'=>'language_proficiency','driver-type'=>'driver_type','payment-type'=>'payment_type','customer-type'=>'customer_types','customer-groups'=>'customer_groups','registration-types'=>'customer_registration_types ','marital-statuses'=>'marital_statuses','bank-account-types'=>'bank_account_types','id-proof-types'=>'id_proof_types');
 			if($param1=='getDescription') {
 			$this->getDescription();
 			}
