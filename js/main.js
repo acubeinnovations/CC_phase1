@@ -1092,6 +1092,27 @@ return false;
 }
 });
 //trips page js end
+
+
+//device-page js start
+
+
+$('.addDeviceico').click(function(){
+$('#addDevice ').trigger('click');
+});
+$('.deviceUpdate').click(function(){
+
+$(this).siblings().find(':submit').trigger('click');
+
+});
+$('.deviceDelete').click(function(){
+
+$(this).siblings().find(':submit').trigger('click');
+
+});
+
+
+// device-page js end
  
 	$('select').change(function(){ 
 	 var edit=$('.edit').attr('for_edit');
