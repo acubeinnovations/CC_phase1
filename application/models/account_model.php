@@ -116,6 +116,21 @@ class account_model extends CI_Model {
 			return false;//could not insert in fa , customer table not set for this organisation
 		}
 	}
+	
+	function delete_fa_customer($ref='')
+	{
+		$fa_customer_table = $this->session->userdata('organisation_id')."_debtors_master";
+
+		if($this->check_fa_table_exists($fa_customer_table))
+		{
+			$this->db->where('debtor_ref',$ref);
+			$this->db->delete($fa_customer_table);
+
+			return true;
+		}else{
+			return false;//could not insert in fa , customer table not set for this organisation
+		}
+	}
 
 	//check cnc customer exists in fa
 	function fa_customer_exists($id,$type,$table)
