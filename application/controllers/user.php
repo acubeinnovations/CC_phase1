@@ -262,26 +262,28 @@ class User extends CI_Controller {
 		}
 	}
 
-	public function Device(){
+	public function Device($param2){
 		if($this->session_check()==true) {
 	
 		$condition='';
 	    $per_page=10;
 	    $where_arry='';
-	
+		$data['s_imei']='';
+		$data['s_sim_no']='';
 	$where_arry['organisation_id']=$this->session->userdata('organisation_id');
 		
-	if((isset($_REQUEST['imei'])|| isset($_REQUEST['sim_no']))&& isset($_REQUEST['search'])){
+	if((isset($_REQUEST['s_imei']) || isset($_REQUEST['s_sim_no'])) && isset($_REQUEST['search'])){
 	if($param2==''){
 	$param2=0;
 	}
 	
-	if($_REQUEST['imei']!=null){
-	
-	$where_arry['imei']=$_REQUEST['imei'];
+	if($_REQUEST['s_imei']!=null){
+	$data['s_imei']=$_REQUEST['s_imei'];
+	$where_arry['imei']=$_REQUEST['s_imei'];
 	}
-	if($_REQUEST['sim_no']!=null){
-	$where_arry['sim_no'] = $_REQUEST['sim_no'];
+	if($_REQUEST['s_sim_no']!=null){
+	$data['s_sim_no']=$_REQUEST['s_sim_no'];
+	$where_arry['sim_no'] = $_REQUEST['s_sim_no'];
 	}
 	
 	$this->mysession->set('condition',array("where"=>$where_arry));
@@ -304,7 +306,7 @@ class User extends CI_Controller {
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
 	
-	$data['title']="Tarrif| ".PRODUCT_NAME; 
+	$data['title']="Device | ".PRODUCT_NAME; 
 	$page='user-pages/device';
 	$this->load_templates($page,$data);
 	
@@ -651,12 +653,14 @@ public function	Customers($param2){
 			
 			$tbl="customers";
 			$baseurl=base_url().'organization/front-desk/customers/';
-			$per_page=10;
+			$per_page=2;
 			$uriseg ='4';
-			//$like_arry='';
 			
 			$where_arry['organisation_id']=$this->session->userdata('organisation_id');
-			if((isset($_REQUEST['customer'])|| isset($_REQUEST['mobile']) || isset($_REQUEST['customer_type_id']))&& isset($_REQUEST['customer_search'])){				$like_arry='';
+			$like_arry['organisation_id']=$this->session->userdata('organisation_id');
+
+			if((isset($_REQUEST['customer'])|| isset($_REQUEST['mobile']) || isset($_REQUEST['customer_type_id']))&& isset($_REQUEST['customer_search'])){	
+				
 				if($param2==''){
 				$param2=0;
 				}
@@ -674,10 +678,13 @@ public function	Customers($param2){
 				}
 				$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
 			}
-			
+			if($param2==''){
+			$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
+			}
+			print_r($this->mysession->get('condition'));
 			
 			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
-			if($param2==''){
+			if($param2==''){echo $param2;
 				$this->mysession->delete('condition');
 			}
 			$data['page_links']=$paginations['page_links'];
