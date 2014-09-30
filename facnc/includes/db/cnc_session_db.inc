@@ -56,5 +56,32 @@ function get_cnc_user($userid)
 	return db_fetch_assoc($result);
 }
 
+function get_cnc_voucher($id = 0)
+{
+	$sql = "SELECT 
+		cust.id AS cnc_cust_id,
+		cust.name AS customer_name 
+		";
+	$sql .="  FROM trip_vouchers voucher ";
+	$sql .= " LEFT JOIN trips trip ON voucher.trip_id = trip.id";
+	$sql .= " LEFT JOIN customers cust ON cust.id = trip.customer_id";
+	$sql .= " LEFT JOIN customer_groups custg ON custg.id = trip.customer_group_id";
+	$sql .= " WHERE voucher.id = ".db_escape($id);
+	$result = db_query($sql, "could not get voucher");
+
+	return db_fetch_assoc($result);
+}
+
+function get_cnc_customer_id($ref = '')
+{
+	$sql = "SELECT debtor_no FROM 1_debtors_master WHERE debtor_ref = ".db_escape($ref);
+
+	$result = db_query($sql, "could not get voucher");
+	
+	$row = db_fetch_assoc($result);
+
+	return $row['debtor_no'];
+}
+
 
 ?>

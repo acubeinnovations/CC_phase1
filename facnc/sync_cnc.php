@@ -46,6 +46,10 @@
 		meta_forward('admin/backups.php');
 		
 	}
+	elseif(isset($_GET['NewDelivery'])){
+		meta_forward('sales/sales_order_entry.php','NewDelivery='.$_GET['NewDelivery']);
+		
+	}
 	
 	
 	

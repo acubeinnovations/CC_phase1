@@ -43,11 +43,14 @@ class Account extends CI_Controller {
 	}
 
 	//organisation user pages from fa
-	public function front_desk($action='None'){
+	public function front_desk($action='None',$value=''){
 		
 		if($this->org_user_session_check()==true) {
-		$data['title'] = "Home | ".$action;
-		$data['url'] = "facnc/sync_cnc.php?".$action."=Yes&cnc_token=".$this->session->userdata('session_id');
+			$data['title'] = "Home | ".$action;
+			if($value)
+				$data['url'] = "facnc/sync_cnc.php?".$action."=".$value."&cnc_token=".$this->session->userdata('session_id');
+			else
+				$data['url'] = "facnc/sync_cnc.php?".$action."=Yes&cnc_token=".$this->session->userdata('session_id');
 			$page='fa-modules/module';
 			$this->load_admin_templates($page,$data);
 		}
