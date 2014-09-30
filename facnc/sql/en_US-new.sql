@@ -1598,7 +1598,7 @@ CREATE TABLE IF NOT EXISTS `0_stock_master` (
 --
 -- Dumping data for table `0_stock_master`
 --
-
+INSERT INTO `0_stock_master` VALUES('101', 1, 1, 'Trip', '', 'ea.', 'B', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0, 10, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 

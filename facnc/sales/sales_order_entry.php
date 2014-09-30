@@ -20,6 +20,7 @@
 $path_to_root = "..";
 $page_security = 'SA_SALESORDER';
 
+
 include_once($path_to_root . "/sales/includes/cart_class.inc");
 include_once($path_to_root . "/includes/session.inc");
 include_once($path_to_root . "/sales/includes/sales_ui.inc");
@@ -27,6 +28,7 @@ include_once($path_to_root . "/sales/includes/ui/sales_order_ui.inc");
 include_once($path_to_root . "/sales/includes/sales_db.inc");
 include_once($path_to_root . "/sales/includes/db/sales_types_db.inc");
 include_once($path_to_root . "/reporting/includes/reporting.inc");
+include_once($path_to_root . "/includes/db/cnc_session_db.inc");
 
 set_page_security( @$_SESSION['Items']->trans_type,
 	array(	ST_SALESORDER=>'SA_SALESORDER',
@@ -61,8 +63,8 @@ if ($use_date_picker) {
 
 if (isset($_GET['NewDelivery']) && is_numeric($_GET['NewDelivery'])) {
 
-	$_SESSION['page_title'] = _($help_context = "Direct Sales Delivery");
-	create_cart(ST_CUSTDELIVERY, $_GET['NewDelivery']);
+	$_SESSION['page_title'] = _($help_context = "Delivery Note");
+	create_cart(ST_CUSTDELIVERY, 0,$_GET['NewDelivery']);
 
 } elseif (isset($_GET['NewInvoice']) && is_numeric($_GET['NewInvoice'])) {
 
@@ -625,12 +627,21 @@ function  handle_cancel_order()
 
 //--------------------------------------------------------------------------------
 
-function create_cart($type, $trans_no)
+function create_cart($type, $trans_no, $cnc_voucher_id = 0)
 { 
 	global $Refs;
 
 	if (!$_SESSION['SysPrefs']->db_ok) // create_cart is called before page() where the check is done
 		return;
+
+	if($cnc_voucher_id > 0){
+		$cnc_voucher = get_cnc_voucher($cnc_voucher_id);
+		//echo "<pre>";
+		//print_r($cnc_voucher);
+		//echo "</pre>";
+		$customer_id = get_cnc_customer_id("C".$cnc_voucher['cnc_cust_id']);
+		
+	}
 
 	processing_start();
 
@@ -646,6 +657,7 @@ function create_cart($type, $trans_no)
 		$doc = new Cart(ST_SALESORDER, array($trans_no));
 		$doc->trans_type = $type;
 		$doc->trans_no = 0;
+		$doc->customer_id = @$customer_id;
 		$doc->document_date = new_doc_date();
 		if ($type == ST_SALESINVOICE) {
 			$doc->due_date = get_invoice_duedate($doc->payment, $doc->document_date);
@@ -683,7 +695,7 @@ if (isset($_POST['CancelItemChanges'])) {
 }
 
 //--------------------------------------------------------------------------------
-check_db_has_stock_items(_("There are no inventory items defined in the system."));
+//check_db_has_stock_items(_("There are no inventory items defined in the system."));
 
 check_db_has_customer_branches(_("There are no customers, or there are no customers with branches. Please define customers and customer branches."));
 
@@ -721,7 +733,7 @@ $customer_error = display_order_header($_SESSION['Items'],
 	($_SESSION['Items']->any_already_delivered() == 0), $idate);
 
 if ($customer_error == "") {
-	start_table(TABLESTYLE, "width=80%", 10);
+	start_table(TABLESTYLE, "width=90%", 10);
 	echo "<tr><td>";
 	display_order_summary($orderitems, $_SESSION['Items'], true);
 	echo "</td></tr>";

@@ -51,14 +51,15 @@ class General extends CI_Controller {
 			if($this->form_validation->run()==False){
 				redirect(base_url().'user/settings');
 			}else {
-				$result=$this->settings_model->addValues($tbl[$param1],$data);
+
+				$result=$this->settings_model->addValues_returnId($tbl[$param1],$data);
 
 				if($result){
 					//------------fa module integration code starts here-----
 					//save customer gruop as customer in fa table
 					if($param1 == 'customer-groups'){
 						$this->load->model("account_model");
-						$fa_customer = $this->account_model->add_fa_customer($data);
+						$fa_customer = $this->account_model->add_fa_customer($result,"CG");
 					}
 					//-----------fa code ends here---------------------------
 
@@ -84,6 +85,13 @@ class General extends CI_Controller {
       else {
 		$result=$this->settings_model->updateValues($tbl[$param1],$data,$id);
 		if($result==true){
+			//------------fa module integration code starts here-----
+			//save customer gruop as customer in fa table
+			if($param1 == 'customer-groups'){
+				$this->load->model("account_model");
+				$fa_customer = $this->account_model->edit_fa_customer($id,"CG");
+			}
+			//-----------fa code ends here---------------------------
 					$this->session->set_userdata(array('dbSuccess'=>'Details Updated Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
 				    redirect(base_url().'user/settings');
@@ -94,24 +102,31 @@ class General extends CI_Controller {
 	}
 	
 	public function delete($tbl,$param1){
-	if(isset($_REQUEST['delete'])){ 
+		if(isset($_REQUEST['delete'])){ 
 	
-	$id=$this->input->post('id_val');
-	        $this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
+			$id=$this->input->post('id_val');
+	        	$this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
 			//$this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
 			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean|alpha_numeric');
-		if($this->form_validation->run()==False){
-        redirect(base_url().'user/settings');
-		}
-      else {
-		$result=$this->settings_model->deleteValues($tbl[$param1],$id);
-		if($result==true){
-					$this->session->set_userdata(array('dbSuccess'=>'Details Deleted Succesfully..!'));
-				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'user/settings');
+			if($this->form_validation->run()==False){
+        			redirect(base_url().'user/settings');
+			}
+      		else {
+			$result=$this->settings_model->deleteValues($tbl[$param1],$id);
+			if($result==true){
+				//------------fa module integration code starts here-----
+				//save customer gruop as customer in fa table
+				if($param1 == 'customer-groups'){
+					$this->load->model("account_model");
+					$fa_customer = $this->account_model->delete_fa_customer("CG".$id);
+				}
+				//-----------fa code ends here---------------------------
+				$this->session->set_userdata(array('dbSuccess'=>'Details Deleted Succesfully..!'));
+				$this->session->set_userdata(array('dbError'=>''));
+				redirect(base_url().'user/settings');
 						}
 			}
-	}
+		}
 	}
 	
 	

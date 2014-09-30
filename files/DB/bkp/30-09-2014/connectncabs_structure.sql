@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 30, 2014 at 09:58 AM
+-- Generation Time: Sep 26, 2014 at 06:45 AM
 -- Server version: 5.5.37-0ubuntu0.13.10.1
 -- PHP Version: 5.5.3-1ubuntu2.6
 
@@ -159,8 +159,9 @@ CREATE TABLE IF NOT EXISTS `customer_types` (
 
 CREATE TABLE IF NOT EXISTS `devices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `imei` varchar(50) NOT NULL,
-  `sim_no` varchar(13) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  `mac_address` varchar(100) NOT NULL,
+  `app_key` varchar(100) NOT NULL,
   `organisation_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -169,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `devices` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -200,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   `badge_renewal_date` date NOT NULL,
   `mother_tongue` text NOT NULL,
   `pan_number` varchar(40) NOT NULL,
-  `bank_account_number` varchar(30) NOT NULL,
+  `bank_account_ number` varchar(30) NOT NULL,
   `name_on_bank_pass_book` varchar(60) NOT NULL,
   `bank_name` varchar(50) NOT NULL,
   `branch` varchar(50) NOT NULL,
@@ -631,7 +632,7 @@ CREATE TABLE IF NOT EXISTS `trip_statuses` (
   KEY `id` (`id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -678,34 +679,6 @@ CREATE TABLE IF NOT EXISTS `trip_travel_log` (
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `trip_vouchers`
---
-
-CREATE TABLE IF NOT EXISTS `trip_vouchers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `trip_id` int(11) NOT NULL,
-  `start_km_reading` double NOT NULL,
-  `end_km_reading` double NOT NULL,
-  `organisation_id` int(11) NOT NULL,
-  `driver_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `garage_closing_kilometer_reading` double NOT NULL,
-  `garage_closing_time` time NOT NULL,
-  `releasing_place` text NOT NULL,
-  `parking_fees` double NOT NULL,
-  `toll_fees` double NOT NULL,
-  `state_tax` double NOT NULL,
-  `night_halt_charges` double NOT NULL,
-  `fuel_extra_charges` double NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY `trip_id` (`trip_id`,`organisation_id`,`driver_id`,`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -1192,4 +1165,3 @@ CREATE TABLE IF NOT EXISTS `vehicle_types` (
   KEY `organisation_id` (`organisation_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
