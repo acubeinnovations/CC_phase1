@@ -7,6 +7,13 @@ class Settings_model extends CI_Model {
 	$this->db->insert($tbl,$data);
 	return true;
 	}
+
+	public function addValues_returnId($tbl,$data){
+	$this->db->set('created', 'NOW()', FALSE);
+	$this->db->insert($tbl,$data);
+	return $this->db->insert_id();
+	}
+
 	public function getValues($id,$tbl){ 
 	$this->db->select('id,description,name');
 	$this->db->from($tbl);

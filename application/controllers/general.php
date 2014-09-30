@@ -51,14 +51,14 @@ class General extends CI_Controller {
 			if($this->form_validation->run()==False){
 				redirect(base_url().'user/settings');
 			}else {
-				$result=$this->settings_model->addValues($tbl[$param1],$data);
+				$result=$this->settings_model->addValues_returnId($tbl[$param1],$data);
 
 				if($result){
 					//------------fa module integration code starts here-----
 					//save customer gruop as customer in fa table
 					if($param1 == 'customer-groups'){
 						$this->load->model("account_model");
-						$fa_customer = $this->account_model->add_fa_customer($data);
+						$fa_customer = $this->account_model->add_fa_customer($result,"CG");
 					}
 					//-----------fa code ends here---------------------------
 
@@ -84,6 +84,13 @@ class General extends CI_Controller {
       else {
 		$result=$this->settings_model->updateValues($tbl[$param1],$data,$id);
 		if($result==true){
+			//------------fa module integration code starts here-----
+			//save customer gruop as customer in fa table
+			if($param1 == 'customer-groups'){
+				$this->load->model("account_model");
+				$fa_customer = $this->account_model->edit_fa_customer($id,"CG");
+			}
+			//-----------fa code ends here---------------------------
 					$this->session->set_userdata(array('dbSuccess'=>'Details Updated Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
 				    redirect(base_url().'user/settings');

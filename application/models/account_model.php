@@ -51,24 +51,39 @@ class account_model extends CI_Model {
 		
 	}
 
-	function add_fa_customer($data = array())
+	function get_cnc_cust_or_group($id,$type='')
+	{
+		if($type == "CG"){
+				$this->db->from('customer_groups');
+		}else{
+			$this->db->from('customers');
+		}
+		$this->db->where('id',$id );
+		$this->db->where('organisation_id',$this->session->userdata('organisation_id'));	
+		return $this->db->get()->row_array();
+	}
+
+	function add_fa_customer($id,$type='')
 	{
 		$fa_customer_table = $this->session->userdata('organisation_id')."_debtors_master";
 
 		if($this->check_fa_table_exists($fa_customer_table))
 		{
+				
+			$cnc_cust = $this->get_cnc_cust_or_group($id,$type);
+			$ref = $type.$cnc_cust['id'];
 
 			$prefs = $this->get_company_prefs();
 			$data = array(
-				'name'=>$data['name'],
-				'debtor_ref'=>(isset($data['description']))?$data['description']:$data['name'],
+				'name'=>$cnc_cust['name'],
+				'debtor_ref'=>$ref,
 				'curr_code'=>@$prefs['curr_default'],
 				'payment_terms'=>@$prefs['default_payment_terms'],
 				'credit_limit'=>@$prefs['default_credit_limit'],
 				'sales_type'=>@$prefs['base_sales'],
 				);
-			if(isset($data['address']))
-				$data['address'] = $data['address'];
+			if(isset($cnc_cust['address']))
+				$data['address'] = $cnc_cust['address'];
 			//print_r($data);exit;
 			$this->db->insert($fa_customer_table,$data);
 			return true;
@@ -78,9 +93,41 @@ class account_model extends CI_Model {
 		}
 	}
 	
-	function edit_fa_customer($data = array())
+	function edit_fa_customer($id,$type='')
 	{
-		return true;
+		$fa_customer_table = $this->session->userdata('organisation_id')."_debtors_master";
+
+		if($this->check_fa_table_exists($fa_customer_table))
+		{
+			if($this->fa_customer_exists($id,$type,$fa_customer_table)){
+				//edit customer
+				$cnc_cust = $this->get_cnc_cust_or_group($id,$type);
+				$data = array('name'=>$cnc_cust['name']);
+				if(isset($cnc_cust['address']))
+					$data['address'] = $cnc_cust['address'];
+
+				$this->db->where('debtor_ref',$type.$id );
+				$this->db->update($fa_customer_table,$data);
+				return true;
+			}else{
+				$this->add_fa_customer($id,$type);
+			}
+		}else{
+			return false;//could not insert in fa , customer table not set for this organisation
+		}
+	}
+
+	//check cnc customer exists in fa
+	function fa_customer_exists($id,$type,$table)
+	{
+		$ref = $type.$id;
+		$this->db->from($table);
+		$this->db->where('debtor_ref',$ref);
+		if($this->db->get()->num_rows() == 1){
+			return true;//customer exists in fa
+		}else{
+			return false;//customer not exists in fa
+		}
 	}
 
 	function get_company_prefs($name = false)
