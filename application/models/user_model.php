@@ -101,13 +101,25 @@ class user_model extends CI_Model {
 	return $qry->result_array();
 	 
 }
-   public function getDriverDetails($id){
-   $qry=$this->db->where('id',$id);
+   public function getDriverDetails($arry){
+   $qry=$this->db->where($arry);
    $qry=$this->db->get('drivers');
-   return $qry->result_array();
+   return $qry->row_array();
    
    }
    public function getType($id){
    $qry=$this->db->select('id,name,phone,mobile');
    }
+   public function getRecordsById($tbl,$id){
+   if($tbl=='vehicles'){
+   $qry=$this->db->where('id',$id);
+   $qry=$this->db->get('vehicle_drivers');
+   $result['driver']= $qry->row_array();
+   
+   }
+	$v_qry=$this->db->where('id',$id);
+	$v_qry=$this->db->get($tbl);
+	$result['vehicle']= $v_qry->row_array();
+	return $result;
+}
 }

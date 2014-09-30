@@ -111,7 +111,7 @@ class Customers extends CI_Controller {
 						//save customer in fa table
 			
 						$this->load->model("account_model");
-						$fa_customer = $this->account_model->edit_fa_customer($data);
+						$fa_customer = $this->account_model->edit_fa_customer($customer_id,"C");
 			
 						//-----------fa code ends here---------------------------
 
@@ -125,7 +125,7 @@ class Customers extends CI_Controller {
 						//save customer in fa table
 			
 						$this->load->model("account_model");
-						$fa_customer = $this->account_model->add_fa_customer($data);
+						$fa_customer = $this->account_model->add_fa_customer($res,"C");
 			
 						//-----------fa code ends here---------------------------
 					 	$this->session->set_userdata(array('dbSuccess'=>'Customer details Added Successfully'));

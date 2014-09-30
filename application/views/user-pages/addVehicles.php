@@ -49,42 +49,8 @@
 
         <div class="<?php echo $v_tab;?>" id="tab_1">
 	<?php
- if(($this->mysession->get('org_id')!=null)&&($this->mysession->get('user_id')!=null)){
-    $name=$result[0]['name'];
-	$place_of_birth=$result[0]['place_of_birth'];
-	$dob=$result[0]['dob'];
-	$blood_group=$result[0]['blood_group'];
-	$marital_status_id=$result[0]['marital_status_id'];
-	$children=$result[0]['children'];
-	$present_address=$result[0]['present_address'];
-	$permanent_address=$result[0]['permanent_address'];
-	$district=$result[0]['district'];
-	$state=$result[0]['state'];
-	$pin_code=$result[0]['pin_code'];
-	$phone=$result[0]['phone'];
-	$mobile=$result[0]['mobile'];
-	$email=$result[0]['email'];
-	$date_of_joining=$result[0]['date_of_joining'];
-	$badge=$result[0]['badge'];
-	$license_number=$result[0]['license_number'];
-	$license_renewal_date=$result[0]['license_renewal_date'];
-	$badge_renewal_date=$result[0]['badge_renewal_date'];
-	$mother_tongue=$result[0]['mother_tongue'];
-	$pan_number=$result[0]['pan_number'];
-	$bank_account_number=$result[0]['bank_account_number'];
-	$name_on_bank_pass_book=$result[0]['name_on_bank_pass_book'];
-	$bank_name=$result[0]['bank_name'];
-	$branch=$result[0]['branch'];
-	$bank_account_type_id=$result[0]['bank_account_type_id'];
-	$ifsc_code=$result[0]['ifsc_code'];
-	$id_proof_type_id=$result[0]['id_proof_type_id'];
-	$id_proof_document_number=$result[0]['id_proof_document_number'];
-	$name_on_id_proof=$result[0]['name_on_id_proof'];
-$this->session->set_userdata('org_id','');
-$this->session->set_userdata('user_id','');
- }elseif($this->mysession->get('post_all')==null && $this->mysession->get('post_driver')==null){
-
-           $ownership ="";
+			$vehicle_id=gINVALID;
+			$ownership ="";
 			$vehicle_type="";
 			$make="";
 			$model="";
@@ -92,7 +58,7 @@ $this->session->set_userdata('user_id','');
 			$ac="";
 			$fuel="";
 			$seat="";
-			$driver="";
+			$driver_id="";
 			$from_date="";
 			$reg_number="";
 			$reg_date="";
@@ -103,14 +69,11 @@ $this->session->set_userdata('user_id','');
 			$permit_amount="";
 			$tax_amount="";
 			$tax_date="";
-	
-
-}
-else
-{
-$data=$this->mysession->get('post_all');
-$driver_data=$this->mysession->get('post_driver');
-           $ownership =$data['vehicle_ownership_types_id'];
+		if($this->mysession->get('post_all')!=null && $this->mysession->get('post_driver')!=null ){
+			$data=$this->mysession->get('post_all');
+			$driver_data=$this->mysession->get('post_driver');
+			$vehicle_id=$data['id'];
+			$ownership =$data['vehicle_ownership_types_id'];
 			$vehicle_type=$data['vehicle_type_id'];
 			$make=$data['vehicle_make_id'];
 			$model=$data['vehicle_model_id'];
@@ -118,7 +81,7 @@ $driver_data=$this->mysession->get('post_driver');
 			$ac=$data['vehicle_ac_type_id'];
 			$fuel=$data['vehicle_fuel_type_id'];
 			$seat=$data['vehicle_seating_capacity_id'];
-			$driver=$driver_data['driver'];
+			$driver_id=$driver_data['driver'];
 			$from_date=$driver_data['from_date'];
 			$reg_number=$data['registration_number'];
 			$reg_date=$data['registration_date'];
@@ -129,9 +92,36 @@ $driver_data=$this->mysession->get('post_driver');
 			$permit_amount=$data['vehicle_permit_renewal_amount'];
 			$tax_amount=$data['tax_renewal_amount'];
 			$tax_date=$data['tax_renewal_date'];	
-$this->mysession->delete('post_all');
-$this->mysession->delete('post_driver');
-}
+		$this->mysession->delete('post_all');
+		$this->mysession->delete('post_driver');
+		}
+		 else if(isset($driver)&&isset($vehicle)&& $driver!=null&& $vehicle!=null){ 
+			$vehicle_id=$vehicle['id'];
+		    $ownership =$vehicle['vehicle_ownership_types_id'];
+			$vehicle_type=$vehicle['vehicle_type_id'];
+			$make=$vehicle['vehicle_make_id'];
+			$model=$vehicle['vehicle_model_id'];
+			$year=$vehicle['vehicle_manufacturing_year'];
+			$ac=$vehicle['vehicle_ac_type_id'];
+			$fuel=$vehicle['vehicle_fuel_type_id'];
+			$seat=$vehicle['vehicle_seating_capacity_id'];
+			
+			$driver_id=$driver['driver_id'];
+			
+			$from_date=$driver['from_date'];
+			$reg_number=$vehicle['registration_number'];
+			$reg_date=$vehicle['registration_date'];
+			$eng_num=$vehicle['engine_number'];
+			$chases_num=$vehicle['chases_number'];
+			$permit=$vehicle['vehicle_permit_type_id'];
+			$permit_date=$vehicle['vehicle_permit_renewal_date'];
+			$permit_amount=$vehicle['vehicle_permit_renewal_amount'];
+			$tax_amount=$vehicle['tax_renewal_amount'];
+			$tax_date=$vehicle['tax_renewal_date'];
+		 }
+		 
+	
+  
 
 ?>
 
@@ -287,15 +277,15 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
            <?php $class="form-control";
 		$msg="Select Driver";
 		$name="driver";
-		if($driver!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver,$class,$id='',$msg); 
+		if($driver_id!=null){
+	echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id,$class,$id='',$msg); 
 }else{
-echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver='',$class,$id='',$msg); 
+echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id='',$class,$id='',$msg); 
 }	?>
 	   
         </div>
 		<div class="form-group">
-		<?php echo form_label('From Date','usernamelabel'); ?>
+		<?php echo form_label('From Date','usernamelabel');?>
            <?php echo form_input(array('name'=>'from_date','class'=>'fromdatepicker form-control' ,'value'=>$from_date));?>
 	   <?php echo $this->form_functions->form_error_session('from_date', '<p class="text-red">', '</p>'); ?>
         </div>
@@ -358,7 +348,8 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver='
            <?php echo form_input(array('name'=>'tax_date','class'=>'fromdatepicker form-control' ,'value'=>$tax_date)); ?>
 	   <?php echo $this->form_functions->form_error_session('tax_date', '<p class="text-red">', '</p>'); ?>
         </div>
-	
+	<div class='hide-me'><?php  
+		echo form_input(array('name'=>'hidden_id','class'=>'form-control','value'=>$vehicle_id));?></div>
 	
    		<div class="box-footer">
 		<?php // echo validation_errors();?>
@@ -371,45 +362,43 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver='
 
 	</fieldset>
 
-<?php echo form_submit("submit-vehicle","Save","class='btn btn-primary next'");?>
+<?php
+			if($vehicle_id==gINVALID || $vehicle_id==null){
+			$btn_name='Save';
+		 }else {
+			$btn_name='Update';
+			}
+			echo form_submit("vehicle-submit",$btn_name,"class='btn btn-primary'"); 
+			?>
 </div>
         </div>
         <div class="<?php echo $i_tab;?>" id="tab_2">
 		
 	<?php
- if(($this->mysession->get('org_id')!=null)&&($this->mysession->get('user_id')!=null)){
-    $name=$result[0]['name'];
-	$place_of_birth=$result[0]['place_of_birth'];
-	$dob=$result[0]['dob'];
-	$blood_group=$result[0]['blood_group'];
-	$marital_status_id=$result[0]['marital_status_id'];
-	$children=$result[0]['children'];
-	$present_address=$result[0]['present_address'];
-	$permanent_address=$result[0]['permanent_address'];
-	$district=$result[0]['district'];
-	$state=$result[0]['state'];
-	$pin_code=$result[0]['pin_code'];
-	$phone=$result[0]['phone'];
-	$mobile=$result[0]['mobile'];
-	$email=$result[0]['email'];
-	$date_of_joining=$result[0]['date_of_joining'];
-	$badge=$result[0]['badge'];
-	$license_number=$result[0]['license_number'];
-	$license_renewal_date=$result[0]['license_renewal_date'];
-	$badge_renewal_date=$result[0]['badge_renewal_date'];
-	$mother_tongue=$result[0]['mother_tongue'];
-	$pan_number=$result[0]['pan_number'];
-	$bank_account_number=$result[0]['bank_account_number'];
-	$name_on_bank_pass_book=$result[0]['name_on_bank_pass_book'];
-	$bank_name=$result[0]['bank_name'];
-	$branch=$result[0]['branch'];
-	$bank_account_type_id=$result[0]['bank_account_type_id'];
-	$ifsc_code=$result[0]['ifsc_code'];
-	$id_proof_type_id=$result[0]['id_proof_type_id'];
-	$id_proof_document_number=$result[0]['id_proof_document_number'];
-	$name_on_id_proof=$result[0]['name_on_id_proof'];
-$this->session->set_userdata('org_id','');
-$this->session->set_userdata('user_id','');
+	
+if($this->mysession->get('vehicle_id')!=null){
+
+
+			$ownership =$vehicle['vehicle_ownership_types_id'];
+			$vehicle_type=$vehicle['vehicle_type_id'];
+			$make=$vehicle['vehicle_make_id'];
+			$model=$vehicle['vehicle_model_id'];
+			$year=$vehicle['vehicle_manufacturing_year'];
+			$ac=$vehicle['vehicle_ac_type_id'];
+			$fuel=$vehicle['vehicle_fuel_type_id'];
+			$seat=$vehicle['vehicle_seating_capacity_id'];
+			$driver=$driver['driver_id'];
+			$from_date='';
+			//$from_date=$driver['from_date'];
+			$reg_number=$vehicle['registration_number'];
+			$reg_date=$vehicle['registration_date'];
+			$eng_num=$vehicle['engine_number'];
+			$chases_num=$vehicle['chases_number'];
+			$permit=$vehicle['vehicle_permit_type_id'];
+			$permit_date=$vehicle['vehicle_permit_renewal_date'];
+			$permit_amount=$vehicle['vehicle_permit_renewal_amount'];
+			$tax_amount=$vehicle['tax_renewal_amount'];
+			$tax_date=$vehicle['tax_renewal_date'];
  }elseif($this->mysession->get('ins_post_all')==null ){
 
 			$ins_number ="";
@@ -802,6 +791,7 @@ $this->mysession->delete('owner_post_all');
         </div>
 		
 			</fieldset>
+			
 			<?php echo form_submit("submit-owner","Save","class='btn btn-primary next'");?>
 			</div>
 		</div>
