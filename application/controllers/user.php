@@ -654,7 +654,7 @@ public function	Customers($param2){
 			
 			$tbl="customers";
 			$baseurl=base_url().'organization/front-desk/customers/';
-			$per_page=2;
+			$per_page=10;
 			$uriseg ='4';
 			
 			$where_arry['organisation_id']=$this->session->userdata('organisation_id');
@@ -663,7 +663,7 @@ public function	Customers($param2){
 			if((isset($_REQUEST['customer'])|| isset($_REQUEST['mobile']) || isset($_REQUEST['customer_type_id']))&& isset($_REQUEST['customer_search'])){	
 				
 				if($param2==''){
-				$param2=0;
+				$param2='0';
 				}
 				if($_REQUEST['customer']!=null){
 					$data['customer']=$_REQUEST['customer'];
@@ -682,8 +682,7 @@ public function	Customers($param2){
 			if($param2==''){
 			$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
 			}
-			print_r($this->mysession->get('condition'));
-			
+						
 			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
 			if($param2==''){echo $param2;
 				$this->mysession->delete('condition');
