@@ -39,28 +39,37 @@ class General extends CI_Controller {
 	
 	public function add($tbl,$param1){
 	
-	if(isset($_REQUEST['select'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['add'])){ 
+		if(isset($_REQUEST['select'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['add'])){ 
 			
-		    $data['name']=$this->input->post('select');
+			$data['name']=$this->input->post('select');
 			$data['description']=$this->input->post('description');
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
 			
-	        $this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
+			$this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
 			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean|alpha_numeric');
-		if($this->form_validation->run()==False){
-        redirect(base_url().'user/settings');
-		}
-      else {
-		$result=$this->settings_model->addValues($tbl[$param1],$data);
-		if($result==true){
+			if($this->form_validation->run()==False){
+				redirect(base_url().'user/settings');
+			}else {
+				$result=$this->settings_model->addValues($tbl[$param1],$data);
+
+				if($result){
+					//------------fa module integration code starts here-----
+					//save customer gruop as customer in fa table
+					if($param1 == 'customer-groups'){
+						$this->load->model("account_model");
+						$fa_customer = $this->account_model->add_fa_customer($data);
+					}
+					//-----------fa code ends here---------------------------
+
 					$this->session->set_userdata(array('dbSuccess'=>'Details Added Succesfully..!'));
-				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'user/settings');
-						}
+					$this->session->set_userdata(array('dbError'=>''));
+					redirect(base_url().'user/settings');
+				}
 			}
-							}
+		}
 	}
+
 	public function edit($tbl,$param1){
 	if(isset($_REQUEST['select_text'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['edit'])){ 
 			
