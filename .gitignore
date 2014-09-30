@@ -1,6 +1,7 @@
 /application/config/config.php
 /application/config/database.php
 /facnc/company
+/facnc/config_db.php
 
 *.php~
 .gitignore~

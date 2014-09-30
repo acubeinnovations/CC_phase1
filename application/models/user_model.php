@@ -113,7 +113,7 @@ class user_model extends CI_Model {
    public function getRecordsById($tbl,$id){
    if($tbl=='vehicles'){
    $qry=$this->db->where('id',$id);
-   $qry=$this->db->get('vehicle_drivers');
+   $qry=$this->db->get('vehicle_drivers'); //echo $this->db->last_query();exit;
    $result['driver']= $qry->row_array();
    
    }
@@ -122,4 +122,11 @@ class user_model extends CI_Model {
 	$result['vehicle']= $v_qry->row_array();
 	return $result;
 }
+	public function getDriverNameById($param2){
+	$qry=$this->db->select('name');
+	$qry=$this->db->where('id',$param2);
+	$qry=$this->db->get('drivers');
+
+	return $qry->row_array();
+	}
 }

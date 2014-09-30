@@ -72,7 +72,7 @@
 		if($this->mysession->get('post_all')!=null && $this->mysession->get('post_driver')!=null ){
 			$data=$this->mysession->get('post_all');
 			$driver_data=$this->mysession->get('post_driver');
-			$vehicle_id=$data['id'];
+			$vehicle_id='';
 			$ownership =$data['vehicle_ownership_types_id'];
 			$vehicle_type=$data['vehicle_type_id'];
 			$make=$data['vehicle_make_id'];
@@ -81,7 +81,7 @@
 			$ac=$data['vehicle_ac_type_id'];
 			$fuel=$data['vehicle_fuel_type_id'];
 			$seat=$data['vehicle_seating_capacity_id'];
-			$driver_id=$driver_data['driver'];
+			$driver_id=$driver_data['driver_id'];
 			$from_date=$driver_data['from_date'];
 			$reg_number=$data['registration_number'];
 			$reg_date=$data['registration_date'];
@@ -348,7 +348,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
            <?php echo form_input(array('name'=>'tax_date','class'=>'fromdatepicker form-control' ,'value'=>$tax_date)); ?>
 	   <?php echo $this->form_functions->form_error_session('tax_date', '<p class="text-red">', '</p>'); ?>
         </div>
-	<div class='hide-me'><?php  
+	<div class='hide-me'><?php  echo $vehicle_id;
 		echo form_input(array('name'=>'hidden_id','class'=>'form-control','value'=>$vehicle_id));?></div>
 	
    		<div class="box-footer">
@@ -363,7 +363,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 	</fieldset>
 
 <?php
-			if($vehicle_id==gINVALID || $vehicle_id==null){
+			if($vehicle_id==gINVALID){
 			$btn_name='Save';
 		 }else {
 			$btn_name='Update';
