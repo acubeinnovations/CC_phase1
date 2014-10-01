@@ -19,15 +19,7 @@ class Vehicle extends CI_Controller {
             }
 			
 			if($param1==''){ 
-			if(isset($_REQUEST['submit-vehicle']) || isset($_REQUEST['update-vehicle'])){
-				if(isset($_REQUEST['submit-vehicle'])){
-				$flag='save';
-				}
-				else{
-				$flag='update';
-				}
-				
-				$this->vehicle_validation($flag);
+				$this->vehicle_validation();
 				}
 			if(isset($_REQUEST['submit-insurance'])){
 				$this->insurance_validation();
@@ -38,7 +30,7 @@ class Vehicle extends CI_Controller {
 			if(isset($_REQUEST['submit-owner'])){
 				$this->owner_validation();
 				}
-			}
+			
 			if($param1) {
 				
 				if(isset($_REQUEST['add'])){
@@ -59,8 +51,8 @@ class Vehicle extends CI_Controller {
 		}
 		
 		
-	}
-		
+	
+		}
 		else{
 			echo 'you are not authorized access this page..';
 			}
@@ -198,10 +190,11 @@ class Vehicle extends CI_Controller {
 		
 		//return 
 		}
-		public function vehicle_validation($flag){
+		public function vehicle_validation(){
 		if($this->session_check()==true) {
 		if(isset($_REQUEST['vehicle-submit'])){
-			$data['id']=$this->input->post('hidden_id');
+		
+			$v_id=$this->input->post('hidden_id');//exit;
 			$data['vehicle_ownership_types_id']=$this->input->post('ownership');
 			$data['vehicle_type_id']=$this->input->post('vehicle_type');
 			$data['vehicle_make_id']=$this->input->post('make');
@@ -210,7 +203,7 @@ class Vehicle extends CI_Controller {
 			$data['vehicle_ac_type_id']=$this->input->post('ac');
 			$data['vehicle_fuel_type_id']=$this->input->post('fuel');
 			$data['vehicle_seating_capacity_id']=$this->input->post('seat');
-			$driver_data['driver']=$this->input->post('driver');
+			$driver_data['driver_id']=$this->input->post('driver');
 			$driver_data['from_date']=$this->input->post('from_date');
 			$data['registration_number']=$this->input->post('reg_number');
 			$data['registration_date']=$this->input->post('reg_date');
@@ -227,7 +220,7 @@ class Vehicle extends CI_Controller {
 			
 					//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
 					$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
-					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean|alpha_numeric');
+					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean');
 					 $this->form_validation->set_rules('from_date','From Date ','trim|required|xss_clean');
 					 $this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
 					 $this->form_validation->set_rules('eng_num','Engine Number','trim|required|xss_clean|numeric');
@@ -282,41 +275,51 @@ $err=True;
 	 $this->mysession->set('permit','Choose Permit Type');
 	 }
 	   if($data['vehicle_model_id'] ==-1){
-	 $data['vehicle_model_id'] ='';
-	 $err=False;
+	 $data['vehicle_model_id'] ='-1';
+	 //$err=False;
 	 $this->mysession->set('model','Choose Model Type');
 	 }
-	  if($driver_data['driver'] ==-1){
-	 $driver_data['driver'] ='';
+	  if($driver_data['driver_id'] ==-1){
+	 $driver_data['driver_id'] ='';
 	 $err=False;
 	 $this->mysession->set('Driver','Choose Any Driver');
 	 } 
-
+	
 	 if($this->form_validation->run()==False|| $err==False){
 	 
-	
-
+	//print_r($driver_data);exit;
+		
 		$this->mysession->set('post_all',$data);
 		$this->mysession->set('post_driver',$driver_data);
 		redirect(base_url().'organization/front-desk/vehicle',$data);	// ?? driver data??
 	 }
 	 
 	  else{
-	   echo "hi";exit;
-	  if($data['id']==gINVALID){
+	  		$date=explode("-",$driver_data['from_date']);
+			$year=$date[0];
+			$month=$date[1];
+			$day=$date[2];
+
+			$from_unix_time = mktime(0, 0, 0, $month, $day, $year);
+			$day_before = strtotime("yesterday", $from_unix_time);
+			$formatted_date = date('Y-m-d', $day_before);
+	  if($v_id==gINVALID){ 
+		
 		$res=$this->vehicle_model->insertVehicle($data,$driver_data);
-		if($res==true){
-		$this->session->set_userdata(array('dbSuccess'=>' Added Succesfully..!'));
-				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'organization/front-desk/vehicle');
+		if( $res==true ) {
+			$this->vehicle_model->map_drivers($driver_data['driver_id'],$driver_data['from_date'],$formatted_date);
+			$this->mysession->set('dbSuccess',' Added Succesfully..!');
+			$this->mysession->set('dbError','');
+			redirect(base_url().'organization/front-desk/vehicle');
 		}
 		}
 		else{
-		$res=$this->vehicle_model->UpdateVehicledetails($all_data);
+		$res=$this->vehicle_model->UpdateVehicledetails($data,$v_id); 
 		if($res==true){
-		$this->session->set_userdata(array('dbSuccess'=>' Updated Succesfully..!'));
-				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'organization/front-desk/vehicle');
+		$this->vehicle_model->map_drivers($driver_data['driver_id'],$driver_data['from_date'],$formatted_date);
+		$this->mysession->set('dbSuccess',' Updated Succesfully..!');
+	    $this->mysession->set('dbError','');
+	    redirect(base_url().'organization/front-desk/vehicle');
 		}
 		}
 	 
@@ -461,6 +464,13 @@ $err=True;
 			}
 		}
 		
+		public function date_check($date){
+			if( strtotime($date) >= strtotime(date('Y-m-d')) ){
+			return true;
+			}	
+		}		
+
+
 			public function owner_validation(){
 		if($this->session_check()==true) {
 		    $data['vehicle_id']=$this->mysession->get('vehicle_id');

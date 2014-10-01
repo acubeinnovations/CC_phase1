@@ -5,21 +5,7 @@ $qry=$this->db->set('created', 'NOW()', FALSE);
 $qry=$this->db->insert('vehicles',$data);
 $v_id=mysql_insert_id();
 if($qry>0){
-//date insertion for vehicle-drivers
-	
-	//$date=explode("-",$driver_data['from_date']);
-	//$year=$date[0];
-	//$month=$date[1];
-	//$day=$date[2];
-	$date=$driver_data['from_date'];
-	$date_result=$this->date_check($date);
-	if($date_result==true ) {
-	$to_date='9999-12-30';
-	$tbl="vehicle_drivers";
-	$arry=array('vehicle_id'=>$v_id,'driver_id'=>$driver_data['driver'],'from_date'=>$date,'organisation_id'=>$data['organisation_id'],'user_id'=>$data['user_id'],'to_date'=>$to_date);
-	//$this->db->set('to_date', $to_date);
-	$this->db->set('created', 'NOW()', FALSE);
-	$this->db->insert($tbl,$arry);
+
 	$this->mysession->set('vehicle_id',$v_id);
 	return true;
 	}
@@ -30,13 +16,9 @@ if($qry>0){
 
 
 }
-}
 
-public function date_check($date){
-	if( strtotime($date) >= strtotime(date('Y-m-d')) ){
-	return true;
-	}	
-	}
+
+
 	
 public function insertInsurance($data){
 $qry=$this->db->insert('vehicles_insurance',$data);
@@ -65,11 +47,55 @@ $map_qry=$this->db->update('vehicles');
 return true;
 
 }
-public function updateVehicle($data,$driver_data){
-print_r($data);exit;
-$qry=$this->db->set('updated', 'NOW()', FALSE);
-$qry=$this->db->update('vehicles',$data);
+public function  UpdateVehicledetails($data,$v_id){
+	
+	$this->db->where('id',$v_id );
+	$this->db->set('updated', 'NOW()', FALSE);
+	$this->db->update('vehicles',$data);
+	return true;
 
+
+}
+
+public function map_drivers($driver_id,$from_date,$updated_date) {
+	$v_id=$this->mysession->get('vehicle_id');
+	$to_date='9999-12-30';
+	$tbl="vehicle_drivers";
+	$qry=$this->db->where(array('vehicle_id'=>$v_id,'organisation_id'=>$this->session->userdata('organisation_id'),'to_date'=>$to_date));
+	$qry=$this->db->get($tbl);
+	$result=$qry->result_array();
+	if($qry->num_rows()>0){
+	$this->db->where('id',$result[0]['id']);
+	$this->db->set('updated', 'NOW()', FALSE);
+	$this->db->update($tbl,array('to_date'=>$updated_date));
+	}
+
+	$arry=array('vehicle_id'=>$v_id,'driver_id'=>$driver_id,'from_date'=>$from_date,'organisation_id'=>$this->session->userdata('organisation_id'),'user_id'=>$this->session->userdata('user_id'),'to_date'=>$to_date);
+	$this->db->set('created', 'NOW()', FALSE);
+	$this->db->insert($tbl,$arry);
+
+	}
+
+
+
+public function sample_call($data,$driver_data,$v_id){
+	$to_date='9999-12-30';
+	$tbl="vehicle_drivers";
+	$qry=$this->db->where(array('vehicle_id'=>$v_id,'organisation_id'=>$data['organisation_id'],'to_date'=>$to_date));
+	$qry=$this->db->get($tbl);
+	$result=$qry->result_array();
+	//$from=$result[0]['from_date'];
+	if($qry->num_rows()>0){
+	$this->db->where('id',$result[0]['id']);
+	$this->db->set('updated', 'NOW()', FALSE);
+	$this->db->update($tbl,array('to_date'=>$formatted_date));
+	
+	}
+	
+	$arry=array('vehicle_id'=>$v_id,'driver_id'=>$driver_data['driver_id'],'from_date'=>$date,'organisation_id'=>$data['organisation_id'],'user_id'=>$data['user_id'],'to_date'=>$to_date);
+	$this->db->set('created', 'NOW()', FALSE);
+	$this->db->insert($tbl,$arry);
+	$this->mysession->set('vehicle_id',$v_id);
 }
 
 }?>

@@ -1,6 +1,7 @@
 <?php
 class Driver_model extends CI_Model {
 public function addDriverdetails($data){
+
 	$this->db->set('salary', '2500');
 	$this->db->set('minimum_working_days', '25');
 	$this->db->set('created', 'NOW()', FALSE);
@@ -36,8 +37,8 @@ public function getDriverDetails($data){
 
 	}
 
-	public function UpdateDriverdetails($data){
-	$arry=array('id'=>$data['id'],'organisation_id'=>$data['organisation_id']);
+	public function UpdateDriverdetails($data,$id){
+	$arry=array('id'=>$id,'organisation_id'=>$data['organisation_id']);
 	$this->db->set('updated', 'NOW()', FALSE);
 	$qry=$this->db->where($arry);
 	$qry=$this->db->update("drivers",$data);

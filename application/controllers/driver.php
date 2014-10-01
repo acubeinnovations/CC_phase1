@@ -52,7 +52,7 @@ class Driver extends CI_Controller {
 	$data['id_proof_type_id']=$this->input->post('id_proof_type_id');
 	$data['id_proof_document_number']=$this->input->post('id_proof_document_number');
 	$data['name_on_id_proof']=$this->input->post('name_on_id_proof');
-	$data['id']=$this->input->post('hidden_id');
+	$dr_id=$this->input->post('hidden_id');
 	$data['organisation_id']=$this->session->userdata('organisation_id'); 
 	$data['user_id']=$this->session->userdata('id');
 		$err=True;
@@ -118,8 +118,8 @@ class Driver extends CI_Controller {
 		redirect(base_url().'organization/front-desk/driver',$data);	
 	 }
 	 else{
-		if($data['id']==gINVALID){
-		$res=$this->driver_model->addDriverdetails($data);
+		if($dr_id==gINVALID){
+		$res=$this->driver_model->addDriverdetails($data); 
 		if($res==true){
 		$this->session->set_userdata(array('dbSuccess'=>' Added Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
@@ -127,7 +127,8 @@ class Driver extends CI_Controller {
 		}
 		}
 		else{
-		$res=$this->driver_model->UpdateDriverdetails($data);
+		echo $dr_id;exit;
+		$res=$this->driver_model->UpdateDriverdetails($data,$dr_id);
 		if($res==true){
 		$this->session->set_userdata(array('dbSuccess'=>' Updated Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
