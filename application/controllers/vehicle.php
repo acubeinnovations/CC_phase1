@@ -194,7 +194,7 @@ class Vehicle extends CI_Controller {
 		if($this->session_check()==true) {
 		if(isset($_REQUEST['vehicle-submit'])){
 		
-			$v_id=$this->input->post('hidden_id');
+			$v_id=$this->input->post('hidden_id');//exit;
 			$data['vehicle_ownership_types_id']=$this->input->post('ownership');
 			$data['vehicle_type_id']=$this->input->post('vehicle_type');
 			$data['vehicle_make_id']=$this->input->post('make');
@@ -220,7 +220,7 @@ class Vehicle extends CI_Controller {
 			
 					//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
 					$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
-					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean|alpha_numeric');
+					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean');
 					 $this->form_validation->set_rules('from_date','From Date ','trim|required|xss_clean');
 					 $this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
 					 $this->form_validation->set_rules('eng_num','Engine Number','trim|required|xss_clean|numeric');
@@ -275,8 +275,8 @@ $err=True;
 	 $this->mysession->set('permit','Choose Permit Type');
 	 }
 	   if($data['vehicle_model_id'] ==-1){
-	 $data['vehicle_model_id'] ='';
-	 $err=False;
+	 $data['vehicle_model_id'] ='-1';
+	 //$err=False;
 	 $this->mysession->set('model','Choose Model Type');
 	 }
 	  if($driver_data['driver_id'] ==-1){
@@ -284,34 +284,42 @@ $err=True;
 	 $err=False;
 	 $this->mysession->set('Driver','Choose Any Driver');
 	 } 
-
+	
 	 if($this->form_validation->run()==False|| $err==False){
 	 
-	
-
+	//print_r($driver_data);exit;
+		
 		$this->mysession->set('post_all',$data);
 		$this->mysession->set('post_driver',$driver_data);
 		redirect(base_url().'organization/front-desk/vehicle',$data);	// ?? driver data??
 	 }
 	 
 	  else{
-	  
+	  		$date=explode("-",$driver_data['from_date']);
+			$year=$date[0];
+			$month=$date[1];
+			$day=$date[2];
+
+			$from_unix_time = mktime(0, 0, 0, $month, $day, $year);
+			$day_before = strtotime("yesterday", $from_unix_time);
+			$formatted_date = date('Y-m-d', $day_before);
 	  if($v_id==gINVALID){ 
 		
 		$res=$this->vehicle_model->insertVehicle($data,$driver_data);
-		
-		if($res==true){
-		$this->mysession->set('dbSuccess',' Added Succesfully..!');
-				    $this->mysession->set('dbError','');
-				    redirect(base_url().'organization/front-desk/vehicle');
+		if( $res==true ) {
+			$this->vehicle_model->map_drivers($driver_data['driver_id'],$driver_data['from_date'],$formatted_date);
+			$this->mysession->set('dbSuccess',' Added Succesfully..!');
+			$this->mysession->set('dbError','');
+			redirect(base_url().'organization/front-desk/vehicle');
 		}
 		}
 		else{
-		$res=$this->vehicle_model->UpdateVehicledetails($data,$driver_data,$v_id); 
+		$res=$this->vehicle_model->UpdateVehicledetails($data,$v_id); 
 		if($res==true){
+		$this->vehicle_model->map_drivers($driver_data['driver_id'],$driver_data['from_date'],$formatted_date);
 		$this->mysession->set('dbSuccess',' Updated Succesfully..!');
-				    $this->mysession->set('dbError','');
-				    redirect(base_url().'organization/front-desk/vehicle');
+	    $this->mysession->set('dbError','');
+	    redirect(base_url().'organization/front-desk/vehicle');
 		}
 		}
 	 
@@ -456,6 +464,13 @@ $err=True;
 			}
 		}
 		
+		public function date_check($date){
+			if( strtotime($date) >= strtotime(date('Y-m-d')) ){
+			return true;
+			}	
+		}		
+
+
 			public function owner_validation(){
 		if($this->session_check()==true) {
 		    $data['vehicle_id']=$this->mysession->get('vehicle_id');

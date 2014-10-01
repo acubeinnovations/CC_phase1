@@ -941,15 +941,14 @@ public function profile() {
 				$org_id=$this->session->userdata('organisation_id');
 				$arry=array('id'=>$id,'organisation_id'=>$org_id);
 				$data['select']=$this->select_Vehicle_Values();
-				//print_r($data['select']);exit;
 				
-				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);
+				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);//print_r($data['record_values']);exit;
 				
 				//print_r($data['record_values']);
 				$data['driver']=$data['record_values']['driver'];
 				$data['vehicle']=$data['record_values']['vehicle'];
 				if(is_numeric($param2)){
-				$driver_id=$data['driver']['driver_id'];
+				$driver_id=$data['driver']['id'];
 				$result=$this->user_model->getDriverNameById($driver_id);
 				$data['select']['drivers'][$driver_id]=$result['name'];
 				}
