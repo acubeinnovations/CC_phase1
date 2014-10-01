@@ -21,13 +21,13 @@ class Vehicle extends CI_Controller {
 			if($param1==''){ 
 				$this->vehicle_validation();
 				}
-			if(isset($_REQUEST['submit-insurance'])){
+			if(isset($_REQUEST['insurance-submit'])){
 				$this->insurance_validation();
 				}
-			if(isset($_REQUEST['submit-loan'])){
+			if(isset($_REQUEST['loan-submit'])){
 				$this->loan_validation();
 				}
-			if(isset($_REQUEST['submit-owner'])){
+			if(isset($_REQUEST['owner-submit'])){
 				$this->owner_validation();
 				}
 			
@@ -280,7 +280,7 @@ $err=True;
 	 $this->mysession->set('model','Choose Model Type');
 	 }
 	  if($driver_data['driver_id'] ==-1){
-	 $driver_data['driver'] ='';
+	 $driver_data['driver_id'] ='';
 	 $err=False;
 	 $this->mysession->set('Driver','Choose Any Driver');
 	 } 
@@ -306,14 +306,16 @@ $err=True;
 	  if($v_id==gINVALID){ 
 		
 		$res=$this->vehicle_model->insertVehicle($data,$driver_data);
+		$v_id=$this->mysession->get('vehicle_id');
 		if( $res==true ) {
 			$this->vehicle_model->map_drivers($driver_data['driver_id'],$driver_data['from_date'],$formatted_date);
-			$this->mysession->set('dbSuccess',' Added Succesfully..!');
-			$this->mysession->set('dbError','');
-			redirect(base_url().'organization/front-desk/vehicle');
+			//$this->mysession->set('dbSuccess',' Added Succesfully..!');
+			//$this->mysession->set('dbError','');
+			redirect(base_url().'organization/front-desk/vehicle/insurance');
 		}
 		}
 		else{
+		
 		$res=$this->vehicle_model->UpdateVehicledetails($data,$v_id); 
 		if($res==true){
 		$this->vehicle_model->map_drivers($driver_data['driver_id'],$driver_data['from_date'],$formatted_date);
@@ -332,6 +334,8 @@ $err=True;
 		}
 		public function insurance_validation(){
 		if($this->session_check()==true) {
+			if(isset($_REQUEST['insurance-submit'])){
+			$ins_id=$this->input->post('hidden_id');
 			$data['vehicle_id']=$this->mysession->get('vehicle_id');
 			$data['insurance_number']=$this->input->post('insurance_number');
 			$data['insurance_date']=$this->input->post('insurance_date');
@@ -341,7 +345,9 @@ $err=True;
 			$data['Insurance_agency']=$this->input->post('insurance_agency');
 			$data['Insurance_agency_address']=$this->input->post('insurance_agency_address');
 			$data['Insurance_agency_phone']=$this->input->post('insurance_agency_phn');
+			$hphone=$this->input->post('hphone');
 			$data['Insurance_agency_email']=$this->input->post('insurance_agency_mail');
+			$hmail=$this->input->post('hmail');
 			$data['Insurance_agency_web']=$this->input->post('insurance_agency_web');
 			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
 					$this->form_validation->set_rules('insurance_number','Insurance Number','trim|required|xss_clean|numeric');
@@ -351,8 +357,17 @@ $err=True;
 					 $this->form_validation->set_rules('insurance_pre-amount','Insurance Pre Amount','trim|required|xss_clean');
 					 $this->form_validation->set_rules('insurance_agency','Insurance Agency','trim|required|xss_clean|alpha_numeric');
 					 $this->form_validation->set_rules('insurance_agency_address','Address','trim|required|xss_clean|alpha_numeric');
+					 if($hphone==$data['Insurance_agency_phone']){
+					 $this->form_validation->set_rules('insurance_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
+					 }
+					 else{
 					 $this->form_validation->set_rules('insurance_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicles_insurance.Insurance_agency_phone]');
+					 }
+					 if($hmail==$data['Insurance_agency_email']){
+					 $this->form_validation->set_rules('insurance_agency_mail','Mail ID','trim|required|xss_clean|valid_email');
+					 }else{
 					 $this->form_validation->set_rules('insurance_agency_mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicles_insurance.Insurance_agency_email]');
+					 }
 					 $this->form_validation->set_rules('insurance_agency_web','Web Address','trim|required|xss_clean|alpha_numeric');
 					 
 					 //for insurance
@@ -365,30 +380,44 @@ $err=True;
 			$this->mysession->set('Err_insurance_pre_amt','Invalid Characters on Pre Amount field!');
 			$err=False;
 			}
-
+	if($this->mysession->get('vehicle_id')==null)
+	{
+	$this->mysession->set('Err_invalid_insurance_add','Invalid Attempt!');
+	$err=False;
+	}
 	 if($this->form_validation->run()==False|| $err==False){
+	 
 		
 		$this->mysession->set('ins_post_all',$data);
 		
 		redirect(base_url().'organization/front-desk/vehicle/insurance',$data);	
 	 }
 	 
-	  else{
+	  else{ 
 	  //database insertion for vehicle
-
-	  $result=$this->vehicle_model->insertInsurance($data);
-	 
-	  if($result==true){
-		$this->mysession->set('ins_Success',' Added Succesfully..!');
+	  if($ins_id==gINVALID){ 
+		
+		$res=$this->vehicle_model->insertInsurance($data);
+		$ins_id=$this->mysession->get('vehicle_id');
+		if( $res==true ) {
+			$this->mysession->set('ins_Success',' Added Succesfully..!');
 				    $this->mysession->set('ins_Error','');
 				    redirect(base_url().'organization/front-desk/vehicle/insurance');
 		}
-		else{
-		$this->mysession->set('ins_post_all',$data);
-		
-		redirect(base_url().'organization/front-desk/vehicle/insurance');
 		}
+		else{
+		
+		$res=$this->vehicle_model->UpdateInsurancedetails($data,$ins_id); 
+		if($res==true){
+		$this->mysession->set('dbSuccess',' Updated Succesfully..!');
+	    $this->mysession->set('dbError','');
+	    redirect(base_url().'organization/front-desk/vehicle');
+		}
+		}
+
 	  }
+		
+		}
 		}
 		else{
 			echo 'you are not authorized access this page..';
@@ -434,7 +463,11 @@ $err=True;
 			$this->mysession->set('Err_loan_emi_amt','Invalid Characters on EMI Amount field!');
 			$err=False;
 			}
-
+	if($this->mysession->get('vehicle_id')==null)
+	{
+	$this->mysession->set('Err_invalid_loan_add','Invalid Attempt!');
+	$err=False;
+	}
 	 if($this->form_validation->run()==False|| $err==False){
 		
 		$this->mysession->set('loan_post_all',$data);
@@ -492,7 +525,11 @@ $err=True;
 					 $this->form_validation->set_rules('dob','Date of Birth','trim|required|xss_clean');
 					 
 					 //for owner
-
+			if($this->mysession->get('vehicle_id')==null)
+	{
+	$this->mysession->set('Err_invalid_owner_add','Invalid Attempt!');
+	$err=False;
+	}
 	 if($this->form_validation->run()==False){
 		
 		$this->mysession->set('owner_post_all',$data);

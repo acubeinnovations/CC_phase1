@@ -129,4 +129,22 @@ class user_model extends CI_Model {
 
 	return $qry->row_array();
 	}
+	public function getInsurance($id){
+	$qry=$this->db->where('id',$id);
+	$qry=$this->db->get('vehicles_insurance');
+	return $qry->row_array();
+	
+	}
+	public function getLoan($id){
+	$qry=$this->db->where('id',$id);
+	$qry=$this->db->get('vehicle_loans');
+	return $qry->row_array();
+	
+	}
+	public function getOwner($id){
+	$qry=$this->db->where('id',$id);
+	$qry=$this->db->get('vehicle_owners');
+	return $qry->row_array();
+	
+	}
 }
