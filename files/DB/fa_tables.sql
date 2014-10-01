@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 29, 2014 at 10:59 AM
+-- Generation Time: Oct 01, 2014 at 10:48 AM
 -- Server version: 5.5.38
 -- PHP Version: 5.3.10-1ubuntu3.13
 
@@ -481,10 +481,7 @@ CREATE TABLE IF NOT EXISTS `0_currencies` (
 --
 
 INSERT INTO `0_currencies` (`currency`, `curr_abrev`, `curr_symbol`, `country`, `hundreds_name`, `auto_update`, `inactive`) VALUES
-('US Dollars', 'USD', '$', 'United States', 'Cents', 1, 0),
-('CA Dollars', 'CAD', '$', 'Canada', 'Cents', 1, 0),
-('Euro', 'EUR', '?', 'Europe', 'Cents', 1, 0),
-('Pounds', 'GBP', '?', 'England', 'Pence', 1, 0);
+('Indian Rupee', 'INR', '?', 'India', 'Rs', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -792,7 +789,14 @@ CREATE TABLE IF NOT EXISTS `0_item_codes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `stock_id` (`stock_id`,`item_code`),
   KEY `item_code` (`item_code`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `0_item_codes`
+--
+
+INSERT INTO `0_item_codes` (`id`, `item_code`, `stock_id`, `description`, `category_id`, `quantity`, `is_foreign`, `inactive`) VALUES
+(1, '101', '101', 'Trip', 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -848,7 +852,7 @@ CREATE TABLE IF NOT EXISTS `0_item_units` (
 --
 
 INSERT INTO `0_item_units` (`abbr`, `name`, `decimals`, `inactive`) VALUES
-('ea.', 'Each', 0, 0);
+('km', 'Kilometer', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -889,6 +893,13 @@ CREATE TABLE IF NOT EXISTS `0_loc_stock` (
   PRIMARY KEY (`loc_code`,`stock_id`),
   KEY `stock_id` (`stock_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `0_loc_stock`
+--
+
+INSERT INTO `0_loc_stock` (`loc_code`, `stock_id`, `reorder_level`) VALUES
+('DEF', '101', 0);
 
 -- --------------------------------------------------------
 
@@ -1382,17 +1393,14 @@ CREATE TABLE IF NOT EXISTS `0_stock_category` (
   `dflt_no_sale` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`category_id`),
   UNIQUE KEY `description` (`description`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `0_stock_category`
 --
 
 INSERT INTO `0_stock_category` (`category_id`, `description`, `dflt_tax_type`, `dflt_units`, `dflt_mb_flag`, `dflt_sales_act`, `dflt_cogs_act`, `dflt_inventory_act`, `dflt_adjustment_act`, `dflt_assembly_act`, `dflt_dim1`, `dflt_dim2`, `inactive`, `dflt_no_sale`) VALUES
-(1, 'Components', 1, 'each', 'B', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0),
-(2, 'Charges', 1, 'each', 'D', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0),
-(3, 'Systems', 1, 'each', 'M', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0),
-(4, 'Services', 1, 'hrs', 'D', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0);
+(1, 'Services', 1, 'km', 'D', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1425,6 +1433,13 @@ CREATE TABLE IF NOT EXISTS `0_stock_master` (
   `editable` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`stock_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `0_stock_master`
+--
+
+INSERT INTO `0_stock_master` (`stock_id`, `category_id`, `tax_type_id`, `description`, `long_description`, `units`, `mb_flag`, `sales_account`, `cogs_account`, `inventory_account`, `adjustment_account`, `assembly_account`, `dimension_id`, `dimension2_id`, `actual_cost`, `last_cost`, `material_cost`, `labour_cost`, `overhead_cost`, `inactive`, `no_sale`, `editable`) VALUES
+('101', 1, 1, 'Trip', '', 'km', 'D', '4010', '5010', '1510', '5040', '1530', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1585,7 +1600,7 @@ INSERT INTO `0_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('email', 'setup.company', 'varchar', 100, ''),
 ('coy_logo', 'setup.company', 'varchar', 100, ''),
 ('domicile', 'setup.company', 'varchar', 55, ''),
-('curr_default', 'setup.company', 'char', 3, 'USD'),
+('curr_default', 'setup.company', 'char', 3, 'INR'),
 ('use_dimension', 'setup.company', 'tinyint', 1, '1'),
 ('f_year', 'setup.company', 'int', 11, '6'),
 ('no_item_list', 'setup.company', 'tinyint', 1, '0'),
@@ -1595,7 +1610,7 @@ INSERT INTO `0_sys_prefs` (`name`, `category`, `type`, `length`, `value`) VALUES
 ('time_zone', 'setup.company', 'tinyint', 1, '0'),
 ('add_pct', 'setup.company', 'int', 5, '-1'),
 ('round_to', 'setup.company', 'int', 5, '1'),
-('login_tout', 'setup.company', 'smallint', 6, '600'),
+('login_tout', 'setup.company', 'smallint', 6, '7200'),
 ('past_due_days', 'glsetup.general', 'int', 11, '30'),
 ('profit_loss_year_act', 'glsetup.general', 'varchar', 15, '9990'),
 ('retained_earnings_act', 'glsetup.general', 'varchar', 15, '3590'),
@@ -1847,7 +1862,7 @@ CREATE TABLE IF NOT EXISTS `0_users` (
 --
 
 INSERT INTO `0_users` (`id`, `user_id`, `password`, `real_name`, `role_id`, `phone`, `email`, `language`, `date_format`, `date_sep`, `tho_sep`, `dec_sep`, `theme`, `page_size`, `prices_dec`, `qty_dec`, `rates_dec`, `percent_dec`, `show_gl`, `show_codes`, `show_hints`, `last_visit_date`, `query_size`, `graphic_links`, `pos`, `print_profile`, `rep_popup`, `sticky_doc_date`, `startup_tab`, `inactive`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 2, '', 'adm@adm.com', '', 0, 0, 0, 0, 'default', 'Letter', 2, 2, 4, 1, 1, 0, 0, '2014-09-29 07:29:00', 10, 1, 1, '1', 1, 0, 'orders', 0);
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 2, '', 'adm@adm.com', '', 0, 0, 0, 0, 'default', 'Letter', 2, 2, 4, 1, 1, 0, 0, '2014-10-01 06:55:33', 10, 1, 1, '1', 1, 0, 'orders', 0);
 
 -- --------------------------------------------------------
 
