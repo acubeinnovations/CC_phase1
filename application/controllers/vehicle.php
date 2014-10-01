@@ -280,7 +280,7 @@ $err=True;
 	 $this->mysession->set('model','Choose Model Type');
 	 }
 	  if($driver_data['driver_id'] ==-1){
-	 $driver_data['driver'] ='';
+	 $driver_data['driver_id'] ='';
 	 $err=False;
 	 $this->mysession->set('Driver','Choose Any Driver');
 	 } 
