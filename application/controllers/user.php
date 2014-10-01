@@ -71,11 +71,11 @@ class User extends CI_Controller {
 		}elseif($param1=='driver-profile'&&($param2== ''|| is_numeric($param2))){
 		$this->ShowDriverProfile($param1,$param2);
 		}
-		elseif($param1=='vehicle' && ($param2== ''|| is_numeric($param2)) &&($param3== ''|| is_numeric($param3))){
+		elseif($param1=='vehicle' && ($param2!= ''|| is_numeric($param2)||$param2== '') &&($param3== ''|| is_numeric($param3))){
 
 		$this->ShowVehicleView($param1,$param2,$param3);
 		}
-		elseif($param1=='vehicle' && $param2=='insurance'&& ($param3== ''|| is_numeric($param3))){
+		/*elseif($param1=='vehicle' && $param2!=''&&($param3==''||is_numeric($param3))){
 		$this->ShowVehicleView($param1,$param2,$param3);
 		}
 		elseif($param1=='vehicle' && $param2=='loan' && ($param3== ''|| is_numeric($param3))){
@@ -83,7 +83,7 @@ class User extends CI_Controller {
 		}
 		elseif($param1=='vehicle' && $param2=='owner' && ($param3== ''|| is_numeric($param3))){
 		$this->ShowVehicleView($param1,$param2,$param3);
-		}
+		}*/
 		elseif($param1=='list-vehicle'&&($param2== ''|| is_numeric($param2)) && ($param3== ''|| is_numeric($param3))){
 		$this->ShowVehicleList($param1,$param2,$param3);
 		}
@@ -897,14 +897,13 @@ public function profile() {
 	}
 	
 	public function ShowVehicleView($param1,$param2,$param3) {
+	
 		if($this->session_check()==true) {
 		
-		if($param2!=null&& $param2!=gINVALID){
-		$data['vehicle_tab']='active';
-		$tbl='vehicles';
-		$id=$param2;
-		}  
-			//sample starts
+		if($param1=='vehicle'&& $param2==''){
+		$this->mysession->delete('vehicle_id');
+		} 
+			
 				if($param2==''||is_numeric($param2)){
 				$data['vehicle_tab']='active';
 				$tbl='vehicles';
@@ -916,17 +915,8 @@ public function profile() {
 				}
 				}
 				
-				if($param2=='insurance'){
-				
+				if($param2=='insurance'){ 
 				$data['insurance_tab']='active';
-				$tbl='vehicles_insurance';
-				$id=$param3;
-				if($id!=null){
-			
-				$this->mysession->set('vehicle_id',$id);
-				
-				}
-				
 				}
 				if($param2=='loan'&&($param3== ''|| is_numeric($param3))){
 				$data['loan_tab']='active';
@@ -939,20 +929,36 @@ public function profile() {
 				$id=$param3;
 				}
 				$org_id=$this->session->userdata('organisation_id');
-				$arry=array('id'=>$id,'organisation_id'=>$org_id);
+				//$arry=array('id'=>$id,'organisation_id'=>$org_id);
+				
 				$data['select']=$this->select_Vehicle_Values();
 				
-				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);//print_r($data['record_values']);exit;
+				if($param2!=null&& is_numeric($param2)){
 				
-				//print_r($data['record_values']);
+				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);
+				
 				$data['driver']=$data['record_values']['driver'];
 				$data['vehicle']=$data['record_values']['vehicle'];
+				$insurance_id=$data['vehicle']['vehicles_insurance_id'];
+				$loan_id=$data['vehicle']['vehicle_loan_id'];
+				$owner_id=$data['vehicle']['vehicle_owner_id'];
+				if($insurance_id!=gINVALID && $insurance_id!=0){
+				$data['get_insurance']=$this->user_model->getInsurance($insurance_id);
+				//print_r($data['get_insurance']);//continueee
+				}
+				if($loan_id!=gINVALID && $loan_id!=0){
+				$data['get_loan']=$this->user_model->getLoan($loan_id);
+				}
+				if($owner_id!=gINVALID && $owner_id!=0){
+				$data['get_owner']=$this->user_model->getOwner($owner_id);
+				}
+				
 				if(is_numeric($param2)){
-				$driver_id=$data['driver']['id'];
+				$driver_id=$data['driver']['driver_id'];
 				$result=$this->user_model->getDriverNameById($driver_id);
 				$data['select']['drivers'][$driver_id]=$result['name'];
 				}
-			
+			}
 			//sample ends
 				$data['title']="Vehicle Details | ".PRODUCT_NAME;  
 				$page='user-pages/addVehicles';
