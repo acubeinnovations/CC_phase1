@@ -18,7 +18,7 @@ public function getDriverDetails($data){
 	}
 
 	function getDriversArray($condion=''){
-	$this->db->from('vehicle_drivers');
+	$this->db->from('drivers');
 	if($condion!=''){
     $this->db->where($condion);
 	}
@@ -26,7 +26,7 @@ public function getDriverDetails($data){
 	
 
 		for($i=0;$i<count($results);$i++){
-		$values[$results[$i]['id']]=$results[$i]['name'];
+		$values[$results[$i]->id]=$results[$i]->name;
 		}
 		if(!empty($values)){
 		return $values;

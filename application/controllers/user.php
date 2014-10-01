@@ -65,7 +65,7 @@ class User extends CI_Controller {
 		}
 		elseif($param1=='driver'){
 
-		$this->ShowDriverView($param1);
+		$this->ShowDriverView($param2);
 		}elseif($param1=='list-driver'&&($param2== ''|| is_numeric($param2))){
 		$this->ShowDriverList($param1,$param2);
 		}elseif($param1=='driver-profile'&&($param2== ''|| is_numeric($param2))){
@@ -809,7 +809,14 @@ public function profile() {
 		if($this->session_check()==true) {
 			//sample starts
 				$data['select']=$this->select_Box_Values();
-	
+			
+			//trip details
+		
+			if($param1!=''){
+			$conditon=array('driver_id'=>$param1);
+			$data['trips']=$this->trip_booking_model->getDetails($conditon,$orderby='');
+			}
+			print_r($data['trips']);exit;
 			//sample ends
 				$data['title']="Driver Details | ".PRODUCT_NAME;  
 				$page='user-pages/addDrivers';
