@@ -48,7 +48,7 @@
     <div class="tab-content">
 
         <div class="<?php echo $v_tab;?>" id="tab_1">
-	<?php
+	<?php 
 			$vehicle_id=gINVALID;
 			$ownership ="";
 			$vehicle_type="";
@@ -72,7 +72,7 @@
 		if($this->mysession->get('post_all')!=null && $this->mysession->get('post_driver')!=null ){
 			$data=$this->mysession->get('post_all');
 			$driver_data=$this->mysession->get('post_driver');
-			$vehicle_id='';
+			$vehicle_id=gINVALID;
 			$ownership =$data['vehicle_ownership_types_id'];
 			$vehicle_type=$data['vehicle_type_id'];
 			$make=$data['vehicle_make_id'];
@@ -375,32 +375,8 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
         <div class="<?php echo $i_tab;?>" id="tab_2">
 		
 	<?php
-	
-if($this->mysession->get('vehicle_id')!=null){
 
-
-			$ownership =$vehicle['vehicle_ownership_types_id'];
-			$vehicle_type=$vehicle['vehicle_type_id'];
-			$make=$vehicle['vehicle_make_id'];
-			$model=$vehicle['vehicle_model_id'];
-			$year=$vehicle['vehicle_manufacturing_year'];
-			$ac=$vehicle['vehicle_ac_type_id'];
-			$fuel=$vehicle['vehicle_fuel_type_id'];
-			$seat=$vehicle['vehicle_seating_capacity_id'];
-			$driver=$driver['driver_id'];
-			$from_date='';
-			//$from_date=$driver['from_date'];
-			$reg_number=$vehicle['registration_number'];
-			$reg_date=$vehicle['registration_date'];
-			$eng_num=$vehicle['engine_number'];
-			$chases_num=$vehicle['chases_number'];
-			$permit=$vehicle['vehicle_permit_type_id'];
-			$permit_date=$vehicle['vehicle_permit_renewal_date'];
-			$permit_amount=$vehicle['vehicle_permit_renewal_amount'];
-			$tax_amount=$vehicle['tax_renewal_amount'];
-			$tax_date=$vehicle['tax_renewal_date'];
- }elseif($this->mysession->get('ins_post_all')==null ){
-
+			$insurance_id=gINVALID;
 			$ins_number ="";
 			$ins_date="";
 			$ins_renewal_date="";
@@ -411,13 +387,10 @@ if($this->mysession->get('vehicle_id')!=null){
 			$ins_phn="";
 			$ins_mail="";
 			$ins_web="";
-	
-
-}
-else
-{
-$data=$this->mysession->get('ins_post_all');
-           $ins_number =$data['insurance_number'];
+	if($this->mysession->get('ins_post_all')!=null ){ 
+	$data=$this->mysession->get('ins_post_all');
+			$insurance_id='';
+            $ins_number =$data['insurance_number'];
 			$ins_date=$data['insurance_date'];
 			$ins_renewal_date=$data['insurance_renewal_date'];
 			$ins_prem_amt=$data['insurance_premium_amount'];
@@ -427,10 +400,21 @@ $data=$this->mysession->get('ins_post_all');
 			$ins_phn=$data['Insurance_agency_phone'];
 			$ins_mail=$data['Insurance_agency_email'];
 			$ins_web=$data['Insurance_agency_web'];
-$this->mysession->delete('ins_post_all');
-
-}
-
+			$this->mysession->delete('ins_post_all');
+		}else if(isset($get_insurance)&& $get_insurance!=null){ 
+			$insurance_id=$get_insurance['id'];
+		    $ins_number =$get_insurance['insurance_number'];
+			$ins_date=$get_insurance['insurance_date'];
+			$ins_renewal_date=$get_insurance['insurance_renewal_date'];
+			$ins_prem_amt=$get_insurance['insurance_premium_amount'];
+			$ins_amt=$get_insurance['insurance_amount'];
+			$ins_agency=$get_insurance['Insurance_agency'];
+			$ins_address=$get_insurance['Insurance_agency_address'];
+			$ins_phn=$get_insurance['Insurance_agency_phone'];
+			$ins_mail=$get_insurance['Insurance_agency_email'];
+			$ins_web=$get_insurance['Insurance_agency_web'];
+			}
+			
 ?>
 
 				<?php if($this->mysession->get('ins_Success') != '') { ?>
@@ -447,17 +431,17 @@ $this->mysession->delete('ins_post_all');
        </div>
        <?php    } ?>
 	   
-	  			<?php if($this->mysession->get('Err_insurance_amt') != ''||$this->mysession->get('Err_insurance_pre_amt') != ''){ ?>
+	  			<?php if($this->mysession->get('Err_insurance_amt') != ''||$this->mysession->get('Err_insurance_pre_amt') != ''||$this->mysession->get('Err_invalid_insurance_add') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                         <b>Alert!</b><br><?php
 													echo $this->mysession->get('Err_insurance_amt').br();
 													echo $this->mysession->get('Err_insurance_pre_amt').br();
-													
+													echo $this->mysession->get('Err_invalid_insurance_add').br();
 														$this->mysession->delete('Err_insurance_amt');
 														$this->mysession->delete('Err_insurance_pre_amt');
-														
+														$this->mysession->delete('Err_invalid_insurance_add');
 														
 										?>
                                     </div>
@@ -506,60 +490,37 @@ $this->mysession->delete('ins_post_all');
 		<?php echo form_label('Insurance Agency Phone','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'insurance_agency_phn','class'=>'form-control','id'=>'insurance_agency_phn','value'=>$ins_phn,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('insurance_agency_phn', '<p class="text-red">', '</p>'); ?>
-        </div>
+        <div class="hide-me"><?php echo form_input(array('name'=>'hphone','value'=>$ins_phn));?></div>
+		</div>
 		<div class="form-group">
 		<?php echo form_label('Insurance Agency Email','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'insurance_agency_mail','class'=>'form-control','id'=>'insurance_agency_mail','value'=>$ins_mail,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('insurance_agency_mail', '<p class="text-red">', '</p>'); ?>
-        </div>
+        <div class="hide-me"><?php echo form_input(array('name'=>'hmail','value'=>$ins_mail));?></div>
+		</div>
 		<div class="form-group">
 		<?php echo form_label('Insurance Agency Web','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'insurance_agency_web','class'=>'form-control','id'=>'insurance_agency_web','value'=>$ins_web,'rows'=>4)); ?>
-	   <?php echo $this->form_functions->form_error_session('insurance_agency_web', '<p class="text-red">', '</p>'); ?>
+	   <?php echo $this->form_functions->form_error_session('insurance_agency_web', '<p class="text-red">', '</p>');?>
         </div>
+		<div class='hide-me'><?php 
+		echo form_input(array('name'=>'hidden_ins_id','class'=>'form-control','value'=>$insurance_id));?></div>
 			</fieldset>
 			<?php 
-			//echo form_submit("driver-submit","<< Previous","class='btn btn-primary prev1'");
-			echo form_submit("submit-insurance","Save","class='btn btn-primary next1'");?>
+			if($insurance_id==gINVALID){
+			$btn_name='Save';
+		 }else {
+			$btn_name='Update';
+			}
+			echo form_submit("insurance-submit",$btn_name,"class='btn btn-primary'"); 
+			?>
 			</div>
         </div>
         <div class="<?php echo $l_tab;?>" id="tab_3">
 				<?php
- if(($this->mysession->get('org_id')!=null)&&($this->mysession->get('user_id')!=null)){
-    $name=$result[0]['name'];
-	$place_of_birth=$result[0]['place_of_birth'];
-	$dob=$result[0]['dob'];
-	$blood_group=$result[0]['blood_group'];
-	$marital_status_id=$result[0]['marital_status_id'];
-	$children=$result[0]['children'];
-	$present_address=$result[0]['present_address'];
-	$permanent_address=$result[0]['permanent_address'];
-	$district=$result[0]['district'];
-	$state=$result[0]['state'];
-	$pin_code=$result[0]['pin_code'];
-	$phone=$result[0]['phone'];
-	$mobile=$result[0]['mobile'];
-	$email=$result[0]['email'];
-	$date_of_joining=$result[0]['date_of_joining'];
-	$badge=$result[0]['badge'];
-	$license_number=$result[0]['license_number'];
-	$license_renewal_date=$result[0]['license_renewal_date'];
-	$badge_renewal_date=$result[0]['badge_renewal_date'];
-	$mother_tongue=$result[0]['mother_tongue'];
-	$pan_number=$result[0]['pan_number'];
-	$bank_account_number=$result[0]['bank_account_number'];
-	$name_on_bank_pass_book=$result[0]['name_on_bank_pass_book'];
-	$bank_name=$result[0]['bank_name'];
-	$branch=$result[0]['branch'];
-	$bank_account_type_id=$result[0]['bank_account_type_id'];
-	$ifsc_code=$result[0]['ifsc_code'];
-	$id_proof_type_id=$result[0]['id_proof_type_id'];
-	$id_proof_document_number=$result[0]['id_proof_document_number'];
-	$name_on_id_proof=$result[0]['name_on_id_proof'];
-$this->session->set_userdata('org_id','');
-$this->session->set_userdata('user_id','');
- }elseif($this->mysession->get('loan_post_all')==null ){
-
+		
+				
+			$loan_id=gINVALID;
 			$l_amt ="";
 			$l_emi_no="";
 			$l_emi_amt="";
@@ -570,14 +531,11 @@ $this->session->set_userdata('user_id','');
 			$l_phn="";
 			$l_mail="";
 			$l_web="";
-	
-
-}
-else
-{
-$data=$this->mysession->get('loan_post_all');
+if($this->mysession->get('loan_post_all')!=null ){
+		$data=$this->mysession->get('loan_post_all');
+			$loan_id='';
 			$l_addrs=$data['loan_agency_address'];
-           $l_amt =$data['total_amount'];
+            $l_amt =$data['total_amount'];
 			$l_emi_no=$data['number_of_emi'];
 			$l_emi_amt=$data['emi_amount'];
 			$l_no_paid_emi=$data['number_of_paid_emi'];
@@ -587,9 +545,22 @@ $data=$this->mysession->get('loan_post_all');
 			$l_phn=$data['loan_agency_phone'];
 			$l_mail=$data['loan_agency_email'];
 			$l_web=$data['loan_agency_web'];
-$this->mysession->delete('loan_post_all');
-
-}
+		$this->mysession->delete('loan_post_all');
+		}else if(isset($get_loan)&& $get_loan!=null){
+	
+			$loan_id=$get_loan['id'];
+			$l_addrs=$get_loan['loan_agency_address'];
+            $l_amt =$get_loan['total_amount'];
+			$l_emi_no=$get_loan['number_of_emi'];
+			$l_emi_amt=$get_loan['emi_amount'];
+			$l_no_paid_emi=$get_loan['number_of_paid_emi'];
+			$l_payment_date=$get_loan['emi_payment_date'];
+			$l_agency=$get_loan['loan_agency'];
+			//$l_address=$data['loan_agency_address'];
+			$l_phn=$get_loan['loan_agency_phone'];
+			$l_mail=$get_loan['loan_agency_email'];
+			$l_web=$get_loan['loan_agency_web'];
+		}
 
 ?>
 
@@ -607,17 +578,17 @@ $this->mysession->delete('loan_post_all');
        </div>
        <?php    } ?>
 	   
-	  			<?php if($this->mysession->get('Err_loan_amt') != ''||$this->mysession->get('Err_loan_emi_amt') != ''){ ?>
+	  			<?php if($this->mysession->get('Err_loan_amt') != ''||$this->mysession->get('Err_loan_emi_amt') != ''||$this->mysession->get('Err_invalid_loan_add') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                         <b>Alert!</b><br><?php
 													echo $this->mysession->get('Err_loan_amt').br();
 													echo $this->mysession->get('Err_loan_emi_amt').br();
-													
+													echo $this->mysession->get('Err_invalid_loan_add').br();
 														$this->mysession->delete('Err_loan_amt');
 														$this->mysession->delete('Err_loan_emi_amt');
-														
+														$this->mysession->delete('Err_invalid_loan_add');
 														
 										?>
                                     </div>
@@ -665,83 +636,61 @@ $this->mysession->delete('loan_post_all');
 		<div class="form-group">
 		<?php echo form_label('Loan Agency Phone','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'loan_agency_phn','class'=>'form-control','id'=>'loan_agency_phn','value'=>$l_phn,'rows'=>4)); ?>
-	   <?php echo $this->form_functions->form_error_session('loan_agency_phn', '<p class="text-red">', '</p>'); ?>
+	   <?php echo $this->form_functions->form_error_session('loan_agency_phn', '<p class="text-red">', '</p>'); 
+	   ?><div class="hide-me"><?php echo form_input(array('name'=>'hphone_ins','value'=>$l_phn));?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('Loan Agency Email','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'loan_agency_mail','class'=>'form-control','id'=>'loan_agency_mail','value'=>$l_mail,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('loan_agency_mail', '<p class="text-red">', '</p>'); ?>
+        </div><div class="hide-me"><?php echo form_input(array('name'=>'hmail_ins','value'=>$l_mail));?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('Loan Agency Web','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'loan_agency_web','class'=>'form-control','id'=>'loan_agency_web','value'=>$l_web,'rows'=>4)); ?>
-	   <?php echo $this->form_functions->form_error_session('loan_agency_web', '<p class="text-red">', '</p>'); ?>
+	   <?php echo $this->form_functions->form_error_session('loan_agency_web', '<p class="text-red">', '</p>');?>
         </div>
+		<div class='hide-me'><?php 
+		echo form_input(array('name'=>'hidden_loan_id','class'=>'form-control','value'=>$loan_id));?></div>
 			</fieldset>
 			<?php 
-			
-			echo form_submit("submit-loan","Save","class='btn btn-primary '");?>
+			if($loan_id==gINVALID){
+			$btn_name='Save';
+		 }else {
+			$btn_name='Update';
+			}
+			echo form_submit("loan-submit",$btn_name,"class='btn btn-primary'"); 
+			?>
 			</div>
         </div>
 		<div class="<?php echo $o_tab;?>" id="tab_4">
 	
-		<?php
- if(($this->mysession->get('org_id')!=null)&&($this->mysession->get('user_id')!=null)){
-    $name=$result[0]['name'];
-	$place_of_birth=$result[0]['place_of_birth'];
-	$dob=$result[0]['dob'];
-	$blood_group=$result[0]['blood_group'];
-	$marital_status_id=$result[0]['marital_status_id'];
-	$children=$result[0]['children'];
-	$present_address=$result[0]['present_address'];
-	$permanent_address=$result[0]['permanent_address'];
-	$district=$result[0]['district'];
-	$state=$result[0]['state'];
-	$pin_code=$result[0]['pin_code'];
-	$phone=$result[0]['phone'];
-	$mobile=$result[0]['mobile'];
-	$email=$result[0]['email'];
-	$date_of_joining=$result[0]['date_of_joining'];
-	$badge=$result[0]['badge'];
-	$license_number=$result[0]['license_number'];
-	$license_renewal_date=$result[0]['license_renewal_date'];
-	$badge_renewal_date=$result[0]['badge_renewal_date'];
-	$mother_tongue=$result[0]['mother_tongue'];
-	$pan_number=$result[0]['pan_number'];
-	$bank_account_number=$result[0]['bank_account_number'];
-	$name_on_bank_pass_book=$result[0]['name_on_bank_pass_book'];
-	$bank_name=$result[0]['bank_name'];
-	$branch=$result[0]['branch'];
-	$bank_account_type_id=$result[0]['bank_account_type_id'];
-	$ifsc_code=$result[0]['ifsc_code'];
-	$id_proof_type_id=$result[0]['id_proof_type_id'];
-	$id_proof_document_number=$result[0]['id_proof_document_number'];
-	$name_on_id_proof=$result[0]['name_on_id_proof'];
-$this->session->set_userdata('org_id','');
-$this->session->set_userdata('user_id','');
- }elseif($this->mysession->get('owner_post_all')==null ){
-
+		<?php 
+			$owner_id=gINVALID;
 			$own_name='';
 			$own_address='';
 			$own_mob='';
 			$own_mail='';
 			$own_dob='';
-	
-
-}
-else
-{
-$data=$this->mysession->get('owner_post_all');
-//echo $data['name'];exit;
+if($this->mysession->get('owner_post_all')!=null ){
+		$data=$this->mysession->get('owner_post_all');
+			$owner_id='';
 			$own_name=$data['name'];
 			$own_address=$data['address'];
 			$own_mob=$data['mobile'];
 			$own_mail=$data['email'];
 			$own_dob=$data['dob'];
-			
-$this->mysession->delete('owner_post_all');
+		$this->mysession->delete('owner_post_all');
 
-}
+}else if(isset($get_owner)&& $get_owner!=null){
+			$owner_id=$get_owner['id'];
+			$own_name=$get_owner['name'];
+			$own_address=$get_owner['address'];
+			$own_mob=$get_owner['mobile'];
+			$own_mail=$get_owner['email'];
+			$own_dob=$get_owner['dob'];
+	
+	}
 
 ?>
 
@@ -758,6 +707,17 @@ $this->mysession->delete('owner_post_all');
            </div>
        </div>
        <?php    } ?>
+	   <?php if($this->mysession->get('Err_invalid_owner_add') != ''){ ?>
+	<div class="alert alert-danger alert-dismissable">
+                                        <i class="fa fa-ban"></i>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <b>Alert!</b><br><?php
+													echo $this->mysession->get('Err_invalid_owner_add').br();
+													$this->mysession->delete('Err_invalid_owner_add');
+														
+												?>
+                                    </div>
+<?php  } ?>
 	   
 
 		                    <div class="width-30-percent-with-margin-left-20-Driver-View insurance ">
@@ -778,21 +738,29 @@ $this->mysession->delete('owner_post_all');
 		<?php echo form_label('Mobile','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'mobile','class'=>'form-control','id'=>'mobile','value'=>$own_mob,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('mobile', '<p class="text-red">', '</p>'); ?>
+        </div><div class="hide-me"><?php echo form_input(array('name'=>'hphone_own','value'=>$own_mob));?>
         </div>
 		<div class="form-group">
 		<?php echo form_label(' Email','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'mail','class'=>'form-control','id'=>'mail','value'=>$own_mail,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('mail', '<p class="text-red">', '</p>'); ?>
+        </div><div class="hide-me"><?php echo form_input(array('name'=>'hmail_own','value'=>$own_mail));?>
         </div>
 		<div class="form-group">
 	<?php echo form_label('Date of Birth','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'dob','class'=>'fromdatepicker form-control' ,'value'=>$own_dob)); ?>
 	   <?php echo $this->form_functions->form_error_session('dob', '<p class="text-red">', '</p>'); ?>
         </div>
-		
+		<div class='hide-me'><?php 
+		echo form_input(array('name'=>'hidden_owner_id','class'=>'form-control','value'=>$owner_id));?></div>
 			</fieldset>
 			
-			<?php echo form_submit("submit-owner","Save","class='btn btn-primary next'");?>
+			<?php if($owner_id==gINVALID){
+			$btn_name='Save';
+		 }else {
+			$btn_name='Update';
+			}
+			echo form_submit("owner-submit",$btn_name,"class='btn btn-primary'"); ?>
 			</div>
 		</div>
     </div>
