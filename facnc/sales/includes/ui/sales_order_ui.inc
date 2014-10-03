@@ -13,7 +13,7 @@ include_once($path_to_root . "/sales/includes/cart_class.inc");
 include_once($path_to_root . "/includes/manufacturing.inc");
 
 //--------------------------------------------------------------------------------
-function add_to_order(&$order, $new_item, $new_item_qty, $price, $discount, $description='')
+function add_to_order(&$order, $new_item, $new_item_qty, $price, $discount, $description='',$total=0)
 {
 	// calculate item price to sum of kit element prices factor for 
 	// value distribution over all exploded kit items
@@ -63,7 +63,7 @@ function add_to_order(&$order, $new_item, $new_item_qty, $price, $discount, $des
 			}
 		}
 		$order->add_to_cart (count($order->line_items),	$item['stock_id'], 
-			$new_item_qty*$item['quantity'], $item_price, $discount, 0,0, $description);
+			$new_item_qty*$item['quantity'], $item_price, $discount, 0,0, $description,0,0,0,$total);
 	 }
 	}
 
@@ -101,6 +101,7 @@ function get_customer_details_to_order(&$order, $customer_id, $branch_id)
 	}
 	$result = get_branch_to_order($customer_id, $branch_id);
 
+
 	/*if (db_num_rows($result) == 0)
 	{
 		return _("The selected customer and branch are not valid, or the customer does not have any branches.");
@@ -132,7 +133,7 @@ function get_customer_details_to_order(&$order, $customer_id, $branch_id)
 }
 
 //---------------------------------------------------------------------------------
-
+/*
 function display_order_summary($title, &$order, $editable_items=false)
 {
 	global $SysPrefs;
@@ -251,10 +252,72 @@ function display_order_summary($title, &$order, $editable_items=false)
 				. '<br>'. $qoh_msg);
 	}
     div_end();
+}*/
+function display_trip_data($cnc_data, &$order)
+{
+   global $SysPrefs;
+
+
+    div_start('items_table');
+	start_table(TABLESTYLE, "colspan=6 width=100%");
+		$th = array(_("Vehicle No"),_("Trip"),_("Particulars"), _("Kms"),
+			 _("Amount"));
+
+		table_header($th);
+
+		$total = 0;
+		$k = 0;  //row colour counter
+
+		alt_table_row_color($rowcounter);
+
+			label_cell(@$cnc_data['vehicle_no']);
+			label_cell(@$cnc_data['trip_model']);
+			echo "<td>";
+				echo $cnc_data['from_city']."-".$cnc_data['to_city'];
+				echo "<br/>";
+				echo $cnc_data['tariff'];
+			echo "</td>";
+			label_cell($cnc_data['total_km_reading']);
+			label_cell($cnc_data['amount']);
+	
+
+		end_row();
+
+		$qty = @$cnc_data['total_km_reading'];
+		
+		hidden('stock_id');
+		hidden('qty',$qty);
+		hidden('price',price_format(0));
+		hidden('Disc',percent_format($order->default_discount * 100));
+		hidden('line_total',@$cnc_data['amount']);
+		hidden('LineNo', 1);
+
+
+		$colspan = 4;
+	
+		hidden('freight_cost',price_format(get_post('freight_cost',0)));
+
+	
+
+		$display_sub_total = price_format($total + input_num('freight_cost'));
+		label_row(_("Sub-total"), $display_sub_total, "colspan=$colspan align=right","align=right");
+		$taxes = $order->get_taxes(input_num('freight_cost'));
+		$tax_total = display_edit_tax_items($taxes, $colspan, $order->tax_included, 2);
+
+		$display_total = price_format(($total + input_num('freight_cost') + $tax_total));
+
+		start_row();
+		label_cells(_("Amount Total"), $display_total, "colspan=$colspan align=right","align=right");
+	
+		end_row();
+
+	end_table();
+
+    div_end();
 }
 
 // ------------------------------------------------------------------------------
-
+/*
 function display_order_header(&$order, $editable, $date_text)
 {
 	global $Ajax, $SysPrefs;
@@ -463,6 +526,116 @@ function display_order_header(&$order, $editable, $date_text)
 			else
 				hidden('dimension2_id', 0);
 		}	
+	}
+	else
+	{
+		label_row($date_text, $order->document_date);
+		hidden('OrderDate', $order->document_date);
+	}
+
+	end_outer_table(1); // outer table
+
+	if ($change_prices != 0) {
+		foreach ($order->line_items as $line_no=>$item) {
+			$line = &$order->line_items[$line_no];
+			$line->price = get_kit_price($line->stock_id, $order->customer_currency,
+				$order->sales_type, $order->price_factor, get_post('OrderDate'));
+		//		$line->discount_percent = $order->default_discount;
+		}
+	    $Ajax->activate('items_table');
+	}
+
+	return $customer_error;
+}*/
+function display_order_header(&$order, $editable, $date_text,$ref='')
+{
+	global $Ajax, $SysPrefs;
+
+	start_outer_table(TABLESTYLE2, "width=100%");
+
+	table_section(1);
+	
+	$customer_error = "";
+	$change_prices = 0;
+
+	label_row("Customer:", $order->customer_name);
+	hidden('customer_id', $order->customer_id);
+	hidden('branch_id', $order->Branch);
+	hidden('sales_type', $order->sales_type);
+
+
+	$customer_error = get_customer_details_to_order($order, $order->customer_id, $order->Branch);
+	
+
+	hidden('Location',$order->Location);
+	hidden('deliver_to',$order->deliver_to);
+	hidden('delivery_address',$order->delivery_address);
+	hidden('phone',$order->phone);
+	hidden('delivery_date',$order->due_date);
+	
+	if($ref)
+		$_POST['ref'] = $ref;
+	hidden('ref');
+	label_row(_("Reference").':',$ref);
+	//ref_row(_("Reference").':', 'ref', _('Reference number unique for this document type'), null, '');
+
+	table_section(2);
+
+
+	customer_credit_row($_POST['customer_id'], $order->credit);
+
+
+	table_section(3);
+	if ($order->pos['cash_sale'] || $order->pos['credit_sale']) {
+		 // editable payment type 
+		if (get_post('payment') !== $order->payment) {
+			$order->payment = get_post('payment');
+			$order->payment_terms = get_payment_terms($order->payment);
+			$order->due_date = get_invoice_duedate($order->payment, $order->document_date);
+			if ($order->payment_terms['cash_sale']) {
+				$_POST['Location'] = $order->Location = $order->pos['pos_location'];
+				$order->location_name = $order->pos['location_name'];
+			}
+			$Ajax->activate('items_table');
+			$Ajax->activate('delivery');
+		}
+		$paymcat = !$order->pos['cash_sale'] ? PM_CREDIT : 
+			(!$order->pos['credit_sale'] ? PM_CASH : PM_ANY);
+		// all terms are available for SO
+		sale_payment_list_cells(_('Payment:'), 'payment', 
+			(in_array($order->trans_type, array(ST_SALESQUOTE, ST_SALESORDER)) 
+			? PM_ANY : $paymcat), null);
+	} else {
+		label_cells(_('Payment:'), $order->payment_terms['terms']);
+	}
+
+	
+
+	table_section(4);
+
+	if ($editable)
+	{
+		if (!isset($_POST['OrderDate']) || $_POST['OrderDate'] == "")
+			$_POST['OrderDate'] = $order->document_date;
+
+		date_row($date_text, 'OrderDate', _('Date of order receive'),
+			$order->trans_no==0, 0, 0, 0, null, true);
+		if (isset($_POST['_OrderDate_changed']) || list_updated('payment')) {
+			if (!is_company_currency($order->customer_currency) 
+				&& (get_base_sales_type()>0)) {
+					$change_prices = 1;
+			}
+			$Ajax->activate('_ex_rate');
+			if ($order->trans_type == ST_SALESINVOICE) {
+				$_POST['delivery_date'] = get_invoice_duedate(get_post('payment'), get_post('OrderDate'));
+			} else 
+				$_POST['delivery_date'] = add_days(get_post('OrderDate'), $SysPrefs->default_delivery_required_by());
+			$Ajax->activate('items_table');
+			$Ajax->activate('delivery_date');
+		}
+		hidden('dimension_id', 0);
+		hidden('dimension2_id', 0);
+			
 	}
 	else
 	{

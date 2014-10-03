@@ -73,6 +73,13 @@ class cart
 	var $credit;
 	var $ex_rate;
 
+	var $trip_ref;
+
+
+	
+	
+	
+
 	//-------------------------------------------------------------------------
 	//
 	//  $trans_no==0 => open new/direct document

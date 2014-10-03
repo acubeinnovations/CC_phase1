@@ -64,7 +64,7 @@ if ($use_date_picker) {
 if (isset($_GET['NewDelivery']) && is_numeric($_GET['NewDelivery'])) {
 
 	$_SESSION['page_title'] = _($help_context = "Delivery Note");
-	create_cart(ST_CUSTDELIVERY, 0,$_GET['NewDelivery']);
+	create_cart(ST_CUSTDELIVERY, 0);
 
 } elseif (isset($_GET['NewInvoice']) && is_numeric($_GET['NewInvoice'])) {
 
@@ -184,7 +184,7 @@ if (isset($_GET['AddedID'])) {
 
 	display_notification_centered(sprintf(_("Delivery # %d has been entered."),$delivery));
 
-	submenu_view(_("&View This Delivery"), ST_CUSTDELIVERY, $delivery);
+	/*submenu_view(_("&View This Delivery"), ST_CUSTDELIVERY, $delivery);
 
 	submenu_print(_("&Print Delivery Note"), ST_CUSTDELIVERY, $delivery, 'prtopt');
 	submenu_print(_("&Email Delivery Note"), ST_CUSTDELIVERY, $delivery, null, 1);
@@ -193,17 +193,18 @@ if (isset($_GET['AddedID'])) {
 	set_focus('prtopt');
 
 	display_note(get_gl_view_str(ST_CUSTDELIVERY, $delivery, _("View the GL Journal Entries for this Dispatch")),0, 1);
+*/
 
 	submenu_option(_("Make &Invoice Against This Delivery"),
 		"/sales/customer_invoice.php?DeliveryNumber=$delivery");
 
-	if ((isset($_GET['Type']) && $_GET['Type'] == 1))
+	/*if ((isset($_GET['Type']) && $_GET['Type'] == 1))
 		submenu_option(_("Enter a New Template &Delivery"),
 			"/sales/inquiry/sales_orders_view.php?DeliveryTemplates=Yes");
 	else
 		submenu_option(_("Enter a &New Delivery"), 
 			"/sales/sales_order_entry.php?NewDelivery=0");
-
+	*/
 	display_footer_exit();
 
 } elseif (isset($_GET['AddedDI'])) {
@@ -250,6 +251,8 @@ function copy_to_cart()
 	$cart->reference = $_POST['ref'];
 
 	$cart->Comments =  $_POST['Comments'];
+
+	$cart->line_total =  $_POST['line_total'];
 
 	$cart->document_date = $_POST['OrderDate'];
 
@@ -374,11 +377,11 @@ function can_process() {
 	}
 
 
-		if ($_SESSION['Items']->trans_type != ST_SALESQUOTE && strlen($_POST['delivery_address']) <= 1) {
+		/*if ($_SESSION['Items']->trans_type != ST_SALESQUOTE && strlen($_POST['delivery_address']) <= 1) {
 			display_error( _("You should enter the street address in the box provided. Orders cannot be accepted without a valid street address."));
 			set_focus('delivery_address');
 			return false;
-		}
+		}*/
 
 		if ($_POST['freight_cost'] == "")
 			$_POST['freight_cost'] = price_format(0);
@@ -419,9 +422,10 @@ function can_process() {
 		set_focus('ref');
 		return false;
 	}
+	/*
 	if (!db_has_currency_rates($_SESSION['Items']->customer_currency, $_POST['OrderDate']))
 		return false;
-	
+	*/
    	if ($_SESSION['Items']->get_items_total() < 0) {
 		display_error("Invoice total amount cannot be less than zero.");
 		return false;
@@ -437,6 +441,7 @@ if (isset($_POST['update'])) {
 }
 
 if (isset($_POST['ProcessOrder']) && can_process()) {
+	
 	copy_to_cart();
 	$modified = ($_SESSION['Items']->trans_no != 0);
 	$so_type = $_SESSION['Items']->so_type;
@@ -627,21 +632,14 @@ function  handle_cancel_order()
 
 //--------------------------------------------------------------------------------
 
-function create_cart($type, $trans_no, $cnc_voucher_id = 0)
+function create_cart($type, $trans_no)
 { 
 	global $Refs;
 
 	if (!$_SESSION['SysPrefs']->db_ok) // create_cart is called before page() where the check is done
 		return;
 
-	if($cnc_voucher_id > 0){
-		$cnc_voucher = get_cnc_voucher($cnc_voucher_id);
-		//echo "<pre>";
-		//print_r($cnc_voucher);
-		//echo "</pre>";
-		$customer_id = get_cnc_customer_id("C".$cnc_voucher['cnc_cust_id']);
-		
-	}
+	
 
 	processing_start();
 
@@ -657,7 +655,9 @@ function create_cart($type, $trans_no, $cnc_voucher_id = 0)
 		$doc = new Cart(ST_SALESORDER, array($trans_no));
 		$doc->trans_type = $type;
 		$doc->trans_no = 0;
-		$doc->customer_id = @$customer_id;
+		
+		
+		
 		$doc->document_date = new_doc_date();
 		if ($type == ST_SALESINVOICE) {
 			$doc->due_date = get_invoice_duedate($doc->payment, $doc->document_date);
@@ -728,24 +728,54 @@ if ($_SESSION['Items']->trans_type == ST_SALESINVOICE) {
 }
 start_form();
 
+//cnc code----------------------
+$cnc_voucher = false;
+if(isset($_GET['NewDelivery']) && $_GET['NewDelivery'] > 0){
+	$cnc_voucher = get_cnc_voucher($_GET['NewDelivery']);
+	$_SESSION['Items']->customer_id = get_cnc_customer_id("C".$cnc_voucher['cnc_cust_id']);
+	$customer = get_customer($_SESSION['Items']->customer_id);
+	$_SESSION['Items']->customer_name = @$cnc_voucher['customer_name'] ;
+	$_SESSION['Items']->customer_currency = @$customer['curr_code'] ;
+	$_SESSION['Items']->sales_type = @$customer['sales_type'] ;
+	$_SESSION['Items']->Branch = get_cnc_customer_branch($_SESSION['Items']->customer_id);
+	echo "<pre>";
+	//print_r($cnc_voucher);
+	echo "</pre>";
+
+	//trip item code -> 101
+	add_to_order($_SESSION['Items'],101, 1,
+		@$cnc_voucher['amount'], 0 / 100);
+		
+}
+//-----------------------------------
+
+
+
+
 hidden('cart_id');
 $customer_error = display_order_header($_SESSION['Items'],
-	($_SESSION['Items']->any_already_delivered() == 0), $idate);
+	($_SESSION['Items']->any_already_delivered() == 0), $idate,@$cnc_voucher['trip_id']);
+
+
+
 
 if ($customer_error == "") {
-	start_table(TABLESTYLE, "width=90%", 10);
+	start_table(TABLESTYLE, "width=100%", 10);
 	echo "<tr><td>";
-	display_order_summary($orderitems, $_SESSION['Items'], true);
+	//display_order_summary($orderitems, $_SESSION['Items'], true);
+	display_trip_data($cnc_voucher,$_SESSION['Items']);
 	echo "</td></tr>";
-	echo "<tr><td>";
-	display_delivery_details($_SESSION['Items']);
-	echo "</td></tr>";
+	//echo "<tr><td>";
+	//display_delivery_details($_SESSION['Items']);
+	//echo "</td></tr>";
 	end_table(1);
 
 	if ($_SESSION['Items']->trans_no == 0) {
 
+		//submit_center_first('ProcessOrder', $porder,
+		 //   _('Check entered data and save document'), 'default');
 		submit_center_first('ProcessOrder', $porder,
-		    _('Check entered data and save document'), 'default');
+		    _('Check entered data and save document'));
 		submit_center_last('CancelOrder', $cancelorder,
 	   		_('Cancels document entry or removes sales order when editing an old document'), true);
 		submit_js_confirm('CancelOrder', _('You are about to void this Document.\nDo you want to continue?'));
