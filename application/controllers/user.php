@@ -955,9 +955,11 @@ public function profile() {
 				}
 				if($loan_id!=gINVALID && $loan_id!=0){
 				$data['get_loan']=$this->user_model->getLoan($loan_id);
+				
 				}
 				if($owner_id!=gINVALID && $owner_id!=0){
 				$data['get_owner']=$this->user_model->getOwner($owner_id);
+				
 				}
 				
 				if(is_numeric($param2)){

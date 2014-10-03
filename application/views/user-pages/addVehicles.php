@@ -48,7 +48,7 @@
     <div class="tab-content">
 
         <div class="<?php echo $v_tab;?>" id="tab_1">
-	<?php echo "vehicle id".$this->mysession->get('vehicle_id');
+	<?php 
 			$vehicle_id=gINVALID;
 			$ownership ="";
 			$vehicle_type="";
@@ -375,7 +375,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
         <div class="<?php echo $i_tab;?>" id="tab_2">
 		
 	<?php
-	echo "vehicle id".$this->mysession->get('vehicle_id');
+
 			$insurance_id=gINVALID;
 			$ins_number ="";
 			$ins_date="";
@@ -389,7 +389,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 			$ins_web="";
 	if($this->mysession->get('ins_post_all')!=null ){ 
 	$data=$this->mysession->get('ins_post_all');
-			$insurance_id=gINVALID;
+			$insurance_id='';
             $ins_number =$data['insurance_number'];
 			$ins_date=$data['insurance_date'];
 			$ins_renewal_date=$data['insurance_renewal_date'];
@@ -414,6 +414,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 			$ins_mail=$get_insurance['Insurance_agency_email'];
 			$ins_web=$get_insurance['Insurance_agency_web'];
 			}
+			
 ?>
 
 				<?php if($this->mysession->get('ins_Success') != '') { ?>
@@ -500,10 +501,10 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 		<div class="form-group">
 		<?php echo form_label('Insurance Agency Web','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'insurance_agency_web','class'=>'form-control','id'=>'insurance_agency_web','value'=>$ins_web,'rows'=>4)); ?>
-	   <?php echo $this->form_functions->form_error_session('insurance_agency_web', '<p class="text-red">', '</p>'); ?>
+	   <?php echo $this->form_functions->form_error_session('insurance_agency_web', '<p class="text-red">', '</p>');?>
         </div>
 		<div class='hide-me'><?php 
-		echo form_input(array('name'=>'hidden_id','class'=>'form-control','value'=>$insurance_id));?></div>
+		echo form_input(array('name'=>'hidden_ins_id','class'=>'form-control','value'=>$insurance_id));?></div>
 			</fieldset>
 			<?php 
 			if($insurance_id==gINVALID){
@@ -517,7 +518,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
         </div>
         <div class="<?php echo $l_tab;?>" id="tab_3">
 				<?php
-				echo "vehicle id".$this->mysession->get('vehicle_id');
+		
 				
 			$loan_id=gINVALID;
 			$l_amt ="";
@@ -532,7 +533,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 			$l_web="";
 if($this->mysession->get('loan_post_all')!=null ){
 		$data=$this->mysession->get('loan_post_all');
-			$loan_id=gINVALID;
+			$loan_id='';
 			$l_addrs=$data['loan_agency_address'];
             $l_amt =$data['total_amount'];
 			$l_emi_no=$data['number_of_emi'];
@@ -635,20 +636,22 @@ if($this->mysession->get('loan_post_all')!=null ){
 		<div class="form-group">
 		<?php echo form_label('Loan Agency Phone','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'loan_agency_phn','class'=>'form-control','id'=>'loan_agency_phn','value'=>$l_phn,'rows'=>4)); ?>
-	   <?php echo $this->form_functions->form_error_session('loan_agency_phn', '<p class="text-red">', '</p>'); ?>
+	   <?php echo $this->form_functions->form_error_session('loan_agency_phn', '<p class="text-red">', '</p>'); 
+	   ?><div class="hide-me"><?php echo form_input(array('name'=>'hphone_ins','value'=>$l_phn));?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('Loan Agency Email','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'loan_agency_mail','class'=>'form-control','id'=>'loan_agency_mail','value'=>$l_mail,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('loan_agency_mail', '<p class="text-red">', '</p>'); ?>
+        </div><div class="hide-me"><?php echo form_input(array('name'=>'hmail_ins','value'=>$l_mail));?>
         </div>
 		<div class="form-group">
 		<?php echo form_label('Loan Agency Web','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'loan_agency_web','class'=>'form-control','id'=>'loan_agency_web','value'=>$l_web,'rows'=>4)); ?>
-	   <?php echo $this->form_functions->form_error_session('loan_agency_web', '<p class="text-red">', '</p>'); ?>
+	   <?php echo $this->form_functions->form_error_session('loan_agency_web', '<p class="text-red">', '</p>');?>
         </div>
 		<div class='hide-me'><?php 
-		echo form_input(array('name'=>'hidden_id','class'=>'form-control','value'=>$loan_id));?></div>
+		echo form_input(array('name'=>'hidden_loan_id','class'=>'form-control','value'=>$loan_id));?></div>
 			</fieldset>
 			<?php 
 			if($loan_id==gINVALID){
@@ -662,7 +665,7 @@ if($this->mysession->get('loan_post_all')!=null ){
         </div>
 		<div class="<?php echo $o_tab;?>" id="tab_4">
 	
-		<?php echo "vehicle id".$this->mysession->get('vehicle_id');
+		<?php 
 			$owner_id=gINVALID;
 			$own_name='';
 			$own_address='';
@@ -671,7 +674,7 @@ if($this->mysession->get('loan_post_all')!=null ){
 			$own_dob='';
 if($this->mysession->get('owner_post_all')!=null ){
 		$data=$this->mysession->get('owner_post_all');
-			$owner_id=gINVALID;
+			$owner_id='';
 			$own_name=$data['name'];
 			$own_address=$data['address'];
 			$own_mob=$data['mobile'];
@@ -735,11 +738,13 @@ if($this->mysession->get('owner_post_all')!=null ){
 		<?php echo form_label('Mobile','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'mobile','class'=>'form-control','id'=>'mobile','value'=>$own_mob,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('mobile', '<p class="text-red">', '</p>'); ?>
+        </div><div class="hide-me"><?php echo form_input(array('name'=>'hphone_own','value'=>$own_mob));?>
         </div>
 		<div class="form-group">
 		<?php echo form_label(' Email','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'mail','class'=>'form-control','id'=>'mail','value'=>$own_mail,'rows'=>4)); ?>
 	   <?php echo $this->form_functions->form_error_session('mail', '<p class="text-red">', '</p>'); ?>
+        </div><div class="hide-me"><?php echo form_input(array('name'=>'hmail_own','value'=>$own_mail));?>
         </div>
 		<div class="form-group">
 	<?php echo form_label('Date of Birth','usernamelabel'); ?>
@@ -747,7 +752,7 @@ if($this->mysession->get('owner_post_all')!=null ){
 	   <?php echo $this->form_functions->form_error_session('dob', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class='hide-me'><?php 
-		echo form_input(array('name'=>'hidden_id','class'=>'form-control','value'=>$owner_id));?></div>
+		echo form_input(array('name'=>'hidden_owner_id','class'=>'form-control','value'=>$owner_id));?></div>
 			</fieldset>
 			
 			<?php if($owner_id==gINVALID){

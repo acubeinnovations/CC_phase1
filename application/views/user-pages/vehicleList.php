@@ -50,13 +50,13 @@
 					    
 					</tr>
 					<?php
-					if(isset($values)){ print_r($values);
-					foreach ($values as $det):
+					if(isset($values)){ 
+					foreach ($values as $det):  
 					?>
 					<tr>
 					    <td><?php echo $det['registration_number'];?></td>
+						<td><?php  echo $det['vehicle_type_id'];?></td>
 						<td><?php echo $det['vehicle_owner_id'];?></td>
-						<td><?php echo $det['vehicle_type_id'];?></td>
 						<td><?php echo $det['vehicle_model_id'];?></td>
 						<td><?php echo anchor(base_url().'organization/front-desk/vehicle/'.$det['id'], 'Edit', 'title="News title"','class="btn btn-primary"');?></td>
 						<td><?php ?></td>

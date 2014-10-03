@@ -110,9 +110,10 @@ class user_model extends CI_Model {
    public function getType($id){
    $qry=$this->db->select('id,name,phone,mobile');
    }
-   public function getRecordsById($tbl,$id){
+   public function getRecordsById($tbl,$id){ 
    if($tbl=='vehicles'){
-   $qry=$this->db->where('id',$id);
+   $to_date='9999-12-30';
+   $qry=$this->db->where(array('vehicle_id'=>$id,'to_date'=>$to_date));
    $qry=$this->db->get('vehicle_drivers'); //echo $this->db->last_query();exit;
    $result['driver']= $qry->row_array();
    
