@@ -326,7 +326,7 @@ class User extends CI_Controller {
 	public function ShowBookTrip($trip_id =''){
 	if($this->session_check()==true) {
 	
-	$tbl_arry=array('booking_sources','trip_models','vehicle_types','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
+	$tbl_arry=array('booking_sources','trip_models','vehicle_types','vehicle_models','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
 	
 	for ($i=0;$i<count($tbl_arry);$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
@@ -809,14 +809,13 @@ public function profile() {
 		if($this->session_check()==true) {
 			//sample starts
 				$data['select']=$this->select_Box_Values();
-			
 			//trip details
 		
-			if($param1!=''){
+			if($param2!=''){
 			
-			$data['trips']=$this->trip_booking_model->getDriverVouchers($param1);
+			$data['trips']=$this->trip_booking_model->getDriverVouchers($param2);
 			}
-			//print_r($data['trips']);exit;
+			
 			//sample ends
 				$data['title']="Driver Details | ".PRODUCT_NAME;  
 				$page='user-pages/addDrivers';
@@ -876,9 +875,15 @@ public function profile() {
 			$org_id=$this->session->userdata('organisation_id');
 			$arry=array('id'=>$param2,'organisation_id'=>$org_id);
 			$data['result']=$this->user_model->getDriverDetails($arry);
+			}   
+			//trip details
+		
+			if($param2!=''){
 			
-			
-		}   $data['title']='Driver Profile| '.PRODUCT_NAME;
+			$data['trips']=$this->trip_booking_model->getDriverVouchers($param2);
+			}
+			//print_r($data['trips']);exit;
+			$data['title']='Driver Profile| '.PRODUCT_NAME;
 			$page='user-pages/addDrivers';
 			$data['select']=$this->select_Box_Values();
 			$this->load_templates($page,$data);

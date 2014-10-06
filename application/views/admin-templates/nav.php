@@ -8,7 +8,7 @@
                             </a>
                         </li>
                         <?php } else if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){ ?>
-                        <li class="active">
+                        <li>
                             <a href="<?php echo base_url().'admin';?>">
                                 <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
@@ -32,13 +32,13 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'admin/organization/new';?>"><i class="fa fa-user"></i> Add Organizations</a></li>
-                                <li><a href="<?php echo base_url().'admin/organization/list';?>"><i class="fa fa-users"></i> List Organizations</a></li>
+                                <li><a href="<?php echo base_url().'admin/organization/new';?>"><i class="fa fa-user"></i>Add Organizations</a></li>
+                                <li><a href="<?php echo base_url().'admin/organization/list';?>"><i class="fa fa-users"></i>List Organizations</a></li>
                                 
                             </ul>
                         </li>
                         <?php }else if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==ORGANISATION_ADMINISTRATOR){ ?>
-                        <li class="active">
+                        <li>
                             <a href="<?php echo base_url().'organization/admin';?>">
                                 <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
@@ -89,7 +89,7 @@
                             </ul>
                         </li>
                         <?php }else if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==FRONT_DESK){ ?>
-                        <li class="active">
+                        <li>
                             <a href="<?php echo base_url().'organization/front-desk';?>">
                                 <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
@@ -184,7 +184,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="<?php echo base_url().'organization/front-desk/customer';?>"><i class="fa fa-angle-double-right"></i>Add Customer</a></li>
-                               	  <li><a href="<?php echo base_url().'organization/front-desk/customers';?>"><i class="fa fa-angle-double-right"></i>Customers</a></li> 
+                            <li><a href="<?php echo base_url().'organization/front-desk/customers';?>"><i class="fa fa-angle-double-right"></i>Customers</a></li> 
                                 
                             </ul>
                         </li>

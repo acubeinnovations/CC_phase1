@@ -384,7 +384,7 @@ $this->mysession->delete('post');
 					</tr>
 					<?php	
 						$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_night_halt=$tot_fuel_extra=0;
-					if($trips!=false){
+					if(isset($trips) && $trips!=false){
 						for($trip_index=0;$trip_index<count($trips);$trip_index++){
 						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
 						$full_tot_km=$full_tot_km+$tot_km;

@@ -819,14 +819,14 @@ function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,d
 			data=jQuery.parseJSON(data);
 			$('#available_vehicle option').remove();
 			$('#available_vehicle').append($("<option value='-1'></option>").text('--Select Vehicle--'));
-			var trip_models=$('.trip-models').html().split(',');
+			var vehicle_models=$('.vehicle-models').html().split(',');
 			for(var i=0;i<data.data.length;i++){
 				if(available_vehicle_id==data.data[i].vehicle_id){
 				var selected="selected=selected";
 				}else{
 				var selected="";
 				}
-			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' "+selected+"></option>").text(data.data[i].registration_number+' '+trip_models[i]));
+			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' "+selected+"></option>").text(data.data[i].registration_number+' '+vehicle_models[i]));
 				i=Number(i)+1;
 			}
 		
