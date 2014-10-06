@@ -162,6 +162,75 @@ class account_model extends CI_Model {
 		}
 	}
 
+
+	//supplier-------------------------------------------------
+	function get_cnc_driver($id)
+	{
+		$this->db->from('drivers');
+		$this->db->where('id',$id );
+		$this->db->where('organisation_id',$this->session->userdata('organisation_id'));	
+		return $this->db->get()->row_array();
+	}
+	function get_cnc_vehicle_owner($id)
+	{
+		$this->db->from('vehicle_owners');
+		$this->db->where('id',$id );
+		$this->db->where('organisation_id',$this->session->userdata('organisation_id'));	
+		return $this->db->get()->row_array();
+	}
+
+	function add_fa_supplier($id,$type='')
+	{
+		$data = $this->prepare_cnc_data_for_supplier($id,$type);
+		$fa_supplier_table = $this->session->userdata('organisation_id')."_suppliers";
+		
+
+		if($this->check_fa_table_exists($fa_supplier_table) && is_array($data))
+		{
+			$this->db->insert($fa_supplier_table,$data);
+			return true;	
+
+		}else{
+			return false;//could not insert in fa , supplier table not set for this organisation
+		}
+	}
+	//prepare supplier data array 
+	function prepare_cnc_data_for_supplier($id,$type='')
+	{
+		$ref = $type.$id;
+		$prefs = $this->get_company_prefs();
+		if($type == 'DR'){
+			$cnc_data = get_cnc_driver($id);
+			$address = $cnc_data['address'];
+			$ac = $cnc_data['bank_account_number'];
+		}elseif($type == 'VW'){
+			$cnc_data = get_cnc_vehicle_owner($id);
+			$address = $cnc_data['present_address'];
+			$ac = "";
+		}
+		else{
+			$cnc_data = false;
+		}
+		if($cnc_data){
+			return $data = array(
+				'supp_name'=>$cnc_data['name'],
+				'supp_ref'=>$ref,
+				'address' => $address,
+				'supp_address' => $address,
+				'bank_account' => $ac,
+				'curr_code'=> @$prefs['curr_default'],
+				'payment_terms'=> @$prefs['default_payment_terms'],
+				'credit_limit'=> @$prefs['default_credit_limit'],		
+ 				'payable_account' => @$prefs['creditors_act'],
+				'payment_discount_account' => @$prefs['pyt_discount_act'],
+				'tax_group_id' => 1//static from tax group table
+				);
+		}else{
+			return false;
+		}
+		
+	}
+
 	function get_company_prefs($name = false)
 	{
 		$fa_pref_table = $this->session->userdata('organisation_id')."_sys_prefs";
