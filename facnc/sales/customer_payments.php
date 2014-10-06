@@ -29,7 +29,7 @@ if ($use_date_picker) {
 }
 add_js_file('payalloc.js');
 
-page(_($help_context = "Customer Payment Entry"), false, false, "", $js);
+
 
 //----------------------------------------------------------------------------------------------
 
@@ -38,9 +38,15 @@ check_db_has_customers(_("There are no customers defined in the system."));
 check_db_has_bank_accounts(_("There are no bank accounts defined in the system."));
 
 //----------------------------------------------------------------------------------------
-if (isset($_GET['customer_id']))
+if(isset($_GET['CustomerPayment'])){
+	$_POST['customer_id'] = get_cnc_customer_id($_GET['CustomerPayment']);
+	$customer = get_customer($_POST['customer_id']);
+	$branch = get_cust_branch_detail($_POST['customer_id']);
+	page(_($help_context = "Payment Entry"), false, false, "", $js);
+}elseif (isset($_GET['customer_id']))
 {
 	$_POST['customer_id'] = $_GET['customer_id'];
+	page(_($help_context = "Customer Payment Entry"), false, false, "", $js);
 }
 
 if (!isset($_POST['bank_account'])) { // first page call
@@ -96,7 +102,7 @@ if (isset($_GET['AddedID'])) {
 
 	display_notification_centered(_("The customer payment has been successfully entered."));
 
-	submenu_print(_("&Print This Receipt"), ST_CUSTPAYMENT, $payment_no."-".ST_CUSTPAYMENT, 'prtopt');
+	/*submenu_print(_("&Print This Receipt"), ST_CUSTPAYMENT, $payment_no."-".ST_CUSTPAYMENT, 'prtopt');
 
 	submenu_view(_("&View this Customer Payment"), ST_CUSTPAYMENT, $payment_no);
 
@@ -107,6 +113,7 @@ if (isset($_GET['AddedID'])) {
 	submenu_option(_("Bank Account &Transfer"), "/gl/bank_transfer.php");
 
 	display_note(get_gl_view_str(ST_CUSTPAYMENT, $payment_no, _("&View the GL Journal Entries for this Customer Payment")));
+*/
 
 	display_footer_exit();
 }
@@ -272,11 +279,14 @@ if (get_post('AddPaymentItem') && can_process()) {
 
 //----------------------------------------------------------------------------------------------
 
-function read_customer_data()
+function read_customer_data($customer_id = false)
 {
 	global $Refs;
 
-	$myrow = get_customer_habit($_POST['customer_id']);
+	if($customer_id)
+		$myrow = get_customer_habit($customer_id);
+	else
+		$myrow = get_customer_habit($_POST['customer_id']);
 
 	$_POST['HoldAccount'] = $myrow["dissallow_invoices"];
 	$_POST['pymt_discount'] = $myrow["pymt_discount"];
@@ -328,33 +338,47 @@ start_form();
 	hidden('trans_no');
 	hidden('old_ref', $old_ref);
 
-	start_outer_table(TABLESTYLE2, "width=60%", 5);
+	start_outer_table(TABLESTYLE2, "width=100%", 5);
 
 	table_section(1);
 
 	bank_accounts_list_row(_("Into Bank Account:"), 'bank_account', null, true);
 
-	if ($new)
-		customer_list_row(_("From Customer:"), 'customer_id', null, false, true);
-	else {
-		label_cells(_("From Customer:"), $_SESSION['alloc']->person_name, "class='label'");
+	if(isset($customer)){
+		label_cells(_("From Customer:"), $customer['name'], "class='label'");
 		hidden('customer_id', $_POST['customer_id']);
-	}
-
-	if (db_customer_has_branches($_POST['customer_id'])) {
-		customer_branches_list_row(_("Branch:"), $_POST['customer_id'], 'BranchID', null, false, true, true);
-	} else {
-		hidden('BranchID', ANY_NUMERIC);
-	}
-
-	if (list_updated('customer_id') || ($new && list_updated('bank_account'))) {
-		$_SESSION['alloc']->set_person($_POST['customer_id'], PT_CUSTOMER);
+		hidden('BranchID', $branch['branch_code']);
+		$_SESSION['alloc']->set_person($customer['debtor_no'], PT_CUSTOMER);
 		$_SESSION['alloc']->read();
 		$_POST['memo_'] = $_POST['amount'] = $_POST['discount'] = '';
 		$Ajax->activate('alloc_tbl');
+		read_customer_data($customer['debtor_no']);
+	}else{
+		
+		if ($new)
+			customer_list_row(_("From Customer:"), 'customer_id', null, false, true);
+		else {
+			label_cells(_("From Customer:"), $_SESSION['alloc']->person_name, "class='label'");
+			hidden('customer_id', $_POST['customer_id']);
+		}
+		if (db_customer_has_branches($_POST['customer_id'])) {
+			customer_branches_list_row(_("Branch:"), $_POST['customer_id'], 'BranchID', null, false, true, true);
+		} else {
+			hidden('BranchID', ANY_NUMERIC);
+		}
+
+		if (list_updated('customer_id') || ($new && list_updated('bank_account'))) {
+			$_SESSION['alloc']->set_person($_POST['customer_id'], PT_CUSTOMER);
+			$_SESSION['alloc']->read();
+			$_POST['memo_'] = $_POST['amount'] = $_POST['discount'] = '';
+			$Ajax->activate('alloc_tbl');
+		}
+
+		read_customer_data();
 	}
 
-	read_customer_data();
+
+	
 
 	set_global_customer($_POST['customer_id']);
 	if (isset($_POST['HoldAccount']) && $_POST['HoldAccount'] != 0)	
@@ -388,7 +412,7 @@ start_form();
 	show_allocatable(false);
 	div_end();
 
-	start_table(TABLESTYLE, "width=60%");
+	start_table(TABLESTYLE, "width=80%");
 
 	label_row(_("Customer prompt payment discount :"), $display_discount_percent);
 

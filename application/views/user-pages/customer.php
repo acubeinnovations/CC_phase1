@@ -113,18 +113,19 @@
 			 <?php echo form_close(); ?>
 			</div>
 			</div>
-		 <div class="tab-pane" id="tab_2">
-		</div>
-		<div class="tab-pane" id="tab_2">
-		</div>
+		 
 			</fieldset>
 		</div>
         </div>
         <div class="tab-pane" id="tab_2">
-            hi,Its me tab2
+            <iframe src="<?php echo base_url().'account/front_desk/CustomerPayment/C'.$customer_id.'/true';?>" height="600px" width="100%">
+		<p>Browser not Support</p>
+		</iframe>
         </div>
         <div class="tab-pane" id="tab_3">
-           hi,Its me tab3
+          <iframe src="<?php echo base_url().'account/front_desk/CustomerPaymentInquiry/C'.$customer_id.'/true';?>" height="600px" width="100%">
+		<p>Browser not Support</p>
+		</iframe>
         </div>
     </div>
 </div>

@@ -437,7 +437,7 @@ function supplier_list($name, $selected_id=null, $spec_option=false, $submit_on_
 {
 	global $all_items;
 
-	$sql = "SELECT supplier_id, supp_ref, curr_code, inactive FROM ".TB_PREF."suppliers ";
+	$sql = "SELECT supplier_id, supp_name, curr_code, inactive FROM ".TB_PREF."suppliers ";
 
 	$mode = get_company_pref('no_supplier_list');
 
