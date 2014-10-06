@@ -178,6 +178,16 @@ class account_model extends CI_Model {
 		$this->db->where('organisation_id',$this->session->userdata('organisation_id'));	
 		return $this->db->get()->row_array();
 	}
+	function fa_supplier_exists($ref,$table)
+	{
+		$this->db->from($table);
+		$this->db->where('supp_ref',$ref);
+		if($this->db->get()->num_rows() == 1){
+			return true;//supplier exists in fa
+		}else{
+			return false;//supplier not exists in fa
+		}
+	}
 
 	function add_fa_supplier($id,$type='')
 	{
@@ -194,6 +204,48 @@ class account_model extends CI_Model {
 			return false;//could not insert in fa , supplier table not set for this organisation
 		}
 	}
+	function edit_fa_supplier($id,$type='')
+	{
+		$fa_supplier_table = $this->session->userdata('organisation_id')."_suppliers";
+		$ref= $type.$id;
+
+		if($this->check_fa_table_exists($fa_supplier_table))
+		{
+			if($this->fa_supplier_exists($ref,$fa_supplier_table)){
+				//edit customer
+				if($type == 'DR'){
+					$cnc_data = get_cnc_driver($id);
+					$address = $cnc_data['address'];
+					$ac = $cnc_data['bank_account_number'];
+				}elseif($type == 'VW'){
+					$cnc_data = get_cnc_vehicle_owner($id);
+					$address = $cnc_data['present_address'];
+					$ac = "";
+				}
+				else{
+					$cnc_data = false;
+				}
+				if($cnc_data){
+					$data = array(
+					'supp_name'=>$cnc_data['name'],
+					'supp_ref'=>$ref,
+					'address' => $address,
+					'supp_address' => $address,
+					'bank_account' => $ac
+					);
+					$this->db->where('supp_ref',$type.$id );
+					$this->db->update($fa_supplier_table,$data);
+					return true;
+				}
+				return true;
+			}else{
+				$this->add_fa_supplier($id,$type);
+			}
+		}else{
+			return false;//could not insert in fa , supplier table not set for this organisation
+		}
+	}
+
 	//prepare supplier data array 
 	function prepare_cnc_data_for_supplier($id,$type='')
 	{
