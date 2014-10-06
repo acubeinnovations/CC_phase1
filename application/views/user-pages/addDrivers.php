@@ -102,7 +102,7 @@ $this->mysession->delete('post');
 	$id_proof_document_number=$result['id_proof_document_number'];
 	$name_on_id_proof=$result['name_on_id_proof'];
 
-}
+} echo $driver_id."hi";
 ?>
 <?php if($this->session->userdata('dbSuccess') != '') { ?>
         <div class="success-message">
@@ -347,7 +347,7 @@ $this->mysession->delete('post');
    		<div class="box-footer">
 		<?php // echo validation_errors();?>
 		<?php 
-		 if($driver_id==gINVALID){
+		 if($driver_id==gINVALID||$driver_id==''){
 			$btn_name='Save';
 		 }else {
 			$btn_name='Update';
