@@ -276,7 +276,7 @@ $err=True;
 	 }
 	   if($data['vehicle_model_id'] ==-1){
 	 $data['vehicle_model_id'] ='-1';
-	 //$err=False;
+	 $err=False;
 	 $this->mysession->set('model','Choose Model Type');
 	 }
 	  if($driver_data['driver_id'] ==-1){
@@ -408,7 +408,7 @@ $err=True;
 		}
 		else{
 	
-		$res=$this->vehicle_model->UpdateInsurancedetails($data,$vehicle_id); 
+		$res=$this->vehicle_model->UpdateInsurancedetails($data,$ins_id); 
 		if($res==true){
 		$this->mysession->set('dbSuccess',' Updated Succesfully..!');
 	    $this->mysession->set('dbError','');
@@ -505,7 +505,7 @@ $err=True;
 		}
 		else{
 	
-		$res=$this->vehicle_model->UpdateLoandetails($data,$vehicle_id); 
+		$res=$this->vehicle_model->UpdateLoandetails($data,$loan_id); 
 		if($res==true){
 		$this->mysession->set('loan_Success',' Updated Succesfully..!');
 	    $this->mysession->set('loan_Error','');
@@ -589,7 +589,7 @@ $err=True;
 		}
 		else{
 
-		$res=$this->vehicle_model->UpdateOwnerdetails($data,$vehicle_id); 
+		$res=$this->vehicle_model->UpdateOwnerdetails($data,$owner_id); 
 		if($res==true){
 		$this->mysession->set('owner_Success',' Updated Succesfully..!');
 	    $this->mysession->set('owner_Error','');

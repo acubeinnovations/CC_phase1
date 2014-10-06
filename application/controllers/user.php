@@ -999,15 +999,16 @@ public function profile() {
 	$org_id=$this->session->userdata('organisation_id');
 	$where_arry['organisation_id']=$org_id;
 	//for search
-	   if( isset($_REQUEST['search'])){
+	   if( isset($_REQUEST['search'])){ 
 	if($param2==''){
 	$param2=0;
 	}
-	if($_REQUEST['owner']!=null){
-	$like_arry['registration_number']=$_REQUEST['owner'];
-	}
+	
 	if($_REQUEST['reg_num']!=null){
-	$like_arry['registration_number']=$_REQUEST['owner'];
+	$like_arry['registration_number']=$_REQUEST['reg_num'];
+	}
+	if($_REQUEST['owner']>0){
+	$where_arry['vehicle_owner_id']=$_REQUEST['owner'];
 	}
 	if($_REQUEST['v_type']>0){
 	$where_arry['vehicle_type_id']=$_REQUEST['v_type'];
@@ -1015,6 +1016,7 @@ public function profile() {
 	if($_REQUEST['v_model']>0){
 	$where_arry['vehicle_model_id']=$_REQUEST['v_model'];
 	}
+
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	$condition=array("like"=>$like_arry,"where"=>$where_arry); 
 	}
