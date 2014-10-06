@@ -50,6 +50,10 @@
 		meta_forward('sales/sales_order_entry.php','NewDelivery='.$_GET['NewDelivery']);
 		
 	}
+	elseif(isset($_GET['SalesDeliveries'])){
+		meta_forward('sales/inquiry/sales_deliveries_view.php','OutstandingOnly=1');
+		
+	}
 	
 	
 	

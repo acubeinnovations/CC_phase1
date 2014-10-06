@@ -22,12 +22,33 @@ $tb_pref_counter = 8;
 $db_connections = array (
   0 => 
   array (
-    'name' => 'mastercompany',
+    
+     'name' => 'mastercompany',
+     'host' => 'localhost',
+     'dbuser' => 'root',
+     'dbpassword' => 'mysql@local',
+     'dbname' => 'connectncabs',
+     'dbpassword' => 'mysql@local',
+     'dbname' => 'connectncabs',
+     'tbpref' => '0_',
+   ),
+  1 => 
+  array (
+    'name' => 'TALC1',
     'host' => 'localhost',
     'dbuser' => 'root',
-    'dbpassword' => 'Mysql@Acube2',
-    'dbname' => 'cc',
-    'tbpref' => '0_',
+    'dbpassword' => 'mysql@local',
+    'dbname' => 'connectncabs',
+    'tbpref' => '1_',
+  ),
+  2 => 
+  array (
+    'name' => 'CONNECTNCABS',
+   'host' => 'localhost',
+    'dbuser' => 'root',
+    'dbpassword' => 'mysql@local',
+    'dbname' => 'connectncabs',
+    'tbpref' => '2_',
   ),
  
 );

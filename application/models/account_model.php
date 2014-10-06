@@ -96,7 +96,9 @@ class account_model extends CI_Model {
 					$data = array(
 						'debtor_no'=>$this->db->insert_id(),
 						'branch_ref'=>$ref,
-						'br_name'=>$cnc_cust['name']
+						'br_name'=>$cnc_cust['name'],
+						'tax_group_id' =>1,
+						'default_location' =>'DEF'
 						);
 					$this->db->insert($fa_branch_table,$data);
 				}	

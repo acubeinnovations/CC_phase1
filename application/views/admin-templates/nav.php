@@ -115,8 +115,8 @@
                             </a>
                             <ul class="treeview-menu">
 				 
-                                <li><a href="<?php echo base_url().'account/front_desk/NewBankPayment';?>"><i class="fa fa-angle-double-right"></i> Bank Payment</a></li>
-				<li><a href="<?php echo base_url().'account/front_desk/NewBankDeposit';?>"><i class="fa fa-angle-double-right"></i> Bank Deposit</a></li>
+                                <li><a href="<?php echo base_url().'account/front_desk/SalesDeliveries';?>"><i class="fa fa-angle-double-right"></i>Delivery</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/NewBankDeposit';?>"><i class="fa fa-angle-double-right"></i> Invoice</a></li>
                                 
                                 
                             </ul>

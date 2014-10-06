@@ -254,7 +254,7 @@ function get_sales_order_header($order_no, $trans_type)
 		return db_fetch($result);
 	}
 	else
-		display_warning("You have missing or invalid sales document in database (type:$trans_type, number:$order_no).");
+		display_warning("You have missing or invalid sales document in database (type:$trans_type, number:$order_no,sql:$sql).");
 
 }
 
