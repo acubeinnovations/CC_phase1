@@ -999,23 +999,30 @@ public function profile() {
 	$org_id=$this->session->userdata('organisation_id');
 	$where_arry['organisation_id']=$org_id;
 	//for search
-	   if(isset($_REQUEST['driver_name'])&& isset($_REQUEST['search'])){
+	   if( isset($_REQUEST['search'])){
 	if($param2==''){
 	$param2=0;
 	}
-	if($_REQUEST['driver_name']!=null){
-	$like_arry['name']=$_REQUEST['driver_name'];
+	if($_REQUEST['owner']!=null){
+	$like_arry['registration_number']=$_REQUEST['owner'];
 	}
+	if($_REQUEST['reg_num']!=null){
+	$like_arry['registration_number']=$_REQUEST['owner'];
+	}
+	if($_REQUEST['v_type']>0){
+	$where_arry['vehicle_type_id']=$_REQUEST['v_type'];
+	}
+	if($_REQUEST['v_model']>0){
+	$where_arry['vehicle_model_id']=$_REQUEST['v_model'];
+	}
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+	$condition=array("like"=>$like_arry,"where"=>$where_arry); 
+	}
+	
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 
-	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
-	$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
-	}
-	//$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
-	//print_r($condition);exit;
-	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
-	//print_r($this->mysession->get('condition'));exit;
 	$tbl="vehicles";
-	$baseurl=base_url().'organization/front-desk/list-driver/';
+	$baseurl=base_url().'organization/front-desk/list-vehicle/';
 	$uriseg ='4';
 
 	   $p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
@@ -1025,23 +1032,10 @@ public function profile() {
 
 	}
 	$data['values']=$p_res['values'];
-	$name_arry=array('vehicle_models','vehicle_types','vehicle_owners');
-	foreach ($data['values'] as $val):
-	$id_arry=array($val['vehicle_model_id'],$val['vehicle_type_id'],$val['vehicle_owner_id']);
-	for ($i=0;$i<3;$i++){
-	$res=$this->user_model->getValueArray($name_arry[$i],$id_arry[$i]);
-	if($res!=false){
-	$data[$name_arry[$i]]=$res;
-	}
-	else{
-	$data[$name_arry[$i]]='';
-	}
-	}
-	endforeach;
-	//print_r($data['result']);exit;
 	$data['page_links']=$p_res['page_links'];
-	$tbl_arry=array('vehicle_models','vehicle_types');
-	for ($i=0;$i<2;$i++){
+	$tbl_arry=array('vehicle_models','vehicle_types','vehicle_owners');
+	$count=count($tbl_arry);
+	for ($i=0;$i<$count;$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
 	if($result!=false){
 	$data[$tbl_arry[$i]]=$result;
