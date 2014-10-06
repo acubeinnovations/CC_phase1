@@ -816,7 +816,7 @@ public function profile() {
 			$conditon=array('driver_id'=>$param1);
 			$data['trips']=$this->trip_booking_model->getDetails($conditon,$orderby='');
 			}
-			print_r($data['trips']);exit;
+			//print_r($data['trips']);exit;
 			//sample ends
 				$data['title']="Driver Details | ".PRODUCT_NAME;  
 				$page='user-pages/addDrivers';
@@ -1019,11 +1019,26 @@ public function profile() {
 	$uriseg ='4';
 
 	   $p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+	   
 	if($param2==''){
 	$this->mysession->delete('condition');
 
 	}
 	$data['values']=$p_res['values'];
+	$name_arry=array('vehicle_models','vehicle_types','vehicle_owners');
+	foreach ($data['values'] as $val):
+	$id_arry=array($val['vehicle_model_id'],$val['vehicle_type_id'],$val['vehicle_owner_id']);
+	for ($i=0;$i<3;$i++){
+	$res=$this->user_model->getValueArray($name_arry[$i],$id_arry[$i]);
+	if($res!=false){
+	$data[$name_arry[$i]]=$res;
+	}
+	else{
+	$data[$name_arry[$i]]='';
+	}
+	}
+	endforeach;
+	//print_r($data['result']);exit;
 	$data['page_links']=$p_res['page_links'];
 	$tbl_arry=array('vehicle_models','vehicle_types');
 	for ($i=0;$i<2;$i++){

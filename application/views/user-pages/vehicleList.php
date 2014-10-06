@@ -51,9 +51,10 @@
 					</tr>
 					<?php
 					if(isset($values)){ 
-					foreach ($values as $det):  
+					foreach ($values as $det): 
+print_r($vehicle_models);					
 					?>
-					<tr>
+					<tr> 
 					    <td><?php echo $det['registration_number'];?></td>
 						<td><?php  echo $det['vehicle_type_id'];?></td>
 						<td><?php echo $det['vehicle_owner_id'];?></td>

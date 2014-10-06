@@ -148,4 +148,26 @@ class user_model extends CI_Model {
 	return $qry->row_array();
 	
 	}
+	public function getValues($tbl,$id){
+	$qry=$this->db->select('name');
+	$qry=$this->db->where('id',$id);
+	$qry=$this->db->get($tbl);
+	return $qry->result_array();
+	
+	}
+	public function getValueArray($tbl,$id){
+		$qry=$this->db->where('id',$id);
+		$qry=$this->db->get($tbl); 
+		$count=$qry->num_rows();
+			$l= $qry->result_array();
+			for($i=0;$i<$count;$i++){
+			$values[$l[$i]['id']]=$l[$i]['name'];
+			}
+			if(!empty($values)){
+			return $values; 
+			}
+			else{
+			return false;
+			}
+	}
 }
