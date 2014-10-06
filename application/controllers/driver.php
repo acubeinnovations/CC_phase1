@@ -118,7 +118,7 @@ class Driver extends CI_Controller {
 		redirect(base_url().'organization/front-desk/driver',$data);	
 	 }
 	 else{
-		if($dr_id==gINVALID){
+		if($dr_id==gINVALID || $dr_id==''){
 		$res=$this->driver_model->addDriverdetails($data); 
 		if($res==true){
 		$this->session->set_userdata(array('dbSuccess'=>' Added Succesfully..!'));
@@ -127,7 +127,7 @@ class Driver extends CI_Controller {
 		}
 		}
 		else{
-		echo $dr_id;exit;
+		//echo $dr_id;exit;
 		$res=$this->driver_model->UpdateDriverdetails($data,$dr_id);
 		if($res==true){
 		$this->session->set_userdata(array('dbSuccess'=>' Updated Succesfully..!'));
