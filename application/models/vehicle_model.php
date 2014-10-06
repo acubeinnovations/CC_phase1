@@ -45,16 +45,20 @@ return true;
 }
 
 public function insertOwner($data){
-$qry=$this->db->set('created', 'NOW()', FALSE);
-$v_id=$this->mysession->get('vehicle_id');
-$qry=$this->db->set('vehicle_id', $v_id);
-$qry=$this->db->insert('vehicle_owners',$data);
-$o_id=mysql_insert_id();
-$map_qry=$this->db->set('vehicle_owner_id', $o_id);
-$v_id=$this->mysession->get('vehicle_id');
-$map_qry=$this->db->where('id',$v_id);
-$map_qry=$this->db->update('vehicles');
-return true;
+	$qry=$this->db->set('created', 'NOW()', FALSE);
+	$v_id=$this->mysession->get('vehicle_id');
+	$qry=$this->db->set('vehicle_id', $v_id);
+	$qry=$this->db->insert('vehicle_owners',$data);
+	if($o_id = $this->db->insert_id()){
+		$map_qry=$this->db->set('vehicle_owner_id', $o_id);
+		$v_id=$this->mysession->get('vehicle_id');
+		$map_qry=$this->db->where('id',$v_id);
+		$map_qry=$this->db->update('vehicles');
+		return $o_id;
+	}else{
+		return false;
+	}
+	
 
 }
 public function  UpdateVehicledetails($data,$v_id){

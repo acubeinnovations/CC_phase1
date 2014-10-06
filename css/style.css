@@ -485,7 +485,7 @@ display:none;
  z-index: 1030;
 width:80%;
 margin:auto;
-top:-700px;
+top:-240px;
 background:#fff;
 }
 
@@ -508,4 +508,13 @@ color: #00A65A;
 
 .device-delete{
     color: #F56954;
+}
+
+.tab-content > .active {
+display:inline-block;
+width: 100%;
+}
+.trips > .box{
+background: none;
+box-shadow:none;
 }

@@ -368,11 +368,11 @@ $this->mysession->delete('post');
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr>
+						<th>SlNo</th>
 					    <th>Date</th>
 					    <th>Route</th>
-						<th>Total Kilometers</th>
+						<th>Kilometers</th>
 						<th>No Of Days</th>
-						<th>Unit Bata</th>
 						<th>Bata Amount</th>
 						<th>Releasing Place</th>
 						<th>Parking</th>
@@ -382,38 +382,50 @@ $this->mysession->delete('post');
 						<th>Fuel extra</th>
 					    
 					</tr>
-					<?php
-					//if(isset($values)){
-					//foreach ($values as $det):
-					?>
-					<tr>
-					    <td><?php //echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$det['name']).nbs(3);?></td>
-					    <td><?php // echo $det['phone'].",".$det['mobile']?></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<?php	
+						$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_night_halt=$tot_fuel_extra=0;
+					if($trips!=false){
+						for($trip_index=0;$trip_index<count($trips);$trip_index++){
+						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
+						$full_tot_km=$full_tot_km+$tot_km;
+						$tot_parking=$tot_parking+$trips[$trip_index]['parking_fees'];
+						$tot_toll=$tot_toll+$trips[$trip_index]['toll_fees'];
+						$tot_state_tax=$tot_state_tax+$trips[$trip_index]['state_tax'];
+						$tot_night_halt=$tot_night_halt+$trips[$trip_index]['night_halt_charges'];
+						$tot_fuel_extra=$tot_fuel_extra+$trips[$trip_index]['fuel_extra_charges'];
+						?>
+						<tr>
+							<td><?php echo $trip_index+1; ?></td>
+							<td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
+							<td><?php echo $trips[$trip_index]['pick_up_city'].' to '.$trips[$trip_index]['drop_city']; ?></td>
+							<td><?php echo $tot_km; ?></td>
+							<td><?php echo ''; ?></td>
+							<td><?php echo ''; ?></td>
+							<td><?php echo $trips[$trip_index]['releasing_place']; ?></td>
+							<td><?php echo $trips[$trip_index]['parking_fees']; ?></td>
+							<td><?php echo $trips[$trip_index]['toll_fees']; ?></td>
+							<td><?php echo $trips[$trip_index]['state_tax']; ?></td>
+							<td><?php echo $trips[$trip_index]['night_halt_charges']; ?></td>
+							<td><?php echo $trips[$trip_index]['fuel_extra_charges']; ?></td>
+							
 						
-					</tr>
+						</tr>
+						<?php } 
+						}					
+					?>
 					<tr>
 					<td>Total</td>
 					<td></td>
 					<td></td>
-					<td>X</td>
+					<td><?php echo $full_tot_km; ?></td>
 					<td></td>
-					<td>X</td>
 					<td></td>
-					<td>X</td>
-					<td>X</td>
-					<td>X</td>
-					<td>X</td>
-					<td>X</td>
+					<td><?php echo $full_tot_km; ?></td>
+					<td><?php echo $tot_parking; ?></td>
+					<td><?php echo $tot_toll; ?></td>
+					<td><?php echo $tot_state_tax; ?></td>
+					<td><?php echo $tot_night_halt; ?></td>
+					<td><?php echo $tot_fuel_extra; ?></td>
 					</tr>
 					<?php //endforeach;
 					//}
