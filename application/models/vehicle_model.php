@@ -113,14 +113,14 @@ public function sample_call($data,$driver_data,$v_id){
 }
 public function UpdateInsurancedetails($data,$id){
 
-$this->db->where('vehicle_id',$id);
+$this->db->where('id',$id);
 $this->db->update('vehicles_insurance',$data); 
 return true;
 
 }
 public function UpdateLoandetails($data,$id){
 $this->db->set('updated', 'NOW()', FALSE);
-$this->db->where('vehicle_id',$id);
+$this->db->where('id',$id);
 $this->db->update('vehicle_loans',$data); 
 return true;
 

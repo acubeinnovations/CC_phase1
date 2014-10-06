@@ -276,7 +276,7 @@ $err=True;
 	 }
 	   if($data['vehicle_model_id'] ==-1){
 	 $data['vehicle_model_id'] ='-1';
-	 //$err=False;
+	 $err=False;
 	 $this->mysession->set('model','Choose Model Type');
 	 }
 	  if($driver_data['driver_id'] ==-1){
@@ -288,7 +288,7 @@ $err=True;
 	 if($this->form_validation->run()==False|| $err==False){
 	 
 	//print_r($driver_data);exit;
-		
+		$this->mysession->set('v_id',$v_id);
 		$this->mysession->set('post_all',$data);
 		$this->mysession->set('post_driver',$driver_data);
 		redirect(base_url().'organization/front-desk/vehicle',$data);	// ?? driver data??
@@ -387,7 +387,7 @@ $err=True;
 	}
 	 if($this->form_validation->run()==False|| $err==False){
 	 
-		
+		$this->mysession->set('insurance_id',$ins_id);
 		$this->mysession->set('ins_post_all',$data);
 		
 		redirect(base_url().'organization/front-desk/vehicle/insurance',$data);	
@@ -408,7 +408,7 @@ $err=True;
 		}
 		else{
 	
-		$res=$this->vehicle_model->UpdateInsurancedetails($data,$vehicle_id); 
+		$res=$this->vehicle_model->UpdateInsurancedetails($data,$ins_id); 
 		if($res==true){
 		$this->mysession->set('dbSuccess',' Updated Succesfully..!');
 	    $this->mysession->set('dbError','');
@@ -484,7 +484,7 @@ $err=True;
 
 	 if($this->form_validation->run()==False|| $err==False){
 	 
-		
+		$this->mysession->set('loan_id',$loan_id);
 		$this->mysession->set('loan_post_all',$data);
 		
 		redirect(base_url().'organization/front-desk/vehicle/loan',$data);	
@@ -505,7 +505,7 @@ $err=True;
 		}
 		else{
 	
-		$res=$this->vehicle_model->UpdateLoandetails($data,$vehicle_id); 
+		$res=$this->vehicle_model->UpdateLoandetails($data,$loan_id); 
 		if($res==true){
 		$this->mysession->set('loan_Success',' Updated Succesfully..!');
 	    $this->mysession->set('loan_Error','');
@@ -569,22 +569,22 @@ $err=True;
 	
 
 	  if($this->form_validation->run()==False){
-		
+		$this->mysession->set('owner_id',$owner_id);
 		$this->mysession->set('owner_post_all',$data);
 		
 		redirect(base_url().'organization/front-desk/vehicle/owner',$data);	
 	 }
 	  else{ 
-	 
+		
 		 //database insertion for vehicle
 		 if($owner_id==gINVALID ){ 
-	
+			
 			$res=$this->vehicle_model->insertOwner($data);
 			$ins_id=$this->mysession->get('vehicle_id');
 			if($res) {
 			
 				//vehicle owner enter as supplier in fa 
-				$this->account_model->add_fa_supplier($res,"VW");
+				//$this->account_model->add_fa_supplier($res,"VW");
 
 				$this->mysession->set('owner_Success',' Added Succesfully..!');
 				$this->mysession->set('owner_Error','');
@@ -593,15 +593,17 @@ $err=True;
 		}
 		else{
 
+
 			$res=$this->vehicle_model->UpdateOwnerdetails($data,$owner_id); 
 			if($res==true){
 				//edit vehicle owner enter as supplier in fa 
-				$this->account_model->edit_fa_supplier($owner_id,"VW");
+				//$this->account_model->edit_fa_supplier($owner_id,"VW");
 
 				$this->mysession->set('owner_Success',' Updated Succesfully..!');
 		    		$this->mysession->set('owner_Error','');
 		    		redirect(base_url().'organization/front-desk/vehicle/owner');
 			}
+
 		}
 
 	  }
