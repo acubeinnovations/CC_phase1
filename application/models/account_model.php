@@ -182,7 +182,7 @@ class account_model extends CI_Model {
 	{
 		$this->db->from($table);
 		$this->db->where('supp_ref',$ref);
-		if($this->db->get()->num_rows() == 1){
+		if($num = $this->db->get()->num_rows() == 1){
 			return true;//supplier exists in fa
 		}else{
 			return false;//supplier not exists in fa
@@ -214,12 +214,12 @@ class account_model extends CI_Model {
 			if($this->fa_supplier_exists($ref,$fa_supplier_table)){
 				//edit customer
 				if($type == 'DR'){
-					$cnc_data = get_cnc_driver($id);
-					$address = $cnc_data['address'];
+					$cnc_data = $this->get_cnc_driver($id);
+					$address = $cnc_data['present_address'];
 					$ac = $cnc_data['bank_account_number'];
 				}elseif($type == 'VW'){
-					$cnc_data = get_cnc_vehicle_owner($id);
-					$address = $cnc_data['present_address'];
+					$cnc_data = $this->get_cnc_vehicle_owner($id);
+					$address = $cnc_data['address'];
 					$ac = "";
 				}
 				else{
@@ -252,12 +252,12 @@ class account_model extends CI_Model {
 		$ref = $type.$id;
 		$prefs = $this->get_company_prefs();
 		if($type == 'DR'){
-			$cnc_data = get_cnc_driver($id);
-			$address = $cnc_data['address'];
+			$cnc_data = $this->get_cnc_driver($id);
+			$address = $cnc_data['present_address'];
 			$ac = $cnc_data['bank_account_number'];
 		}elseif($type == 'VW'){
-			$cnc_data = get_cnc_vehicle_owner($id);
-			$address = $cnc_data['present_address'];
+			$cnc_data = $this->get_cnc_vehicle_owner($id);
+			$address = $cnc_data['address'];
 			$ac = "";
 		}
 		else{
