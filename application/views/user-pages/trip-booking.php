@@ -770,12 +770,12 @@ $this->mysession->delete('post');
 </div>
 
 <div class="hide-me">
-<div class="trip-models">
+<div class="vehicle-models">
 <?php
 	$i=0;
- foreach ($vehicle_types as $value) {
+ foreach ($vehicle_models as $value) {
 echo $value;
-	if($i<count($vehicle_types)-1){
+	if($i<count($vehicle_models)-1){
 echo ',';
 	}
 	$i++;

@@ -25,6 +25,7 @@ $mobile='';
 <div class="page-outer">    
 	<fieldset class="body-border">
 		<legend class="body-head">Customers</legend>
+		
 		<div class="box-body table-responsive no-padding">
 			
 			<?php echo form_open(base_url()."organization/front-desk/customers"); ?>
@@ -78,6 +79,7 @@ echo form_close();?></td>
 				</tbody>
 			</table><?php echo $page_links;?>
 		</div>
+		
 	</fieldset>
 </div>
 
