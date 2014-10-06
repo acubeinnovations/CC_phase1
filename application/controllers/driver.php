@@ -122,8 +122,9 @@ class Driver extends CI_Controller {
 		if($dr_id==gINVALID || $dr_id==''){
 			$res=$this->driver_model->addDriverdetails($data); 
 			if($res){
-				
+				//add driver as supplier in fa
 				$this->account_model->add_fa_supplier($res,"DR");
+
 				$this->session->set_userdata(array('dbSuccess'=>' Added Succesfully..!'));
 				$this->session->set_userdata(array('dbError'=>''));
 				redirect(base_url().'organization/front-desk/driver');
@@ -134,7 +135,9 @@ class Driver extends CI_Controller {
 			$res=$this->driver_model->UpdateDriverdetails($data,$dr_id);
 			
 			if($res==true){
+				//edit driver as supplier in fa 
 				$this->account_model->edit_fa_supplier($dr_id,"DR");
+
 				$this->session->set_userdata(array('dbSuccess'=>' Updated Succesfully..!'));
 				$this->session->set_userdata(array('dbError'=>''));
 				redirect(base_url().'organization/front-desk/driver');
