@@ -19,6 +19,7 @@ include_once($path_to_root . "/includes/banking.inc");
 include_once($path_to_root . "/includes/data_checks.inc");
 include_once($path_to_root . "/purchasing/includes/purchasing_db.inc");
 include_once($path_to_root . "/reporting/includes/reporting.inc");
+include_once($path_to_root . "/includes/db/cnc_session_db.inc");
 
 $js = "";
 if ($use_popup_windows)
@@ -30,7 +31,12 @@ add_js_file('payalloc.js');
 
 page(_($help_context = "Supplier Payment Entry"), false, false, "", $js);
 
-if (isset($_GET['supplier_id']))
+if(isset($_GET['SupplierPayment'])){//get supplier reference
+	//supplier id
+	$_POST['supplier_id'] = get_cnc_supplier_id($_GET['SupplierPayment']);
+		
+}
+elseif (isset($_GET['supplier_id']))
 {
 	$_POST['supplier_id'] = $_GET['supplier_id'];
 }

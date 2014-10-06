@@ -72,7 +72,7 @@
 		if($this->mysession->get('post_all')!=null && $this->mysession->get('post_driver')!=null ){
 			$data=$this->mysession->get('post_all');
 			$driver_data=$this->mysession->get('post_driver');
-			$vehicle_id=gINVALID;
+			$vehicle_id=$this->mysession->get('v_id');
 			$ownership =$data['vehicle_ownership_types_id'];
 			$vehicle_type=$data['vehicle_type_id'];
 			$make=$data['vehicle_make_id'];
@@ -389,7 +389,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 			$ins_web="";
 	if($this->mysession->get('ins_post_all')!=null ){ 
 	$data=$this->mysession->get('ins_post_all');
-			$insurance_id='';
+			$insurance_id=$this->mysession->get('insurance_id');
             $ins_number =$data['insurance_number'];
 			$ins_date=$data['insurance_date'];
 			$ins_renewal_date=$data['insurance_renewal_date'];
@@ -533,7 +533,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 			$l_web="";
 if($this->mysession->get('loan_post_all')!=null ){
 		$data=$this->mysession->get('loan_post_all');
-			$loan_id='';
+			$loan_id=$this->mysession->get('loan_id');
 			$l_addrs=$data['loan_agency_address'];
             $l_amt =$data['total_amount'];
 			$l_emi_no=$data['number_of_emi'];
@@ -674,7 +674,7 @@ if($this->mysession->get('loan_post_all')!=null ){
 			$own_dob='';
 if($this->mysession->get('owner_post_all')!=null ){
 		$data=$this->mysession->get('owner_post_all');
-			$owner_id='';
+			$owner_id=$this->mysession->get('owner_id');
 			$own_name=$data['name'];
 			$own_address=$data['address'];
 			$own_mob=$data['mobile'];

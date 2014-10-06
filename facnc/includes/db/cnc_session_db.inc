@@ -112,4 +112,15 @@ function get_cnc_customer_branch($debtor_no = '')
 }
 
 
+function get_cnc_supplier_id($ref = '')
+{
+	$sql = "SELECT supplier_id FROM ".TB_PREF."suppliers WHERE supp_ref = ".db_escape($ref);
+//echo $sql;exit;
+	$result = db_query($sql, "could not get voucher");
+	
+	$row = db_fetch_assoc($result);
+
+	return $row['supplier_id'];
+}
+
 ?>

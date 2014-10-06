@@ -35,7 +35,10 @@
 					    <?php echo form_close();?>
 						<td><?php echo nbs(55); ?></td>
 						<td><?php echo nbs(35); echo form_close(); ?></td>
-						<td><?php echo form_submit("add","Add","class='btn btn-primary'");?></td>
+						<td><?php echo form_open( base_url().'organization/front-desk/vehicle');
+								  echo form_submit("add","Add","class='btn btn-primary'");
+								  echo form_close(); 
+						?></td>
 					</tr>
 				</tbody>
 			</table>
