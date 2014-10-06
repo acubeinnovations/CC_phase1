@@ -190,7 +190,9 @@ $this->mysession->delete('post');
 	
 	?></div>
 	<div class="form-group">
-	<?php echo form_label('Children','usernamelabel'); ?>
+	<?php 
+	
+	echo form_label('Children','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'children','class'=>'form-control','id'=>'children','placeholder'=>'Children','value'=>$children)); ?>
 	   <?php echo $this->form_functions->form_error_session('children', '<p class="text-red">', '</p>'); ?>
         </div>

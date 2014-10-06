@@ -13,7 +13,7 @@ class Vehicle extends CI_Controller {
 
 	
 		if($this->session_check()==true) {
-		$tbl=array('vehicle-ownership'=>'vehicle_ownership_types','vehicle-types'=>'vehicle_types','ac-types'=>'vehicle_ac_types','fuel-types'=>'vehicle_fuel_types','seating-capacity'=>'vehicle_seating_capacity','beacon-light-options'=>'vehicle_beacon_light_options ','vehicle-makes'=>'vehicle_makes','driver-bata-percentages'=>'vehicle_driver_bata_percentages ','permit-types'=>'vehicle_permit_types');
+		$tbl=array('vehicle-ownership'=>'vehicle_ownership_types','vehicle-types'=>'vehicle_types','ac-types'=>'vehicle_ac_types','fuel-types'=>'vehicle_fuel_types','seating-capacity'=>'vehicle_seating_capacity','beacon-light-options'=>'vehicle_beacon_light_options ','vehicle-makes'=>'vehicle_makes','driver-bata-percentages'=>'vehicle_driver_bata_percentages ','permit-types'=>'vehicle_permit_types','vehicle-models'=>'vehicle_models');
             if($param1=='getDescription') {
             $this->getDescription();
             }
@@ -94,7 +94,7 @@ class Vehicle extends CI_Controller {
 			$data['user_id']=$this->session->userdata('id');
 			
 	        
-        
+        //echo $param1;exit;
 	
 		$result=$this->settings_model->addValues($tbl[$param1],$data);
 		if($result==true){
@@ -397,7 +397,7 @@ $err=True;
 	 
 	  //database insertion for vehicle
 	  if($ins_id==gINVALID ){ 
-		echo $ins_id ."add";exit;
+		
 		$res=$this->vehicle_model->insertInsurance($data);
 		$ins_id=$this->mysession->get('vehicle_id');
 		if( $res==true ) {

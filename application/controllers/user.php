@@ -943,7 +943,6 @@ public function profile() {
 				if($param2!=null&& is_numeric($param2)){
 				
 				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);
-				
 				$data['driver']=$data['record_values']['driver'];
 				$data['vehicle']=$data['record_values']['vehicle'];
 				$insurance_id=$data['vehicle']['vehicles_insurance_id'];
