@@ -24,7 +24,11 @@ if (!@$_GET['popup'])
 		$js .= get_js_open_window(900, 500);
 	if ($use_date_picker)
 		$js .= get_js_date_picker();
-	page(_($help_context = "Supplier Inquiry"), isset($_GET['supplier_id']), false, "", $js);
+
+	if(isset($_GET['SupplierPaymentInquiry']))
+		page(_($help_context = "Transactions"), isset($_GET['supplier_id']), false, "", $js);
+	else
+		page(_($help_context = "Supplier Inquiry"), isset($_GET['supplier_id']), false, "", $js);
 }
 if (isset($_GET['supplier_id'])){
 	$_POST['supplier_id'] = $_GET['supplier_id'];
@@ -47,13 +51,14 @@ if (!isset($_POST['supplier_id']))
 start_table(TABLESTYLE_NOBORDER);
 start_row();
 
-if (!@$_GET['popup'])
-	supplier_list_cells(_("Select a supplier:"), 'supplier_id', null, true, false, false, !@$_GET['popup']);
-
+//if (!@$_GET['popup'])
+	//supplier_list_cells(_("Select a supplier:"), 'supplier_id', null, true, false, false, !@$_GET['popup']);
+hidden('supplier_id');
 date_cells(_("From:"), 'TransAfterDate', '', null, -30);
 date_cells(_("To:"), 'TransToDate');
 
-supp_transactions_list_cell("filterType", null, true);
+//supp_transactions_list_cell("filterType", null, true);
+hidden('filterType',ST_SUPPAYMENT);
 
 submit_cells('RefreshInquiry', _("Search"),'',_('Refresh Inquiry'), 'default');
 
@@ -72,7 +77,7 @@ function display_supplier_summary($supplier_record)
 	$pastdue2 = _('Over') . " " . $past2 . " " . _('Days');
 	
 
-    start_table(TABLESTYLE, "width=80%");
+    start_table(TABLESTYLE, "width=100%");
     $th = array(_("Currency"), _("Terms"), _("Current"), $nowdue,
     	$pastdue1, $pastdue2, _("Total Balance"));
 
@@ -192,7 +197,7 @@ if ($_POST['supplier_id'] != ALL_TEXT)
 $table =& new_db_pager('trans_tbl', $sql, $cols);
 $table->set_marker('check_overdue', _("Marked items are overdue."));
 
-$table->width = "85%";
+$table->width = "100%";
 
 display_db_pager($table);
 

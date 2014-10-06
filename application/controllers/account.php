@@ -43,7 +43,7 @@ class Account extends CI_Controller {
 	}
 
 	//organisation user pages from fa
-	public function front_desk($action='None',$value=''){
+	public function front_desk($action='None',$value='',$tab = false){
 		
 		if($this->org_user_session_check()==true) {
 			$data['title'] = "Home | ".$action;
@@ -52,7 +52,11 @@ class Account extends CI_Controller {
 			else
 				$data['url'] = "facnc/sync_cnc.php?".$action."=Yes&cnc_token=".$this->session->userdata('session_id');
 			$page='fa-modules/module';
-			$this->load_admin_templates($page,$data);
+			
+			if($tab)
+				$this->load->view($page,$data);
+			else
+				$this->load_admin_templates($page,$data);
 		}
 	  	else{
 			echo 'you are not authorized access this page..';

@@ -60,6 +60,8 @@
 			$seat="";
 			$driver_id="";
 			$from_date="";
+			$device_id="";
+			$from_date_device="";
 			$reg_number="";
 			$reg_date="";
 			$eng_num="";
@@ -288,6 +290,23 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 		<?php echo form_label('From Date','usernamelabel');?>
            <?php echo form_input(array('name'=>'from_date','class'=>'fromdatepicker form-control' ,'value'=>$from_date));?>
 	   <?php echo $this->form_functions->form_error_session('from_date', '<p class="text-red">', '</p>'); ?>
+        </div>
+		<div class="form-group">
+		<?php echo form_label('Select Device','usernamelabel'); ?>
+           <?php $class="form-control";
+		$msg="Select Device";
+		$name="device";
+		if($device_id!=null){
+	echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_id,$class,$id='',$msg); 
+}else{
+echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_id='',$class,$id='',$msg); 
+}	?>
+	   
+        </div>
+		<div class="form-group">
+		<?php echo form_label('From Date for Device','usernamelabel');?>
+           <?php echo form_input(array('name'=>'from_date_device','class'=>'fromdatepicker form-control' ,'value'=>$from_date_device));?>
+	   <?php echo $this->form_functions->form_error_session('from_date_device', '<p class="text-red">', '</p>'); ?>
         </div>
 	
 		</fieldset> </div>

@@ -13,7 +13,7 @@ class Vehicle extends CI_Controller {
 
 	
 		if($this->session_check()==true) {
-		$tbl=array('vehicle-ownership'=>'vehicle_ownership_types','vehicle-types'=>'vehicle_types','ac-types'=>'vehicle_ac_types','fuel-types'=>'vehicle_fuel_types','seating-capacity'=>'vehicle_seating_capacity','beacon-light-options'=>'vehicle_beacon_light_options ','vehicle-makes'=>'vehicle_makes','driver-bata-percentages'=>'vehicle_driver_bata_percentages ','permit-types'=>'vehicle_permit_types');
+		$tbl=array('vehicle-ownership'=>'vehicle_ownership_types','vehicle-types'=>'vehicle_types','ac-types'=>'vehicle_ac_types','fuel-types'=>'vehicle_fuel_types','seating-capacity'=>'vehicle_seating_capacity','beacon-light-options'=>'vehicle_beacon_light_options ','vehicle-makes'=>'vehicle_makes','driver-bata-percentages'=>'vehicle_driver_bata_percentages ','permit-types'=>'vehicle_permit_types','vehicle-models'=>'vehicle_models');
             if($param1=='getDescription') {
             $this->getDescription();
             }
@@ -94,7 +94,7 @@ class Vehicle extends CI_Controller {
 			$data['user_id']=$this->session->userdata('id');
 			
 	        
-        
+        //echo $param1;exit;
 	
 		$result=$this->settings_model->addValues($tbl[$param1],$data);
 		if($result==true){
@@ -205,6 +205,8 @@ class Vehicle extends CI_Controller {
 			$data['vehicle_seating_capacity_id']=$this->input->post('seat');
 			$driver_data['driver_id']=$this->input->post('driver');
 			$driver_data['from_date']=$this->input->post('from_date');
+			$device_data['device_id']=$this->input->post('device');
+			$device_data['from_date_device']=$this->input->post('from_date_device');
 			$data['registration_number']=$this->input->post('reg_number');
 			$data['registration_date']=$this->input->post('reg_date');
 			$data['engine_number']=$this->input->post('eng_num');
@@ -216,12 +218,13 @@ class Vehicle extends CI_Controller {
 			$data['tax_renewal_date']=$this->input->post('tax_date');
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
-			$all_data=array('data'=>$data,'driver_data'=>$driver_data);
+			$all_data=array('data'=>$data,'driver_data'=>$driver_data,'device_data'=>$device_data);
 			
 					//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
 					$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
 					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean');
 					 $this->form_validation->set_rules('from_date','From Date ','trim|required|xss_clean');
+					 $this->form_validation->set_rules('from_date_device','From Date ','trim|required|xss_clean');
 					 $this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
 					 $this->form_validation->set_rules('eng_num','Engine Number','trim|required|xss_clean|numeric');
 					 $this->form_validation->set_rules('chases_num','Chases Number','trim|required|xss_clean|numeric');
@@ -284,14 +287,19 @@ $err=True;
 	 $err=False;
 	 $this->mysession->set('Driver','Choose Any Driver');
 	 } 
-	
+	  if($device_data['device_id'] ==-1){
+	 $device_data['device_id'] ='';
+	 $err=False;
+	 $this->mysession->set('Device','Choose Any Device');
+	 } 
 	 if($this->form_validation->run()==False|| $err==False){
 	 
 	//print_r($driver_data);exit;
 		$this->mysession->set('v_id',$v_id);
 		$this->mysession->set('post_all',$data);
 		$this->mysession->set('post_driver',$driver_data);
-		redirect(base_url().'organization/front-desk/vehicle',$data);	// ?? driver data??
+		$this->mysession->set('post_device',$device_data);
+		redirect(base_url().'organization/front-desk/vehicle',$data);	// ?? driver data?? device_data??
 	 }
 	 
 	  else{
@@ -397,7 +405,7 @@ $err=True;
 	 
 	  //database insertion for vehicle
 	  if($ins_id==gINVALID ){ 
-		echo $ins_id ."add";exit;
+		
 		$res=$this->vehicle_model->insertInsurance($data);
 		$ins_id=$this->mysession->get('vehicle_id');
 		if( $res==true ) {

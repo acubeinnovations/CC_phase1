@@ -99,6 +99,13 @@ function get_cust_branch($customer_id, $branch_code)
 	$result = db_query($sql,"check failed");
 	return db_fetch($result);
 }
+function get_cust_branch_detail($customer_id)
+{
+	$sql = "SELECT * FROM ".TB_PREF."cust_branch
+		WHERE debtor_no=".db_escape($customer_id);
+	$result = db_query($sql,"check failed");
+	return db_fetch($result);
+}
 
 function get_branch_accounts($branch_id)
 {

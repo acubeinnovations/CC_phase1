@@ -36,8 +36,19 @@
 	}
 	$this->mysession->delete('post');
 ?>
-	
-		 <div class="profile-body width-80-percent-and-margin-auto">
+<div class="page-outer">
+	   <fieldset class="body-border">
+		<legend class="body-head">Customers</legend>
+<div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
+        <li class=""><a href="#tab_2" data-toggle="tab">Payments</a></li>
+         <li class=""><a href="#tab_3" data-toggle="tab">Accounts</a></li>
+       
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+            		 <div class="profile-body width-80-percent-and-margin-auto">
 			<fieldset class="body-border">
    			 <legend class="body-head">Customer</legend>
 			 <div class="nav-tabs-custom">
@@ -102,10 +113,22 @@
 			 <?php echo form_close(); ?>
 			</div>
 			</div>
-		 <div class="tab-pane" id="tab_2">
-		</div>
-		<div class="tab-pane" id="tab_2">
-		</div>
+		 
 			</fieldset>
-		</div><!-- body -->
+		</div>
+        </div>
+        <div class="tab-pane" id="tab_2">
+            <iframe src="<?php echo base_url().'account/front_desk/CustomerPayment/C'.$customer_id.'/true';?>" height="600px" width="100%">
+		<p>Browser not Support</p>
+		</iframe>
+        </div>
+        <div class="tab-pane" id="tab_3">
+          <iframe src="<?php echo base_url().'account/front_desk/CustomerPaymentInquiry/C'.$customer_id.'/true';?>" height="600px" width="100%">
+		<p>Browser not Support</p>
+		</iframe>
+        </div>
+    </div>
+</div>
 	
+</fieldset>
+</div>

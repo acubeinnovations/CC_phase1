@@ -4,7 +4,7 @@ class Settings_model extends CI_Model {
 	
 	public function addValues($tbl,$data){
 	$this->db->set('created', 'NOW()', FALSE);
-	$this->db->insert($tbl,$data);
+	$this->db->insert($tbl,$data); 
 	return true;
 	}
 

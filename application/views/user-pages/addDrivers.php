@@ -190,7 +190,9 @@ $this->mysession->delete('post');
 	
 	?></div>
 	<div class="form-group">
-	<?php echo form_label('Children','usernamelabel'); ?>
+	<?php 
+	
+	echo form_label('Children','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'children','class'=>'form-control','id'=>'children','placeholder'=>'Children','value'=>$children)); ?>
 	   <?php echo $this->form_functions->form_error_session('children', '<p class="text-red">', '</p>'); ?>
         </div>
@@ -441,7 +443,10 @@ $this->mysession->delete('post');
          
 
 <div class="page-outer">
-	   <fieldset class="body-border">
+		<iframe src="<?php echo base_url().'account/front_desk/SupplierPayment/DR'.$driver_id.'/true';?>" height="600px" width="100%">
+		<p>Browser not Support</p>
+		</iframe>
+	   <!--<fieldset class="body-border">
 		<legend class="body-head">Payments</legend><div class="form-group">
 	<div class="box-body table-responsive no-padding">
 			<table class="table table-hover table-bordered">
@@ -493,12 +498,14 @@ $this->mysession->delete('post');
 			</table><?php //echo $page_links;?>
 		</div>
 </div>
-</fieldset>
+</fieldset>-->
 </div>
         </div>
 		<div class="tab-pane" id="tab_4">
-         accounts
-        </div>
+        		<iframe src="<?php echo base_url().'account/front_desk/SupplierPaymentInquiry/DR'.$driver_id.'/true';?>" height="600px" width="100%">
+		<p>Browser not Support</p>
+		</iframe>
+        	</div>
     </div>
 </div>	
 
