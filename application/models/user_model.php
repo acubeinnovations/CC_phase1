@@ -39,9 +39,10 @@ class user_model extends CI_Model {
 
 	public function getArray($tbl){
 	if($tbl=='drivers'){
+	//$to_date='9999-12-30';
 	$org_id=$this->session->userdata('organisation_id');
 	$query='SELECT * FROM drivers WHERE drivers.id NOT IN (SELECT driver_id FROM vehicle_drivers WHERE organisation_id='.$org_id.') And organisation_id='.$org_id.'';
-	$qry=$this->db->query($query);
+	$qry=$this->db->query($query); //echo $this->db->last_query();exit;
 	//echo $this->db->select('*')->from('drivers');exit;
 	//$qry=$this->db->where('`id` NOT IN (SELECT `driver_id` FROM `vehicle_drivers`)', NULL, FALSE);
 	//echo $this->db->last_query();exit;

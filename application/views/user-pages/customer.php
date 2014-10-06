@@ -36,10 +36,31 @@
 	}
 	$this->mysession->delete('post');
 ?>
-	
-		 <div class="profile-body width-80-percent-and-margin-auto">
+<div class="page-outer">
+	   <fieldset class="body-border">
+		<legend class="body-head">Customers</legend>
+<div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
+        <li class=""><a href="#tab_2" data-toggle="tab">Payments</a></li>
+         <li class=""><a href="#tab_3" data-toggle="tab">Accounts</a></li>
+       
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+            		 <div class="profile-body width-80-percent-and-margin-auto">
 			<fieldset class="body-border">
    			 <legend class="body-head">Customer</legend>
+			 <div class="nav-tabs-custom">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
+					<li class=""><a href="#tab_2" data-toggle="tab">Tab2</a></li>
+					 <li class=""><a href="#tab_3" data-toggle="tab">Tab3</a></li>
+				  
+				</ul>
+				<div class="tab-content">
+				
+				<div class="tab-pane active" id="tab_1">
 			<div class="div-with-50-percent-width-with-margin-10">
 				<?php echo form_open(base_url().'customers/AddUpdate');?>
 				
@@ -91,6 +112,22 @@
 				?></div>
 			 <?php echo form_close(); ?>
 			</div>
+			</div>
+		 <div class="tab-pane" id="tab_2">
+		</div>
+		<div class="tab-pane" id="tab_2">
+		</div>
 			</fieldset>
-		</div><!-- body -->
+		</div>
+        </div>
+        <div class="tab-pane" id="tab_2">
+            hi,Its me tab2
+        </div>
+        <div class="tab-pane" id="tab_3">
+           hi,Its me tab3
+        </div>
+    </div>
+</div>
 	
+</fieldset>
+</div>

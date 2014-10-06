@@ -190,7 +190,9 @@ $this->mysession->delete('post');
 	
 	?></div>
 	<div class="form-group">
-	<?php echo form_label('Children','usernamelabel'); ?>
+	<?php 
+	
+	echo form_label('Children','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'children','class'=>'form-control','id'=>'children','placeholder'=>'Children','value'=>$children)); ?>
 	   <?php echo $this->form_functions->form_error_session('children', '<p class="text-red">', '</p>'); ?>
         </div>
@@ -384,7 +386,7 @@ $this->mysession->delete('post');
 					</tr>
 					<?php	
 						$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_night_halt=$tot_fuel_extra=0;
-					if($trips!=false){
+					if(isset($trips) && $trips!=false){
 						for($trip_index=0;$trip_index<count($trips);$trip_index++){
 						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
 						$full_tot_km=$full_tot_km+$tot_km;
