@@ -813,8 +813,8 @@ public function profile() {
 			//trip details
 		
 			if($param1!=''){
-			$conditon=array('driver_id'=>$param1);
-			$data['trips']=$this->trip_booking_model->getDetails($conditon,$orderby='');
+			
+			$data['trips']=$this->trip_booking_model->getDriverVouchers($param1);
 			}
 			//print_r($data['trips']);exit;
 			//sample ends
