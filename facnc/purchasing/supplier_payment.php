@@ -29,16 +29,20 @@ if ($use_date_picker)
 
 add_js_file('payalloc.js');
 
-page(_($help_context = "Supplier Payment Entry"), false, false, "", $js);
+
 
 if(isset($_GET['SupplierPayment'])){//get supplier reference
 	//supplier id
 	$_POST['supplier_id'] = get_cnc_supplier_id($_GET['SupplierPayment']);
-		
+	$supplier = get_supplier($_POST['supplier_id']);
+	page(_($help_context = "Payment Entry"), false, false, "", $js);	
 }
 elseif (isset($_GET['supplier_id']))
 {
 	$_POST['supplier_id'] = $_GET['supplier_id'];
+	page(_($help_context = "Supplier Payment Entry"), false, false, "", $js);
+}else{
+page(_($help_context = "Supplier Payment Entry"), false, false, "", $js);
 }
 
 //----------------------------------------------------------------------------------------
@@ -103,7 +107,7 @@ if (isset($_GET['AddedID'])) {
 
    	display_notification_centered( _("Payment has been sucessfully entered"));
 
-	submenu_print(_("&Print This Remittance"), ST_SUPPAYMENT, $payment_id."-".ST_SUPPAYMENT, 'prtopt');
+	/*submenu_print(_("&Print This Remittance"), ST_SUPPAYMENT, $payment_id."-".ST_SUPPAYMENT, 'prtopt');
 	submenu_print(_("&Email This Remittance"), ST_SUPPAYMENT, $payment_id."-".ST_SUPPAYMENT, null, 1);
 
 	submenu_view(_("View this Payment"), ST_SUPPAYMENT, $payment_id);
@@ -114,7 +118,7 @@ if (isset($_GET['AddedID'])) {
 	submenu_option(_("Enter &Customer Payment"), "/sales/customer_payments.php");
 	submenu_option(_("Enter Other &Deposit"), "/gl/gl_bank.php?NewDeposit=Yes");
 	submenu_option(_("Bank Account &Transfer"), "/gl/bank_transfer.php");
-
+*/
 	display_footer_exit();
 }
 
@@ -274,18 +278,23 @@ if (isset($_POST['ProcessSuppPayment']))
 
 start_form();
 
-	start_outer_table(TABLESTYLE2, "width=60%", 5);
+	start_outer_table(TABLESTYLE2, "width=100%", 5);
 
 	table_section(1);
+	
+	if(isset($supplier)){
+		hidden('supplier_id');
+		label_row(_("Payment To:"),$supplier['supp_name']);
+	}else{
 
-    supplier_list_row(_("Payment To:"), 'supplier_id', null, false, true);
+		supplier_list_row(_("Payment To:"), 'supplier_id', null, false, true);
 
-	if (list_updated('supplier_id') || list_updated('bank_account')) {
-	  $_SESSION['alloc']->read();
-	  $_POST['memo_'] = $_POST['amount'] = '';
-	  $Ajax->activate('alloc_tbl');
+		if (list_updated('supplier_id') || list_updated('bank_account')) {
+		  $_SESSION['alloc']->read();
+		  $_POST['memo_'] = $_POST['amount'] = '';
+		  $Ajax->activate('alloc_tbl');
+		}
 	}
-
 	set_global_supplier($_POST['supplier_id']);
 
 	if (!list_updated('bank_account') && !get_post('__ex_rate_changed'))
@@ -293,7 +302,7 @@ start_form();
 	else
 		$_POST['amount'] = price_format(0);
 
-    bank_accounts_list_row(_("From Bank Account:"), 'bank_account', null, true);
+        bank_accounts_list_row(_("From Bank Account:"), 'bank_account', null, false);
 
 	bank_balance_row($_POST['bank_account']);
 
@@ -325,7 +334,7 @@ start_form();
 	show_allocatable(false);
 	div_end();
 
-	start_table(TABLESTYLE, "width=60%");
+	start_table(TABLESTYLE, "width=80%");
 	amount_row(_("Amount of Discount:"), 'discount', null, '', $supplier_currency);
 	amount_row(_("Amount of Payment:"), 'amount', null, '', $supplier_currency);
 	textarea_row(_("Memo:"), 'memo_', null, 22, 4);

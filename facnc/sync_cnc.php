@@ -54,6 +54,14 @@
 		meta_forward('sales/inquiry/sales_deliveries_view.php','OutstandingOnly=1');
 		
 	}
+	elseif(isset($_GET['SupplierPayment'])){
+		meta_forward('purchasing/supplier_payment.php','SupplierPayment='.$_GET['SupplierPayment']);
+		
+	}
+	elseif(isset($_GET['SupplierPaymentInquiry'])){
+		meta_forward('purchasing/inquiry/supplier_inquiry.php','SupplierPaymentInquiry='.$_GET['SupplierPaymentInquiry']);
+		
+	}
 	
 	
 	
