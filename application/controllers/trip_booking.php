@@ -4,6 +4,7 @@ class Trip_booking extends CI_Controller {
 		{
 		parent::__construct();
 		$this->load->model("trip_booking_model");
+		$this->load->model("tarrif_model");
 		$this->load->model("customers_model");
 		$this->load->helper('my_helper');
 		no_cache();
@@ -24,6 +25,10 @@ class Trip_booking extends CI_Controller {
 		}else if($param2=='tripVoucher') {
 		
 			$this->tripVoucher();
+			
+		}else if($param2=='getTarrif') {
+		
+			$this->getTarrif();
 			
 		}else if($param2=='getVouchers') {
 		
@@ -445,7 +450,16 @@ class Trip_booking extends CI_Controller {
 		}
 	}
 	}
-
+	public function getTarrif(){
+		if($_REQUEST['tarrif_id'] && $_REQUEST['ajax']){
+			$res=$this->tarrif_model->selectTariffDetails($_REQUEST['tarrif_id']);
+			if(count($res)>0){
+			echo json_encode($res);
+			}else{
+			echo 'false';
+			}
+		}
+	}
 	public function getAvailableVehicles(){
 	if($_REQUEST['vehicle_type'] && $_REQUEST['vehicle_ac_type'] && $_REQUEST['pickupdatetime'] && $_REQUEST['dropdatetime']){
 	$data['vehicle_type']=$_REQUEST['vehicle_type'];

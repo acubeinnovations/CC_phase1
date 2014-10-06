@@ -983,6 +983,7 @@ var h = Math.floor(total_min/60); //Get whole hours
 $('.voucher').on('click',function(){
 var trip_id=$(this).attr('trip_id');
 var driver_id=$(this).attr('driver_id');
+var tarrif_id=$(this).attr('tarrif_id');
 $('.overlay-container').css('display','block');
 $('.trip-voucher-save').attr('trip_id',trip_id);
 $('.trip-voucher-save').attr('driver_id',driver_id);
@@ -1006,9 +1007,27 @@ $('.trip-voucher-save').attr('driver_id',driver_id);
 			$('.statetax').val(data[0].state_tax);
 			$('.nighthalt').val(data[0].night_halt_charges);
 			$('.extrafuel').val(data[0].fuel_extra_charges);
+			
+			if(tarrif_id!=-1){
+			$.post(base_url+"/trip-booking/getTarrif",
+			  {
+				tarrif_id:tarrif_id,
+				ajax:'YES'
+			
+			},function(data){
+			  if(data=='false'){
+				}else{
+				data=jQuery.parseJSON(data);
+				alert(data);
+
+				}
+			});
 			}
+		}
 		});
+
 });
+
 $('.modal-close').on('click',function(){
 $('.overlay-container').css('display','	none');
 $('.start-km-error').html('');

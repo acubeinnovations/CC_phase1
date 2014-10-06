@@ -62,7 +62,7 @@ echo form_close();?></td>
 					</tr>
 					<?php
 					
-					for($customer_index=0;$customer_index<count($customers);$customer_index++){
+					for($customer_index=0;$customer_index<count($customers);$customer_index++) {
 					?>
 					<tr>
 						<td><?php echo $customers[$customer_index]['id'];?></td>
