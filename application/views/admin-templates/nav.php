@@ -13,18 +13,7 @@
                                 <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-wrench"></i>
-                                <span>Account Settings</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'admin/profile';?>"><i class="fa fa-angle-double-right"></i> Profile</a></li>
-                                <li><a href="<?php echo base_url().'admin/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
-                                
-                            </ul>
-                        </li>
+                        
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-users"></i>
@@ -43,18 +32,7 @@
                                 <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
-                               <i class="fa fa-wrench"></i> 
-                                <span>Account Settings</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'organization/admin/profile';?>"><i class="fa fa-angle-double-right"></i> Profile</a></li>
-                                <li><a href="<?php echo base_url().'organization/admin/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
-                                
-                            </ul>
-                        </li>
+                        
 
 			<li class="treeview">
                             <a href="#">
@@ -94,18 +72,7 @@
                                 <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-wrench"></i>
-                                <span>Account Settings</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'organization/front-desk/profile';?>"><i class="fa fa-angle-double-right"></i> Profile</a></li>
-                                <li><a href="<?php echo base_url().'organization/front-desk/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
-                                
-                            </ul>
-                        </li>
+                        
 		
 			<li class="treeview">
                             <a href="#">

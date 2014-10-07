@@ -1017,9 +1017,9 @@ $('.trip-voucher-save').attr('driver_id',driver_id);
 			},function(data){
 			  if(data=='false'){
 				}else{
-				data=jQuery.parseJSON(data);
-				alert(data);
-
+				$('.trip-voucher-save').attr('rate',data[0].rate);
+				$('.trip-voucher-save').attr('additional_kilometer_rate',data[0].additional_kilometer_rate);
+				$('.trip-voucher-save').attr('minimum_kilometers',data[0].minimum_kilometers);
 				}
 			});
 			}
@@ -1052,16 +1052,39 @@ $('.garage-time-error').html('');
 
 
 $('.trip-voucher-save').on('click',function(){
+
+var extrakmtravelled=0;
+var rate=$('.trip-voucher-save').attr('rate');
+var additional_kilometer_rate=$('.trip-voucher-save').attr('additional_kilometer_rate');
+var minimum_kilometers=$('.trip-voucher-save').attr('minimum_kilometers');
+
 var startkm=$('.startkm').val();
 var endkm=$('.endkm').val();
+
+var totkmtravelled=Number(endkm)-Number(startkm);
+
+if(totkmtravelled>minimum_kilometers){
+extrakmtravelled=totkmtravelled-minimum_kilometers;
+expense=(Number(minimum_kilometers)*Number(rate))+(Number(extrakmtravelled)*Number(additional_kilometer_rate));
+}else{
+
+expense=Number(totkmtravelled)*Number(rate);
+
+}
+
+
 var garageclosingkm=$('.garageclosingkm').val();
 var garageclosingtime=$('.garageclosingtime').val();
 var releasingplace=$('.releasingplace').val();
+
 var parkingfee=$('.parkingfee').val();
 var tollfee=$('.tollfee').val();
 var statetax=$('.statetax').val();
 var nighthalt=$('.nighthalt').val();
 var extrafuel=$('.extrafuel').val();
+
+var totexpense=Number(expense)+Number(parkingfee)+Number(tollfee)+Number(statetax)+Number(nighthalt);
+
 var trip_id=$(this).attr('trip_id');
 var driver_id=$(this).attr('driver_id');
 var error=false;
@@ -1097,7 +1120,8 @@ if(error==false){
 			statetax:statetax,
 			nighthalt:nighthalt,
 			extrafuel:extrafuel,
-			driver_id:driver_id
+			driver_id:driver_id,
+			totexpense:totexpense
 		},function(data){
 		  if(data='true'){
 				window.location.replace(base_url+'/organization/front-desk/trips');
