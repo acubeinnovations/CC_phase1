@@ -502,7 +502,7 @@ $this->mysession->delete('post');
 </div>
         </div>
 		<div class="tab-pane" id="tab_4">
-        		<iframe src="<?php echo base_url().'account/front_desk/SupplierPaymentInquiry/DR'.$driver_id.'/true';?>" height="600px" width="100%">
+        		<iframe src="<?php echo base_url().'account/front_desk/DriverPaymentInquiry/DR'.$driver_id.'/true';?>" height="600px" width="100%">
 		<p>Browser not Support</p>
 		</iframe>
         	</div>

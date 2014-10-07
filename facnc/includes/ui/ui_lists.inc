@@ -482,6 +482,106 @@ function supplier_list_row($label, $name, $selected_id=null, $all_option = false
 	echo "</td></tr>\n";
 }
 //----------------------------------------------------------------------------------------------
+function driver_list($name, $selected_id=null, $spec_option=false, $submit_on_change=false,
+	$all=false, $editkey = false)
+{
+	global $all_items;
+
+	$sql = "SELECT supplier_id, supp_name, curr_code, inactive FROM ".TB_PREF."suppliers WHERE supp_ref LIKE 'DR%'";
+
+	$mode = get_company_pref('no_driver_list');
+
+	if ($editkey)
+		set_editor('supplier', $name, $editkey);
+		
+	$ret = combo_input($name, $selected_id, $sql, 'supplier_id', 'supp_name',
+	array(
+		'format' => '_format_add_curr',
+	    'order' => array('supp_ref'),
+		'search_box' => $mode!=0,
+		'type' => 1,
+		'spec_option' => $spec_option === true ? _("All Drivers") : $spec_option,
+		'spec_id' => $all_items,
+		'select_submit'=> $submit_on_change,
+		'async' => false,
+		'sel_hint' => $mode ? _('Press Space tab to filter by name fragment') :
+		_('Select supplier'),
+		'show_inactive'=>$all
+		));
+	if ($editkey)
+		$ret .= add_edit_combo('supplier');		
+	return $ret;
+}
+
+function driver_list_cells($label, $name, $selected_id=null, $all_option=false, 
+	$submit_on_change=false, $all=false, $editkey = false)
+{
+	if ($label != null)
+		echo "<td>$label</td><td>\n";
+		echo driver_list($name, $selected_id, $all_option, $submit_on_change, 
+		$all, $editkey);
+		echo "</td>\n";
+}
+
+function driver_list_row($label, $name, $selected_id=null, $all_option = false, 
+	$submit_on_change=false, $all=false, $editkey = false)
+{
+	echo "<tr><td class='label'>$label</td><td>";
+	echo driver_list($name, $selected_id, $all_option, $submit_on_change,
+		$all, $editkey);
+	echo "</td></tr>\n";
+}
+//----------------------------------------------------------------------------------------------
+function owner_list($name, $selected_id=null, $spec_option=false, $submit_on_change=false,
+	$all=false, $editkey = false)
+{
+	global $all_items;
+
+	$sql = "SELECT supplier_id, supp_name, curr_code, inactive FROM ".TB_PREF."suppliers WHERE supp_ref LIKE 'VW%'";
+
+	$mode = get_company_pref('no_owner_list');
+
+	if ($editkey)
+		set_editor('supplier', $name, $editkey);
+		
+	$ret = combo_input($name, $selected_id, $sql, 'supplier_id', 'supp_name',
+	array(
+		'format' => '_format_add_curr',
+	    'order' => array('supp_ref'),
+		'search_box' => $mode!=0,
+		'type' => 1,
+		'spec_option' => $spec_option === true ? _("All Vehicle Owners") : $spec_option,
+		'spec_id' => $all_items,
+		'select_submit'=> $submit_on_change,
+		'async' => false,
+		'sel_hint' => $mode ? _('Press Space tab to filter by name fragment') :
+		_('Select supplier'),
+		'show_inactive'=>$all
+		));
+	if ($editkey)
+		$ret .= add_edit_combo('supplier');		
+	return $ret;
+}
+
+function owner_list_cells($label, $name, $selected_id=null, $all_option=false, 
+	$submit_on_change=false, $all=false, $editkey = false)
+{
+	if ($label != null)
+		echo "<td>$label</td><td>\n";
+		echo owner_list($name, $selected_id, $all_option, $submit_on_change, 
+		$all, $editkey);
+		echo "</td>\n";
+}
+
+function owner_list_row($label, $name, $selected_id=null, $all_option = false, 
+	$submit_on_change=false, $all=false, $editkey = false)
+{
+	echo "<tr><td class='label'>$label</td><td>";
+	echo owner_list($name, $selected_id, $all_option, $submit_on_change,
+		$all, $editkey);
+	echo "</td></tr>\n";
+}
+//----------------------------------------------------------------------------------------------
 
 function customer_list($name, $selected_id=null, $spec_option=false, $submit_on_change=false, 
 	$show_inactive=false, $editkey = false)

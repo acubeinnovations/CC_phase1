@@ -25,8 +25,12 @@ if (!@$_GET['popup'])
 	if ($use_date_picker)
 		$js .= get_js_date_picker();
 
-	if(isset($_GET['SupplierPaymentInquiry']))
+	if(isset($_GET['DriverPaymentInquiry']))
 		page(_($help_context = "Transactions"), isset($_GET['supplier_id']), false, "", $js);
+	elseif(isset($_GET['DriverTransactions']))
+		page(_($help_context = "Driver Transactions"), isset($_GET['supplier_id']), false, "", $js);
+	elseif(isset($_GET['OwnerTransactions']))
+		page(_($help_context = "Vehicle Owner Transactions"), isset($_GET['supplier_id']), false, "", $js);
 	else
 		page(_($help_context = "Supplier Inquiry"), isset($_GET['supplier_id']), false, "", $js);
 }
@@ -51,14 +55,36 @@ if (!isset($_POST['supplier_id']))
 start_table_left(TABLESTYLE_NOBORDER);
 start_row();
 
-//if (!@$_GET['popup'])
-	//supplier_list_cells(_("Select a supplier:"), 'supplier_id', null, true, false, false, !@$_GET['popup']);
-hidden('supplier_id');
+if (!@$_GET['popup']){
+	if(isset($_GET['DriverPaymentInquiry'])){
+		hidden('supplier_id');
+		$_POST['supplier_type'] = CNC_DRIVER;
+	}
+	elseif(isset($_GET['DriverTransactions'])){
+		driver_list_cells(_("Select Driver:"), 'supplier_id', null, true, false, false, !@$_GET['popup']);
+		$_POST['supp_type'] = CNC_DRIVER;
+	}
+	elseif(isset($_GET['OwnerTransactions'])){
+		owner_list_cells(_("Select Vehicle Owner:"), 'supplier_id', null, true, false, false, !@$_GET['popup']);
+		$_POST['supp_type'] = CNC_VEHICLE_OWNER;
+	}		
+	else{
+		supplier_list_cells(_("Select a supplier:"), 'supplier_id', null, true, false, false, !@$_GET['popup']);
+		$_POST['supp_type'] = '';
+	}
+	
+}
+
+hidden('supp_type');//hidden for supplier type(driver,vehicle owner)
+
 date_cells(_("From:"), 'TransAfterDate', '', null, -30);
 date_cells(_("To:"), 'TransToDate');
 
-//supp_transactions_list_cell("filterType", null, true);
-hidden('filterType',3);
+if(isset($_GET['SupplierPaymentInquiry']))
+	hidden('filterType',3);
+else
+	supp_transactions_list_cell("filterType", null, true);
+
 
 submit_cells('RefreshInquiry', _("Search"),'',_('Refresh Inquiry'), 'default');
 
@@ -169,7 +195,7 @@ function check_overdue($row)
 }
 //------------------------------------------------------------------------------------------------
 
-$sql = get_sql_for_supplier_inquiry($_POST['filterType'], $_POST['TransAfterDate'], $_POST['TransToDate'], $_POST['supplier_id']);
+$sql = get_sql_for_supplier_inquiry($_POST['filterType'], $_POST['TransAfterDate'], $_POST['TransToDate'], $_POST['supplier_id'],$_POST['supp_type']);
 
 $cols = array(
 			_("Type") => array('fun'=>'systype_name', 'ord'=>''), 

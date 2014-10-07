@@ -120,6 +120,8 @@
 				<li><a href="<?php echo base_url().'account/front_desk/NewBankPayment';?>"><i class="fa fa-angle-double-right"></i> Payment</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/NewBankDeposit';?>"><i class="fa fa-angle-double-right"></i> Receipt</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/CustomerTransactions';?>"><i class="fa fa-angle-double-right"></i> Customer Transactions</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/DriverTransactions';?>"><i class="fa fa-angle-double-right"></i> Driver Transactions</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/OwnerTransactions';?>"><i class="fa fa-angle-double-right"></i> Vehicle Owner Transactions</a></li>
                                 
                                 
                             </ul>

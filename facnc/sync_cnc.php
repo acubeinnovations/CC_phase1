@@ -58,8 +58,8 @@
 		meta_forward('purchasing/supplier_payment.php','SupplierPayment='.$_GET['SupplierPayment']);
 		
 	}
-	elseif(isset($_GET['SupplierPaymentInquiry'])){
-		meta_forward('purchasing/inquiry/supplier_inquiry.php','SupplierPaymentInquiry='.$_GET['SupplierPaymentInquiry']);
+	elseif(isset($_GET['DriverPaymentInquiry'])){
+		meta_forward('purchasing/inquiry/supplier_inquiry.php','DriverPaymentInquiry='.$_GET['DriverPaymentInquiry']);
 		
 	}
 	elseif(isset($_GET['CustomerPayment'])){
@@ -76,6 +76,14 @@
 	}
 	elseif(isset($_GET['CustomerTransactions'])){
 		meta_forward('sales/inquiry/customer_inquiry.php');
+		
+	}
+	elseif(isset($_GET['DriverTransactions'])){
+		meta_forward('purchasing/inquiry/supplier_inquiry.php','DriverTransactions=Yes');
+		
+	}
+	elseif(isset($_GET['OwnerTransactions'])){
+		meta_forward('purchasing/inquiry/supplier_inquiry.php','OwnerTransactions=Yes');
 		
 	}
 
