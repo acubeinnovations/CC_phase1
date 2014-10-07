@@ -267,18 +267,22 @@
                               <?php 
 				 if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){
 						$profile_url='admin/profile';
+						$change_password_url='admin/changepassword';
 	 			 }else if($this->session->userdata('isLoggedIn')==true && ($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR )){
 					$profile_url=base_url().'organization/admin/profile';
+					$change_password_url=base_url().'organization/admin/changepassword';
 	  			 }else if($this->session->userdata('isLoggedIn')==true && $this->session->userdata('type')==FRONT_DESK){
 					$profile_url=base_url().'organization/front-desk/profile';
+					$change_password_url=base_url().'organization/front-desk/changepassword';
 				 }?>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="<?php echo $profile_url; ?>" class="btn btn-default btn-flat">Profile</a>
+                                        <a href="<?php echo $profile_url; ?>" class="btn btn-default btn-flat font-size-13-px">Profile</a>
+										 <a href="<?php echo $change_password_url; ?>" class="btn btn-default btn-flat font-size-13-px">Change Password</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="<?php echo base_url();?>logout" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="<?php echo base_url();?>logout" class="btn btn-default btn-flat font-size-13-px">Sign out</a>
                                     </div>
                                 </li>
                             </ul>

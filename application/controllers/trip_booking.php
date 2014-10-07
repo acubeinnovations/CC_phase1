@@ -413,6 +413,7 @@ class Trip_booking extends CI_Controller {
 	$data['state_tax']=$_REQUEST['statetax'];
 	$data['night_halt_charges']=$_REQUEST['nighthalt'];
 	$data['fuel_extra_charges']=$_REQUEST['extrafuel'];
+	$data['total_trip_amount']=$_REQUEST['totexpense'];
 	$data['user_id']=$this->session->userdata('id');
 	$data['trip_id']=$_REQUEST['trip_id'];
 	$data['organisation_id']=$this->session->userdata('organisation_id');
@@ -454,6 +455,7 @@ class Trip_booking extends CI_Controller {
 		if($_REQUEST['tarrif_id'] && $_REQUEST['ajax']){
 			$res=$this->tarrif_model->selectTariffDetails($_REQUEST['tarrif_id']);
 			if(count($res)>0){
+			header('Content-Type: application/json');
 			echo json_encode($res);
 			}else{
 			echo 'false';
