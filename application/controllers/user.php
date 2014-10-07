@@ -204,6 +204,13 @@ class User extends CI_Controller {
 	if(isset($_REQUEST['search'])){
 		$fdate = $this->input->post('search_from_date');
 		$tdate = $this->input->post('search_to_date');
+		//valid date check
+		if(!$this->date_check($fdate)){
+	$this->mysession->set('Err_from_date','Invalid From Date for Tariff Search!');
+	}
+		if(!$this->date_check($tdate)){
+	$this->mysession->set('Err_to_date','Invalid To Date for Tariff Search!');
+	}
 		if($fdate!=''&& $tdate==''){
 		$tdate=date('Y-m-d');
 		}
@@ -712,8 +719,8 @@ public function profile() {
 		    $dbdata['address']   = $this->input->post('address');
 			$dbdata['username']   = $this->input->post('husername');
 			//$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean');
-			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
-			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
+			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean');
+			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean');
 			if($dbdata['email'] == $hmail){
 			$this->form_validation->set_rules('email','Mail','trim|required|valid_email');
 		}else{
@@ -805,7 +812,7 @@ public function profile() {
 			echo 'you are not authorized access this page..';
 		}
 	}
-	public function ShowDriverView($param1) {
+	public function ShowDriverView($param2) {
 		if($this->session_check()==true) {
 			//sample starts
 				$data['select']=$this->select_Box_Values();
@@ -947,9 +954,10 @@ public function profile() {
 				
 				if($param2!=null&& is_numeric($param2)){
 				
-				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);
+				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);//print_r($data['record_values']);exit;
 				$data['driver']=$data['record_values']['driver'];
 				$data['vehicle']=$data['record_values']['vehicle'];
+				$data['device']=$data['record_values']['device'];
 				$insurance_id=$data['vehicle']['vehicles_insurance_id'];
 				$loan_id=$data['vehicle']['vehicle_loan_id'];
 				$owner_id=$data['vehicle']['vehicle_owner_id'];
@@ -970,6 +978,10 @@ public function profile() {
 				$driver_id=$data['driver']['driver_id'];
 				$result=$this->user_model->getDriverNameById($driver_id);
 				$data['select']['drivers'][$driver_id]=$result['name'];
+				//for device
+				$device_id=$data['device']['device_id'];
+				$result=$this->user_model->getDeviceNameById($device_id);
+				$data['select']['devices'][$device_id]=$result['name'];
 				}
 			}
 			//sample ends
@@ -1057,6 +1069,11 @@ public function profile() {
 	}
 	else{
 	echo 'you are not authorized access this page..';
+	}
+	}
+	public function date_check($date){
+	if( strtotime($date) >= strtotime(date('Y-m-d')) ){
+	return true;
 	}
 	}
 }

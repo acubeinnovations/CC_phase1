@@ -92,10 +92,12 @@ $bank_transfer_types = array(
 
 $payment_person_types = array (
 	PT_MISC => _("Miscellaneous"),
-				_("Work Order"),
-				_("Customer"),
-				_("Supplier"),
-				_("Quick Entry")
+	PT_WORKORDER => _("Work Order"),
+	PT_CUSTOMER => _("Customer"),
+	PT_DRIVER => _("Driver"),
+	PT_OWNER => _("Vehicle Owner"),
+	//PT_SUPPLIER => _("Supplier"),
+	PT_QUICKENTRY => _("Quick Entry"),
 	);
 
 //----------------------------------------------------------------------------------

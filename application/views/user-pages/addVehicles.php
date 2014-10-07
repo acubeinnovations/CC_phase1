@@ -71,9 +71,10 @@
 			$permit_amount="";
 			$tax_amount="";
 			$tax_date="";
-		if($this->mysession->get('post_all')!=null && $this->mysession->get('post_driver')!=null ){
+		if($this->mysession->get('post_all')!=null && $this->mysession->get('post_driver')!=null && $this->mysession->get('post_device')!=null){
 			$data=$this->mysession->get('post_all');
 			$driver_data=$this->mysession->get('post_driver');
+			$device_data=$this->mysession->get('post_device');
 			$vehicle_id=$this->mysession->get('v_id');
 			$ownership =$data['vehicle_ownership_types_id'];
 			$vehicle_type=$data['vehicle_type_id'];
@@ -84,7 +85,9 @@
 			$fuel=$data['vehicle_fuel_type_id'];
 			$seat=$data['vehicle_seating_capacity_id'];
 			$driver_id=$driver_data['driver_id'];
-			$from_date=$driver_data['from_date'];
+			$from_date_device=$driver_data['from_date'];
+			$device_id=$device_data['device_id'];
+			$from_date_device=$device_data['from_date_device'];
 			$reg_number=$data['registration_number'];
 			$reg_date=$data['registration_date'];
 			$eng_num=$data['engine_number'];
@@ -107,10 +110,10 @@
 			$ac=$vehicle['vehicle_ac_type_id'];
 			$fuel=$vehicle['vehicle_fuel_type_id'];
 			$seat=$vehicle['vehicle_seating_capacity_id'];
-			
 			$driver_id=$driver['driver_id'];
-			
 			$from_date=$driver['from_date'];
+			$device_id=$device['device_id'];
+			$from_date_device=$device['from_date'];
 			$reg_number=$vehicle['registration_number'];
 			$reg_date=$vehicle['registration_date'];
 			$eng_num=$vehicle['engine_number'];
@@ -140,7 +143,7 @@
            </div>
        </div>
        <?php    } ?>
-			<?php if($this->mysession->get('Err_permit_amt') != ''||$this->mysession->get('Err_tax_amt') != ''||$this->mysession->get('ownership') != ''||$this->mysession->get('vehicle_type') != ''||$this->mysession->get('make') != ''||$this->mysession->get('fuel') != ''||$this->mysession->get('seat') != ''||$this->mysession->get('permit') != ''||$this->mysession->get('Driver') != ''||$this->mysession->get('ac') != ''||$this->mysession->get('date_err') != ''){ ?>
+			<?php if($this->mysession->get('Err_permit_amt') != ''||$this->mysession->get('Err_tax_amt') != ''||$this->mysession->get('ownership') != ''||$this->mysession->get('vehicle_type') != ''||$this->mysession->get('make') != ''||$this->mysession->get('fuel') != ''||$this->mysession->get('seat') != ''||$this->mysession->get('permit') != ''||$this->mysession->get('Driver') != ''||$this->mysession->get('ac') != ''||$this->mysession->get('date_err') != ''||$this->mysession->get('Device') != ''||$this->mysession->get('Err_driver_fdate') != ''||$this->mysession->get('Err_device_fdate') != ''||$this->mysession->get('Err_reg_date') != ''||$this->mysession->get('Err_tax_date') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -155,7 +158,12 @@
 													echo $this->mysession->get('seat').br();
 													echo $this->mysession->get('permit').br();
 													echo $this->mysession->get('Driver').br();
+													echo $this->mysession->get('Device').br();
 													echo $this->mysession->get('date_err').br();
+													echo $this->mysession->get('Err_driver_fdate').br();
+													echo $this->mysession->get('Err_device_fdate').br();
+													echo $this->mysession->get('Err_reg_date').br();
+													echo $this->mysession->get('Err_tax_date').br();
 														$this->mysession->delete('Err_permit_amt');
 														$this->mysession->delete('Err_tax_amt');
 														$this->mysession->delete('ownership');
@@ -166,7 +174,12 @@
 														$this->mysession->delete('seat');
 														$this->mysession->delete('permit');
 														$this->mysession->delete('Driver');
+														$this->mysession->delete('Device');
 														$this->mysession->delete('date_err');
+														$this->mysession->delete('Err_driver_fdate');
+														$this->mysession->delete('Err_device_fdate');
+														$this->mysession->delete('Err_reg_date');
+														$this->mysession->delete('Err_tax_date');
 														
 										?>
                                     </div>
@@ -450,7 +463,7 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
        </div>
        <?php    } ?>
 	   
-	  			<?php if($this->mysession->get('Err_insurance_amt') != ''||$this->mysession->get('Err_insurance_pre_amt') != ''||$this->mysession->get('Err_invalid_insurance_add') != ''){ ?>
+	  			<?php if($this->mysession->get('Err_insurance_amt') != ''||$this->mysession->get('Err_insurance_pre_amt') != ''||$this->mysession->get('Err_invalid_insurance_add') != ''||$this->mysession->get('Err_ins_date') != ''||$this->mysession->get('Err_ins_renewal') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -458,9 +471,13 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 													echo $this->mysession->get('Err_insurance_amt').br();
 													echo $this->mysession->get('Err_insurance_pre_amt').br();
 													echo $this->mysession->get('Err_invalid_insurance_add').br();
+													echo $this->mysession->get('Err_ins_date').br();
+													echo $this->mysession->get('Err_ins_renewal').br();
 														$this->mysession->delete('Err_insurance_amt');
 														$this->mysession->delete('Err_insurance_pre_amt');
 														$this->mysession->delete('Err_invalid_insurance_add');
+														$this->mysession->delete('Err_ins_date');
+														$this->mysession->delete('Err_ins_renewal');
 														
 										?>
                                     </div>
@@ -597,7 +614,7 @@ if($this->mysession->get('loan_post_all')!=null ){
        </div>
        <?php    } ?>
 	   
-	  			<?php if($this->mysession->get('Err_loan_amt') != ''||$this->mysession->get('Err_loan_emi_amt') != ''||$this->mysession->get('Err_invalid_loan_add') != ''){ ?>
+	  			<?php if($this->mysession->get('Err_loan_amt') != ''||$this->mysession->get('Err_loan_emi_amt') != ''||$this->mysession->get('Err_invalid_loan_add') != ''||$this->mysession->get('Err_emi_date') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -605,9 +622,11 @@ if($this->mysession->get('loan_post_all')!=null ){
 													echo $this->mysession->get('Err_loan_amt').br();
 													echo $this->mysession->get('Err_loan_emi_amt').br();
 													echo $this->mysession->get('Err_invalid_loan_add').br();
+													echo $this->mysession->get('Err_emi_date').br();
 														$this->mysession->delete('Err_loan_amt');
 														$this->mysession->delete('Err_loan_emi_amt');
 														$this->mysession->delete('Err_invalid_loan_add');
+														$this->mysession->delete('Err_emi_date');
 														
 										?>
                                     </div>

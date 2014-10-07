@@ -14,12 +14,24 @@
 
 		meta_forward('gl/gl_bank.php','NewDeposit=Yes');
 	}
+	elseif(isset($_GET['BankTransfer'])){
+
+		meta_forward('gl/bank_transfer.php');
+	}
+	elseif(isset($_GET['ReconcileBank'])){
+
+		meta_forward('gl/bank_account_reconcile.php');
+	}
 	elseif(isset($_GET['CompanySetup'])){
 		meta_forward('admin/company_preferences.php');
 		
 	}
 	elseif(isset($_GET['DisplaySetup'])){
 		meta_forward('admin/display_prefs.php');
+		
+	}
+	elseif(isset($_GET['AccessSetup'])){
+		meta_forward('admin/security_roles.php');
 		
 	}
 	elseif(isset($_GET['FormSetup'])){
@@ -58,8 +70,8 @@
 		meta_forward('purchasing/supplier_payment.php','SupplierPayment='.$_GET['SupplierPayment']);
 		
 	}
-	elseif(isset($_GET['SupplierPaymentInquiry'])){
-		meta_forward('purchasing/inquiry/supplier_inquiry.php','SupplierPaymentInquiry='.$_GET['SupplierPaymentInquiry']);
+	elseif(isset($_GET['DriverPaymentInquiry'])){
+		meta_forward('purchasing/inquiry/supplier_inquiry.php','DriverPaymentInquiry='.$_GET['DriverPaymentInquiry']);
 		
 	}
 	elseif(isset($_GET['CustomerPayment'])){
@@ -70,6 +82,57 @@
 		meta_forward('sales/inquiry/customer_inquiry.php','CustomerPaymentInquiry='.$_GET['CustomerPaymentInquiry']);
 		
 	}
+	elseif(isset($_GET['NewInvoice'])){
+		meta_forward('sales/sales_order_entry.php','NewInvoice=0');
+		
+	}
+	elseif(isset($_GET['CustomerTransactions'])){
+		meta_forward('sales/inquiry/customer_inquiry.php');
+		
+	}
+	elseif(isset($_GET['DriverTransactions'])){
+		meta_forward('purchasing/inquiry/supplier_inquiry.php','DriverTransactions=Yes');
+		
+	}
+	elseif(isset($_GET['OwnerTransactions'])){
+		meta_forward('purchasing/inquiry/supplier_inquiry.php','OwnerTransactions=Yes');
+		
+	}
+	elseif(isset($_GET['SalesInvoices'])){
+		meta_forward('sales/inquiry/customer_inquiry.php','SalesInvoices=Yes');
+		
+	}
+	elseif(isset($_GET['BankAccounts'])){
+		meta_forward('gl/manage/bank_accounts.php');
+		
+	}
+	elseif(isset($_GET['GlAccounts'])){
+		meta_forward('gl/manage/gl_accounts.php');
+		
+	}
+	elseif(isset($_GET['GlAccountGroups'])){
+		meta_forward('gl/manage/gl_account_types.php');
+		
+	}
+	elseif(isset($_GET['GlAccountClasses'])){
+		meta_forward('gl/manage/gl_account_classes.php');
+		
+	}
+	elseif(isset($_GET['TrialBalance'])){
+		meta_forward('gl/inquiry/gl_trial_balance.php');
+		
+	}
+	elseif(isset($_GET['BalanceSheet'])){
+		meta_forward('gl/inquiry/balance_sheet.php');
+		
+	}
+	elseif(isset($_GET['ProfitLoss'])){
+		meta_forward('gl/inquiry/profit_loss.php');
+		
+	}
+
+
+
 	
 	
 	

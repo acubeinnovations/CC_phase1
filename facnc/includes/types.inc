@@ -93,6 +93,8 @@ define('PT_CUSTOMER', 2);
 define('PT_SUPPLIER', 3);
 define('PT_QUICKENTRY', 4);
 define('PT_DIMESION', 5);
+define('PT_DRIVER', 6);
+define('PT_OWNER', 7);
 
 function payment_person_currency($type, $person_id)  {
 	switch ($type)
@@ -255,5 +257,12 @@ defined('ICON_ALLOC') || define('ICON_ALLOC', 'alloc.png');
 //security roles
 define('SECURITY_ROLE_FRD',10); //Frontdesk
 define('SECURITY_ROLE_SYSADM',2);//system administrator
+
+define('CNC_DRIVER','DR');
+define('CNC_VEHICLE_OWNER','VW');
+define('CNC_CUSTOMER','C');
+define('CNC_CUSTOMER_GROUP','CG');
+
+
 
 ?>

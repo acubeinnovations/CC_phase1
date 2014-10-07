@@ -1,6 +1,6 @@
 <?php
 class Vehicle_model extends CI_Model {
-public function insertVehicle($data,$driver_data){
+public function insertVehicle($data,$driver_data,$device_data){
 $qry=$this->db->set('created', 'NOW()', FALSE);
 $qry=$this->db->insert('vehicles',$data);
 $v_id=mysql_insert_id();
@@ -90,6 +90,24 @@ public function map_drivers($driver_id,$from_date,$updated_date) {
 
 	}
 
+	public function map_devices($device_id,$from_date,$updated_date) {
+	$v_id=$this->mysession->get('vehicle_id');
+	$to_date='9999-12-30';
+	$tbl="vehicle_devices";
+	$qry=$this->db->where(array('vehicle_id'=>$v_id,'organisation_id'=>$this->session->userdata('organisation_id'),'to_date'=>$to_date));
+	$qry=$this->db->get($tbl);
+	$result=$qry->result_array();
+	if($qry->num_rows()>0){
+	$this->db->where('id',$result[0]['id']);
+	$this->db->set('updated', 'NOW()', FALSE);
+	$this->db->update($tbl,array('to_date'=>$updated_date));
+	}
+
+	$arry=array('vehicle_id'=>$v_id,'device_id'=>$device_id,'from_date'=>$from_date,'organisation_id'=>$this->session->userdata('organisation_id'),'user_id'=>$this->session->userdata('id'),'to_date'=>$to_date);
+	$this->db->set('created', 'NOW()', FALSE);
+	$this->db->insert($tbl,$arry);
+
+	}
 
 
 public function sample_call($data,$driver_data,$v_id){

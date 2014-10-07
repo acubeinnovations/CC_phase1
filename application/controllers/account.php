@@ -28,6 +28,21 @@ class Account extends CI_Controller {
 		}
 	}
 	
+	//admin
+	public function admin($action='None'){
+		
+		if($this->admin_session_check()==true) {
+		$data['title'] = "Home | ".$action;
+		$data['url'] = "facnc/sync_cnc.php?".$action."=Yes&cnc_token=".$this->session->userdata('session_id');
+			$page='fa-modules/module';
+			$this->load_admin_templates($page,$data);
+		}
+	  	else{
+			echo 'you are not authorized access this page..';
+		}
+	}
+
+	
 	//organisation admin pages from fa
 	public function organization($action='None'){
 		

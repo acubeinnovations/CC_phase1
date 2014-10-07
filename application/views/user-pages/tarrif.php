@@ -21,31 +21,33 @@ $night_halt=$data['night_halt'];
 $this->session->set_userdata('post','');
 }
 
-if($this->session->userdata('select_tariff') != ''||$this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('Err_date') != ''||$this->session->userdata('Err_rate') != ''||$this->session->userdata('Err_add_kilo') != ''||$this->session->userdata('Err_add_hrs') != ''||$this->session->userdata('Err_bata') != ''||$this->session->userdata('Err_halt') != ''||$this->session->userdata('Required') != ''||$this->session->userdata('Date_err') != ''){ ?>
+if($this->session->userdata('select_tariff') != ''||$this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('Err_rate') != ''||$this->session->userdata('Err_add_kilo') != ''||$this->session->userdata('Err_add_hrs') != ''||$this->session->userdata('Err_bata') != ''||$this->session->userdata('Err_halt') != ''||$this->session->userdata('Required') != ''||$this->mysession->get('Err_date') != ''||$this->mysession->get('Err_from_date') != ''||$this->mysession->get('Err_to_date') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                         <b>Alert!</b><br><?php
 													echo $this->session->userdata('dbvalTarrif_Err').nbs();
 													echo $this->session->userdata('select_tariff').nbs();
-													echo $this->session->userdata('Err_date').nbs();
 													echo $this->session->userdata('Err_rate').nbs();
 													echo $this->session->userdata('Err_add_kilo').nbs();
 													echo $this->session->userdata('Err_add_hrs').nbs();
 													echo $this->session->userdata('Err_bata').nbs();
 													echo $this->session->userdata('Err_halt').nbs();
 													echo $this->session->userdata('Required').nbs();
-													echo $this->session->userdata('Date_err').nbs();
+													echo $this->mysession->get('Err_date').nbs();
+													echo $this->mysession->get('Err_from_date').nbs();
+													echo $this->mysession->get('Err_to_date').nbs();
 														$this->session->set_userdata(array('dbvalTarrif_Err'=>''));
 														$this->session->set_userdata(array('select_tariff'=>''));
-														$this->session->set_userdata(array('Err_date'=>''));
 														$this->session->set_userdata(array('Err_rate'=>''));
 														$this->session->set_userdata(array('Err_add_kilo'=>''));
 														$this->session->set_userdata(array('Err_add_hrs'=>''));
 														$this->session->set_userdata(array('Err_bata'=>''));
 														$this->session->set_userdata(array('Err_halt'=>''));
 														$this->session->set_userdata(array('Required'=>''));
-														$this->session->set_userdata(array('Date_err'=>''));
+														$this->mysession->delete('Err_date');
+														$this->mysession->delete('Err_from_date');
+														$this->mysession->delete('Err_to_date');
 										?>
                                     </div>
 <?php  }  if($this->session->userdata('dbSuccess') != '') { ?>
@@ -67,9 +69,9 @@ if($this->session->userdata('select_tariff') != ''||$this->session->userdata('db
 <table>
 <tr>
 <td><?php echo form_open(base_url()."organization/front-desk/tarrif"); 
- echo form_input(array('name'=>'search_from_date','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up From Date','value'=>$from_date)); ?>
+ echo form_input(array('name'=>'search_from_date','class'=>'fromdatepicker form-control' ,'placeholder'=>' From Date')); ?>
 </td>
-<td><?php  echo form_input(array('name'=>'search_to_date','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up To Date','value'=>$from_date)); ?></td>
+<td><?php  echo form_input(array('name'=>'search_to_date','class'=>'fromdatepicker form-control' ,'placeholder'=>' To Date')); ?></td>
 <td><?php echo form_submit("search","Search","class='btn btn-primary'");
 echo form_close();?></td>
 </tr>
@@ -90,7 +92,7 @@ echo form_close();?></td>
 echo $this->form_functions->populate_dropdown($name,$masters,$tariff_master_id,$class,$id='',$msg); 
 ?></div></td>
 		
-		<td><div class="form-group"><?php echo form_input(array('name'=>'fromdatepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up From Date','value'=>$from_date)); ?></div></td>
+		<td><div class="form-group"><?php echo form_input(array('name'=>'fromdatepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>' From Date','value'=>$from_date)); ?></div></td>
 		<td><div class="form-group"><?php echo form_input(array('name'=>'rate','class'=>'form-control','id'=>'rate','placeholder'=>'Rate','value'=>$rate)); ?></div></td>
 		<td><div class="form-group"><?php echo form_input(array('name'=>'additional_kilometer_rate','class'=>'form-control','id'=>'additional_kilometer_rate','placeholder'=>'Additional Kilometer Rate','value'=>$additional_kilometer_rate)); ?></div></td>
 		<td><div class="form-group"><?php echo form_input(array('name'=>'additional_hour_rate','class'=>'form-control','id'=>'additional_hour_rate','placeholder'=>'Additional Hour Rate','value'=>$additional_hour_rate)); ?></div></td>

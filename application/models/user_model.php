@@ -38,17 +38,14 @@ class user_model extends CI_Model {
    	}
 
 	public function getArray($tbl){
-	if($tbl=='drivers'){
 	$org_id=$this->session->userdata('organisation_id');
+	if($tbl=='drivers'){
 	$query='SELECT * FROM drivers WHERE drivers.id NOT IN(SELECT driver_id FROM vehicle_drivers WHERE organisation_id='.$org_id.' and to_date="9999-12-30")and organisation_id='.$org_id.' ';
 	$qry=$this->db->query($query);
-	//echo $this->db->select('*')->from('drivers');exit;
-	//$qry=$this->db->where('`id` NOT IN (SELECT `driver_id` FROM `vehicle_drivers`)', NULL, FALSE);
-	//echo $this->db->last_query();exit;
-	//$qry=$this->db->where(array('organisation_id'=>$org_id));
-	//$qry=$this->db->get($tbl);
-	//get drivers who not get assigned for any vehicle
-	
+	}
+	elseif($tbl=='devices'){
+	$query='SELECT * FROM devices WHERE devices.id NOT IN(SELECT device_id FROM vehicle_devices WHERE organisation_id='.$org_id.' and to_date="9999-12-30")and organisation_id='.$org_id.' ';
+	$qry=$this->db->query($query);
 	}
 	else{
 		$qry=$this->db->get($tbl);
@@ -114,9 +111,11 @@ class user_model extends CI_Model {
    if($tbl=='vehicles'){
    $to_date='9999-12-30';
    $qry=$this->db->where(array('vehicle_id'=>$id,'to_date'=>$to_date));
-   $qry=$this->db->get('vehicle_drivers'); //echo $this->db->last_query();exit;
+   $qry=$this->db->get('vehicle_drivers'); 
    $result['driver']= $qry->row_array();
-   
+   $dev_qry=$this->db->where(array('vehicle_id'=>$id,'to_date'=>$to_date));
+   $dev_qry=$this->db->get('vehicle_devices'); 
+   $result['device']= $dev_qry->row_array();
    }
 	$v_qry=$this->db->where('id',$id);
 	$v_qry=$this->db->get($tbl);
@@ -127,6 +126,13 @@ class user_model extends CI_Model {
 	$qry=$this->db->select('name');
 	$qry=$this->db->where('id',$param2);
 	$qry=$this->db->get('drivers');
+
+	return $qry->row_array();
+	}
+	public function getDeviceNameById($param2){
+	$qry=$this->db->select('name');
+	$qry=$this->db->where('id',$param2);
+	$qry=$this->db->get('devices');
 
 	return $qry->row_array();
 	}
@@ -155,7 +161,7 @@ class user_model extends CI_Model {
 	return $qry->result_array();
 	
 	}
-	public function getValueArray($tbl,$id){
+	/*public function getValueArray($tbl,$id){
 		$qry=$this->db->where('id',$id);
 		$qry=$this->db->get($tbl); 
 		$count=$qry->num_rows();
@@ -169,5 +175,5 @@ class user_model extends CI_Model {
 			else{
 			return false;
 			}
-	}
+	}*/
 }

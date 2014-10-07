@@ -17,7 +17,7 @@ function display_bank_header(&$order)
 	$customer_error = false;
 	div_start('pmt_header');
 
-	start_outer_table(TABLESTYLE2, "width=90%"); // outer table
+	start_outer_table(TABLESTYLE2, "width=100%"); // outer table
 
 	table_section(1);
 	
@@ -62,6 +62,12 @@ function display_bank_header(&$order)
     	//	break;
 		case PT_SUPPLIER :
     		supplier_list_row(_("Supplier:"), 'person_id', null, false, true, false, true);
+    		break;
+		case PT_DRIVER :
+    		driver_list_row(_("Driver:"), 'person_id', null, false, true, false, true);
+    		break;
+		case PT_OWNER :
+    		owner_list_row(_("Vehicle Owner:"), 'person_id', null, false, true, false, true);
     		break;
 		case PT_CUSTOMER :
     		customer_list_row(_("Customer:"), 'person_id', null, false, true, false, true);
