@@ -143,6 +143,10 @@ class Tarrif extends CI_Controller {
 	 $this->form_validation->set_rules('driver_bata','Driver Bata','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('night_halt','Night Halt','trim|required|xss_clean|numeric');
 	 $err=true;
+	if(!$this->date_check($data['from_date'])){
+	$err=False;
+	$this->mysession->set('Err_date','Invalid Date for Tariff Add!');
+	}
 	 if($data['tariff_master_id'] ==-1){
 	 $data['tariff_master_id'] ='';
 	 $err=False;
@@ -183,10 +187,7 @@ class Tarrif extends CI_Controller {
 			$this->session->set_userdata(array('dbvalTarrif_Err'=>'Fields Required..!'));
 			$err=true;
 			}
-		if($this->tarrif_model->date_check($data['from_date'])!=true){
-		$this->session->set_userdata(array('Err_date'=>'Invalid Date!'));
-			$err=true;
-		}
+		
 		if(preg_match('#[^0-9\.]#', $data['rate'])){
 			$this->session->set_userdata(array('Err_rate'=>'Invalid Characters on Rate field!'));
 			$err=true;
@@ -250,6 +251,12 @@ class Tarrif extends CI_Controller {
 	echo 'false';
 	}
 
+	}	
+	}
+	
+	public function date_check($date){
+	if( strtotime($date) >= strtotime(date('Y-m-d')) ){
+	return true;
 	}	
 	}
 	

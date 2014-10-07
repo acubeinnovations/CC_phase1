@@ -1184,3 +1184,9 @@ $('.prev1').click(function(){
 $('#tab_1').trigger('click');
 });
 });
+//for marital status
+$(document).ready(function(){
+$('#marital_id').change(function(){
+alert($(this).value());exit;
+});
+});

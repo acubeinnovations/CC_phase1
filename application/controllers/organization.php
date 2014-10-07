@@ -109,12 +109,12 @@ public function __construct()
 			$data['org_id'] = $this->input->post('org_id');
 			
 		if($data['name'] == $data['hname']){
-			$this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|alpha_numeric');
+			$this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean');
 		}else{
-			$this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|is_unique[organisations.name]|alpha_numeric');
+			$this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|is_unique[organisations.name]');
 		}
-		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
-		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
+		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[2]|xss_clean');
+		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[2]|xss_clean');
 		$this->form_validation->set_rules('addr','Address','trim|required|min_length[10]|xss_clean');
 		if($data['mail'] == $data['hmail']){
 			$this->form_validation->set_rules('mail','Mail','trim|required|valid_email');
@@ -226,8 +226,8 @@ public function __construct()
 		    $email  = $this->input->post('email');
 		    $phone = $this->input->post('phone');
 	        
-		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
-		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
+		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean');
+		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean');
 		$this->form_validation->set_rules('address','Address','trim|required|min_length[10]|xss_clean');
 		$this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[15]|xss_clean|is_unique[users.username]');
 		$this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|matches[cpassword]|xss_clean');
@@ -372,8 +372,8 @@ public function __construct()
 			$data['status']   =   $this->input->post('status');
 			
 	        
-		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
-		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean|alpha_numeric');
+		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean');
+		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean');
 		$this->form_validation->set_rules('address','Address','trim|required|min_length[10]|xss_clean');
 		//$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[users.username]');
 		if($this->input->post('email')==$this->input->post('hmail')){

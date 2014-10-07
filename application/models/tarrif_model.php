@@ -56,11 +56,7 @@ class Tarrif_model extends CI_Model {
 	}
 	}
 	
-	public function date_check($date){
-	if( strtotime($date) >= strtotime(date('Y-m-d')) ){
-	return true;
-	}	
-	}
+	
 	public function edit_tarrifValues($data,$id){
 	$tbl="tariffs";
 	$this->db->where('id',$id );
