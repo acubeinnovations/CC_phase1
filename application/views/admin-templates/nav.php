@@ -83,7 +83,7 @@
                             <ul class="treeview-menu">
 				 
                                 <li><a href="<?php echo base_url().'account/front_desk/SalesDeliveries';?>"><i class="fa fa-angle-double-right"></i> Trip Deliveries</a></li>
-				<li><a href="<?php echo base_url().'account/front_desk/NewInvoice';?>"><i class="fa fa-angle-double-right"></i> Trip Invoice</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/SalesInvoices';?>"><i class="fa fa-angle-double-right"></i> Trip Invoice</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/NewBankPayment';?>"><i class="fa fa-angle-double-right"></i> Payment</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/NewBankDeposit';?>"><i class="fa fa-angle-double-right"></i> Receipt</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/CustomerTransactions';?>"><i class="fa fa-angle-double-right"></i> Customer Transactions</a></li>

@@ -86,6 +86,12 @@
 		meta_forward('purchasing/inquiry/supplier_inquiry.php','OwnerTransactions=Yes');
 		
 	}
+	elseif(isset($_GET['SalesInvoices'])){
+		meta_forward('sales/inquiry/customer_inquiry.php','SalesInvoices=Yes');
+		
+	}
+
+
 
 	
 	

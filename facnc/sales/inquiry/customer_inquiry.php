@@ -28,6 +28,10 @@ if (!@$_GET['popup'])
 
 	if(isset($_GET['CustomerPaymentInquiry'])){
 		page(_($help_context = "Transactions"), isset($_GET['customer_id']), false, "", $js);
+		$_POST['filterType'] = 3;
+	}elseif(isset($_GET['SalesInvoices'])){
+		page(_($help_context = "Trip Invoices"), isset($_GET['customer_id']), false, "", $js);
+		$_POST['filterType'] = 1;
 	}else{
 		page(_($help_context = "Customer Transactions"), isset($_GET['customer_id']), false, "", $js);
 
@@ -62,10 +66,10 @@ date_cells(_("From:"), 'TransAfterDate', '', null, -30);
 date_cells(_("To:"), 'TransToDate', '', null, 1);
 
 if (!isset($_POST['filterType']))
-	$_POST['filterType'] = 3;
+	$_POST['filterType'] = 0;
 
 
-if(isset($_GET['CustomerPaymentInquiry']))
+if(isset($_GET['CustomerPaymentInquiry']) || isset($_GET['SalesInvoices']))
 	hidden('filterType');
 else
 	cust_allocations_list_cells(null, 'filterType', $_POST['filterType'], true);
