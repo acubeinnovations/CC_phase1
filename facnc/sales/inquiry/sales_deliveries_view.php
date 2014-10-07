@@ -26,12 +26,13 @@ if ($use_date_picker)
 if (isset($_GET['OutstandingOnly']) && ($_GET['OutstandingOnly'] == true))
 {
 	$_POST['OutstandingOnly'] = true;
-	page(_($help_context = "Search Not Invoiced Deliveries"), false, false, "", $js);
+	//page(_($help_context = "Search Not Invoiced Trip Deliveries"), false, false, "", $js);
+	page(_($help_context = "Trip Deliveries"), false, false, "", $js);
 }
 else
 {
 	$_POST['OutstandingOnly'] = false;
-	page(_($help_context = "Search All Deliveries"), false, false, "", $js);
+	page(_($help_context = "Search All Trip Deliveries"), false, false, "", $js);
 }
 
 if (isset($_GET['selected_customer']))
@@ -98,18 +99,15 @@ if (get_post('_DeliveryNumber_changed'))
 
 start_form(false, false, $_SERVER['PHP_SELF'] ."?OutstandingOnly=".$_POST['OutstandingOnly']);
 
-start_table(TABLESTYLE_NOBORDER);
+start_table_left(TABLESTYLE_NOBORDER);
 start_row();
-ref_cells(_("#:"), 'DeliveryNumber', '',null, '', true);
+ref_cells(_("#:"), 'DeliveryNumber', '',null, '', true,5);
 date_cells(_("from:"), 'DeliveryAfterDate', '', null, -30);
 date_cells(_("to:"), 'DeliveryToDate', '', null, 1);
 
-locations_list_cells(_("Location:"), 'StockLocation', null, true);
-end_row();
+//locations_list_cells(_("Location:"), 'StockLocation', null, true);
+hidden('StockLocation');
 
-end_table();
-start_table(TABLESTYLE_NOBORDER);
-start_row();
 
 stock_items_list_cells(_("Item:"), 'SelectStockFromList', null, true);
 
@@ -119,7 +117,7 @@ hidden('OutstandingOnly', $_POST['OutstandingOnly']);
 
 end_row();
 
-end_table(1);
+end_table_left(1);br();
 //---------------------------------------------------------------------------------------------
 
 if (isset($_POST['SelectStockFromList']) && ($_POST['SelectStockFromList'] != "") &&
@@ -205,7 +203,7 @@ if (isset($_SESSION['Batch']))
 $table =& new_db_pager('deliveries_tbl', $sql, $cols);
 $table->set_marker('check_overdue', _("Marked items are overdue."));
 
-//$table->width = "92%";
+$table->width = "100%";
 
 display_db_pager($table);
 
