@@ -70,6 +70,15 @@
 		meta_forward('sales/inquiry/customer_inquiry.php','CustomerPaymentInquiry='.$_GET['CustomerPaymentInquiry']);
 		
 	}
+	elseif(isset($_GET['NewInvoice'])){
+		meta_forward('sales/sales_order_entry.php','NewInvoice=0');
+		
+	}
+	elseif(isset($_GET['CustomerTransactions'])){
+		meta_forward('sales/inquiry/customer_inquiry.php');
+		
+	}
+
 	
 	
 	

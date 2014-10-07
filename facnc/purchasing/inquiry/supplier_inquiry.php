@@ -48,7 +48,7 @@ if (!@$_GET['popup'])
 if (!isset($_POST['supplier_id']))
 	$_POST['supplier_id'] = get_global_supplier();
 
-start_table(TABLESTYLE_NOBORDER);
+start_table_left(TABLESTYLE_NOBORDER);
 start_row();
 
 //if (!@$_GET['popup'])
@@ -58,13 +58,15 @@ date_cells(_("From:"), 'TransAfterDate', '', null, -30);
 date_cells(_("To:"), 'TransToDate');
 
 //supp_transactions_list_cell("filterType", null, true);
-hidden('filterType',ST_SUPPAYMENT);
+hidden('filterType',3);
 
 submit_cells('RefreshInquiry', _("Search"),'',_('Refresh Inquiry'), 'default');
 
 end_row();
-end_table();
+
+end_table_left();
 set_global_supplier($_POST['supplier_id']);
+br();
 
 //------------------------------------------------------------------------------------------------
 
