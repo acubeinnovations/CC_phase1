@@ -22,6 +22,10 @@
 		meta_forward('admin/display_prefs.php');
 		
 	}
+	elseif(isset($_GET['AccessSetup'])){
+		meta_forward('admin/security_roles.php');
+		
+	}
 	elseif(isset($_GET['FormSetup'])){
 		meta_forward('admin/forms_setup.php');
 		
@@ -88,6 +92,22 @@
 	}
 	elseif(isset($_GET['SalesInvoices'])){
 		meta_forward('sales/inquiry/customer_inquiry.php','SalesInvoices=Yes');
+		
+	}
+	elseif(isset($_GET['BankAccounts'])){
+		meta_forward('gl/manage/bank_accounts.php');
+		
+	}
+	elseif(isset($_GET['GlAccounts'])){
+		meta_forward('gl/manage/gl_accounts.php');
+		
+	}
+	elseif(isset($_GET['GlAccountGroups'])){
+		meta_forward('gl/manage/gl_account_types.php');
+		
+	}
+	elseif(isset($_GET['GlAccountClasses'])){
+		meta_forward('gl/manage/gl_account_classes.php');
 		
 	}
 

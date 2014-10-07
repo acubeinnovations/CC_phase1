@@ -43,6 +43,7 @@
                             <ul class="treeview-menu">
 				 <li><a href="<?php echo base_url().'account/organization/CompanySetup';?>"><i class="fa fa-angle-double-right"></i> Company Setup</a></li>
                                 <li><a href="<?php echo base_url().'account/organization/DisplaySetup';?>"><i class="fa fa-angle-double-right"></i> Display Setup</a></li>
+				 <li><a href="<?php echo base_url().'account/organization/AccessSetup';?>"><i class="fa fa-angle-double-right"></i> Access Setup</a></li>
 				<li><a href="<?php echo base_url().'account/organization/FormSetup';?>"><i class="fa fa-angle-double-right"></i> Forms Setup</a></li>
 				<li><a href="<?php echo base_url().'account/organization/PaymentTerms';?>"><i class="fa fa-angle-double-right"></i> Payment Terms</a></li>
 				<li><a href="<?php echo base_url().'account/organization/FiscalYear';?>"><i class="fa fa-angle-double-right"></i> Fiscal Year</a></li>
@@ -76,7 +77,7 @@
 		
 			<li class="treeview">
                             <a href="#">
-                                <i class="fa fa-wrench"></i>
+                                <i class="fa fa-laptop"></i>
                                 <span>Accounts</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
@@ -96,30 +97,47 @@
 
 
                         
-						 <li class="treeview">
+			<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-wrench"></i>
                                 <span> Settings</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'organization/front-desk/settings';?>"><i class="fa fa-angle-double-right"></i>General</a></li>
-                               <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-wrench"></i>
-                                <span>Tarrif Settings</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'organization/front-desk/tarrif-masters';?>"><i class="fa fa-angle-double-right"></i> Tarrif Masters</a></li>
-                                <li><a href="<?php echo base_url().'organization/front-desk/tarrif';?>"><i class="fa fa-angle-double-right"></i>Tarrifs</a></li>
+                                <li><a href="<?php echo base_url().'organization/front-desk/settings';?>"><i class="fa fa-angle-double-right"></i>General Settings</a></li>
+                                <li class="treeview">
+		                    <a href="#">
+		                        <i class="fa fa-wrench"></i>
+		                        <span>Tarrif Settings</span>
+		                        <i class="fa fa-angle-left pull-right"></i>
+		                    </a>
+		                    <ul class="treeview-menu">
+		                        <li><a href="<?php echo base_url().'organization/front-desk/tarrif-masters';?>"><i class="fa fa-angle-double-right"></i> Tarrif Masters</a></li>
+		                        <li><a href="<?php echo base_url().'organization/front-desk/tarrif';?>"><i class="fa fa-angle-double-right"></i>Tarrifs</a></li>
+		                        
+		                    </ul>
+                        	</li>
+
+				<li class="treeview">
+		                    <a href="#">
+		                        <i class="fa fa-angle-double-right"></i>
+		                        <span>Account Settings</span>
+		                        <i class="fa fa-angle-left pull-right"></i>
+		                    </a>
+		                    <ul class="treeview-menu">
+		                        <li><a href="<?php echo base_url().'account/front_desk/BankAccounts';?>"><i class="fa fa-angle-double-right"></i> Bank Accounts</a></li>
+		                        <li><a href="<?php echo base_url().'account/front_desk/GlAccounts';?>"><i class="fa fa-angle-double-right"></i>GL Accounts</a></li>
+					<li><a href="<?php echo base_url().'account/front_desk/GlAccountGroups';?>"><i class="fa fa-angle-double-right"></i>GL Account Groups</a></li>
+					<li><a href="<?php echo base_url().'account/front_desk/GlAccountClasses';?>"><i class="fa fa-angle-double-right"></i>GL Account Classes</a></li>
+		                        
+		                    </ul>
+                        	</li>
                                 
                             </ul>
                         </li>
-                                
-                            </ul>
-                        </li>
-						<li class="treeview">
+
+
+			<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-laptop"></i>
                                 <span>Driver</span>

@@ -31,7 +31,8 @@ if ($use_date_picker)
 	$js .= get_js_date_picker();
 
 if (isset($_GET['NewPayment'])) {
-	$_SESSION['page_title'] = _($help_context = "Bank Account Payment Entry");
+	//$_SESSION['page_title'] = _($help_context = "Bank Account Payment Entry");
+	$_SESSION['page_title'] = _($help_context = "Payment Entry");
 	create_cart(ST_BANKPAYMENT, 0);
 } else if(isset($_GET['NewDeposit'])) {
 	$_SESSION['page_title'] = _($help_context = "Bank Account Deposit Entry");

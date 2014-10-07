@@ -119,12 +119,25 @@ class account_model extends CI_Model {
 			if($this->fa_customer_exists($id,$type,$fa_customer_table)){
 				//edit customer
 				$cnc_cust = $this->get_cnc_cust_or_group($id,$type);
-				$data = array('name'=>$cnc_cust['name']);
+				$prefs = $this->get_company_prefs();
+				$data = array('name'=>$cnc_cust['name'],
+						'curr_code'=>@$prefs['curr_default'],
+						'payment_terms'=>@$prefs['default_payment_terms'],
+						'credit_limit'=>@$prefs['default_credit_limit'],
+						'sales_type'=>@$prefs['base_sales']
+						);
 				if(isset($cnc_cust['address']))
 					$data['address'] = $cnc_cust['address'];
 
 				$this->db->where('debtor_ref',$type.$id );
 				$this->db->update($fa_customer_table,$data);
+				
+				//update branch
+				$data1 = array('br_name'=>$cnc_cust['name']);
+				$fa_branch_table = $this->session->userdata('organisation_id')."_cust_branch";
+				$this->db->where('debtor_no',$cnc_cust['id'] );
+				$this->db->update($fa_branch_table,$data1);
+
 				return true;
 			}else{
 				$this->add_fa_customer($id,$type);

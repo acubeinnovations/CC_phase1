@@ -112,8 +112,8 @@ CREATE TABLE IF NOT EXISTS `0_bank_accounts` (
 --
 
 INSERT INTO `0_bank_accounts` (`account_code`, `account_type`, `bank_account_name`, `bank_account_number`, `bank_name`, `bank_address`, `bank_curr_code`, `dflt_curr_act`, `id`, `last_reconciled_date`, `ending_reconcile_balance`, `inactive`) VALUES
-('1060', 0, 'Current account', 'N/A', 'N/A', '', 'USD', 1, 1, '0000-00-00 00:00:00', 0, 0),
-('1065', 3, 'Petty Cash account', 'N/A', 'N/A', '', 'USD', 0, 2, '0000-00-00 00:00:00', 0, 0);
+('1060', 0, 'Current account', 'N/A', 'N/A', '', 'INR', 1, 1, '0000-00-00 00:00:00', 0, 0),
+('1065', 3, 'Petty Cash account', 'N/A', 'N/A', '', 'INR', 0, 2, '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1598,7 +1598,7 @@ INSERT INTO `0_sys_prefs` VALUES('fax', 'setup.company', 'varchar', 30, '');
 INSERT INTO `0_sys_prefs` VALUES('email', 'setup.company', 'varchar', 100, '');
 INSERT INTO `0_sys_prefs` VALUES('coy_logo', 'setup.company', 'varchar', 100, '');
 INSERT INTO `0_sys_prefs` VALUES('domicile', 'setup.company', 'varchar', 55, '');
-INSERT INTO `0_sys_prefs` VALUES('curr_default', 'setup.company', 'char', 3, 'USD');
+INSERT INTO `0_sys_prefs` VALUES('curr_default', 'setup.company', 'char', 3, 'INR');
 INSERT INTO `0_sys_prefs` VALUES('use_dimension', 'setup.company', 'tinyint', 1, '1');
 INSERT INTO `0_sys_prefs` VALUES('f_year', 'setup.company', 'int', 11, '6');
 INSERT INTO `0_sys_prefs` VALUES('no_item_list', 'setup.company', 'tinyint', 1, '0');
