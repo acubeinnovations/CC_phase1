@@ -1083,7 +1083,7 @@ var statetax=$('.statetax').val();
 var nighthalt=$('.nighthalt').val();
 var extrafuel=$('.extrafuel').val();
 
-var totexpense=Number(expense)+Number(parkingfee)+Number(tollfee)+Number(statetax)+Number(nighthalt)+Number(extrafuel);
+var totexpense=Number(expense)+Number(parkingfee)+Number(tollfee)+Number(statetax)+Number(nighthalt);
 
 var trip_id=$(this).attr('trip_id');
 var driver_id=$(this).attr('driver_id');
