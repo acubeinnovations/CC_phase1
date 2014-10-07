@@ -395,13 +395,21 @@ $this->mysession->delete('post');
 						$tot_state_tax=$tot_state_tax+$trips[$trip_index]['state_tax'];
 						$tot_night_halt=$tot_night_halt+$trips[$trip_index]['night_halt_charges'];
 						$tot_fuel_extra=$tot_fuel_extra+$trips[$trip_index]['fuel_extra_charges'];
+						
+						
+						$date1 = date_create($trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time']);
+						$date2 = date_create($trips[$trip_index]['drop_date'].' '.$trips[$trip_index]['drop_time']);
+						
+						$diff= date_diff($date1, $date2);
+						$no_of_days=$diff->d.' Days '.$diff->h.' H '.$diff->i.' M';
+						
 						?>
 						<tr>
 							<td><?php echo $trip_index+1; ?></td>
 							<td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
 							<td><?php echo $trips[$trip_index]['pick_up_city'].' to '.$trips[$trip_index]['drop_city']; ?></td>
 							<td><?php echo $tot_km; ?></td>
-							<td><?php echo ''; ?></td>
+							<td><?php echo $no_of_days; ?></td>
 							<td><?php echo ''; ?></td>
 							<td><?php echo $trips[$trip_index]['releasing_place']; ?></td>
 							<td><?php echo $trips[$trip_index]['parking_fees']; ?></td>
