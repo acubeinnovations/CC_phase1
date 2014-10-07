@@ -131,7 +131,7 @@ $this->mysession->delete('post');
         
         <div class="tab-pane active" id="tab_1">
 
-    <?php if($this->session->userdata('marital_status_id') != ''||$this->session->userdata('bank_account_type_id') != ''||$this->session->userdata('id_proof_type_id') != ''||$this->session->userdata('Err_sal') != ''||$this->session->userdata('Err_blood_group') != ''){ ?>
+    <?php if($this->session->userdata('marital_status_id') != ''||$this->session->userdata('bank_account_type_id') != ''||$this->session->userdata('id_proof_type_id') != ''||$this->session->userdata('Err_sal') != ''||$this->mysession->get('Err_join') != ''||$this->mysession->get('Err_badge') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -141,13 +141,15 @@ $this->mysession->delete('post');
 													echo $this->session->userdata('id_proof_type_id').br();
 													echo $this->session->userdata('Err_sal').br();
 													echo $this->session->userdata('Err_blood_group').br();
-										
+													echo $this->mysession->get('Err_badge').br();
+													echo $this->mysession->get('Err_badge').br();
 														$this->session->set_userdata(array('marital_status_id'=>''));
 														$this->session->set_userdata(array('bank_account_type_id'=>''));
 														$this->session->set_userdata(array('id_proof_type_id'=>''));
 														$this->session->set_userdata(array('Err_sal'=>''));
 														$this->session->set_userdata(array('Err_blood_group'=>''));
-														
+														$this->mysession->delete('Err_badge');
+														$this->mysession->delete('Err_badge');
 										?>
                                     </div>
 <?php  } ?>        
@@ -183,8 +185,8 @@ $this->mysession->delete('post');
 		$class="form-control";
 		$msg="Select Marital Status";
 		$name="marital_status_id";
-	
-	echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id,$class,$id='',$msg);
+		$id='marital_id';
+	echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id,$class,$id,$msg);
 
 	
 	

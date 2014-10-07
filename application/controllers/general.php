@@ -46,8 +46,8 @@ class General extends CI_Controller {
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
 			
-			$this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
-			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean|alpha_numeric');
+			$this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean');
+			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
 			if($this->form_validation->run()==False){
 				redirect(base_url().'user/settings');
 			}else {
@@ -77,8 +77,8 @@ class General extends CI_Controller {
 		    $data['name']=$this->input->post('select_text');
 			$data['description']=$this->input->post('description');
 			$id=$this->input->post('id_val');
-	        $this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
-			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean|alpha_numeric');
+	        $this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean');
+			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
 		if($this->form_validation->run()==False){
         redirect(base_url().'user/settings');
 		}
@@ -105,9 +105,9 @@ class General extends CI_Controller {
 		if(isset($_REQUEST['delete'])){ 
 	
 			$id=$this->input->post('id_val');
-	        	$this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
+	        	$this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean');
 			//$this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
-			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean|alpha_numeric');
+			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
 			if($this->form_validation->run()==False){
         			redirect(base_url().'user/settings');
 			}
