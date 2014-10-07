@@ -1,5 +1,6 @@
 iframe{
 border:none;
+overflow:hidden;
 }
 a{
 
@@ -517,4 +518,8 @@ width: 100%;
 .trips > .box{
 background: none;
 box-shadow:none;
+}
+.font-size-13-px{
+
+font-size:13px;
 }

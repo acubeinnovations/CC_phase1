@@ -13,18 +13,7 @@
                                 <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-wrench"></i>
-                                <span>Account Settings</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'admin/profile';?>"><i class="fa fa-angle-double-right"></i> Profile</a></li>
-                                <li><a href="<?php echo base_url().'admin/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
-                                
-                            </ul>
-                        </li>
+                        
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-users"></i>
@@ -43,23 +32,12 @@
                                 <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
-                               <i class="fa fa-wrench"></i> 
-                                <span>Account Settings</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'organization/admin/profile';?>"><i class="fa fa-angle-double-right"></i> Profile</a></li>
-                                <li><a href="<?php echo base_url().'organization/admin/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
-                                
-                            </ul>
-                        </li>
+                        
 
 			<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-wrench"></i>
-                                <span>FA Account Settings</span>
+                                <span>Accounts</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
@@ -94,29 +72,23 @@
                                 <i class="fa fa-home"></i> <span> Dashboard </span>
                             </a>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-wrench"></i>
-                                <span>Account Settings</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'organization/front-desk/profile';?>"><i class="fa fa-angle-double-right"></i> Profile</a></li>
-                                <li><a href="<?php echo base_url().'organization/front-desk/changepassword';?>"><i class="fa fa-lock"></i>Change Password</a></li>
-                                
-                            </ul>
-                        </li>
+                        
 		
 			<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-wrench"></i>
-                                <span>FA Account Settings</span>
+                                <span>Accounts</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
 				 
-                                <li><a href="<?php echo base_url().'account/front_desk/SalesDeliveries';?>"><i class="fa fa-angle-double-right"></i>Delivery</a></li>
-				<li><a href="<?php echo base_url().'account/front_desk/NewBankDeposit';?>"><i class="fa fa-angle-double-right"></i> Invoice</a></li>
+                                <li><a href="<?php echo base_url().'account/front_desk/SalesDeliveries';?>"><i class="fa fa-angle-double-right"></i> Trip Deliveries</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/NewInvoice';?>"><i class="fa fa-angle-double-right"></i> Trip Invoice</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/NewBankPayment';?>"><i class="fa fa-angle-double-right"></i> Payment</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/NewBankDeposit';?>"><i class="fa fa-angle-double-right"></i> Receipt</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/CustomerTransactions';?>"><i class="fa fa-angle-double-right"></i> Customer Transactions</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/DriverTransactions';?>"><i class="fa fa-angle-double-right"></i> Driver Transactions</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/OwnerTransactions';?>"><i class="fa fa-angle-double-right"></i> Vehicle Owner Transactions</a></li>
                                 
                                 
                             </ul>

@@ -26,10 +26,12 @@ if (!@$_GET['popup'])
 	if ($use_date_picker)
 		$js .= get_js_date_picker();
 
-	if(isset($_GET['CustomerPaymentInquiry']))
+	if(isset($_GET['CustomerPaymentInquiry'])){
 		page(_($help_context = "Transactions"), isset($_GET['customer_id']), false, "", $js);
-	else
+	}else{
 		page(_($help_context = "Customer Transactions"), isset($_GET['customer_id']), false, "", $js);
+
+	}
 }
 
 if (isset($_GET['customer_id']))
@@ -45,28 +47,36 @@ if (!@$_GET['popup'])
 if (!isset($_POST['customer_id']))
 	$_POST['customer_id'] = get_global_customer();
 
-start_table(TABLESTYLE_NOBORDER);
+start_table_left(TABLESTYLE_NOBORDER);
 start_row();
 
-if (!@$_GET['popup'])
-	//customer_list_cells(_("Select a customer: "), 'customer_id', null, true, false, false, !@$_GET['popup']);
-	hidden('customer_id');
+if (!@$_GET['popup']){
+	if(isset($_GET['CustomerPaymentInquiry']))
+		hidden('customer_id');
+	else
+		customer_list_cells(_("Select a customer: "), 'customer_id', null, true, false, false, !@$_GET['popup']);
+	
+}
 
 date_cells(_("From:"), 'TransAfterDate', '', null, -30);
 date_cells(_("To:"), 'TransToDate', '', null, 1);
 
 if (!isset($_POST['filterType']))
-	$_POST['filterType'] = ST_CUSTPAYMENT;
+	$_POST['filterType'] = 3;
 
-//cust_allocations_list_cells(null, 'filterType', $_POST['filterType'], true);
-hidden('filterType');
+
+if(isset($_GET['CustomerPaymentInquiry']))
+	hidden('filterType');
+else
+	cust_allocations_list_cells(null, 'filterType', $_POST['filterType'], true);
+
 
 submit_cells('RefreshInquiry', _("Search"),'',_('Refresh Inquiry'), 'default');
 end_row();
-end_table();
+end_table_left();
 
 set_global_customer($_POST['customer_id']);
-
+br();
 //------------------------------------------------------------------------------------------------
 
 function display_customer_summary($customer_record)
@@ -105,8 +115,8 @@ div_start('totals_tbl');
 if ($_POST['customer_id'] != "" && $_POST['customer_id'] != ALL_TEXT)
 {
 	$customer_record = get_customer_details($_POST['customer_id'], $_POST['TransToDate']);
-    display_customer_summary($customer_record);
-    echo "<br>";
+    	display_customer_summary($customer_record);
+    	echo "<br>";
 }
 div_end();
 

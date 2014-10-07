@@ -256,4 +256,11 @@ defined('ICON_ALLOC') || define('ICON_ALLOC', 'alloc.png');
 define('SECURITY_ROLE_FRD',10); //Frontdesk
 define('SECURITY_ROLE_SYSADM',2);//system administrator
 
+define('CNC_DRIVER','DR');
+define('CNC_VEHICLE_OWNER','VW');
+define('CNC_CUSTOMER','C');
+define('CNC_CUSTOMER_GROUP','CG');
+
+
+
 ?>

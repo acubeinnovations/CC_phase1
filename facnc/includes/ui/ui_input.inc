@@ -717,9 +717,9 @@ function file_row($label, $name, $id = "")
 
 //-----------------------------------------------------------------------------------
 
-function ref_cells($label, $name, $title=null, $init=null, $params=null, $submit_on_change=false)
+function ref_cells($label, $name, $title=null, $init=null, $params=null, $submit_on_change=false,$size = 16)
 {
-	text_cells_ex($label, $name, 16, 18, $init, $title, $params, null, $submit_on_change);
+	text_cells_ex($label, $name, $size, 18, $init, $title, $params, null, $submit_on_change);
 }
 
 //-----------------------------------------------------------------------------------

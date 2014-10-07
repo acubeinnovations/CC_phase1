@@ -77,6 +77,7 @@ function check_csrf_token()
 	return true;
 }
 
+//align center table
 function start_table($class=false, $extra="", $padding='2', $spacing='0')
 {
 	echo "<center><table";
@@ -97,6 +98,30 @@ function end_table($breaks=0)
 	if ($breaks)
 		br($breaks);
 }
+//--------------------------------
+
+//align left
+function start_table_left($class=false, $extra="", $padding='2', $spacing='0')
+{
+	echo "<table";
+	if ($class == TABLESTYLE_NOBORDER)
+		echo " class='tablestyle_noborder'";
+	elseif ($class == TABLESTYLE2)
+		echo " class='tablestyle2'";
+	elseif ($class == TABLESTYLE)
+		echo " class='tablestyle'";
+	if ($extra != "")
+		echo " $extra";
+	echo " cellpadding=$padding cellspacing=$spacing>\n";
+}
+
+function end_table_left($breaks=0)
+{
+	echo "</table>\n";
+	if ($breaks)
+		br($breaks);
+}
+
 
 function start_outer_table($class=false, $extra="", $padding='2', $spacing='0', $br=false)
 {
