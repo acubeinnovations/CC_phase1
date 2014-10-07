@@ -35,7 +35,8 @@ if (isset($_GET['NewPayment'])) {
 	$_SESSION['page_title'] = _($help_context = "Payment Entry");
 	create_cart(ST_BANKPAYMENT, 0);
 } else if(isset($_GET['NewDeposit'])) {
-	$_SESSION['page_title'] = _($help_context = "Bank Account Deposit Entry");
+	//$_SESSION['page_title'] = _($help_context = "Bank Account Deposit Entry");
+	$_SESSION['page_title'] = _($help_context = "Receipt Entry");
 	create_cart(ST_BANKDEPOSIT, 0);
 } else if(isset($_GET['ModifyPayment'])) {
 	$_SESSION['page_title'] = _($help_context = "Modify Bank Account Entry")." #".$_GET['trans_no'];
@@ -74,13 +75,14 @@ if (isset($_GET['AddedID']))
 
    	display_notification_centered(sprintf(_("Payment %d has been entered"), $trans_no));
 
-	display_note(get_gl_view_str($trans_type, $trans_no, _("&View the GL Postings for this Payment")));
+	/*display_note(get_gl_view_str($trans_type, $trans_no, _("&View the GL Postings for this Payment")));
 
 	hyperlink_params($_SERVER['PHP_SELF'], _("Enter Another &Payment"), "NewPayment=yes");
 
 	hyperlink_params($_SERVER['PHP_SELF'], _("Enter A &Deposit"), "NewDeposit=yes");
 
 	hyperlink_params("$path_to_root/admin/attachments.php", _("Add an Attachment"), "filterType=$trans_type&trans_no=$trans_no");
+	*/
 
 	display_footer_exit();
 }
@@ -92,11 +94,12 @@ if (isset($_GET['UpdatedID']))
 
    	display_notification_centered(sprintf(_("Payment %d has been modified"), $trans_no));
 
-	display_note(get_gl_view_str($trans_type, $trans_no, _("&View the GL Postings for this Payment")));
+	/*display_note(get_gl_view_str($trans_type, $trans_no, _("&View the GL Postings for this Payment")));
 
 	hyperlink_params($_SERVER['PHP_SELF'], _("Enter Another &Payment"), "NewPayment=yes");
 
 	hyperlink_params($_SERVER['PHP_SELF'], _("Enter A &Deposit"), "NewDeposit=yes");
+	*/
 
 	display_footer_exit();
 }
@@ -108,11 +111,12 @@ if (isset($_GET['AddedDep']))
 
    	display_notification_centered(sprintf(_("Deposit %d has been entered"), $trans_no));
 
-	display_note(get_gl_view_str($trans_type, $trans_no, _("View the GL Postings for this Deposit")));
+	/*display_note(get_gl_view_str($trans_type, $trans_no, _("View the GL Postings for this Deposit")));
 
 	hyperlink_params($_SERVER['PHP_SELF'], _("Enter Another Deposit"), "NewDeposit=yes");
 
 	hyperlink_params($_SERVER['PHP_SELF'], _("Enter A Payment"), "NewPayment=yes");
+	*/
 
 	display_footer_exit();
 }
@@ -123,11 +127,12 @@ if (isset($_GET['UpdatedDep']))
 
    	display_notification_centered(sprintf(_("Deposit %d has been modified"), $trans_no));
 
-	display_note(get_gl_view_str($trans_type, $trans_no, _("&View the GL Postings for this Deposit")));
+	/*display_note(get_gl_view_str($trans_type, $trans_no, _("&View the GL Postings for this Deposit")));
 
 	hyperlink_params($_SERVER['PHP_SELF'], _("Enter Another &Deposit"), "NewDeposit=yes");
 
 	hyperlink_params($_SERVER['PHP_SELF'], _("Enter A &Payment"), "NewPayment=yes");
+	*/
 
 	display_footer_exit();
 }
@@ -401,7 +406,7 @@ start_form();
 
 display_bank_header($_SESSION['pay_items']);
 
-start_table(TABLESTYLE2, "width=90%", 10);
+start_table(TABLESTYLE2, "width=100%", 10);
 start_row();
 echo "<td>";
 display_gl_items($_SESSION['pay_items']->trans_type==ST_BANKPAYMENT ?

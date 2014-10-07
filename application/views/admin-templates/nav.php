@@ -54,7 +54,8 @@
                                 
                             </ul>
                         </li>
-
+			
+			
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-users"></i>
@@ -87,10 +88,26 @@
 				<li><a href="<?php echo base_url().'account/front_desk/SalesInvoices';?>"><i class="fa fa-angle-double-right"></i> Trip Invoice</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/NewBankPayment';?>"><i class="fa fa-angle-double-right"></i> Payment</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/NewBankDeposit';?>"><i class="fa fa-angle-double-right"></i> Receipt</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/BankTransfer';?>"><i class="fa fa-angle-double-right"></i> Bank Account Transfers</a></li>
+				<li><a href="<?php echo base_url().'account/front_desk/ReconcileBank';?>"><i class="fa fa-angle-double-right"></i> Reconcile Bank Account</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/CustomerTransactions';?>"><i class="fa fa-angle-double-right"></i> Customer Transactions</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/DriverTransactions';?>"><i class="fa fa-angle-double-right"></i> Driver Transactions</a></li>
 				<li><a href="<?php echo base_url().'account/front_desk/OwnerTransactions';?>"><i class="fa fa-angle-double-right"></i> Vehicle Owner Transactions</a></li>
                                 
+                                
+                            </ul>
+                        </li>
+	
+			<li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-laptop"></i>
+                                <span>Account Statements</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+				 <li><a href="<?php echo base_url().'account/front_desk/TrialBalance';?>"><i class="fa fa-angle-double-right"></i> Trial Balance</a></li>
+                                <li><a href="<?php echo base_url().'account/front_desk/BalanceSheet';?>"><i class="fa fa-angle-double-right"></i> Balance sheet</a></li>
+				 <li><a href="<?php echo base_url().'account/front_desk/ProfitLoss';?>"><i class="fa fa-angle-double-right"></i> Profit and Loss</a></li>                                
                                 
                             </ul>
                         </li>

@@ -1857,6 +1857,7 @@ function payment_person_types_list($name, $selected_id=null, $submit_on_change=f
 {
 	global $payment_person_types;
 
+
 	$items = array();
 	foreach ($payment_person_types as $key=>$type)
 	{

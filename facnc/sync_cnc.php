@@ -14,6 +14,14 @@
 
 		meta_forward('gl/gl_bank.php','NewDeposit=Yes');
 	}
+	elseif(isset($_GET['BankTransfer'])){
+
+		meta_forward('gl/bank_transfer.php');
+	}
+	elseif(isset($_GET['ReconcileBank'])){
+
+		meta_forward('gl/bank_account_reconcile.php');
+	}
 	elseif(isset($_GET['CompanySetup'])){
 		meta_forward('admin/company_preferences.php');
 		
@@ -108,6 +116,18 @@
 	}
 	elseif(isset($_GET['GlAccountClasses'])){
 		meta_forward('gl/manage/gl_account_classes.php');
+		
+	}
+	elseif(isset($_GET['TrialBalance'])){
+		meta_forward('gl/inquiry/gl_trial_balance.php');
+		
+	}
+	elseif(isset($_GET['BalanceSheet'])){
+		meta_forward('gl/inquiry/balance_sheet.php');
+		
+	}
+	elseif(isset($_GET['ProfitLoss'])){
+		meta_forward('gl/inquiry/profit_loss.php');
 		
 	}
 
