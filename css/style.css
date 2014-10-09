@@ -88,7 +88,7 @@ margin:20px 0 20px 0;
     
 }
 .body-head {
-    width:inherit; /* Or auto */
+    width:auto; /* Or auto */
     padding:0 10px; /* To give a bit of padding on the left and right */
     border-bottom:none;
 	margin:10px;
@@ -137,7 +137,11 @@ margin-top: 20px;
 color:#00C0EF;
 
 }
+.tarrif_master_body{
+width:95%;
+margin: auto;
 
+}
 .settings-delete{
 color:#F56954;
 margin-top: 20px;

@@ -88,12 +88,24 @@ echo form_close();?></td>
 					<?php
 					
 					for($trip_index=0;$trip_index<count($trips);$trip_index++){
+						$pickdate=$trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time'];
+						$dropdate=$trips[$trip_index]['drop_date']." ".$trips[$trip_index]['drop_time'];
+
+						$date1 = date_create($pickdate);
+						$date2 = date_create($dropdate);
+						
+						$diff= date_diff($date1, $date2);
+						if($diff->d > 0 && $diff->h >= 0 && $diff->i >=1 ){
+							$no_of_days=$diff->d+1;
+						}else{
+							$no_of_days=$diff->d;
+						}
 					?>
 					<tr>
 						<td><?php echo $trip_sl_no;?></td>
 						<td><?php echo $trips[$trip_index]['id'];?></td>
 					    <td><?php echo $customers[$trips[$trip_index]['customer_id']];?></td>
-					    <td><?php echo $trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time']; ?></td>
+					    <td><?php echo $pickdate; ?></td>
 						 <td><?php echo $trips[$trip_index]['pick_up_city'];?></td>
 						 <td><?php echo $trips[$trip_index]['drop_city'];?></td>
 					    <td>
@@ -102,7 +114,7 @@ echo form_close();?></td>
 						</td>	
 						<td><?php if($trips[$trip_index]['vehicle_id']==gINVALID){ echo 'Vehicle not allocated';}else{echo $vehicles[$trips[$trip_index]['vehicle_id']]; }?></td>
 						 <td><?php if($trips[$trip_index]['driver_id']==gINVALID){ echo 'Driver not allocated';}else{echo $drivers[$trips[$trip_index]['driver_id']]; }?></td>
-						<td><?php if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED || $trips[$trip_index]['trip_status_id']==TRIP_STATUS_PENDING ) { echo anchor(base_url().'organization/front-desk/trip-booking/'.$trips[$trip_index]['id'],'EDIT','class="btn btn-primary"').nbs(5)."<a href=".base_url().'trip/complete/'.$trips[$trip_index]['id']." class='btn btn-primary'>COMPLETE</a>"; }else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_COMPLETED){ echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['id']." class='btn btn-primary' target='_blank'>PRINT</a>".nbs(5)."<button class='btn btn-primary voucher' trip_id='".$trips[$trip_index]['id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button'>VOUCHER</button>"; }else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_BILLED){ echo "<button class='btn btn-primary voucher' trip_id='".$trips[$trip_index]['id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button'>VOUCHER</button>"; } ?></td>
+						<td><?php if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED || $trips[$trip_index]['trip_status_id']==TRIP_STATUS_PENDING ) { echo anchor(base_url().'organization/front-desk/trip-booking/'.$trips[$trip_index]['id'],'EDIT','class="btn btn-primary"').nbs(5)."<a href=".base_url().'trip/complete/'.$trips[$trip_index]['id']." class='btn btn-primary'>COMPLETE</a>"; }else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_COMPLETED){ echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['id']." class='btn btn-primary' target='_blank'>PRINT</a>".nbs(5)."<button class='btn btn-primary voucher' trip_id='".$trips[$trip_index]['id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' >VOUCHER</button>"; }else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_BILLED){ echo "<button class='btn btn-primary voucher' trip_id='".$trips[$trip_index]['id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' >VOUCHER</button>"; } ?></td>
 					</tr>
 					<?php 
 						$trip_sl_no++;

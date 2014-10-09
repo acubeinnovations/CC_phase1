@@ -639,6 +639,11 @@ $this->mysession->delete('post');
 		                                        
 		                                    </tr>
 											<tr>
+		                                        <td>No of Days<span class="float-right"> : </span></td>
+		                                        <td><div class="no-of-days"></div></td>
+		                                        
+		                                    </tr>
+											<tr>
 		                                        <td>Charge<span class="float-right"> : </span></td>
 		                                        <td><div class="charge-per-km"></div></td>
 		                                        

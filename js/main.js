@@ -589,7 +589,10 @@ $.post(base_url+'/maps/get-distance',{
 data=jQuery.parseJSON(data);
 if(data.No_Data=='false'){
 if(data.via=='NO'){
+var tot_distance = data.distance.replace(/\km\b/g, '');
 $('.estimated-distance-of-journey').html(data.distance);
+$('.estimated-distance-of-journey').attr('estimated-distance-of-journey',tot_distance);
+
 $('.estimated-time-of-journey').html(data.duration);
 }else if(data.via=='YES'){
 first_duration=data.first_duration.replace(/\hour\b/g, 'h');
@@ -598,10 +601,17 @@ first_duration=first_duration.replace(/\mins\b/g, 'm');
 second_duration=data.second_duration.replace(/\hours\b/g, 'h');
 second_duration=second_duration.replace(/\hour\b/g, 'h');
 second_duration=second_duration.replace(/\mins\b/g, 'm');
+
+var first_distance = data.first_distance.replace(/\km\b/g, '');
+var second_distance = data.second_distance.replace(/\km\b/g, '');
+var tot_distance=Number(first_distance)+Number(second_distance);
+
 var distance_estimation='<div class="via-distance-estimation">Pick up to Via Loc : '+data.first_distance+'<br/> Via to Drop Loc : '+data.second_distance+'</div>';
 var duration_estimation='<div class="via-duration-estimation">Pick up to Via Loc : '+first_duration+'<br/>  Via to Drop Loc : '+second_duration+'</div>';
 
 $('.estimated-distance-of-journey').html(distance_estimation);
+$('.estimated-distance-of-journey').attr('estimated-distance-of-journey',tot_distance);
+
 $('.estimated-time-of-journey').html(duration_estimation);
 }
 }else{
@@ -738,10 +748,54 @@ function SetRoughEstimate(){
 var additional_kilometer_rate = $('#tarrif option:selected').attr('additional_kilometer_rate');
 var minimum_kilometers = $('#tarrif option:selected').attr('minimum_kilometers');
 var rate = $('#tarrif option:selected').attr('rate');
-var estimated_distance = $('.estimated-distance-of-journey').html();
+var estimated_distance = $('.estimated-distance-of-journey').attr('estimated-distance-of-journey');
 
 var extra_charge=0;
-estimated_distance=Trim(estimated_distance.replace(/\km\b/g, ''));
+
+var pickupdate = $('#pickupdatepicker').val();
+var pickuptime = $('#pickuptimepicker').val();
+var dropdate = $('#dropdatepicker').val();
+var droptime = $('#droptimepicker').val();
+	
+	pickupdate=pickupdate.split('-');
+	dropdate=dropdate.split('-');
+	var start_actual_time  =  pickupdate[0]+'/'+pickupdate[1]+'/'+pickupdate[2]+' '+pickuptime;
+    var end_actual_time    =  dropdate[0]+'/'+dropdate[1]+'/'+dropdate[2]+' '+droptime;
+
+
+    start_actual_time = new Date(start_actual_time);
+    end_actual_time = new Date(end_actual_time);
+
+    var diff = end_actual_time - start_actual_time;
+
+    var diffSeconds = diff/1000;
+    var HH = Math.floor(diffSeconds/3600);
+    var MM = Math.floor(diffSeconds%3600)/60;
+	var no_of_days=Math.floor(HH/24);
+    if(HH>=24 && MM>=1){
+      no_of_days=no_of_days+1; 
+		var days="Days";
+    }else{
+ 	no_of_days=1;
+	var days="Day";
+	}
+if(HH>=24){
+
+if(Number(estimated_distance) > Number(minimum_kilometers)*Number(no_of_days)){
+var extra_distance=Number(estimated_distance)-(Number(minimum_kilometers)*Number(no_of_days));
+charge=(Number(minimum_kilometers)*Number(no_of_days))*Number(rate);
+extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
+total=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
+
+}else{
+total=Math.round(Number(estimated_distance)*Number(rate)).toFixed(2);
+
+}
+
+
+}else{
+
+
 if(Number(estimated_distance) > minimum_kilometers){
 var extra_distance=Number(estimated_distance)-Number(minimum_kilometers);
 charge=Number(minimum_kilometers)*Number(rate);
@@ -753,11 +807,15 @@ total=Math.round(Number(estimated_distance)*Number(rate)).toFixed(2);
 
 }
 
+}
+
+
+
 $('.additional-charge-per-km').html('RS . '+additional_kilometer_rate);
 $('.mini-km').html(minimum_kilometers+' Km');
 $('.charge-per-km').html('RS . '+rate);
 $('.estimated-total-amount').html('RS . '+total);
-
+$('.no-of-days').html(no_of_days+' '+days+' Trip');
 }
 
 $('#tarrif,#available_vehicle').on('change',function(){
@@ -984,6 +1042,7 @@ $('.voucher').on('click',function(){
 var trip_id=$(this).attr('trip_id');
 var driver_id=$(this).attr('driver_id');
 var tarrif_id=$(this).attr('tarrif_id');
+var no_of_days=$(this).attr('no_of_days');
 $('.overlay-container').css('display','block');
 $('.trip-voucher-save').attr('trip_id',trip_id);
 $('.trip-voucher-save').attr('driver_id',driver_id);
@@ -1020,6 +1079,7 @@ $('.trip-voucher-save').attr('driver_id',driver_id);
 				$('.trip-voucher-save').attr('rate',data[0].rate);
 				$('.trip-voucher-save').attr('additional_kilometer_rate',data[0].additional_kilometer_rate);
 				$('.trip-voucher-save').attr('minimum_kilometers',data[0].minimum_kilometers);
+				$('.trip-voucher-save').attr('no_of_days',no_of_days);
 				}
 			});
 			}
@@ -1057,12 +1117,14 @@ var extrakmtravelled=0;
 var rate=$('.trip-voucher-save').attr('rate');
 var additional_kilometer_rate=$('.trip-voucher-save').attr('additional_kilometer_rate');
 var minimum_kilometers=$('.trip-voucher-save').attr('minimum_kilometers');
+var no_of_days=$('.trip-voucher-save').attr('no_of_days');
 
 var startkm=$('.startkm').val();
 var endkm=$('.endkm').val();
 
 var totkmtravelled=Number(endkm)-Number(startkm);
 
+/*
 if(totkmtravelled>minimum_kilometers){
 extrakmtravelled=totkmtravelled-minimum_kilometers;
 expense=(Number(minimum_kilometers)*Number(rate))+(Number(extrakmtravelled)*Number(additional_kilometer_rate));
@@ -1071,7 +1133,29 @@ expense=(Number(minimum_kilometers)*Number(rate))+(Number(extrakmtravelled)*Numb
 expense=Number(totkmtravelled)*Number(rate);
 
 }
+*/
 
+if(no_of_days>1){
+
+if(Number(totkmtravelled) > Number(minimum_kilometers)*Number(no_of_days)){
+var extra_distance=Number(totkmtravelled)-(Number(minimum_kilometers)*Number(no_of_days));
+charge=(Number(minimum_kilometers)*Number(no_of_days))*Number(rate);
+extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
+expense=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
+}else{
+expense=Math.round(Number(totkmtravelled)*Number(rate)).toFixed(2);
+}
+}else{
+
+if(Number(totkmtravelled) > minimum_kilometers){
+var extra_distance=Number(totkmtravelled)-Number(minimum_kilometers);
+charge=Number(minimum_kilometers)*Number(rate);
+extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
+expense=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
+}else{
+expense=Math.round(Number(totkmtravelled)*Number(rate)).toFixed(2);
+}
+}
 
 var garageclosingkm=$('.garageclosingkm').val();
 var garageclosingtime=$('.garageclosingtime').val();
