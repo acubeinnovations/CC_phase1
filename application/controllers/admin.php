@@ -95,7 +95,7 @@ class Admin extends CI_Controller {
 	if($secondaction==''){
 	$secondaction=0;
 	}
-	$this->session->unset_userdata('condition');
+	$this->mysession->delete('condition');
 	if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
 	$like_arry=array('name'=> $_REQUEST['sname']);
 	$where_arry=array('status_id'=>$_REQUEST['status']);
@@ -106,7 +106,7 @@ class Admin extends CI_Controller {
 	if($_REQUEST['sname']!=null&& $_REQUEST['status']==-1){
 	$like_arry=array('name'=> $_REQUEST['sname']);
 	}
-	$this->session->set_userdata(array('condition'=>array("like"=>$like_arry,"where"=>$where_arry)));
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 
 	}
 	$tbl='organisations';
@@ -114,7 +114,7 @@ class Admin extends CI_Controller {
 	$baseurl=base_url().'admin/organization/list/';
     $uriseg ='4';
 	if($secondaction==''){
-		$this->session->set_userdata('condition','');
+		$this->mysession->delete('condition');
 		}
     $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
 	

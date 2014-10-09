@@ -17,21 +17,18 @@ $def_coy - the default company that is pre-selected on login
 
 $def_coy = 0;
 
-$tb_pref_counter = 8;
+$tb_pref_counter = 11;
 
 $db_connections = array (
   0 => 
   array (
-    
-     'name' => 'mastercompany',
-     'host' => 'localhost',
-     'dbuser' => 'root',
-     'dbpassword' => 'mysql@local',
-     'dbname' => 'connectncabs',
-     'dbpassword' => 'mysql@local',
-     'dbname' => 'connectncabs',
-     'tbpref' => '0_',
-   ),
+    'name' => 'mastercompany',
+    'host' => 'localhost',
+    'dbuser' => 'root',
+    'dbpassword' => 'mysql@local',
+    'dbname' => 'connectncabs',
+    'tbpref' => '0_',
+  ),
   1 => 
   array (
     'name' => 'TALC1',
@@ -44,12 +41,11 @@ $db_connections = array (
   2 => 
   array (
     'name' => 'CONNECTNCABS',
-   'host' => 'localhost',
+    'host' => 'localhost',
     'dbuser' => 'root',
     'dbpassword' => 'mysql@local',
     'dbname' => 'connectncabs',
     'tbpref' => '2_',
   ),
- 
 );
 ?>
