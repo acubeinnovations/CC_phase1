@@ -368,19 +368,20 @@ public function __construct()
 		if(isset($_REQUEST['user-profile-update'])){
 		echo $this->input->post('fa_account');exit;
 			$data['firstname']= trim($this->input->post('firstname'));
-		    $data['lastname'] = trim($this->input->post('lastname'));
-		    $data['address']  = $this->input->post('address');
-		    $data['username'] = $this->input->post('husername');
-		    $data['email'] 	  = $this->input->post('email');
-		    $data['phone']    = $this->input->post('phone');
+			$data['lastname'] = trim($this->input->post('lastname'));
+			$data['address']  = $this->input->post('address');
+			$data['username'] = $this->input->post('husername');
+			$data['email'] 	  = $this->input->post('email');
+			$data['phone']    = $this->input->post('phone');
 			$data['id']		  = $this->input->post('id');
 			$data['status']   =   $this->input->post('status');
+			$data['fa_account']		  = $this->input->post('fa_account');
 			
 	        
-		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean');
-		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean');
-		$this->form_validation->set_rules('address','Address','trim|required|min_length[10]|xss_clean');
-		//$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[users.username]');
+			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean');
+			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean');
+			$this->form_validation->set_rules('address','Address','trim|required|min_length[10]|xss_clean');
+			//$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[users.username]');
 		if($this->input->post('email')==$this->input->post('hmail')){
 			$this->form_validation->set_rules('email','Email','trim|required|valid_email|xss_clean');
 			}
@@ -399,6 +400,12 @@ public function __construct()
 		$res    		   = $this->organization_model->updateUser($data);
 
 		if($res == true) { 
+
+		   //fa user edit
+		   $this->load->model('account_model');
+		   $this->account_model->edit_user($data);
+                   
+		   
 	   	    $this->session->set_userdata(array('dbSuccess'=>'User Profile Updated Succesfully..!'));
 		    $this->session->set_userdata(array('dbError'=>''));
 		    redirect(base_url().'organization/admin/front-desk/list');

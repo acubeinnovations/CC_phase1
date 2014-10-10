@@ -149,8 +149,11 @@ function handle_submit()
 				update_admin_password($conn, md5($_POST['admpassword']));*/
 				update_fa_account_in_organisations($_POST['cnc_org_id']);
 				$cnc_org_admin = get_cnc_org_admin($_POST['cnc_org_id']);
-				if($cnc_org_admin)
+				if($cnc_org_admin){
 					sync_cnc_org_login($conn, $cnc_org_admin['username'],$cnc_org_admin['password']);
+					
+					update_fa_account_in_users($cnc_org_admin['id'],1);
+				}
 			}	
 		}
 		set_global_connection();

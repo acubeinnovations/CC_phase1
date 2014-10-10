@@ -62,9 +62,8 @@
 						<td>
 							<?php echo anchor(base_url().'organization/admin/front-desk/'.$row['username'],'Edit','class="btn btn-primary"').nbs(3).anchor(base_url().'organization/admin/front-desk/'.$row['username'].'/password-reset','Change Password','class="btn btn-primary"'); ?>
 							
-							<?php 
-						echo ($this->account_model->check_fa_user_exists($row['id'])?"":nbs(3).anchor(base_url().'account/add_user/'.$row['id'],'Add Accounts','class="btn btn-primary"'));
-					?>
+							
+					<?php echo ($row['fa_account'])?"":nbs(3).anchor(base_url().'account/add_user/'.$row['id'],'Add Accounts','class="btn btn-primary"');?>
 						</td>
 					</tr>
 					<?php endforeach;
