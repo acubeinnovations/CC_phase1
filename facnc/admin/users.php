@@ -89,6 +89,10 @@ if (($Mode=='ADD_ITEM' || $Mode=='UPDATE_ITEM') && check_csrf_token())
 					$_POST['phone'], $_POST['email'], $_POST['role_id'], $_POST['language'],
 					$_POST['print_profile'], check_value('rep_popup'), $_POST['pos']);
 				$id = db_insert_id();
+				
+				update_fa_account_in_users($_POST['cnc_userid']);
+				
+				
 				// use current user display preferences as start point for new user
 				$prefs = $_SESSION['wa_current_user']->prefs->get_all();
 			
@@ -182,7 +186,8 @@ if(isset($_GET['NewUser']) || isset($_GET['EditUser'])){
 	$_POST['real_name'] = trim(@$cnc_user["first_name"]." ".@$cnc_user["last_name"]);
 	$_POST['phone'] = @$cnc_user["phone"];
 	$_POST['email'] = @$cnc_user["email"];
-	$_POST['user_id'] = @$cnc_user["user_id"];
+	$_POST['user_id'] = @$cnc_user["username"];
+	
 
 	if(isset($_GET['EditUser'])){
 		//editing an existing User		
@@ -229,8 +234,8 @@ if(isset($_GET['NewUser']) || isset($_GET['EditUser'])){
 		false, _('Set this option to on if your browser directly supports pdf files'));
 
 	end_table(1);
-
-	submit_continue_center($selected_id == -1, '', 'both');
+	if(isset($GET['NewUser']))
+		submit_continue_center($selected_id == -1, '', 'both');
 	//submit_continue_center($selected_id == -1);
 }else{
 

@@ -49,6 +49,12 @@ function update_fa_account_in_organisations($org_id = -1)
 		." WHERE id=".db_escape($org_id);
 	db_query($sql, "Organisation updated");
 }
+function update_fa_account_in_users($user_id = -1)
+{
+	$sql = "UPDATE users SET fa_account = 1"
+		." WHERE id=".db_escape($user_id);
+	db_query($sql, "User updated");
+}
 
 function get_cnc_user($userid)
 {
