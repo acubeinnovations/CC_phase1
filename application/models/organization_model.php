@@ -3,19 +3,32 @@ class Organization_model extends CI_Model {
 	function OrganizationOrUserLogin( $username, $password ) {
         $this->db->from('users');
         $this->db->where('username',$username );
-		$user_type_condition='user_type_id = '.ORGANISATION_ADMINISTRATOR.' OR user_type_id = '.FRONT_DESK;
-		$this->db->where($user_type_condition);
+		//$user_type_condition='user_type_id = '.ORGANISATION_ADMINISTRATOR.' OR user_type_id = '.FRONT_DESK.' AND user_status_id='.USER_STATUS_ACTIVE;
+		//$this->db->where($user_type_condition);
         $this->db->where( 'password', md5($password) );
         $login = $this->db->get()->result();
-        
-        if ( is_array($login) && count($login) == 1 ) {
-            
-            $this->details = $login[0];
-            $this->set_session();
-            return true;
-        }
 
+       
+        if ( is_array($login) && count($login) == 1 ) {
+			
+            $this->details = $login[0];
+			if($this->details->user_type_id==ORGANISATION_ADMINISTRATOR || $this->details->user_type_id==FRONT_DESK){
+				if($this->details->user_status_id==USER_STATUS_ACTIVE){
+					$this->set_session();
+          			  return true;
+				}else{
+				 $this->mysession->set('user_status_error','User Not Active.');
+				return false;
+				}
+			}else{
+				$this->mysession->set('user_type_error','Login with Organization or Front desk credentials.');
+				return false;
+			}
+            
+        }else{
+		$this->mysession->set('password_error','Password Incorrect');
         return false;
+		}
     }
 	function getProfile(){
 		$query=$this->db->get_where('organisations',array('id'=>$this->session->userdata('organisation_id')));

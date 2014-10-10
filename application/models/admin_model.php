@@ -7,20 +7,31 @@ class admin_model extends CI_Model {
         
         $this->db->from('users');
         $this->db->where('username',$username );
-		$this->db->where( 'user_type_id',SYSTEM_ADMINISTRATOR );
-        $this->db->where( 'password', md5($password) );
+		$this->db->where( 'password', md5($password) );
         $login = $this->db->get()->result();
 	
 	
         
         if ( is_array($login) && count($login) == 1 ) {
-            
+			
             $this->details = $login[0];
-            $this->set_session();
-            return true;
-        }
-
+			if($this->details->user_type_id==SYSTEM_ADMINISTRATOR){
+				if($this->details->user_status_id==USER_STATUS_ACTIVE){
+					$this->set_session();
+          			  return true;
+				}else{
+				 $this->mysession->set('user_status_error','User Not Active.');
+				return false;
+				}
+			}else{
+				$this->mysession->set('user_type_error','Login with Administrators credentials.');
+				return false;
+			}
+            
+        }else{
+		$this->mysession->set('password_error','Password Incorrect');
         return false;
+		}
     }
 
     function set_session() {
@@ -29,11 +40,11 @@ class admin_model extends CI_Model {
                 'id'=>$this->details->id,
                 'name'=> $this->details->first_name . ' ' . $this->details->last_name,
                 'email'=>$this->details->email,
-		'username'=>$this->details->username,
-		'type'=>$this->details->user_type_id,
-                'isLoggedIn'=>true,
-		'token_pass' =>$this->details->password
-            )
+				'username'=>$this->details->username,
+				'type'=>$this->details->user_type_id,
+				        'isLoggedIn'=>true,
+				'token_pass' =>$this->details->password
+				    )
         );
     }
 

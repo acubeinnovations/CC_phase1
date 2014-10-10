@@ -24,12 +24,15 @@
             <?php echo form_open(base_url().'organization/login','class=form_login');?>
                 <div class="body bg-gray">
                     <div class="form-group">
+						<?php echo '<p class="text-red">'.$this->mysession->get('user_status_error').'</p>'; ?>
+						<?php echo '<p class="text-red">'.$this->mysession->get('user_type_error').'</p>'; ?>
 						<?php echo form_input(array('name' => 'username','class'=>'username form-control','placeholder'=>'User ID')); ?>
 						<?php echo form_error('username','<p class="text-red">', '</p>'); ?>	
                     </div>
                     <div class="form-group">
 						<?php echo form_password(array('name'=>'password','class'=>'pass form-control','placeholder'=>'Password')); ?>
-						<?php echo form_error('password','<p class="text-red">', '</p>'); ?>	
+						<?php echo form_error('password','<p class="text-red">', '</p>'); ?>
+						<?php echo '<p class="text-red">'.$this->mysession->get('password_error').'</p>'; ?>	
                     </div>   
 					<?php  if( $this->session->userdata('isloginAttemptexceeded')==true){  ?>     
                    	<div class="form-group">
@@ -38,8 +41,12 @@
                 </div>
 				<?php } ?>
                 <div class="footer">  
-					<?php echo form_submit("","Login","class='btn bg-olive btn-block'");  ?>                                                       
-                                      
+					<?php echo form_submit("","Login","class='btn bg-olive btn-block'"); 
+						 $this->mysession->delete('user_status_error');
+					   $this->mysession->delete('password_error');  
+						 $this->mysession->delete('user_type_error');
+					    ?>                                                       
+                             
                  </div>
         	 <?php echo form_close(); ?>
 

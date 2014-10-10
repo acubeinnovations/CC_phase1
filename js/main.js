@@ -1141,9 +1141,9 @@ if(Number(totkmtravelled) > Number(minimum_kilometers)*Number(no_of_days)){
 var extra_distance=Number(totkmtravelled)-(Number(minimum_kilometers)*Number(no_of_days));
 charge=(Number(minimum_kilometers)*Number(no_of_days))*Number(rate);
 extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
-expense=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
+totexpense=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 }else{
-expense=Math.round(Number(totkmtravelled)*Number(rate)).toFixed(2);
+totexpense=Math.round(Number(totkmtravelled)*Number(rate)).toFixed(2);
 }
 }else{
 
@@ -1151,9 +1151,9 @@ if(Number(totkmtravelled) > minimum_kilometers){
 var extra_distance=Number(totkmtravelled)-Number(minimum_kilometers);
 charge=Number(minimum_kilometers)*Number(rate);
 extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
-expense=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
+totexpense=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 }else{
-expense=Math.round(Number(totkmtravelled)*Number(rate)).toFixed(2);
+totexpense=Math.round(Number(totkmtravelled)*Number(rate)).toFixed(2);
 }
 }
 
@@ -1167,7 +1167,7 @@ var statetax=$('.statetax').val();
 var nighthalt=$('.nighthalt').val();
 var extrafuel=$('.extrafuel').val();
 
-var totexpense=Number(expense)+Number(parkingfee)+Number(tollfee)+Number(statetax)+Number(nighthalt);
+
 
 var trip_id=$(this).attr('trip_id');
 var driver_id=$(this).attr('driver_id');
@@ -1207,11 +1207,8 @@ if(error==false){
 			driver_id:driver_id,
 			totexpense:totexpense
 		},function(data){
-		  if(data='true'){
-				window.location.replace(base_url+'/organization/front-desk/trips');
-			}else{
-
-
+		  if(data!='false'){
+				window.location.replace(base_url+'/account/front_desk/NewDelivery/'+data);
 			}
 		});
 }else{

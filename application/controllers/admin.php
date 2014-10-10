@@ -99,6 +99,7 @@ class Admin extends CI_Controller {
 	if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
 	$like_arry=array('name'=> $_REQUEST['sname']);
 	$where_arry=array('status_id'=>$_REQUEST['status']);
+	
 	}
 	if($_REQUEST['sname']==null&& $_REQUEST['status']!=-1){
 	$where_arry=array('status_id'=>$_REQUEST['status']);
@@ -107,17 +108,18 @@ class Admin extends CI_Controller {
 	$like_arry=array('name'=> $_REQUEST['sname']);
 	}
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
-
+	$data['status_id']=$_REQUEST['status'];
+	$data['sname']=$_REQUEST['sname'];
 	}
 	$tbl='organisations';
 	$data['org_status']=$this->admin_model->getStatus();
 	$baseurl=base_url().'admin/organization/list/';
     $uriseg ='4';
+	
+    $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
 	if($secondaction==''){
 		$this->mysession->delete('condition');
 		}
-    $p_res=$this->mypage->paging($tbl,$per_page,$secondaction,$baseurl,$uriseg);
-	
 	//check company exists in fa. If exists then remove link add account for this organisation
 	$data['values']=$p_res['values'];
 	$data['page_links']=$p_res['page_links'];
@@ -345,7 +347,11 @@ class Admin extends CI_Controller {
 				$dbdata['old_password'] = md5(trim($this->input->post('old_password')));
 				$val    			    = $this->admin_model->changePassword($dbdata);
 				if($val == true) {				
-					redirect(base_url().'admin');
+					//change fa admin password
+					$this->load->model('account_model');
+					$this->account_model->change_password($dbdata);
+					
+					redirect(base_url().'logout');
 				}else{
 					$this->show_change_password($data);
 				}

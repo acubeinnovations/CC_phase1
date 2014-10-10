@@ -11,6 +11,7 @@
 		<fieldset class="body-border">
    			 <legend class="body-head"><?php echo $page_cap; ?></legend>
 		<?php echo form_open(base_url().$url);?>
+	<div class="div-with-50-percent-width-with-margin-10">
         <div class="form-group">
 		   <?php echo form_label('Organization Name');?>
            <?php echo form_input(array('name'=>'name','class'=>'form-control','id'=>'name','placeholder'=>'Enter Organization Name','value'=>$name)); ?>
@@ -32,6 +33,8 @@
             <?php echo form_textarea(array('name'=>'addr','class'=>'form-control','placeholder'=>'Enter Address','rows' => '4','value'=>$addr)); ?>
 	    <?php echo form_error('addr', '<p class="text-red">', '</p>'); ?>
         </div>
+		</div>
+		<div class="div-with-50-percent-width-with-margin-10">
 	<div class="form-group">
 			<?php echo form_label('Username');if(isset($org_id) && isset($user_id) && isset($status)) { 
 			echo form_input(array('name'=>'uname','class'=>'form-control','id'=>'uname','placeholder'=>'Enter Username','value'=>$uname,'disabled'=>''));
@@ -82,5 +85,6 @@
 		 echo form_submit("admin-org-profile-update","Update","class='btn btn-primary'").nbs(3).form_submit("admin-org-profile-status-change",$cap_status,"class='btn btn-primary'");}  ?>  
         </div>
 	 <?php echo form_close(); ?>
+	</div>
 	</fieldset>
 </div><!-- body -->

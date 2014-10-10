@@ -98,7 +98,7 @@ echo $this->form_functions->populate_dropdown($name,$masters,$tariff_master_id,$
 		<td><div class="form-group"><?php echo form_input(array('name'=>'additional_hour_rate','class'=>'form-control','id'=>'additional_hour_rate','placeholder'=>'Additional Hour Rate','value'=>$additional_hour_rate)); ?></div></td>
 		<td><div class="form-group"><?php echo form_input(array('name'=>'driver_bata','class'=>'form-control','id'=>'driver_bata','placeholder'=>'Driver Bata','value'=>$driver_bata)); ?></div></td>
 		<td><div class="form-group"><?php echo form_input(array('name'=>'night_halt','class'=>'form-control','id'=>'night_halt','placeholder'=>'Night Halt','value'=>$night_halt)); ?></div></td>
-		<td><div  class="tarrif-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("tarrif-add","Add","id=tarrif-add-id","class=btn");?></div
+		<td><div  class="tarrif-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("tarrif-add","Add","id=tarrif-add-id","class=btn");?></div
 	>
 	</td>
 		</tr>
@@ -146,8 +146,8 @@ echo $this->form_functions->populate_dropdown($name,$masters,$det['tariff_master
 		<td><div class="form-group"><?php echo form_input(array('name'=>'manage_driver_bata','class'=>'form-control','id'=>'driver_bata','placeholder'=>'Driver Bata','value'=> $det['driver_bata'])); ?></div></td>
 		<td><div class="form-group"><?php echo form_input(array('name'=>'manage_night_halt','class'=>'form-control','id'=>'night_halt','placeholder'=>'Night Halt','value'=> $det['night_halt'])); ?>
             <div class="hide-me"><?php echo form_input(array('name'=>'manage_id','class'=>'form-control','id'=>'manage_id','value'=> $det['id'],'trigger'=>'true' ));?></div></td>
-<td><div  class="tarrif-edit" ><?php echo nbs(5);?><i class="fa fa-edit"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=tarrif-edit-id","class=btn");?></div></td>
-<td><div  class="tarrif-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o delete"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=tarrif-delete-id","class=btn ");?></div></td>
+<td><div  class="tarrif-edit" ><?php echo nbs(5);?><i class="fa fa-edit cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=tarrif-edit-id","class=btn");?></div></td>
+<td><div  class="tarrif-delete margin-top-18-px" ><?php echo nbs(5);?><i class="fa fa-trash-o delete cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=tarrif-delete-id","class=btn ");?></div></td>
 <?php echo form_close();?>
 </tr>
 <?php endforeach; ?>
