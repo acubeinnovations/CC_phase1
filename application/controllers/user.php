@@ -710,7 +710,7 @@ public function profile() {
 	   if($this->session_check()==true) {
 		
 		$dbdata = '';
-              if(isset($_REQUEST['user-profile-update'])){
+              if(isset($_REQUEST['user-profile-update'])){ 
 			  $dbdata['first_name'] = $this->input->post('firstname');
 			$dbdata['last_name']  = $this->input->post('lastname');
 		    $dbdata['email'] 	   = $this->input->post('email');

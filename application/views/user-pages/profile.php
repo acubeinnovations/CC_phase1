@@ -59,7 +59,9 @@ if(isset($values)){
 				<div class="form-group">
 					<?php echo form_label('Phone','phonelabel'); ?>
 				    <?php echo form_input(array('name'=>'phone','class'=>'form-control','placeholder'=>'Enter Phone','value'=>$phone)); 
-					if (isset($user_id)) {  echo form_hidden('hphone',$phone); }?>
+					if (isset($user_id)) {  echo form_hidden('hphone',$phone); 
+					
+					echo form_hidden('fa_account',$fa_account); }?>
 					<?php echo form_error('phone', '<p class="text-red">', '</p>'); ?>
 				</div>
 				<div class="form-group">

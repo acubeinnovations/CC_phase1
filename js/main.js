@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 $('.settings-add').click(function(){
 var trigger = $(this).parent().prev().prev().find('#editbox').attr('trigger');
 if(trigger=='true'){
@@ -13,6 +14,37 @@ $('.settings-delete').click(function(){
 $(this).siblings().find(':submit').trigger('click');
 });
 });
+//masters
+ var base_url=window.location.origin;
+	$('select').change(function(){ 
+	 var edit=$('.edit').attr('for_edit');
+	  if(edit=='false'){
+		    $id=$(this).val();
+			$tbl=$(this).attr('tblname');
+			$obj=$(this);
+	//$(this).attr('trigger',false);
+	
+	  $(this).next().attr('trigger',false);
+	  $('.edit').attr('for_edit',true);
+	  
+	
+	  $.post(base_url+"/vehicle/getDescription",
+		  {
+			id:$id,
+			tbl:$tbl
+		  },function(data){
+		  
+				var values=data.split(",",3);//alert($(this).parent().find('#id').attr('id'));
+				  $obj.parent().find('#id').val(values[0]);
+				  $obj.parent().find('#editbox').val(values[2]);
+				  $obj.parent().next().find('#description').val(values[1]);
+				
+				$obj.hide();
+				$obj.parent().find('#editbox').show();
+		});
+		}	
+			
+	});
 
 //for tarrif trigger
 $(document).ready(function(){
@@ -51,7 +83,7 @@ function Trim(strInput) {
 
 $(document).ready(function(){
 
-var base_url=window.location.origin;
+
 
 //trip_bookig page-js start
 var pathname = window.location.pathname.split("/");
@@ -1237,36 +1269,7 @@ $(this).siblings().find(':submit').trigger('click');
 
 
 // device-page js end
- 
-	$('select').change(function(){ 
-	 var edit=$('.edit').attr('for_edit');
-	  if(edit=='false'){
-		    $id=$(this).val();
-			$tbl=$(this).attr('tblname');
-			$obj=$(this);
-	//$(this).attr('trigger',false);
-	
-	  $(this).next().attr('trigger',false);
-	  $('.edit').attr('for_edit',true);
-	  
-	
-	  $.post(base_url+"/vehicle/getDescription",
-		  {
-			id:$id,
-			tbl:$tbl
-		  },function(data){
-		  
-				var values=data.split(" ",3);//alert($(this).parent().find('#id').attr('id'));
-				  $obj.parent().find('#id').val(values[0]);
-				  $obj.parent().find('#editbox').val(values[2]);
-				  $obj.parent().next().find('#description').val(values[1]);
-				
-				$obj.hide();
-				$obj.parent().find('#editbox').show();
-		});
-		}	
-			
-	});
+
 	
 	//add tarrif page js start
 	//$('#fromdatepicker').datetimepicker({timepicker:false,format:'Y-m-d'});

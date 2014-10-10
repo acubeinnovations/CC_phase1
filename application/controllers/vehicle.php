@@ -78,14 +78,7 @@ class Vehicle extends CI_Controller {
 			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
 			$err=true;
 			}
-			if(preg_match('#[^a-zA-Z0-9]#', $data['name'])){
-			$this->session->set_userdata(array('Err_name'=>'Invalid Characters on name field!'));
-			$err=true;
-			}
-			if(preg_match('#[^a-zA-Z0-9]#', $data['description'])){
-			$this->session->set_userdata(array('Err_desc'=>'Invalid Characters on description field!'));
-			$err=true;
-			}
+			
 			if($err==true){
 			redirect(base_url().'organization/front-desk/settings');
 			}
@@ -124,13 +117,7 @@ class Vehicle extends CI_Controller {
 			$this->session->set_userdata(array('Err_num_desc'=>'Invalid input on description field!'));
 			$err=true;
 			}
-			if(preg_match('#[^a-zA-Z0-9]#', $data['name'])){
-			$this->session->set_userdata(array('Err_name'=>'Invalid Characters on name field!'));
-			$err=true;
-			}
-			if(preg_match('#[^a-zA-Z0-9]#', $data['description'])){
-			$this->session->set_userdata(array('Err_desc'=>'Invalid Characters on description field!'));
-			$err=true;}
+			
 			if($err==true){
 			redirect(base_url().'user/settings');
 			}
@@ -186,7 +173,7 @@ class Vehicle extends CI_Controller {
 		$id=$_REQUEST['id'];
 		$tbl=$_REQUEST['tbl'];
 		$res=$this->settings_model->getValues($id,$tbl);
-		echo $res[0]['id']." ".$res[0]['description']." ".$res[0]['name'];
+		echo $res[0]['id'].",".$res[0]['description'].",".$res[0]['name'];
 		
 		//return 
 		}
