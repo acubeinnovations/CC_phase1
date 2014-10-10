@@ -25,7 +25,7 @@ if (!@$_GET['popup'])
 	if ($use_date_picker)
 		$js .= get_js_date_picker();
 
-	if(isset($_GET['DriverPaymentInquiry']))
+	if(isset($_GET['DriverPaymentInquiry']) || isset($_GET['OwnerPaymentInquiry']))
 		page(_($help_context = "Transactions"), isset($_GET['supplier_id']), false, "", $js);
 	elseif(isset($_GET['DriverTransactions']))
 		page(_($help_context = "Driver Transactions"), isset($_GET['supplier_id']), false, "", $js);
@@ -59,6 +59,10 @@ if (!@$_GET['popup']){
 	if(isset($_GET['DriverPaymentInquiry'])){
 		hidden('supplier_id');
 		$_POST['supplier_type'] = CNC_DRIVER;
+	}
+	if(isset($_GET['OwnerPaymentInquiry'])){
+		hidden('supplier_id');
+		$_POST['supplier_type'] = CNC_VEHICLE_OWNER;
 	}
 	elseif(isset($_GET['DriverTransactions'])){
 		driver_list_cells(_("Select Driver:"), 'supplier_id', null, true, false, false, !@$_GET['popup']);
