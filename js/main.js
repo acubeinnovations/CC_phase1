@@ -1134,7 +1134,7 @@ expense=Number(totkmtravelled)*Number(rate);
 
 }
 */
-alert(no_of_days);alert(totkmtravelled);alert(minimum_kilometers);alert(rate);//alert(extra_charge);
+
 if(no_of_days>1){
 
 if(Number(totkmtravelled) > Number(minimum_kilometers)*Number(no_of_days)){
@@ -1156,7 +1156,7 @@ totexpense=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 totexpense=Math.round(Number(totkmtravelled)*Number(rate)).toFixed(2);
 }
 }
-alert(totexpense);
+
 var garageclosingkm=$('.garageclosingkm').val();
 var garageclosingtime=$('.garageclosingtime').val();
 var releasingplace=$('.releasingplace').val();

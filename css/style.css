@@ -61,11 +61,11 @@ text-align:right;
 }
 /*admin template*/
 .profile-body{
-width:30%;
+width:70%;
 margin:0 auto;
 }
 .new-org-body{
-width:30%;
+width:70%;
 margin:0 auto;
 }
 .change-password-body{
@@ -148,7 +148,7 @@ margin-top: 20px;
 }
 .tarrif-delete{
 color:#F56954;
-margin-top: 18px;
+
 }
 .settings-add > .fa-plus-circle{
 font-size: 20px;
@@ -208,7 +208,7 @@ float:left;
 }
 .col-1-textbox-with-50-percent-width-and-float-left{
 margin-right:13px;
-width:46%;
+width:45%;
 float:left;
 }
 .col-2-textbox-with-50-percent-width-and-float-left{
@@ -218,7 +218,7 @@ float:left;
 }
 .div-with-90-percent-width-and-marigin-5{
 margin:5px;
-width:90%;
+width:96%;
 float:left;
 }
 .width-96-percent-and-margin-8{
@@ -536,4 +536,10 @@ box-shadow:none;
 .font-size-13-px{
 
 font-size:13px;
+}
+.cursor-pointer{
+cursor: pointer;
+}
+.margin-top-18-px{
+margin-top:18px;
 }
