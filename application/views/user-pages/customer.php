@@ -42,22 +42,18 @@
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
+		<?php if(isset($mode)&& $mode!='' ){?>
         <li class=""><a href="#tab_2" data-toggle="tab">Payments</a></li>
          <li class=""><a href="#tab_3" data-toggle="tab">Accounts</a></li>
-       
+       <?php } ?>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab_1">
             		 <div class="profile-body width-80-percent-and-margin-auto">
 			<fieldset class="body-border">
-   			 <legend class="body-head">Customer</legend>
+   			 <legend class="body-head">Personal Details</legend>
 			 <div class="nav-tabs-custom">
-				<ul class="nav nav-tabs">
-					<li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
-					<li class=""><a href="#tab_2" data-toggle="tab">Tab2</a></li>
-					 <li class=""><a href="#tab_3" data-toggle="tab">Tab3</a></li>
-				  
-				</ul>
+				
 				<div class="tab-content">
 				
 				<div class="tab-pane active" id="tab_1">

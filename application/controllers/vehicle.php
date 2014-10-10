@@ -489,7 +489,7 @@ $err=True;
 			
 			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
 					$this->form_validation->set_rules('total_amt','Total Amount','trim|required|xss_clean');
-					 $this->form_validation->set_rules('emi_number','EMI Number ','trim|required|xss_clean');
+					 $this->form_validation->set_rules('emi_number','EMI Number ','trim|required|xss_clean|numeric');
 					 $this->form_validation->set_rules('emi_amt','EMI Amount ','trim|required|xss_clean');
 					 $this->form_validation->set_rules('no_paid_emi','Number of Paid EMI','trim|required|xss_clean|numeric');
 					 $this->form_validation->set_rules('emi_date','EMI Payment Date','trim|required|xss_clean');
@@ -543,7 +543,7 @@ $err=True;
 	  if($loan_id==gINVALID ){ 
 		
 		$res=$this->vehicle_model->insertLoan($data);
-		$ins_id=$this->mysession->get('vehicle_id');
+		//$ins_id=$this->mysession->get('vehicle_id');
 		if( $res==true ) {
 			$this->mysession->set('loan_Success',' Added Succesfully..!');
 				    $this->mysession->set('loan_Error','');
@@ -622,9 +622,9 @@ $err=True;
 		
 		 //database insertion for vehicle
 		 if($owner_id==gINVALID ){ 
-			
+			$id=$this->mysession->get('vehicle_id');
 			$res=$this->vehicle_model->insertOwner($data);
-			$ins_id=$this->mysession->get('vehicle_id');
+			
 			if($res) {
 			
 				//vehicle owner enter as supplier in fa 

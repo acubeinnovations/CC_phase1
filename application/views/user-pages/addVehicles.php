@@ -287,7 +287,37 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
 }	?>
 	   
         </div>
-		<div class="form-group">
+			<div class="form-group">
+	<?php echo form_label('Permit Type','usernamelabel'); ?>
+           <?php $class="form-control";
+		$msg="Select Permit Type";
+		$name="permit";
+		if($permit!=null){
+	echo $this->form_functions->populate_dropdown($name,$select['vehicle_permit_types'],$permit,$class,$id='',$msg); }
+	else{
+	echo $this->form_functions->populate_dropdown($name,$select['vehicle_permit_types'],$permit='',$class,$id='',$msg);
+	}
+	?>
+	  
+        </div>
+	<div class="form-group">
+	<?php echo form_label('Permit Renewal Date','usernamelabel'); ?>
+           <?php  echo form_input(array('name'=>'permit_date','class'=>'fromdatepicker form-control' ,'value'=>$permit_date));?>
+	   <?php echo $this->form_functions->form_error_session('permit_date', '<p class="text-red">', '</p>'); ?>
+        </div>	
+	<div class="form-group">
+	<?php echo form_label('Permit Renewal Amount','usernamelabel'); ?>
+           <?php echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>$permit_amount)); ?>
+	   <?php echo $this->form_functions->form_error_session('permit_amount', '<p class="text-red">', '</p>'); ?>
+        </div>
+		
+	
+		</fieldset> </div>
+		
+		<div class="width-30-percent-with-margin-left-20-Driver-View">
+<fieldset class="body-border-Driver-View border-style-Driver-view" >
+<legend class="body-head">Other Details</legend>
+	<div class="form-group">
 		<?php echo form_label('Select Driver','usernamelabel'); ?>
            <?php $class="form-control";
 		$msg="Select Driver";
@@ -321,12 +351,6 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
            <?php echo form_input(array('name'=>'from_date_device','class'=>'fromdatepicker form-control' ,'value'=>$from_date_device));?>
 	   <?php echo $this->form_functions->form_error_session('from_date_device', '<p class="text-red">', '</p>'); ?>
         </div>
-	
-		</fieldset> </div>
-		
-		<div class="width-30-percent-with-margin-left-20-Driver-View">
-<fieldset class="body-border-Driver-View border-style-Driver-view" >
-<legend class="body-head">Other Details</legend>
 	<div class="form-group">
 		<?php echo form_label('Registration Number','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'reg_number','class'=>'form-control','id'=>'reg_number','value'=>$reg_number)); ?>
@@ -347,29 +371,7 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
            <?php echo form_input(array('name'=>'chases_num','class'=>'form-control','id'=>'chases_num','value'=>$chases_num)); ?>
 	   <?php echo $this->form_functions->form_error_session('chases_num', '<p class="text-red">', '</p>'); ?>
         </div>
-		<div class="form-group">
-	<?php echo form_label('Permit Type','usernamelabel'); ?>
-           <?php $class="form-control";
-		$msg="Select Permit Type";
-		$name="permit";
-		if($permit!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_permit_types'],$permit,$class,$id='',$msg); }
-	else{
-	echo $this->form_functions->populate_dropdown($name,$select['vehicle_permit_types'],$permit='',$class,$id='',$msg);
-	}
-	?>
-	  
-        </div>
-	<div class="form-group">
-	<?php echo form_label('Permit Renewal Date','usernamelabel'); ?>
-           <?php  echo form_input(array('name'=>'permit_date','class'=>'fromdatepicker form-control' ,'value'=>$permit_date));?>
-	   <?php echo $this->form_functions->form_error_session('permit_date', '<p class="text-red">', '</p>'); ?>
-        </div>	
-	<div class="form-group">
-	<?php echo form_label('Permit Renewal Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>$permit_amount)); ?>
-	   <?php echo $this->form_functions->form_error_session('permit_amount', '<p class="text-red">', '</p>'); ?>
-        </div>
+	
 	<div class="form-group">
 	<?php echo form_label('Tax Renewal Amount ','usernamelabel'); ?>
            <?php  echo form_input(array('name'=>'tax_amount','class'=>'form-control','id'=>'tax_amount','value'=>$tax_amount));?>
@@ -383,18 +385,7 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 	<div class='hide-me'><?php  echo $vehicle_id;
 		echo form_input(array('name'=>'hidden_id','class'=>'form-control','value'=>$vehicle_id));?></div>
 	
-   		<div class="box-footer">
-		<?php // echo validation_errors();?>
-		<?php //if(!isset($org_id) && !isset($user_id)) {
-		
-		 //}else {
-		
-		// echo form_submit("driver-detail-update","Update","class='btn btn-primary'");}  ?>  
-        </div>
-
-	</fieldset>
-
-<?php
+   		<div class="box-footer"><?php echo br();
 			if($vehicle_id==gINVALID){
 			$btn_name='Save';
 		 }else {
@@ -402,6 +393,11 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 			}
 			echo form_submit("vehicle-submit",$btn_name,"class='btn btn-primary'"); 
 			?>
+        </div>
+
+	</fieldset>
+
+
 </div>
         </div>
         <div class="<?php echo $i_tab;?>" id="tab_2">
@@ -541,15 +537,16 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
         </div>
 		<div class='hide-me'><?php 
 		echo form_input(array('name'=>'hidden_ins_id','class'=>'form-control','value'=>$insurance_id));?></div>
-			</fieldset>
-			<?php 
+			<div class="box-footer"><?php 
 			if($insurance_id==gINVALID){
 			$btn_name='Save';
 		 }else {
 			$btn_name='Update';
 			}
 			echo form_submit("insurance-submit",$btn_name,"class='btn btn-primary'"); 
-			?>
+			?></div>
+			</fieldset>
+			
 			</div>
         </div>
         <div class="<?php echo $l_tab;?>" id="tab_3">
@@ -690,8 +687,8 @@ if($this->mysession->get('loan_post_all')!=null ){
         </div>
 		<div class='hide-me'><?php 
 		echo form_input(array('name'=>'hidden_loan_id','class'=>'form-control','value'=>$loan_id));?></div>
-			</fieldset>
-			<?php 
+		<div class="box-footer">
+		<?php 
 			if($loan_id==gINVALID){
 			$btn_name='Save';
 		 }else {
@@ -699,6 +696,9 @@ if($this->mysession->get('loan_post_all')!=null ){
 			}
 			echo form_submit("loan-submit",$btn_name,"class='btn btn-primary'"); 
 			?>
+		</div>
+			</fieldset>
+			
 			</div>
         </div>
 		<div class="<?php echo $o_tab;?>" id="tab_4">
@@ -791,14 +791,17 @@ if($this->mysession->get('owner_post_all')!=null ){
         </div>
 		<div class='hide-me'><?php 
 		echo form_input(array('name'=>'hidden_owner_id','class'=>'form-control','value'=>$owner_id));?></div>
-			</fieldset>
-			
-			<?php if($owner_id==gINVALID){
+		<div class="box-footer">
+		<?php if($owner_id==gINVALID){
 			$btn_name='Save';
 		 }else {
 			$btn_name='Update';
 			}
 			echo form_submit("owner-submit",$btn_name,"class='btn btn-primary'"); ?>
+		</div>
+			</fieldset>
+			
+			
 			</div>
 		</div>
     </div>
