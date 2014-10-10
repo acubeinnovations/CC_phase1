@@ -11,7 +11,13 @@
        </div>
        <?php    } ?>
 	  <?php 
-	  //search?>
+		if(!isset($sname)){
+			$sname='';
+		}
+		if(!isset($status_id)){
+			$status_id='';
+		}
+		?>
 
 <div class="page-outer">    
 	<fieldset class="body-border">
@@ -21,9 +27,9 @@
 			<table class="table list-org-table">
 				<tbody>
 					<tr>
-					    <td><?php echo form_input(array('name'=>'sname','class'=>'form-control','id'=>'sname','placeholder'=>'By Name','size'=>30));?> </td>
+					    <td><?php echo form_input(array('name'=>'sname','class'=>'form-control','id'=>'sname','placeholder'=>'By Name','size'=>30,'value'=>$sname));?> </td>
 					    <td><?php 	$class="form-control";
-									$data=$this->form_functions->populate_dropdown('status',$org_status,$selected='',$class,$id='',$msg='Select Status');
+									$data=$this->form_functions->populate_dropdown('status',$org_status,$status_id,$class,$id='',$msg='Select Status');
 									echo $data;?>
 					</td>
 					    <td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
