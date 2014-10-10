@@ -15,7 +15,11 @@ function get_cnc_session($session_id)
 
 function get_cnc_organization($org_id=-1)
 {
-	$sql = "SELECT * FROM organisations WHERE id='".$org_id."'";
+	$sql = "SELECT org.*,user.phone,user.email FROM organisations org";
+	$sql .= " LEFT JOIN users user ON org.id = user.organisation_id AND user.user_type_id = ".CNC_ORG_ADMIN;
+	$sql .=" WHERE org.id='".$org_id."'";
+	
+	//echo $sql;exit;
 
 	$result = db_query($sql,"could not get company information");
 
