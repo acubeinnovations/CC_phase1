@@ -88,6 +88,10 @@ AND T.organisation_id ='.$this->session->userdata('organisation_id').' AND T.id 
 	return $result;
 
 	}
-	
+	public function date_check($date){
+	if( strtotime($date) >= strtotime(date('Y-m-d')) ){
+	return true;
+	}
+	}
 	}
 	?>
