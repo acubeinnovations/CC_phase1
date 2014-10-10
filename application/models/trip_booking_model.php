@@ -37,12 +37,13 @@ class Trip_booking_model extends CI_Model {
 	
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('trip_vouchers',$data);
-	
+	$trip_voucher_id = $this->db->mysql_insert_id();
+
 	$id=$data['trip_id'];
 	$updatedata=array('trip_status_id'=>TRIP_STATUS_TRIP_BILLED);
 	$res=$this->updateTrip($updatedata,$id);	
 	if($res=true){
-	return true;
+	return $trip_voucher_id;
 	}else{
 	return false;
 	}
@@ -53,7 +54,7 @@ class Trip_booking_model extends CI_Model {
 	$this->db->where('id',$id );
 	$this->db->set('updated', 'NOW()', FALSE);
 	$this->db->update("trip_vouchers",$data);
-	return true;
+	return $id;
 	}
 
 	function  updateTrip($data,$id) {

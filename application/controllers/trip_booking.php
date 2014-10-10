@@ -427,7 +427,7 @@ class Trip_booking extends CI_Controller {
 	if($res==false){
 	echo 'false';
 	}else{
-	echo 'true';
+	echo $res;
 	}
 
 	}
