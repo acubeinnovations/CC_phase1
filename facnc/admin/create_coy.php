@@ -151,7 +151,8 @@ function handle_submit()
 				$cnc_org_admin = get_cnc_org_admin($_POST['cnc_org_id']);
 				if($cnc_org_admin){
 					sync_cnc_org_login($conn, $cnc_org_admin['username'],$cnc_org_admin['password']);
-					update_fa_account_in_users($cnc_org_admin['id']);
+					
+					update_fa_account_in_users($cnc_org_admin['id'],1);
 				}
 			}	
 		}

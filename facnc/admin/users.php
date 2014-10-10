@@ -90,7 +90,7 @@ if (($Mode=='ADD_ITEM' || $Mode=='UPDATE_ITEM') && check_csrf_token())
 					$_POST['print_profile'], check_value('rep_popup'), $_POST['pos']);
 				$id = db_insert_id();
 				
-				update_fa_account_in_users($_POST['cnc_userid']);
+				update_fa_account_in_users($_POST['cnc_userid'],$id);
 				
 				
 				// use current user display preferences as start point for new user
@@ -234,8 +234,10 @@ if(isset($_GET['NewUser']) || isset($_GET['EditUser'])){
 		false, _('Set this option to on if your browser directly supports pdf files'));
 
 	end_table(1);
-	if(isset($GET['NewUser']))
+
+	if(isset($_GET['NewUser']))
 		submit_continue_center($selected_id == -1, '', 'both');
+	
 	//submit_continue_center($selected_id == -1);
 }else{
 
