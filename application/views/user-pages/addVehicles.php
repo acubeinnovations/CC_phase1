@@ -43,7 +43,9 @@
         <li class="<?php echo $ins_class;?>"><a href="#tab_2" data-toggle="tab">Insurance </a></li>
          <li class="<?php echo $loan_class;?>"><a href="#tab_3" data-toggle="tab">Loan </a></li>
 		  <li class="<?php echo $owner_class;?>"><a href="#tab_4" data-toggle="tab">Owner </a></li>
-       
+        <li class="<?php echo $owner_class;?>"><a href="#tab_5" data-toggle="tab">Trip </a></li>
+		 <li class="<?php echo $owner_class;?>"><a href="#tab_6" data-toggle="tab">Payments </a></li>
+		  <li class="<?php echo $owner_class;?>"><a href="#tab_7" data-toggle="tab">Accounts</a></li>
     </ul>
     <div class="tab-content">
 
@@ -804,6 +806,30 @@ if($this->mysession->get('owner_post_all')!=null ){
 			
 			</div>
 		</div>
+				
+				<div class="tab-pane" id="tab_5">
+					trip
+				</div>
+			        
+				<div class="tab-pane" id="tab_6">
+						<div class="page-outer">
+						<iframe src="<?php echo base_url().'account/front_desk/SupplierPayment/VW'.$owner_id.'/true';?>" height="600px" width="100%">
+						<p>Browser not Support</p>
+						</iframe>
+						</div>
+				</div>
+			
+				<div class="tab-pane" id="tab_7">
+						<div class="page-outer">
+						<iframe src="<?php echo base_url().'account/front_desk/OwnerPaymentInquiry/VW'.$owner_id.'/true';?>" height="600px" width="100%">
+						<p>Browser not Support</p>
+						</iframe>
+						</div>
+				</div>
+    </div>
+</div>	
+	
+	
     </div>
 </div>
 		
