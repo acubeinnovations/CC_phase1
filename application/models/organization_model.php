@@ -17,16 +17,16 @@ class Organization_model extends CI_Model {
 					$this->set_session();
           			  return true;
 				}else{
-				 $this->mysession->set('user_status_error','User Not Active.');
+				 $this->mysession->set('user_status_error','User is Not Active.');
 				return false;
 				}
 			}else{
-				$this->mysession->set('user_type_error','Login with Organization or Front desk credentials.');
+				$this->mysession->set('user_type_error','Please Login with Organization or Front desk credentials.');
 				return false;
 			}
             
         }else{
-		$this->mysession->set('password_error','Password Incorrect');
+		$this->mysession->set('password_error','Entered Password is Incorrect');
         return false;
 		}
     }

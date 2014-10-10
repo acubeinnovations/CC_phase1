@@ -378,12 +378,13 @@ $this->mysession->delete('post');
 						<th>Kilometers</th>
 						<th>No Of Days</th>
 						<th>Bata Amount</th>
-						<th>Releasing Place</th>
+						<!--<th>Releasing Place</th>-->
 						<th>Parking</th>
 						<th>Toll</th>
 						<th>State Tax</th>
 						<th>Night Halt</th>
 						<th>Fuel extra</th>
+						<th>Trip Amount</th>
 					    
 					</tr>
 					<?php	
@@ -403,8 +404,15 @@ $this->mysession->delete('post');
 						$date2 = date_create($trips[$trip_index]['drop_date'].' '.$trips[$trip_index]['drop_time']);
 						
 						$diff= date_diff($date1, $date2);
-						$no_of_days=$diff->d.' Days '.$diff->h.' H '.$diff->i.' M';
-						
+						$no_of_days=$diff->d;
+						if($no_of_days==0){
+							$no_of_days.='1 Day';
+							day=1;
+						}else{
+							$no_of_days.=' Days';
+							day=$diff->d;
+						}
+
 						?>
 						<tr>
 							<td><?php echo $trip_index+1; ?></td>
@@ -412,14 +420,14 @@ $this->mysession->delete('post');
 							<td><?php echo $trips[$trip_index]['pick_up_city'].' to '.$trips[$trip_index]['drop_city']; ?></td>
 							<td><?php echo $tot_km; ?></td>
 							<td><?php echo $no_of_days; ?></td>
-							<td><?php echo ''; ?></td>
-							<td><?php echo $trips[$trip_index]['releasing_place']; ?></td>
+							<td><?php echo $trips[$trip_index]['driver_bata']*day; ?></td>
+							<!--<td><?php //echo $trips[$trip_index]['releasing_place'];?></td>-->
 							<td><?php echo $trips[$trip_index]['parking_fees']; ?></td>
 							<td><?php echo $trips[$trip_index]['toll_fees']; ?></td>
 							<td><?php echo $trips[$trip_index]['state_tax']; ?></td>
 							<td><?php echo $trips[$trip_index]['night_halt_charges']; ?></td>
 							<td><?php echo $trips[$trip_index]['fuel_extra_charges']; ?></td>
-							
+							<td><?php echo $trips[$trip_index]['total_trip_amount']; ?></td>
 						
 						</tr>
 						<?php } 

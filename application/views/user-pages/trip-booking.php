@@ -654,7 +654,7 @@ $this->mysession->delete('post');
 		                                        
 		                                    </tr>
 											<tr>
-		                                        <td>Minimum Kilometers<span class="float-right"> : </span></td>
+		                                        <td>Minimum Kilometers per Day<span class="float-right"> : </span></td>
 		                                        <td><div class="mini-km"></div></td>
 		                                        
 		                                    </tr>
