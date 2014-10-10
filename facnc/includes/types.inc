@@ -263,6 +263,11 @@ define('CNC_VEHICLE_OWNER','VW');
 define('CNC_CUSTOMER','C');
 define('CNC_CUSTOMER_GROUP','CG');
 
+//CNC user types
+define('CNC_ADMIN',1);
+define('CNC_ORG_ADMIN',2);
+define('CNC_FRONT_DESK',3);
+
 
 
 ?>

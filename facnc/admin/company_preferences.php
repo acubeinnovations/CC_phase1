@@ -134,19 +134,20 @@ $myrow = get_company_prefs();
 if($cnc_org){
 	$_POST['coy_name'] = $cnc_org["name"];
 	$_POST['postal_address']  = $cnc_org["address"];
+	$_POST['phone'] = @$cnc_org["phone"];
+	$_POST['email']  = @$cnc_org["email"];
 }else{
 	$_POST['coy_name'] = $myrow["coy_name"];
 	$_POST['postal_address']  = $myrow["postal_address"];
+	$_POST['phone']  = $myrow["phone"];
+	$_POST['email']  = $myrow["email"];
 }
 
 $_POST['gst_no'] = $myrow["gst_no"];
 $_POST['tax_prd'] = $myrow["tax_prd"];
 $_POST['tax_last'] = $myrow["tax_last"];
 $_POST['coy_no']  = $myrow["coy_no"];
-
-$_POST['phone']  = $myrow["phone"];
 $_POST['fax']  = $myrow["fax"];
-$_POST['email']  = $myrow["email"];
 $_POST['coy_logo']  = $myrow["coy_logo"];
 $_POST['domicile']  = $myrow["domicile"];
 $_POST['use_dimension']  = $myrow["use_dimension"];
@@ -176,9 +177,9 @@ text_row_ex(_("Name (to appear on reports):"), 'coy_name', 42, 50, null, null, n
 textarea_row(_("Address:"), 'postal_address', $_POST['postal_address'], 35, 6,null,'',true);
 text_row_ex(_("Domicile:"), 'domicile', 25, 55);
 
-text_row_ex(_("Phone Number:"), 'phone', 25, 55);
+text_row_ex(_("Phone Number:"), 'phone', 25, 55, null, null, null, false, true);
 text_row_ex(_("Fax Number:"), 'fax', 25);
-email_row_ex(_("Email Address:"), 'email', 25, 55);
+email_row_ex(_("Email Address:"), 'email', 25, 55, null, null, null, false, true);
 
 email_row_ex(_("BCC Address for all outgoing mails:"), 'bcc_email', 25, 55);
 
