@@ -190,7 +190,11 @@ public function __construct()
 				$dbdata['old_password'] = md5(trim($this->input->post('old_password')));
 				$val    			    = $this->organization_model->changePassword($dbdata);
 				if($val == true) {
-					redirect(base_url().'organization/admin');
+					//change fa user password
+					$this->load->model('account_model');
+					$this->account_model->change_password($dbdata);
+
+					redirect(base_url().'logout');
 				}else{
 					$this->show_change_password($data);
 				}

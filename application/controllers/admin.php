@@ -345,7 +345,11 @@ class Admin extends CI_Controller {
 				$dbdata['old_password'] = md5(trim($this->input->post('old_password')));
 				$val    			    = $this->admin_model->changePassword($dbdata);
 				if($val == true) {				
-					redirect(base_url().'admin');
+					//change fa admin password
+					$this->load->model('account_model');
+					$this->account_model->change_password($dbdata);
+					
+					redirect(base_url().'logout');
 				}else{
 					$this->show_change_password($data);
 				}

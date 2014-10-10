@@ -6,6 +6,22 @@
 */
 
 class account_model extends CI_Model {
+
+	//change fa user password
+	function change_password($data=array())
+	{
+		$fa_user_table = (@$this->session->userdata('organisation_id'))?@$this->session->userdata('organisation_id')."_users":"0_users";
+		if($this->check_fa_table_exists($fa_user_table) && @$data['password']){echo "ok";
+			$data1 = array('password' => $data['password']);
+			$this->db->where('user_id',@$this->session->userdata('username'));
+			$this->db->where('password',@$data['old_password']);
+			$this->db->update($fa_user_table,$data1);
+			
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
 	public function check_fa_user_exists($userid)	
 	{
