@@ -595,6 +595,7 @@ class User extends CI_Controller {
 	
 	public function Customer($param2=''){
 		if($this->session_check()==true) {
+		$data['mode']=$param2;
 			if($param2!=''){
 				$condition=array('id'=>$param2);
 				$result=$this->customers_model->getCustomerDetails($condition);
@@ -954,7 +955,7 @@ public function profile() {
 				
 				if($param2!=null&& is_numeric($param2)){
 				
-				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);//print_r($data['record_values']);exit;
+				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);
 				$data['driver']=$data['record_values']['driver'];
 				$data['vehicle']=$data['record_values']['vehicle'];
 				$data['device']=$data['record_values']['device'];
@@ -980,8 +981,8 @@ public function profile() {
 				$data['select']['drivers'][$driver_id]=$result['name'];
 				//for device
 				$device_id=$data['device']['device_id'];
-				$result=$this->user_model->getDeviceNameById($device_id);
-				$data['select']['devices'][$device_id]=$result['name'];
+				$result=$this->user_model->getDeviceImeiById($device_id);
+				$data['select']['devices'][$device_id]=$result['imei'];
 				}
 			}
 			//sample ends

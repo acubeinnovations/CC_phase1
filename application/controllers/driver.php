@@ -38,7 +38,7 @@ class Driver extends CI_Controller {
 	$data['email']=$this->input->post('email');
 	$hmail=$this->input->post('hmail');
 	$data['license_number']=$this->input->post('license_number');
-	$data['date_of_joining']=$this->input->post('date_of_joining');
+	$data['date_of_joining']=$this->input->post('date_of_joining');//echo $data['date_of_joining'];exit;
 	$data['badge']=$this->input->post('badge');
 	$data['license_renewal_date']=$this->input->post('license_renewal_date');
 	$data['badge_renewal_date']=$this->input->post('badge_renewal_date');
@@ -120,12 +120,15 @@ class Driver extends CI_Controller {
 	$this->mysession->set('Err_badge','Invalid Date for Badge Renewal!');
 	}
 	 if($this->form_validation->run()==False|| $err==False){
-		$this->mysession->set('post',$data);
+		$this->mysession->set('driver_id',$dr_id);
+		$this->mysession->set('post',$data); 
 		redirect(base_url().'organization/front-desk/driver',$data);	
 	 }
 	 else{
-		if($dr_id==gINVALID || $dr_id==''){
+	
+		if($dr_id==gINVALID ){
 			$res=$this->driver_model->addDriverdetails($data); 
+			//$ins_id=$this->mysession->get('vehicle_id');
 			if($res){
 				//add driver as supplier in fa
 				$this->account_model->add_fa_supplier($res,"DR");

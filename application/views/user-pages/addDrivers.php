@@ -35,7 +35,7 @@
  if($this->mysession->get('post')!=null){
  //echo $result[''];
  $data=$this->mysession->get('post');
-	$driver_id='';
+	$driver_id=$this->mysession->get('driver_id');
 	$name=$data['name'];
 	$place_of_birth=$data['place_of_birth'];
 	$dob=$data['dob'];
@@ -142,14 +142,14 @@ $this->mysession->delete('post');
 													echo $this->session->userdata('Err_sal').br();
 													echo $this->session->userdata('Err_blood_group').br();
 													echo $this->mysession->get('Err_badge').br();
-													echo $this->mysession->get('Err_badge').br();
+													echo $this->mysession->get('Err_join').br();
 														$this->session->set_userdata(array('marital_status_id'=>''));
 														$this->session->set_userdata(array('bank_account_type_id'=>''));
 														$this->session->set_userdata(array('id_proof_type_id'=>''));
 														$this->session->set_userdata(array('Err_sal'=>''));
 														$this->session->set_userdata(array('Err_blood_group'=>''));
 														$this->mysession->delete('Err_badge');
-														$this->mysession->delete('Err_badge');
+														$this->mysession->delete('Err_join');
 										?>
                                     </div>
 <?php  } ?>        
@@ -171,7 +171,7 @@ $this->mysession->delete('post');
         </div>
 	<div class="form-group">
 	<?php echo form_label('Date','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'dob','class'=>'fromdatepicker form-control' ,'placeholder'=>'Date','value'=>$dob));?>
+           <?php echo form_input(array('name'=>'dob','class'=>'fromdatepicker form-control' ,'placeholder'=>'Date of Birth','value'=>$dob));?>
 	   <?php echo $this->form_functions->form_error_session('dob', '<p class="text-red">', '</p>'); ?>
         </div>
         <div class="form-group">

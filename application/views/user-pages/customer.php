@@ -42,14 +42,21 @@
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
+		<?php if(isset($mode)&& $mode!='' ){?>
         <li class=""><a href="#tab_2" data-toggle="tab">Payments</a></li>
          <li class=""><a href="#tab_3" data-toggle="tab">Accounts</a></li>
-       
+       <?php } ?>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab_1">
-          <div class="profile-body width-80-percent-and-margin-auto">
-			
+            		 <div class="profile-body width-80-percent-and-margin-auto">
+			<fieldset class="body-border">
+   			 <legend class="body-head">Personal Details</legend>
+			 <div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+				
+				<div class="tab-pane active" id="tab_1">
 			<div class="div-with-50-percent-width-with-margin-10">
 				<?php echo form_open(base_url().'customers/AddUpdate');?>
 				
@@ -103,7 +110,7 @@
 			</div>
 			</div>
 		 
-			
+			</fieldset>
 		</div>
         </div>
         <div class="tab-pane" id="tab_2">

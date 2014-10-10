@@ -39,6 +39,7 @@ class user_model extends CI_Model {
 
 	public function getArray($tbl){
 	$org_id=$this->session->userdata('organisation_id');
+	$flag=0;
 	if($tbl=='drivers'){
 	$query='SELECT * FROM drivers WHERE drivers.id NOT IN(SELECT driver_id FROM vehicle_drivers WHERE organisation_id='.$org_id.' and to_date="9999-12-30")and organisation_id='.$org_id.' ';
 	$qry=$this->db->query($query);
@@ -46,6 +47,7 @@ class user_model extends CI_Model {
 	elseif($tbl=='devices'){
 	$query='SELECT * FROM devices WHERE devices.id NOT IN(SELECT device_id FROM vehicle_devices WHERE organisation_id='.$org_id.' and to_date="9999-12-30")and organisation_id='.$org_id.' ';
 	$qry=$this->db->query($query);
+	$flag=1;
 	}
 	else{
 		$qry=$this->db->get($tbl);
@@ -54,7 +56,12 @@ class user_model extends CI_Model {
 			$l= $qry->result_array();
 		
 			for($i=0;$i<$count;$i++){
+			if($flag==0){
 			$values[$l[$i]['id']]=$l[$i]['name'];
+			}
+			else{
+			$values[$l[$i]['id']]=$l[$i]['imei'];
+			}
 			}
 			if(!empty($values)){
 			return $values;
@@ -129,8 +136,8 @@ class user_model extends CI_Model {
 
 	return $qry->row_array();
 	}
-	public function getDeviceNameById($param2){
-	$qry=$this->db->select('name');
+	public function getDeviceImeiById($param2){
+	$qry=$this->db->select('imei');
 	$qry=$this->db->where('id',$param2);
 	$qry=$this->db->get('devices');
 
