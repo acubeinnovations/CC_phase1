@@ -5,7 +5,10 @@
         <div class="form-group">
 		   <?php echo form_label('Organization Name');?>
            <?php echo form_input(array('name'=>'name','class'=>'form-control','id'=>'name','placeholder'=>'Enter Organization Name','value'=>$name)); ?>
-			<?php if(isset($org_id) && isset($user_id)) {  echo form_hidden('hname',$hname); } ?>
+			<?php if(isset($org_id) && isset($user_id)) {  
+			echo form_hidden('hname',$hname); 
+			
+			} ?>
 	   <?php echo form_error('name', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">

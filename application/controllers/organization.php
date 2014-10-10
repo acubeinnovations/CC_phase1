@@ -151,7 +151,6 @@ public function __construct()
 		$data['name']=$org_res['name'];
 		$data['hname']  = $org_res['name'];;
 		$data['addr']=$org_res['address'];
-
 		$data['user_id']=$user_res['id'];
 		$data['uname']=$user_res['username'];
 		$data['fname']=$user_res['first_name'];
@@ -367,7 +366,7 @@ public function __construct()
 		
 		$data['title']='Profile Update |'.PRODUCT_NAME;
 		if(isset($_REQUEST['user-profile-update'])){
-		
+		echo $this->input->post('fa_account');exit;
 			$data['firstname']= trim($this->input->post('firstname'));
 			$data['lastname'] = trim($this->input->post('lastname'));
 			$data['address']  = $this->input->post('address');
@@ -422,6 +421,7 @@ public function __construct()
 		$data['id']=$result['id'];
 		$data['username']=$result['username'];
 		$data['firstname']=$result['first_name'];
+		$data['fa_account']=$result['fa_account'];
 		$data['lastname']=$result['last_name'];
 		$data['address']=$result['address'];
 		$data['email']=$result['email'];

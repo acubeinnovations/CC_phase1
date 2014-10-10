@@ -15,6 +15,7 @@ class user_model extends CI_Model {
 		if($succes > 0) {
 		$this->session->set_userdata(array('dbSuccess'=>'Profile Updated Successfully'));
 		}
+		return true;
     }
    	function changePassword($data) {
 		$this->db->from('users');

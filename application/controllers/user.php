@@ -710,8 +710,8 @@ public function profile() {
 	   if($this->session_check()==true) {
 		
 		$dbdata = '';
-              if(isset($_REQUEST['user-profile-update'])){
-			  $dbdata['first_name'] = $this->input->post('firstname');
+              if(isset($_REQUEST['user-profile-update'])){ 
+			$dbdata['first_name'] = $this->input->post('firstname');
 			$dbdata['last_name']  = $this->input->post('lastname');
 		    $dbdata['email'] 	   = $this->input->post('email');
 			$hmail 	   = $this->input->post('hmail');
@@ -719,6 +719,11 @@ public function profile() {
 			$hphone 	   = $this->input->post('hphone');
 		    $dbdata['address']   = $this->input->post('address');
 			$dbdata['username']   = $this->input->post('husername');
+			$fadata['firstname'] = $this->input->post('firstname');
+			$fadata['lastname']  = $this->input->post('lastname');
+		    $fadata['email'] 	   = $this->input->post('email');
+			$fadata['phone'] 	   = $this->input->post('phone');
+			$fadata['fa_account']   = $this->input->post('fa_account');
 			//$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean');
 			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean');
 			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean');
@@ -739,7 +744,13 @@ public function profile() {
 			
 			if($this->form_validation->run() != False) {
 				$val    		   = $this->user_model->updateProfile($dbdata);
+				if($val==true){
+				//fa user edit
+					$this->load->model('account_model');
+					$this->account_model->edit_user($dbdata);
+                   
 				redirect(base_url().'organization/front-desk');
+				}
 			}else{
 				$this->show_profile($dbdata);
 			}

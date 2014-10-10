@@ -38,6 +38,7 @@
 				</div>
 				<?php }else{
 				echo form_hidden('id',$id);
+				echo form_hidden('fa_account',$fa_account);
 				echo form_hidden('husername',$username);
 				} ?>
 				<div class="form-group">
