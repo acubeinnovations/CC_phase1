@@ -7,9 +7,18 @@ class Home extends CI_Controller {
 	 
 	 */
 	public function index()
-	{	$Title['title']="Home | Acube Innovations";	
+	{	if( $this->session->userdata('isLoggedIn') ) {
+		if( $this->session->userdata('type')==SYSTEM_ADMINISTRATOR){
+			redirect(base_url().'admin');
+		}else if($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR){
+			redirect(base_url().'organization/admin');
+		}else if($this->session->userdata('type')==FRONT_DESK){
+			 redirect(base_url().'organization/front-desk');
+		}
+		}else{
+		$Title['title']="Home | ".PRODUCT_NAME;		
 		$this->load->view('home',$Title);
-		
+		}
 	}
 }
 

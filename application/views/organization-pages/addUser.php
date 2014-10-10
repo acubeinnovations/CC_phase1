@@ -14,6 +14,7 @@
 			<fieldset class="body-border">
    			 <legend class="body-head"><?php echo $page_cap; ?></legend>
 				<?php echo form_open(base_url().$url);?>
+			<div class="div-with-50-percent-width-with-margin-10">
 				<div class="form-group">
 				   <?php echo form_label('Username','usernamelabel'); ?>
 					<?php if(isset($id)){ 
@@ -58,6 +59,8 @@
 				 ?>
 				</div>
 				<?php }  ?>
+				</div>
+				<div class="div-with-50-percent-width-with-margin-10">
 				<div class="form-group">
 					<?php echo form_label('Email','emaillabel'); ?>
 				    <?php echo form_input(array('name'=>'email','class'=>'form-control','placeholder'=>'Enter email','value'=>$email)); 
@@ -82,6 +85,7 @@
 				echo form_submit("user-profile-update","Update","class='btn btn-primary'");
 				}
 				 ?>  
+				</div>
 				</div>
 			 <?php echo form_close(); ?>
 			</fieldset>

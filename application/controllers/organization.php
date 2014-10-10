@@ -62,8 +62,10 @@ public function __construct()
 				 
 		        
 		    } else {
+				if($this->mysession->get('password_error')!='' ){
 				$ip_address=$this->input->ip_address();
 		        $this->organization_model->recordLoginAttempts($username,$ip_address);
+				}
 		        $this->show_login();
 		    }
 			} else {

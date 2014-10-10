@@ -61,11 +61,11 @@ text-align:right;
 }
 /*admin template*/
 .profile-body{
-width:30%;
+width:70%;
 margin:0 auto;
 }
 .new-org-body{
-width:30%;
+width:70%;
 margin:0 auto;
 }
 .change-password-body{
@@ -148,7 +148,7 @@ margin-top: 20px;
 }
 .tarrif-delete{
 color:#F56954;
-margin-top: 18px;
+
 }
 .settings-add > .fa-plus-circle{
 font-size: 20px;
@@ -536,4 +536,10 @@ box-shadow:none;
 .font-size-13-px{
 
 font-size:13px;
+}
+.cursor-pointer{
+cursor: pointer;
+}
+.margin-top-18-px{
+margin-top:18px;
 }
