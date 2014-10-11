@@ -609,7 +609,7 @@ $this->mysession->delete('post');
 							</div>
 						</div><!-- /.box-body -->
 	   					<?php if($trip_id!='' && $trip_id!=gINVALID){?>
-						<div class='overlay-container' style="display:block;">
+						<div class='overlay-container' style="display:block !important;">
 					   		<div class="overlay"></div>
 							<div class="lok-img"></div>
 						</div>
@@ -766,7 +766,7 @@ $this->mysession->delete('post');
 
 </div><!-- /.box-body -->
    
-	<div class='overlay-container'>
+	<div class='overlay-container display-me'>
    		<div class="overlay"></div>
 		<div class="loading-img"></div>
 	</div>

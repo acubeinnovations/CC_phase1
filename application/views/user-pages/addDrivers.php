@@ -406,11 +406,11 @@ $this->mysession->delete('post');
 						$diff= date_diff($date1, $date2);
 						$no_of_days=$diff->d;
 						if($no_of_days==0){
-							$no_of_days.='1 Day';
-							day=1;
+							$no_of_days='1 Day';
+							$day=1;
 						}else{
 							$no_of_days.=' Days';
-							day=$diff->d;
+							$day=$diff->d;
 						}
 
 						?>
