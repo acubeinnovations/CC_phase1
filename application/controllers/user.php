@@ -826,8 +826,8 @@ public function profile() {
 	}
 	public function ShowDriverView($param2) {
 		if($this->session_check()==true) {
-			//sample starts
 				$data['select']=$this->select_Box_Values();
+				$data['mode']=$param2;
 			//trip details
 		
 			if($param2!=''){
@@ -877,6 +877,13 @@ public function profile() {
 
 	}
 	$data['values']=$p_res['values'];
+	for ($i=0;$i<count($data['values']);$i++){
+	$driverid=$data['values'][$i]['id'];
+	$driver_details[$driverid]=$this->user_model->getVehicleDetails($driverid);
+	}
+	$data['v_details']=$driver_details;
+	$data['v_models']=$this->user_model->getArray('vehicle_models');
+	
 	$data['page_links']=$p_res['page_links'];
 	$data['title']='List Driver| '.PRODUCT_NAME;
 	$page='user-pages/driverList';
@@ -930,7 +937,7 @@ public function profile() {
 	public function ShowVehicleView($param1,$param2,$param3) {
 	
 		if($this->session_check()==true) {
-		
+		$data['mode']=$param2;
 		if($param1=='vehicle'&& $param2==''){
 		$this->mysession->delete('vehicle_id');
 		} 
@@ -1062,6 +1069,12 @@ public function profile() {
 
 	}
 	$data['values']=$p_res['values'];
+	for ($i=0;$i<count($data['values']);$i++){
+	$id=$data['values'][$i]['vehicle_owner_id'];
+	$details[$id]=$this->user_model->getOwnerDetails($id);
+	
+	}
+	$data['owner_details']=$details;
 	$data['page_links']=$p_res['page_links'];
 	$tbl_arry=array('vehicle_models','vehicle_types','vehicle_owners');
 	$count=count($tbl_arry);

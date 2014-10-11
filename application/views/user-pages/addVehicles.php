@@ -43,9 +43,11 @@
         <li class="<?php echo $ins_class;?>"><a href="#tab_2" data-toggle="tab">Insurance </a></li>
          <li class="<?php echo $loan_class;?>"><a href="#tab_3" data-toggle="tab">Loan </a></li>
 		  <li class="<?php echo $owner_class;?>"><a href="#tab_4" data-toggle="tab">Owner </a></li>
+		  <?php if(isset($mode)&& $mode!='' ){?>
         <li class="<?php echo $owner_class;?>"><a href="#tab_5" data-toggle="tab">Trip </a></li>
 		 <li class="<?php echo $owner_class;?>"><a href="#tab_6" data-toggle="tab">Payments </a></li>
 		  <li class="<?php echo $owner_class;?>"><a href="#tab_7" data-toggle="tab">Accounts</a></li>
+		  <?php }?>
     </ul>
     <div class="tab-content">
 

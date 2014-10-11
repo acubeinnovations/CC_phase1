@@ -123,9 +123,11 @@ $this->mysession->delete('post');
 	<div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
+	 <?php if(isset($mode)&& $mode!='' ){?>
         <li class=""><a href="#tab_2" data-toggle="tab">Trip</a></li>
          <li class=""><a href="#tab_3" data-toggle="tab">Payments</a></li>
        <li class=""><a href="#tab_4" data-toggle="tab">Accounts</a></li>
+	   <?php }?>
     </ul>
     <div class="tab-content">
         
@@ -200,13 +202,13 @@ $this->mysession->delete('post');
         </div>
 	<div class="form-group">
 	<?php echo form_label('Present Address','usernamelabel'); ?>
-           <?php echo form_textarea(array('name'=>'present_address','class'=>'form-control','id'=>'present_address','placeholder'=>'Present Address','value'=>$present_address,'rows'=>7)); ?>
+           <?php echo form_textarea(array('name'=>'present_address','class'=>'form-control','id'=>'present_address','placeholder'=>'Present Address','value'=>$present_address,'rows'=>5)); ?>
 	   <?php echo $this->form_functions->form_error_session('present_address', '<p class="text-red">', '</p>'); ?>
         </div>
 	
 	<div class="form-group">
 	<?php echo form_label('Permanent Address','usernamelabel'); ?>
-           <?php echo form_textarea(array('name'=>'permanent_address','class'=>'form-control','id'=>'permanent_address','placeholder'=>'Permanent Address','value'=>$permanent_address,'rows'=>7)); ?>
+           <?php echo form_textarea(array('name'=>'permanent_address','class'=>'form-control','id'=>'permanent_address','placeholder'=>'Permanent Address','value'=>$permanent_address,'rows'=>5)); ?>
 	   <?php echo $this->form_functions->form_error_session('permanent_address', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
@@ -241,22 +243,23 @@ $this->mysession->delete('post');
 	   <?php echo $this->form_functions->form_error_session('email', '<p class="text-red">', '</p>'); ?>
 	 <div class="hide-me" >  <?php echo form_input(array('name'=>"hmail",'value'=>$email));?></div>
         </div>
+		<div class="form-group">
+	<?php echo form_label('Date of Joining','usernamelabel'); ?>
+           <?php echo form_input(array('name'=>'date_of_joining','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of Joining','value'=>$date_of_joining));?>
+	   <?php echo $this->form_functions->form_error_session('date_of_joining', '<p class="text-red">', '</p>'); ?>
+        </div>	
+	
 		</fieldset> </div>
 		
 	<div class="width-30-percent-with-margin-left-20-Driver-View">
 <fieldset class="body-border-Driver-View border-style-Driver-view" >
 <legend class="body-head">Other Details</legend>
-
-	<div class="form-group">
-	<?php echo form_label('Date of Joining','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'date_of_joining','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of Joining','value'=>$date_of_joining));?>
-	   <?php echo $this->form_functions->form_error_session('date_of_joining', '<p class="text-red">', '</p>'); ?>
-        </div>	
 	<div class="form-group">
 	<?php echo form_label('License Number','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'license_number','class'=>'form-control','id'=>'license_number','placeholder'=>'License Number','value'=>$license_number)); ?>
 	   <?php echo $this->form_functions->form_error_session('license_number', '<p class="text-red">', '</p>'); ?>
         </div>
+	
 	<div class="form-group">
 	<?php echo form_label('Date of Renewal','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'license_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of Renewal','value'=>$license_renewal_date));?>
@@ -349,8 +352,8 @@ $this->mysession->delete('post');
 		<div class='hide-me'><?php  
 		echo form_input(array('name'=>'hidden_id','class'=>'form-control','value'=>$driver_id));?></div>
    		<div class="box-footer">
-		<?php // echo validation_errors();?>
-		<?php 
+		
+		<?php echo br();
 		 if($driver_id==gINVALID||$driver_id==''){
 			$btn_name='Save';
 		 }else {
@@ -406,11 +409,11 @@ $this->mysession->delete('post');
 						$diff= date_diff($date1, $date2);
 						$no_of_days=$diff->d;
 						if($no_of_days==0){
-							$no_of_days.='1 Day';
-							day=1;
+							$no_of_days='1 Day';
+							$day=1;
 						}else{
 							$no_of_days.=' Days';
-							day=$diff->d;
+							$day=$diff->d;
 						}
 
 						?>
@@ -464,59 +467,7 @@ $this->mysession->delete('post');
 		<iframe src="<?php echo base_url().'account/front_desk/SupplierPayment/DR'.$driver_id.'/true';?>" height="600px" width="100%">
 		<p>Browser not Support</p>
 		</iframe>
-	   <!--<fieldset class="body-border">
-		<legend class="body-head">Payments</legend><div class="form-group">
-	<div class="box-body table-responsive no-padding">
-			<table class="table table-hover table-bordered">
-				<tbody>
-					<tr>
-					    <th>Date</th>
-					    <th>Particulars</th>
-						<th>Trip Detail</th>
-						<th>Memo/Particulars</th>
-						<th>Credit</th>
-						<th>Debit</th>
-						<th>Cash/Bank</th>
-						<th>Advances</th>
-						<th>Loans</th>
-					</tr>
-					<?php
-					//if(isset($values)){
-					//foreach ($values as $det):
-					?>
-					<tr>
-					    <td><?php //echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$det['name']).nbs(3);?></td>
-					    <td><?php // echo $det['phone'].",".$det['mobile']?></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						</tr>
-					<tr>
-					<td>Total</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>X</td>
-					<td>X</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					</tr>
-					<?php //endforeach;
-					//}
-					?>
-				</tbody>
-			</table><?php //echo $page_links;?>
-		</div>
-</div>
-</fieldset>-->
+
 </div>
         </div>
 		<div class="tab-pane" id="tab_4">
