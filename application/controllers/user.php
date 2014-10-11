@@ -747,7 +747,7 @@ public function profile() {
 				if($val==true){
 				//fa user edit
 					$this->load->model('account_model');
-					$this->account_model->edit_user($dbdata);
+					$this->account_model->edit_user($fadata);
                    
 				redirect(base_url().'organization/front-desk');
 				}

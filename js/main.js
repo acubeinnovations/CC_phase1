@@ -1112,6 +1112,8 @@ $('.trip-voucher-save').attr('driver_id',driver_id);
 				$('.trip-voucher-save').attr('additional_kilometer_rate',data[0].additional_kilometer_rate);
 				$('.trip-voucher-save').attr('minimum_kilometers',data[0].minimum_kilometers);
 				$('.trip-voucher-save').attr('no_of_days',no_of_days);
+				$('.trip-voucher-save').attr('driver_bata',data[0].driver_bata);
+				
 				}
 			});
 			}
@@ -1150,6 +1152,7 @@ var rate=$('.trip-voucher-save').attr('rate');
 var additional_kilometer_rate=$('.trip-voucher-save').attr('additional_kilometer_rate');
 var minimum_kilometers=$('.trip-voucher-save').attr('minimum_kilometers');
 var no_of_days=$('.trip-voucher-save').attr('no_of_days');
+var driver_bata=$('.trip-voucher-save').attr('driver_bata');
 
 var startkm=$('.startkm').val();
 var endkm=$('.endkm').val();
@@ -1199,7 +1202,7 @@ var statetax=$('.statetax').val();
 var nighthalt=$('.nighthalt').val();
 var extrafuel=$('.extrafuel').val();
 
-
+totexpense=Number(totexpense)+Number(tollfee);
 
 var trip_id=$(this).attr('trip_id');
 var driver_id=$(this).attr('driver_id');
@@ -1237,7 +1240,9 @@ if(error==false){
 			nighthalt:nighthalt,
 			extrafuel:extrafuel,
 			driver_id:driver_id,
-			totexpense:totexpense
+			totexpense:totexpense,
+			no_of_days:no_of_days,
+			driver_bata:driver_bata
 		},function(data){
 		  if(data!='false'){
 				window.location.replace(base_url+'/account/front_desk/NewDelivery/'+data);
