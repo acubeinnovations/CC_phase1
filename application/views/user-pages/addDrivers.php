@@ -123,9 +123,11 @@ $this->mysession->delete('post');
 	<div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
+	 <?php if(isset($mode)&& $mode!='' ){?>
         <li class=""><a href="#tab_2" data-toggle="tab">Trip</a></li>
          <li class=""><a href="#tab_3" data-toggle="tab">Payments</a></li>
        <li class=""><a href="#tab_4" data-toggle="tab">Accounts</a></li>
+	   <?php }?>
     </ul>
     <div class="tab-content">
         
