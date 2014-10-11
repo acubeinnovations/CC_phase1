@@ -286,15 +286,13 @@ function display_trip_data($cnc_data, &$order)
 				$trip_ad_km = $cnc_data['total_km_reading'] - $trip_min_km;
 				$trip_ad_charge = $trip_ad_km * $cnc_data['ad_km_rate'];
 
-				echo $trip_min_km."KM @ Rs.".$trip_min_charge." + ";
-				//echo "<br/>";		
-				
-				echo "And Additional KM Is ".$trip_ad_km."KM @ Rs.".$trip_ad_charge." + ";
-				echo "<br/>";
+				$particulars = $trip_min_km."KM @ Rs.".$trip_min_charge." + ";			
+				$particulars .= "And Additional KM Is ".$trip_ad_km."KM @ Rs.".$trip_ad_charge." + ";
+				$particulars .= "Toll Rs. "	.$cnc_data['toll_fees']." + ";
+				$particulars .= "Parking fees Rs. "	.$cnc_data['parking_fees']." + ";
+				$particulars .= "Night halt charges Rs. "	.$cnc_data['bata'];
 
-				echo "Toll Rs. "	.$cnc_data['toll_fees']." + ";
-				echo "Parking fees Rs. "	.$cnc_data['parking_fees']." + ";
-				echo "Night halt charges Rs. "	.$cnc_data['bata'];
+				echo $particulars;
 
 			echo "</td>";
 			label_cell($cnc_data['total_km_reading'],'width=10%');
@@ -311,6 +309,7 @@ function display_trip_data($cnc_data, &$order)
 		hidden('Disc',percent_format($order->default_discount * 100));
 		hidden('line_total',$line_total);
 		hidden('LineNo', 1);
+		hidden('Comments', $particulars, 31, 5);
 
 		//----------------------------------end trip data----------------------------------------
 
