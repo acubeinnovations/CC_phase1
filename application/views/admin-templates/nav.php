@@ -46,6 +46,7 @@
 				 <li><a href="<?php echo base_url().'account/organization/AccessSetup';?>"><i class="fa fa-angle-double-right"></i> Access Setup</a></li>
 				<li><a href="<?php echo base_url().'account/organization/FormSetup';?>"><i class="fa fa-angle-double-right"></i> Forms Setup</a></li>
 				<li><a href="<?php echo base_url().'account/organization/PaymentTerms';?>"><i class="fa fa-angle-double-right"></i> Payment Terms</a></li>
+				<li><a href="<?php echo base_url().'account/organization/Taxes';?>"><i class="fa fa-angle-double-right"></i> Taxes</a></li>
 				<li><a href="<?php echo base_url().'account/organization/FiscalYear';?>"><i class="fa fa-angle-double-right"></i> Fiscal Year</a></li>
 				<li><a href="<?php echo base_url().'account/organization/SystemGl';?>"><i class="fa fa-angle-double-right"></i> System and GL Setup</a></li>
 				<li><a href="<?php echo base_url().'account/organization/VoidTransaction';?>"><i class="fa fa-angle-double-right"></i> Void Transaction</a></li>

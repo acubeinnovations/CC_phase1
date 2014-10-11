@@ -42,16 +42,18 @@
 					<tr>
 					    <th>Driver Name</th>
 					    <th>Contact Info</th>
-					    
+					    <th>Vehicle Number</th>
+						<th>Vehicle Model</th>
 					</tr>
 					<?php
-					if(isset($values)){
+					if(isset($values)){ 
 					foreach ($values as $det):
 					?>
 					<tr>
 					    <td><?php echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$det['name']).nbs(3);?></td>
 					    <td><?php echo $det['phone'].",".$det['mobile']?></td>	
-						
+						<td><?php if($v_details[$det['id']]==null){ echo '';}else{echo $v_details[$det['id']]['registration_number'];} ?></td>
+						<td><?php if($v_details[$det['id']]==null){ echo '';}else{echo $v_models[$v_details[$det['id']]['vehicle_model_id']];} ?></td>
 					</tr>
 					<?php endforeach;
 					}
