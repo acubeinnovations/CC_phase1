@@ -38,6 +38,10 @@
 		meta_forward('admin/forms_setup.php');
 		
 	}
+	elseif(isset($_GET['Taxes'])){
+		meta_forward('taxes/tax_types.php');
+		
+	}
 	elseif(isset($_GET['PaymentTerms'])){
 		meta_forward('admin/payment_terms.php');
 		
