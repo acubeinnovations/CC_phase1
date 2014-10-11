@@ -859,7 +859,12 @@ public function profile() {
 	if($_REQUEST['driver_name']!=null){
 	$like_arry['name']=$_REQUEST['driver_name'];
 	}
-
+	if($_REQUEST['driver_city']!=null){
+	$like_arry['district']=$_REQUEST['driver_city'];
+	}
+	if($_REQUEST['model']!=null){
+	$where_arry['district']=$_REQUEST['model'];
+	}
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
 	}
@@ -881,7 +886,9 @@ public function profile() {
 	$driverid=$data['values'][$i]['id'];
 	$driver_details[$driverid]=$this->user_model->getVehicleDetails($driverid);
 	}
+	
 	$data['v_details']=$driver_details;
+	
 	$data['v_models']=$this->user_model->getArray('vehicle_models');
 	
 	$data['page_links']=$p_res['page_links'];
