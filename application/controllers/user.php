@@ -866,16 +866,10 @@ public function profile() {
 	if($_REQUEST['driver_city']!=null){
 	$like_arry['district']=$_REQUEST['driver_city'];
 	}
-	if($_REQUEST['model']!=null){
-	$where_arry['district']=$_REQUEST['model'];
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
+	$condition=array("like"=>$like_arry,"where"=>$where_arry);
 	}
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
-	$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
-	}
-	//$condition=array("like"=>$like_arry,"where"=>$where_arry); //print_r($condition);exit;
-	//print_r($condition);exit;
-	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
-	//print_r($this->mysession->get('condition'));exit;
 	$tbl="drivers";
 	$baseurl=base_url().'organization/front-desk/list-driver/';
 	$uriseg ='4';
@@ -1056,9 +1050,9 @@ public function profile() {
 	if($_REQUEST['owner']>0){
 	$where_arry['vehicle_owner_id']=$_REQUEST['owner'];
 	}
-	if($_REQUEST['v_type']>0){
+	/*if($_REQUEST['v_type']>0){
 	$where_arry['vehicle_type_id']=$_REQUEST['v_type'];
-	}
+	}*/
 	if($_REQUEST['v_model']>0){
 	$where_arry['vehicle_model_id']=$_REQUEST['v_model'];
 	}
