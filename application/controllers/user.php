@@ -883,9 +883,12 @@ public function profile() {
 	for ($i=0;$i<count($data['values']);$i++){
 	$driverid=$data['values'][$i]['id'];
 	$driver_details[$driverid]=$this->user_model->getVehicleDetails($driverid);
+	
+	}
+	if(!empty($driver_details)){
+		$data['v_details']=$driver_details;
 	}
 	
-	$data['v_details']=$driver_details;
 	
 	$data['v_models']=$this->user_model->getArray('vehicle_models');
 	
@@ -1079,7 +1082,9 @@ public function profile() {
 	$details[$id]=$this->user_model->getOwnerDetails($id);
 	
 	}
+	if(!empty($details)){
 	$data['owner_details']=$details;
+	}
 	$data['page_links']=$p_res['page_links'];
 	$tbl_arry=array('vehicle_models','vehicle_types','vehicle_owners');
 	$count=count($tbl_arry);
