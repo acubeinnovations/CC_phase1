@@ -2233,3 +2233,403 @@
 [11-Oct-2014 11:14:19 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
 [11-Oct-2014 11:14:19 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
 >>>>>>> 9b96be8c0fb7d7c30c118c3534fd1a680564e618
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:34:27 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:36:11 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:36:55 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:38:11 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:11 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:16 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:16 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:16 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:16 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:16 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:16 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:16 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:16 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:17 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:17 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:17 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:17 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:17 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:17 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:17 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:17 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:27 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:32 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:40 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:42:47 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:43:30 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:44:20 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:44:23 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:44:34 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:45:44 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:45:50 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:48:16 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:48:25 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:48:39 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:39 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:48:39 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:39 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:39 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:39 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:39 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:48:39 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:48:40 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:40 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:48:40 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:40 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:48:40 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:40 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:48:40 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:48:40 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:53:10 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:53:26 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 12:57:29 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 13:00:51 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 13:01:21 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): 
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:28: mysql_select_db() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:35: mysql_get_server_info(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:61: mysql_query() expects parameter 2 to be resource, boolean given
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:156: mysql_errno() expects parameter 1 to be resource, boolean given
+[11-Oct-2014 13:01:29 Europe/Paris] 0::connect_db.inc:100: mysql_fetch_array() expects parameter 1 to be resource, null given

@@ -75,15 +75,7 @@ class User extends CI_Controller {
 
 		$this->ShowVehicleView($param1,$param2,$param3);
 		}
-		/*elseif($param1=='vehicle' && $param2!=''&&($param3==''||is_numeric($param3))){
-		$this->ShowVehicleView($param1,$param2,$param3);
-		}
-		elseif($param1=='vehicle' && $param2=='loan' && ($param3== ''|| is_numeric($param3))){
-		$this->ShowVehicleView($param1,$param2,$param3);
-		}
-		elseif($param1=='vehicle' && $param2=='owner' && ($param3== ''|| is_numeric($param3))){
-		$this->ShowVehicleView($param1,$param2,$param3);
-		}*/
+		
 		elseif($param1=='list-vehicle'&&($param2== ''|| is_numeric($param2)) && ($param3== ''|| is_numeric($param3))){
 		$this->ShowVehicleList($param1,$param2,$param3);
 		}
@@ -831,7 +823,8 @@ public function profile() {
 	public function ShowDriverView($param2) {
 		if($this->session_check()==true) {
 				$data['select']=$this->select_Box_Values();
-				$data['mode']=$param2;
+				
+				
 			//trip details
 		
 			if($param2!=''){
@@ -866,6 +859,7 @@ public function profile() {
 	if($_REQUEST['driver_city']!=null){
 	$like_arry['district']=$_REQUEST['driver_city'];
 	}
+	
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	$condition=array("like"=>$like_arry,"where"=>$where_arry);
 	}
@@ -904,7 +898,7 @@ public function profile() {
 		
 		public function ShowDriverProfile($param1,$param2){
 			if($this->session_check()==true) {
-			
+			$data['mode']=$param2;
 			if($param2!=null&& $param2!=gINVALID){
 			$org_id=$this->session->userdata('organisation_id');
 			$arry=array('id'=>$param2,'organisation_id'=>$org_id);
@@ -949,6 +943,11 @@ public function profile() {
 		if($param1=='vehicle'&& $param2==''){
 		$this->mysession->delete('vehicle_id');
 		} 
+		
+		if($param2!=''){
+			
+			$data['trips']=$this->trip_booking_model->getVehicleVouchers($param2);
+			}
 			
 				if($param2==''||is_numeric($param2)){
 				$data['vehicle_tab']='active';
