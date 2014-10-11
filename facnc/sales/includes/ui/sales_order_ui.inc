@@ -257,7 +257,9 @@ function display_trip_data($cnc_data, &$order)
 {
    global $SysPrefs;
 
-
+	//print_r($cnc_data);
+	//exit;
+    display_heading("Trip Details");
     div_start('items_table');
 	start_table(TABLESTYLE, "colspan=6 width=100%");
 		$th = array(_("Vehicle No"),_("Trip"),_("Particulars"), _("Kms"),
@@ -268,17 +270,35 @@ function display_trip_data($cnc_data, &$order)
 		$total = 0;
 		$k = 0;  //row colour counter
 
+		//----------------------------------start trip data----------------------------------------
+		$line_total = $cnc_data['amount'];
+		$total +=$line_total;
 		alt_table_row_color($rowcounter);
 
-			label_cell(@$cnc_data['vehicle_no']);
-			label_cell(@$cnc_data['trip_model']);
+			label_cell(@$cnc_data['vehicle_no'],'width=10%');
+			label_cell(@$cnc_data['trip_model'],'width=20%');
 			echo "<td>";
-				echo $cnc_data['from_city']."-".$cnc_data['to_city'];
+				echo $cnc_data['from_city']." - ".$cnc_data['to_city'];
 				echo "<br/>";
-				echo $cnc_data['tariff'];
+
+				$trip_min_km = $cnc_data['min_km'] * $cnc_data['no_of_days'];
+				$trip_min_charge = $trip_min_km * $cnc_data['min_rate'];
+				$trip_ad_km = $cnc_data['total_km_reading'] - $trip_min_km;
+				$trip_ad_charge = $trip_ad_km * $cnc_data['ad_km_rate'];
+
+				echo $trip_min_km."KM @ Rs.".$trip_min_charge." + ";
+				//echo "<br/>";		
+				
+				echo "And Additional KM Is ".$trip_ad_km."KM @ Rs.".$trip_ad_charge." + ";
+				echo "<br/>";
+
+				echo "Toll Rs. "	.$cnc_data['toll_fees']." + ";
+				echo "Parking fees Rs. "	.$cnc_data['parking_fees']." + ";
+				echo "Night halt charges Rs. "	.$cnc_data['bata'];
+
 			echo "</td>";
-			label_cell($cnc_data['total_km_reading']);
-			label_cell($cnc_data['amount']);
+			label_cell($cnc_data['total_km_reading'],'width=10%');
+			label_cell(price_format($line_total),'width=10%');
 	
 
 		end_row();
@@ -289,8 +309,10 @@ function display_trip_data($cnc_data, &$order)
 		hidden('qty',$qty);
 		hidden('price',price_format(0));
 		hidden('Disc',percent_format($order->default_discount * 100));
-		hidden('line_total',@$cnc_data['amount']);
+		hidden('line_total',$line_total);
 		hidden('LineNo', 1);
+
+		//----------------------------------end trip data----------------------------------------
 
 
 		$colspan = 4;
