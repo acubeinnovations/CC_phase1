@@ -380,7 +380,6 @@ $this->mysession->delete('post');
 					    <th>Route</th>
 						<th>Kilometers</th>
 						<th>No Of Days</th>
-						<th>Bata Amount</th>
 						<!--<th>Releasing Place</th>-->
 						<th>Parking</th>
 						<th>Toll</th>
@@ -423,7 +422,6 @@ $this->mysession->delete('post');
 							<td><?php echo $trips[$trip_index]['pick_up_city'].' to '.$trips[$trip_index]['drop_city']; ?></td>
 							<td><?php echo $tot_km; ?></td>
 							<td><?php echo $no_of_days; ?></td>
-							<td><?php echo $trips[$trip_index]['driver_bata']*day; ?></td>
 							<!--<td><?php //echo $trips[$trip_index]['releasing_place'];?></td>-->
 							<td><?php echo $trips[$trip_index]['parking_fees']; ?></td>
 							<td><?php echo $trips[$trip_index]['toll_fees']; ?></td>

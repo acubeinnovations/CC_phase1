@@ -26,8 +26,8 @@
 					    <td><?php echo form_input(array('name'=>'reg_num','class'=>'form-control','id'=>'reg_num','placeholder'=>'By Registration Number','size'=>30));?> </td>
 						 <td><?php $class="form-control";
 						echo $this->form_functions->populate_dropdown('owner',$vehicle_owners,$selected='',$class,$id='',$msg='Select Vehicle Owner')?> </td>
-						<td><?php $class="form-control";
-						echo $this->form_functions->populate_dropdown('v_type',$vehicle_types,$selected='',$class,$id='',$msg='Select Vehicle Type')?></td>
+						<!--<td><?php// $class="form-control";
+						//echo $this->form_functions->populate_dropdown('v_type',$vehicle_types,$selected='',$class,$id='',$msg='Select Vehicle Type')?></td>-->
 						<td><?php $class="form-control";
 						echo $this->form_functions->populate_dropdown('v_model',$vehicle_models,$selected='',$class,$id='',$msg='Select Vehicle Model')?></td>
 						
