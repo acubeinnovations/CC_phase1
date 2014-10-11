@@ -52,10 +52,11 @@ session_unset();
 
 if(isset($_GET['ret'])){
 	switch($_GET['ret']){
-		case 1:header('Location:http://cc.local/syslogin');break;
-		case 2:header('Location:http://cc.local/organization/login');break;
-		default:header('Location:http://cc.local');break;
+		case 1:$url = $cnc_url.'syslogin';break;
+		case 2:$url = $cnc_url.'organization/login';break;
+		default:$url = $cnc_url;break;
 	}
+	header('Location:'.$url);
 }
 
 ?>
