@@ -115,7 +115,75 @@
 		</div>
         </div>
 		 <div class="tab-pane" id="tab_2">
-            trip
+            <div class="page-outer">
+	   <fieldset class="body-border">
+		<legend class="body-head">Trip</legend><div class="form-group">
+	<div class="box-body table-responsive no-padding">
+			<table class="table table-hover table-bordered">
+				<tbody>
+					<tr>
+						<th>SlNo</th>
+					    <th>Date</th>
+					    <th>Route</th>
+						<th>Kilometers</th>
+						<th>No Of Days</th>
+						<!--<th>Releasing Place</th>-->
+						<th>Trip Amount</th>
+					    
+					</tr>
+					<?php	
+						$full_tot_km=$total_trip_amount=0;
+					if(isset($trips) && $trips!=false){
+						for($trip_index=0;$trip_index<count($trips);$trip_index++){
+						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
+						$full_tot_km=$full_tot_km+$tot_km;
+						$total_trip_amount=$total_trip_amount+$trips[$trip_index]['total_trip_amount'];
+						
+						
+						$date1 = date_create($trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time']);
+						$date2 = date_create($trips[$trip_index]['drop_date'].' '.$trips[$trip_index]['drop_time']);
+						
+						$diff= date_diff($date1, $date2);
+						$no_of_days=$diff->d;
+						if($no_of_days==0){
+							$no_of_days='1 Day';
+							
+						}else{
+							$no_of_days.=' Days';
+							
+						}
+
+						?>
+						<tr>
+							<td><?php echo $trip_index+1; ?></td>
+							<td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
+							<td><?php echo $trips[$trip_index]['pick_up_city'].' to '.$trips[$trip_index]['drop_city']; ?></td>
+							<td><?php echo $tot_km; ?></td>
+							<td><?php echo $no_of_days; ?></td>
+							<!--<td><?php //echo $trips[$trip_index]['releasing_place'];?></td>-->
+							<td><?php echo $trips[$trip_index]['total_trip_amount']; ?></td>
+						
+						</tr>
+						<?php } 
+						}					
+					?>
+					<tr>
+					<td>Total</td>
+					<td></td>
+					<td></td>
+					<td><?php echo $full_tot_km; ?></td>
+					<td></td>
+					<td><?php echo $total_trip_amount; ?></td>
+					</tr>
+					<?php //endforeach;
+					//}
+					?>
+				</tbody>
+			</table><?php //echo $page_links;?>
+		</div>
+</div>
+</fieldset>
+</div>
         </div>
         <div class="tab-pane" id="tab_3">
             <iframe src="<?php echo base_url().'account/front_desk/CustomerPayment/C'.$customer_id.'/true';?>" height="600px" width="100%">

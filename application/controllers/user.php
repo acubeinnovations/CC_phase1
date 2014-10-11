@@ -625,6 +625,10 @@ class User extends CI_Controller {
 			}else{
 				$data['values']=false;
 			}
+			if($param2!=''){
+			
+			$data['trips']=$this->trip_booking_model->getCustomerVouchers($param2);
+			}
 			
 			$page='user-pages/customer';
 		    $this->load_templates($page,$data);
