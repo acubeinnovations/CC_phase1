@@ -81,7 +81,7 @@ AND T.organisation_id ='.$data['organisation_id'].' AND vehicle_type_id ='.$data
 	}
 
 	public function selectTariffDetails($id){
-	$qry='SELECT T.rate,T.additional_kilometer_rate,TM.minimum_kilometers, T.tariff_master_id, T.id FROM tariffs AS T, tariff_masters AS TM WHERE T.tariff_master_id = TM.id
+	$qry='SELECT T.rate,T.driver_bata,T.additional_kilometer_rate,TM.minimum_kilometers, T.tariff_master_id, T.id FROM tariffs AS T, tariff_masters AS TM WHERE T.tariff_master_id = TM.id
 AND T.organisation_id ='.$this->session->userdata('organisation_id').' AND T.id ='.$id;
 	$result=$this->db->query($qry);
 	$result=$result->result_array();

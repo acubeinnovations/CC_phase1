@@ -414,6 +414,8 @@ class Trip_booking extends CI_Controller {
 	$data['night_halt_charges']=$_REQUEST['nighthalt'];
 	$data['fuel_extra_charges']=$_REQUEST['extrafuel'];
 	$data['total_trip_amount']=$_REQUEST['totexpense'];
+	$data['no_of_days']=$_REQUEST['no_of_days'];
+	$data['driver_bata']=$_REQUEST['driver_bata'];
 	$data['user_id']=$this->session->userdata('id');
 	$data['trip_id']=$_REQUEST['trip_id'];
 	$data['organisation_id']=$this->session->userdata('organisation_id');
