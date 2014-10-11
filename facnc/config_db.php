@@ -17,7 +17,7 @@ $def_coy - the default company that is pre-selected on login
 
 $def_coy = 0;
 
-$tb_pref_counter = 11;
+$tb_pref_counter = 17;
 
 $db_connections = array (
   0 => 
@@ -46,6 +46,24 @@ $db_connections = array (
     'dbpassword' => 'mysql@local',
     'dbname' => 'connectncabs',
     'tbpref' => '2_',
+  ),
+  4 => 
+  array (
+    'name' => 'testcoy',
+    'host' => 'localhost',
+    'dbuser' => 'root',
+    'dbpassword' => 'mysql@local',
+    'dbname' => 'connectncabs',
+    'tbpref' => '4_',
+  ),
+  3 => 
+  array (
+    'name' => 'acubeinnovations',
+    'host' => 'localhost',
+    'dbuser' => 'root',
+    'dbpassword' => 'mysql@local',
+    'dbname' => 'connectncabs',
+    'tbpref' => '3_',
   ),
 );
 ?>
