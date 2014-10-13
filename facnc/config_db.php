@@ -25,27 +25,10 @@ $db_connections = array (
     'name' => 'mastercompany',
     'host' => 'localhost',
     'dbuser' => 'root',
-    'dbpassword' => 'mysql@local',
-    'dbname' => 'connectncabs',
+    'dbpassword' => '',
+    'dbname' => 'cc',
     'tbpref' => '0_',
   ),
-  1 => 
-  array (
-    'name' => 'TALC1',
-    'host' => 'localhost',
-    'dbuser' => 'root',
-    'dbpassword' => 'mysql@local',
-    'dbname' => 'connectncabs',
-    'tbpref' => '1_',
-  ),
-  2 => 
-  array (
-    'name' => 'CONNECTNCABS',
-    'host' => 'localhost',
-    'dbuser' => 'root',
-    'dbpassword' => 'mysql@local',
-    'dbname' => 'connectncabs',
-    'tbpref' => '2_',
-  ),
+ 
 );
 ?>
