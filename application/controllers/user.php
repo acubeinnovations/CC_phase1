@@ -144,7 +144,7 @@ class User extends CI_Controller {
 	
 	if($_REQUEST['search_title']!=null){
 	
-	$like_arry=array('title'=> $_REQUEST['search_title']);
+	$like_arry=array('title'=> $_REQUEST['search_title']); 
 	}
 	if($_REQUEST['search_trip_model']>0){
 	$where_arry['trip_model_id']=$_REQUEST['search_trip_model'];
@@ -152,7 +152,7 @@ class User extends CI_Controller {
 	if($_REQUEST['search_ac_type']>0){
 	$where_arry['vehicle_ac_type_id']=$_REQUEST['search_ac_type'];
 	}
-	$this->session->set_userdata(array('condition'=>array("like"=>$like_arry,"where"=>$where_arry)));
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	
 	}
 	}
