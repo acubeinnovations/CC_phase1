@@ -37,6 +37,7 @@
 	$owner_class='';
 	$o_tab="tab-pane ";
 	}
+	
 	?>
 	
         <li class="<?php echo $vehicle_class;?>"><a href="#tab_1" data-toggle="tab">Vehicle </a></li>

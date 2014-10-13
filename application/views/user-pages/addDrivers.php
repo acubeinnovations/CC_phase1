@@ -263,7 +263,9 @@ $this->mysession->delete('post');
 	<div class="form-group">
 	<?php echo form_label('Date of Renewal','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'license_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of Renewal','value'=>$license_renewal_date));?>
-	   <?php echo $this->form_functions->form_error_session('license_renewal_date', '<p class="text-red">', '</p>'); ?>
+	   <?php echo $this->form_functions->form_error_session('license_renewal_date', '<p class="text-red">', '</p>'); 
+
+	  ?>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Badge','usernamelabel'); ?>

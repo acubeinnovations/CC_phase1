@@ -944,10 +944,7 @@ public function profile() {
 		$this->mysession->delete('vehicle_id');
 		} 
 		
-		if($param2!=''){
 			
-			$data['trips']=$this->trip_booking_model->getVehicleVouchers($param2);
-			}
 			
 				if($param2==''||is_numeric($param2)){
 				$data['vehicle_tab']='active';
@@ -959,7 +956,10 @@ public function profile() {
 				
 				}
 				}
-				
+				if($param2!=''){
+					$id=$this->mysession->get('vehicle_id');
+					$data['trips']=$this->trip_booking_model->getVehicleVouchers($id);
+					}
 				if($param2=='insurance'){ 
 				$data['insurance_tab']='active';
 				}
@@ -1096,7 +1096,7 @@ public function profile() {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
-	$data['title']='List Driver| '.PRODUCT_NAME;
+	$data['title']='List Vehicles| '.PRODUCT_NAME;
 	$page='user-pages/vehicleList';
 	
 	$this->load_templates($page,$data);	
