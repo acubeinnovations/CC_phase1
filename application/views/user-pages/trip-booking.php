@@ -66,7 +66,7 @@ $alternative_pickuptimepicker	= '';
 $alternative_droptimepicker 	= '';
 $alternative_dropdatepicker	    = '';
 
-$customer_type					= '';
+$customer_type					= -1;
 
 
 
@@ -178,7 +178,9 @@ $customer_type					= $data['customer_type'];
 
 $this->mysession->delete('post');
 }
-
+if($customer_type==-1){
+$customer_type='';
+}
 ?>
 
 
@@ -623,7 +625,7 @@ $this->mysession->delete('post');
 						<div class="box no-border-top rough-estimate-body">
                               <div class="box-body no-padding">
 									<div class="float-right form-group customer-type-container">
-										<?php $class="form-control customer-type";
+										<?php $class="form-control customer-type"; 
 											echo $this->form_functions->populate_dropdown('customer_type',$customer_types,$customer_type,$class,$id='',$msg="Select Customer type").br(4);?>
 									</div>
                                     <table class="table table-striped rough-estimate-table">

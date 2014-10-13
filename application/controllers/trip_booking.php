@@ -5,6 +5,7 @@ class Trip_booking extends CI_Controller {
 		parent::__construct();
 		$this->load->model("trip_booking_model");
 		$this->load->model("tarrif_model");
+		$this->load->model("driver_model");
 		$this->load->model("customers_model");
 		$this->load->helper('my_helper');
 		no_cache();
@@ -310,7 +311,7 @@ class Trip_booking extends CI_Controller {
 			$this->session->set_userdata('customer_name','');
 			$this->session->set_userdata('customer_email','');
 			$this->session->set_userdata('customer_mobile','');
-	
+			
 				if(isset($data['trip_id']) && $data['trip_id']>0){
 				$res = $this->trip_booking_model->updateTrip($dbdata,$data['trip_id']);
 				if($res==true){

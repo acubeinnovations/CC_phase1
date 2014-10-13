@@ -161,5 +161,3 @@ class Customers extends CI_Controller {
 
 	
 }
-?>
-	
