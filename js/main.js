@@ -81,6 +81,7 @@ function Trim(strInput) {
 	
 }
 
+var API_KEY='AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
 $(document).ready(function(){
 
 
@@ -612,7 +613,7 @@ var via='NO';
 }
 if(origin!='' && destination!=''){
 
-var url='https://maps.googleapis.com/maps/api/distancematrix/json?origins='+origin+'&destinations='+destination+'&mode=driving&language=	en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
+var url='https://maps.googleapis.com/maps/api/distancematrix/json?origins='+origin+'&destinations='+destination+'&mode=driving&language=	en&key='+API_KEY;
 
 $.post(base_url+'/maps/get-distance',{
 	url:url,
@@ -663,7 +664,7 @@ $('#'+insert_to).prop('disabled', true);
 $('.display-me').css('display','block');
 
 var 
-url='https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&components=country:IN&language=en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
+url='https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&components=country:IN&language=en&key='+API_KEY;
 
 $.post(base_url+'/maps/get-places',{
 	url:url,
@@ -711,7 +712,7 @@ function replaceCommas(place){
 
 function getLatLng(city,text_box_class){
 
-var url='https://maps.googleapis.com/maps/api/geocode/json?address='+city+'&&components=country:IN&language=en&key=AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
+var url='https://maps.googleapis.com/maps/api/geocode/json?address='+city+'&&components=country:IN&language=en&key='+API_KEY;
 var text_box_class = text_box_class;
 $.post(base_url+'/maps/get-latlng',{
 	url:url
@@ -1241,7 +1242,7 @@ if(error==false){
 			extrafuel:extrafuel,
 			driver_id:driver_id,
 			totexpense:totexpense,
-			no_of_days:no_of_days,
+			no_of_days:no_of_days
 			
 		},function(data){
 		  if(data!='false'){
