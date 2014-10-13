@@ -74,16 +74,16 @@ echo form_close();?></td>
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr>	
-						 <th>Sl No</th>
-					    <th>Trip ID</th>
-					    <th>Customer</th>
-					    <th>Pickup Date</th>
-					    <th>Pickup Loc</th>	
-						<th>Drop Loc</th>	
-						 <th>Status</th>
-						<th>Vehicle</th>
-						<th>Driver</th>
-						 <th>Action</th>
+						
+					    <th style="width:5%">Trip ID</th>
+					    <th style="width:15%">Customer</th>
+					    <th style="width:10%">Pickup Date</th>
+					    <th  style="width:10%">Pickup Loc</th>	
+						<th style="width:10%">Drop Loc</th>	
+						 <th style="width:10%">Status</th>
+						<th style="width:10%">Vehicle</th>
+						<th style="width:10%">Driver</th>
+						 <th style="width:20%">Action</th>
 					</tr>
 					<?php
 					
@@ -102,12 +102,16 @@ echo form_close();?></td>
 						}
 					?>
 					<tr>
-						<td><?php echo $trip_sl_no;?></td>
+						
 						<td><?php echo $trips[$trip_index]['id'];?></td>
 					    <td><?php echo $customers[$trips[$trip_index]['customer_id']];?></td>
 					    <td><?php echo $pickdate; ?></td>
-						 <td><?php echo $trips[$trip_index]['pick_up_city'];?></td>
-						 <td><?php echo $trips[$trip_index]['drop_city'];?></td>
+						 <td><?php echo $trips[$trip_index]['pick_up_city'].br();
+									 echo $trips[$trip_index]['pick_up_area'];
+						 ?></td>
+						 <td><?php echo $trips[$trip_index]['drop_city'].br();
+									echo $trips[$trip_index]['drop_area'];
+						 ?></td>
 					    <td>
 							<span class="label <?php echo $status_class[$trips[$trip_index]['trip_status_id']]; ?>"><?php echo $trip_statuses[$trips[$trip_index]['trip_status_id']];?></span> 
 						
