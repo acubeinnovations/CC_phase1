@@ -17,16 +17,16 @@ class Organization_model extends CI_Model {
 					$this->set_session();
           			  return true;
 				}else{
-				 $this->mysession->set('user_status_error','User Not Active.');
+				 $this->mysession->set('user_status_error','User is Not Active.');
 				return false;
 				}
 			}else{
-				$this->mysession->set('user_type_error','Login with Organization or Front desk credentials.');
+				$this->mysession->set('user_type_error','Please Login with Organization or Front desk credentials.');
 				return false;
 			}
             
         }else{
-		$this->mysession->set('password_error','Password Incorrect');
+		$this->mysession->set('password_error','Entered Password is Incorrect');
         return false;
 		}
     }
@@ -35,7 +35,7 @@ class Organization_model extends CI_Model {
 		if($query->num_rows()>0){
 		$org_res=$query->row_array(); 
 		$qry=$this->db->get_where('users',array('organisation_id'=>$this->session->userdata('organisation_id')));
-		$user_res=$qry->row_array();
+		$user_res=$qry->row_array(); print_r($user_res);
 		$data=array('org_res'=>$org_res,'user_res'=>$user_res);
 		return $data;
 		}else {

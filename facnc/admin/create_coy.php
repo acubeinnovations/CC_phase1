@@ -108,8 +108,14 @@ function handle_submit()
 	if (!check_data())
 		return false;
 
-	if ($selected_id==-1)
+	if(isset($_POST['cnc_org_id'])){
+		$selected_id = $_POST['cnc_org_id'];
+	}else{
+		if ($selected_id==-1)
 		$selected_id = count($db_connections);
+	}
+
+	
 
 	$new = !isset($db_connections[$selected_id]);
 
@@ -133,6 +139,7 @@ function handle_submit()
 			$db_connections[$selected_id]['tbpref'] = "";
 
 		$conn = $db_connections[$selected_id];
+		
 		if (($db = db_create_db($conn)) == 0)
 		{
 			display_error(_("Error creating Database: ") . $conn['dbname'] . _(", Please create it manually"));
@@ -144,13 +151,14 @@ function handle_submit()
 			} 
 			else
 			{
-				/*if (!isset($_POST['admpassword']) || $_POST['admpassword'] == "")
-					$_POST['admpassword'] = "password";
-				update_admin_password($conn, md5($_POST['admpassword']));*/
+				
 				update_fa_account_in_organisations($_POST['cnc_org_id']);
 				$cnc_org_admin = get_cnc_org_admin($_POST['cnc_org_id']);
-				if($cnc_org_admin)
+				if($cnc_org_admin){
 					sync_cnc_org_login($conn, $cnc_org_admin['username'],$cnc_org_admin['password']);
+					
+					update_fa_account_in_users($cnc_org_admin['id'],1);
+				}
 			}	
 		}
 		set_global_connection();
@@ -253,6 +261,8 @@ function display_companies()
 {
 	global $def_coy, $db_connections;
 
+	//echo "<pre>";print_r($db_connections);echo "</pre>";exit;
+
 	$coyno = $_SESSION["wa_current_user"]->company;
 
 	echo "
@@ -274,7 +284,7 @@ function display_companies()
 	$k=0;
 	$conn = $db_connections;
 	$n = count($conn);
-	for ($i = 0; $i < $n; $i++)
+	/*for ($i = 0; $i < $n; $i++)
 	{
 		if ($i == $def_coy)
 			$what = _("Yes");
@@ -303,6 +313,36 @@ function display_companies()
 		//label_cell( $i == $coyno ? '' :
 			//"<a href='javascript:deleteCompany($i, $name)'>$delete</a>");
 		end_row();
+	}*/
+
+	foreach($conn as $key=>$coy){
+		if($key == $def_coy)
+			$what = _("Yes");
+		else
+			$what = _("No");
+
+		if ($key == $coyno)
+    		start_row("class='stockmankobg'");
+    		else
+    		alt_table_row_color($k);
+
+		label_cell($coy['name'],'width=300');
+		//label_cell($conn[$i]['host']);
+		//label_cell($conn[$i]['dbuser']);
+		//label_cell($conn[$i]['dbname']);
+		label_cell($coy['tbpref'],'width=100');
+		label_cell($what,'width=150');
+		$edit = _("Edit");
+		$delete = _("Delete");
+		if (user_graphic_links())
+		{
+			$edit = set_icon(ICON_EDIT, $edit);
+			$delete = set_icon(ICON_DELETE, $delete);
+		}
+
+    		$name = "\"".$coy['name']."\"";
+		end_row();
+
 	}
 
 	end_table();

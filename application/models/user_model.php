@@ -15,6 +15,7 @@ class user_model extends CI_Model {
 		if($succes > 0) {
 		$this->session->set_userdata(array('dbSuccess'=>'Profile Updated Successfully'));
 		}
+		return true;
     }
    	function changePassword($data) {
 		$this->db->from('users');
@@ -104,7 +105,12 @@ class user_model extends CI_Model {
 	$count=$qry->num_rows();
 	return $qry->result_array();
 	 
-}
+	}
+	public function getVehicleDetails($id){
+	$query="SELECT vehicles.registration_number,vehicles.vehicle_model_id FROM `vehicles` INNER JOIN vehicle_drivers where vehicles.id=vehicle_drivers.vehicle_id and vehicle_drivers.driver_id='.$id.' and vehicle_drivers.to_date='9999-12-30'";
+	$qry=$this->db->query($query);
+	return $qry->row_array();
+	}
    public function getDriverDetails($arry){
    $qry=$this->db->where($arry);
    $qry=$this->db->get('drivers');
@@ -168,19 +174,10 @@ class user_model extends CI_Model {
 	return $qry->result_array();
 	
 	}
-	/*public function getValueArray($tbl,$id){
-		$qry=$this->db->where('id',$id);
-		$qry=$this->db->get($tbl); 
-		$count=$qry->num_rows();
-			$l= $qry->result_array();
-			for($i=0;$i<$count;$i++){
-			$values[$l[$i]['id']]=$l[$i]['name'];
-			}
-			if(!empty($values)){
-			return $values; 
-			}
-			else{
-			return false;
-			}
-	}*/
+	public function getOwnerDetails($id){
+	$qry=$this->db->select('mobile,address');
+	$qry=$this->db->where('id',$id);
+	$qry=$this->db->get('vehicle_owners');
+	return $qry->row_array();
+	}
 }

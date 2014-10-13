@@ -34,7 +34,7 @@ add_js_file('payalloc.js');
 if(isset($_GET['SupplierPayment'])){//get supplier reference
 	//supplier id
 	$_POST['supplier_id'] = get_cnc_supplier_id($_GET['SupplierPayment']);
-	$supplier = get_supplier($_POST['supplier_id']);
+	$supplier = get_supplier($_POST['supplier_id']);print_r($supplier);
 	page(_($help_context = "Payment Entry"), false, false, "", $js);	
 }
 elseif (isset($_GET['supplier_id']))

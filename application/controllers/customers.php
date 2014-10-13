@@ -45,7 +45,7 @@ class Customers extends CI_Controller {
 		$this->set_customer_session($res);
 		}
 		}else{
-		return false;
+		echo false;
 		}
 		
 		}

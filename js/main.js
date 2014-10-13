@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 $('.settings-add').click(function(){
 var trigger = $(this).parent().prev().prev().find('#editbox').attr('trigger');
 if(trigger=='true'){
@@ -13,6 +14,37 @@ $('.settings-delete').click(function(){
 $(this).siblings().find(':submit').trigger('click');
 });
 });
+//masters
+ var base_url=window.location.origin;
+	$('select').change(function(){ 
+	 var edit=$('.edit').attr('for_edit');
+	  if(edit=='false'){
+		    $id=$(this).val();
+			$tbl=$(this).attr('tblname');
+			$obj=$(this);
+	//$(this).attr('trigger',false);
+	
+	  $(this).next().attr('trigger',false);
+	  $('.edit').attr('for_edit',true);
+	  
+	
+	  $.post(base_url+"/vehicle/getDescription",
+		  {
+			id:$id,
+			tbl:$tbl
+		  },function(data){
+		  
+				var values=data.split(",",3);//alert($(this).parent().find('#id').attr('id'));
+				  $obj.parent().find('#id').val(values[0]);
+				  $obj.parent().find('#editbox').val(values[2]);
+				  $obj.parent().next().find('#description').val(values[1]);
+				
+				$obj.hide();
+				$obj.parent().find('#editbox').show();
+		});
+		}	
+			
+	});
 
 //for tarrif trigger
 $(document).ready(function(){
@@ -52,7 +84,7 @@ function Trim(strInput) {
 var API_KEY='AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
 $(document).ready(function(){
 
-var base_url=window.location.origin;
+
 
 //trip_bookig page-js start
 var pathname = window.location.pathname.split("/");
@@ -316,7 +348,7 @@ $('.add-reccurent-dates').attr('count',Number(count)+1);
 });
 
 //for checking user in db
-$('#email,#mobile').on('keyup focus focusout click blur',function(){
+$('#email,#mobile').on('keyup click',function(){
 var email=$('#email').val();
 var mobile=$('#mobile').val();
 	if(Trim(email)=="" && Trim(mobile)==""){
@@ -365,7 +397,7 @@ var mobile=$('#mobile').val();
 	});
 //guest passengerchecking in db
 
-	$('#guestemail,#guestmobile').on('keyup focus focusout click blur',function(){
+	$('#guestemail,#guestmobile').on('keyup click',function(){
 var email=$('#guestemail').val();
 var mobile=$('#guestmobile').val();
 	
@@ -629,7 +661,7 @@ function placeAutofillGenerator(city,ul_class,insert_to){
 var insert_to=insert_to;
 $('#'+insert_to).prop('disabled', true);
 
-$('.overlay-container').css('display','block');
+$('.display-me').css('display','block');
 
 var 
 url='https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&components=country:IN&language=en&key='+API_KEY;
@@ -641,7 +673,7 @@ $.post(base_url+'/maps/get-places',{
 if(data!='false'){
 $('.'+ul_class).html(data);
 $('.'+ul_class).parent().addClass('open');
-$('.overlay-container').css('display','none');
+$('.display-me').css('display','none');
 $('#'+insert_to).prop('disabled', false);
 }
 
@@ -743,13 +775,13 @@ $('#tarrif').on('change',function(){
 
 SetRoughEstimate();
 });
-
+	
 function SetRoughEstimate(){
 
 var additional_kilometer_rate = $('#tarrif option:selected').attr('additional_kilometer_rate');
 var minimum_kilometers = $('#tarrif option:selected').attr('minimum_kilometers');
 var rate = $('#tarrif option:selected').attr('rate');
-var estimated_distance = $('.estimated-distance-of-journey').attr('estimated-distance-of-journey');
+var estimated_distance = 2*Number($('.estimated-distance-of-journey').attr('estimated-distance-of-journey'));
 
 var extra_charge=0;
 
@@ -851,12 +883,12 @@ if(vehicle_type!=-1 && vehicle_ac_type!=-1 && pickupdate!='' && pickuptime!='' &
 
 var pickupdatetime = pickupdate+' '+pickuptime+':00';
 var dropdatetime   = dropdate+' '+droptime+':00';
-$('.overlay-container').css('display','block');
+$('.display-me').css('display','block');
 generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id);
 generateTariffs(vehicle_type,vehicle_ac_type,tarif_id);
 
 }else if(vehicle_type!=-1 && vehicle_ac_type!=-1){
-$('.overlay-container').css('display','block');
+$('.display-me').css('display','block');
 generateTariffs(vehicle_type,vehicle_ac_type,tarif_id);
 
 }
@@ -895,7 +927,7 @@ function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,d
 					alert('No Available Vehicles');
 					
 			}
-			$('.overlay-container').css('display','none');
+			$('.display-me').css('display','none');
 		   });
 
 }
@@ -920,7 +952,7 @@ function generateTariffs(vehicle_type,vehicle_ac_type,tarif_id=''){
 			  $('#tarrif').append($("<option rate='"+data.data[i].rate+"' additional_kilometer_rate='"+data.data[i].additional_kilometer_rate+"' minimum_kilometers='"+data.data[i].minimum_kilometers+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' "+selected+"></option>").attr("value",data.data[i].id).text(data.data[i].title));
 				
 			}
-			$('.overlay-container').css('display','none');
+			$('.display-me').css('display','none');
 			if(tarif_id!=''){
 
 			SetRoughEstimate();
@@ -928,7 +960,7 @@ function generateTariffs(vehicle_type,vehicle_ac_type,tarif_id=''){
 			}else{
 			 $('#tarrif option').remove();
 			 $('#tarrif').append($("<option rate='-1' additional_kilometer_rate='-1' minimum_kilometers='-1'></option>").attr("value",'-1').text('--Select Tariffs--'));
-				$('.overlay-container').css('display','none');
+				$('.display-me').css('display','none');
 			}
 			
 		  });
@@ -1081,6 +1113,8 @@ $('.trip-voucher-save').attr('driver_id',driver_id);
 				$('.trip-voucher-save').attr('additional_kilometer_rate',data[0].additional_kilometer_rate);
 				$('.trip-voucher-save').attr('minimum_kilometers',data[0].minimum_kilometers);
 				$('.trip-voucher-save').attr('no_of_days',no_of_days);
+				//$('.trip-voucher-save').attr('driver_bata',data[0].driver_bata);
+				
 				}
 			});
 			}
@@ -1119,6 +1153,7 @@ var rate=$('.trip-voucher-save').attr('rate');
 var additional_kilometer_rate=$('.trip-voucher-save').attr('additional_kilometer_rate');
 var minimum_kilometers=$('.trip-voucher-save').attr('minimum_kilometers');
 var no_of_days=$('.trip-voucher-save').attr('no_of_days');
+//var driver_bata=$('.trip-voucher-save').attr('driver_bata');
 
 var startkm=$('.startkm').val();
 var endkm=$('.endkm').val();
@@ -1168,7 +1203,7 @@ var statetax=$('.statetax').val();
 var nighthalt=$('.nighthalt').val();
 var extrafuel=$('.extrafuel').val();
 
-
+totexpense=Number(totexpense)+Number(tollfee)+Number(parkingfee)+Number(nighthalt);
 
 var trip_id=$(this).attr('trip_id');
 var driver_id=$(this).attr('driver_id');
@@ -1206,7 +1241,9 @@ if(error==false){
 			nighthalt:nighthalt,
 			extrafuel:extrafuel,
 			driver_id:driver_id,
-			totexpense:totexpense
+			totexpense:totexpense,
+			no_of_days:no_of_days,
+			
 		},function(data){
 		  if(data!='false'){
 				window.location.replace(base_url+'/account/front_desk/NewDelivery/'+data);
@@ -1238,36 +1275,7 @@ $(this).siblings().find(':submit').trigger('click');
 
 
 // device-page js end
- 
-	$('select').change(function(){ 
-	 var edit=$('.edit').attr('for_edit');
-	  if(edit=='false'){
-		    $id=$(this).val();
-			$tbl=$(this).attr('tblname');
-			$obj=$(this);
-	//$(this).attr('trigger',false);
-	
-	  $(this).next().attr('trigger',false);
-	  $('.edit').attr('for_edit',true);
-	  
-	
-	  $.post(base_url+"/vehicle/getDescription",
-		  {
-			id:$id,
-			tbl:$tbl
-		  },function(data){
-		  
-				var values=data.split(" ",3);//alert($(this).parent().find('#id').attr('id'));
-				  $obj.parent().find('#id').val(values[0]);
-				  $obj.parent().find('#editbox').val(values[2]);
-				  $obj.parent().next().find('#description').val(values[1]);
-				
-				$obj.hide();
-				$obj.parent().find('#editbox').show();
-		});
-		}	
-			
-	});
+
 	
 	//add tarrif page js start
 	//$('#fromdatepicker').datetimepicker({timepicker:false,format:'Y-m-d'});

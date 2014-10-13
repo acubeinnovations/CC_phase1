@@ -335,6 +335,25 @@ class account_model extends CI_Model {
 		}
 	}
 
+ 	function edit_user($data=array())
+	{
+		$fa_user_table = $this->session->userdata('organisation_id')."_users";
+		
+		if($this->check_fa_table_exists($fa_user_table))
+		{
+			$data1 = array(
+					'real_name'=> $data['firstname']." ".$data['lastname'],
+					'phone'=> $data['phone'],
+					'email' => $data['email']
+					);
+			$this->db->where('id',$data['fa_account'] );
+			$this->db->update($fa_user_table,$data1);
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 
 }
 ?>

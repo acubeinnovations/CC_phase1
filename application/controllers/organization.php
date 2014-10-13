@@ -38,13 +38,13 @@ public function __construct()
 			 $username=$this->input->post('username');
 			 $this->organization_model->LoginAttemptsChecks($username);
 			 if( $this->session->userdata('isloginAttemptexceeded')==false){
-			 $this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[15]|xss_clean');
-			 $this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|xss_clean');
+			 $this->form_validation->set_rules('username','Username','trim|required|min_length[3]|max_length[20]|xss_clean');
+			 $this->form_validation->set_rules('password','Password','trim|required|min_length[3]|max_length[20]|xss_clean');
 			 } else {
 			 $captcha = $this->input->post('captcha');
 			 $this->form_validation->set_rules('captcha', 'Captcha', 'trim|required|callback_captcha_check');
-			 $this->form_validation->set_rules('username','Username','trim|required|min_length[4]|max_length[15]|xss_clean');
-			 $this->form_validation->set_rules('password','Password','trim|required|min_length[5]|max_length[12]|xss_clean');
+			 $this->form_validation->set_rules('username','Username','trim|required|min_length[3]|max_length[20]|xss_clean');
+			 $this->form_validation->set_rules('password','Password','trim|required|min_length[3]|max_length[20]|xss_clean');
 			}
 			 if($this->form_validation->run()!=False){
 			 $username = $this->input->post('username');
@@ -151,7 +151,6 @@ public function __construct()
 		$data['name']=$org_res['name'];
 		$data['hname']  = $org_res['name'];;
 		$data['addr']=$org_res['address'];
-
 		$data['user_id']=$user_res['id'];
 		$data['uname']=$user_res['username'];
 		$data['fname']=$user_res['first_name'];
@@ -367,21 +366,22 @@ public function __construct()
 		
 		$data['title']='Profile Update |'.PRODUCT_NAME;
 		if(isset($_REQUEST['user-profile-update'])){
-		
+		echo $this->input->post('fa_account');exit;
 			$data['firstname']= trim($this->input->post('firstname'));
-		    $data['lastname'] = trim($this->input->post('lastname'));
-		    $data['address']  = $this->input->post('address');
-		    $data['username'] = $this->input->post('husername');
-		    $data['email'] 	  = $this->input->post('email');
-		    $data['phone']    = $this->input->post('phone');
+			$data['lastname'] = trim($this->input->post('lastname'));
+			$data['address']  = $this->input->post('address');
+			$data['username'] = $this->input->post('husername');
+			$data['email'] 	  = $this->input->post('email');
+			$data['phone']    = $this->input->post('phone');
 			$data['id']		  = $this->input->post('id');
 			$data['status']   =   $this->input->post('status');
+			$data['fa_account']		  = $this->input->post('fa_account');
 			
 	        
-		$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean');
-		$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean');
-		$this->form_validation->set_rules('address','Address','trim|required|min_length[10]|xss_clean');
-		//$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[users.username]');
+			$this->form_validation->set_rules('firstname','First Name','trim|required|min_length[2]|xss_clean');
+			$this->form_validation->set_rules('lastname','Last Name','trim|required|min_length[2]|xss_clean');
+			$this->form_validation->set_rules('address','Address','trim|required|min_length[10]|xss_clean');
+			//$this->form_validation->set_rules('username','Username','trim|required|min_length[5]|max_length[20]|xss_clean|is_unique[users.username]');
 		if($this->input->post('email')==$this->input->post('hmail')){
 			$this->form_validation->set_rules('email','Email','trim|required|valid_email|xss_clean');
 			}
@@ -400,6 +400,12 @@ public function __construct()
 		$res    		   = $this->organization_model->updateUser($data);
 
 		if($res == true) { 
+
+		   //fa user edit
+		   $this->load->model('account_model');
+		   $this->account_model->edit_user($data);
+                   
+		   
 	   	    $this->session->set_userdata(array('dbSuccess'=>'User Profile Updated Succesfully..!'));
 		    $this->session->set_userdata(array('dbError'=>''));
 		    redirect(base_url().'organization/admin/front-desk/list');
@@ -415,6 +421,7 @@ public function __construct()
 		$data['id']=$result['id'];
 		$data['username']=$result['username'];
 		$data['firstname']=$result['first_name'];
+		$data['fa_account']=$result['fa_account'];
 		$data['lastname']=$result['last_name'];
 		$data['address']=$result['address'];
 		$data['email']=$result['email'];

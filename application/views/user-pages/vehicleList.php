@@ -26,8 +26,8 @@
 					    <td><?php echo form_input(array('name'=>'reg_num','class'=>'form-control','id'=>'reg_num','placeholder'=>'By Registration Number','size'=>30));?> </td>
 						 <td><?php $class="form-control";
 						echo $this->form_functions->populate_dropdown('owner',$vehicle_owners,$selected='',$class,$id='',$msg='Select Vehicle Owner')?> </td>
-						<td><?php $class="form-control";
-						echo $this->form_functions->populate_dropdown('v_type',$vehicle_types,$selected='',$class,$id='',$msg='Select Vehicle Type')?></td>
+						<!--<td><?php// $class="form-control";
+						//echo $this->form_functions->populate_dropdown('v_type',$vehicle_types,$selected='',$class,$id='',$msg='Select Vehicle Type')?></td>-->
 						<td><?php $class="form-control";
 						echo $this->form_functions->populate_dropdown('v_model',$vehicle_models,$selected='',$class,$id='',$msg='Select Vehicle Model')?></td>
 						
@@ -48,22 +48,24 @@
 				<tbody>
 					<tr>
 					    <th>Registration Number </th>
-					    <th>Vehicle Type</th>
 						<th>Vehicle Owner</th>
+						<th>Owner's Contact Info</th>
+						<th>Owner's Location</th>
 						<th>Vehicle Model</th>
 					    
 					</tr>
 					<?php
-					if(isset($values)){ 
+					if(isset($values)){  //print_r($values);exit;
 					foreach ($values as $det): 
 				
 					?>
 					<tr> 
-					    <td><?php echo $det['registration_number'];?></td>
-						<td><?php  if($det['vehicle_type_id']<=0){ echo '';}else{echo $vehicle_types[$det['vehicle_type_id']];}?></td>
+					    <td><?php  echo anchor(base_url().'organization/front-desk/vehicle/'.$det['id'],$det['registration_number']).nbs(3);?></td>
 						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $vehicle_owners[$det['vehicle_owner_id']];}?></td>
+						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['mobile'];} ?></td>
+						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['address'];} ?></td>
 						<td><?php if($det['vehicle_model_id']<=0){ echo '';}else{echo $vehicle_models[$det['vehicle_model_id']];}?></td>
-						<td><?php echo anchor(base_url().'organization/front-desk/vehicle/'.$det['id'], 'Edit','class="btn btn-primary"');?></td>
+						
 						<td><?php ?></td>
 					
 					    	

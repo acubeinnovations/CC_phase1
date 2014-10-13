@@ -8,6 +8,7 @@ if(isset($values)){
 	$email		= 	$values[0]->email; 
 	$phone		= 	$values[0]->phone;	
 	$address	= 	$values[0]->address; 
+	$fa_account	= 	$values[0]->fa_account; 
 }else if(isset($postvalues)){
  $user_id=$this->session->userdata('id');
 	$username	=	$postvalues['username'];
@@ -16,7 +17,7 @@ if(isset($values)){
 	$email		= 	$postvalues['email']; 
 	$phone		= 	$postvalues['phone']; 
 	$address	= 	$postvalues['address']; 
-
+	$fa_account	= 	$postvalues['fa_account']; 
 }else{
 	$username=	'';
 	$Firstname= ''; 
@@ -24,7 +25,7 @@ if(isset($values)){
 	$email= 	''; 
 	$phone= 	''; 
 	$address= 	''; 
-
+	$fa_account= 	'';
 }
 ?>
 	
@@ -57,9 +58,11 @@ if(isset($values)){
 			</div>
 			<div class="div-with-50-percent-width-with-margin-10">
 				<div class="form-group">
-					<?php echo form_label('Phone','phonelabel'); ?>
+					<?php echo form_label('Phone','phonelabel');?>
 				    <?php echo form_input(array('name'=>'phone','class'=>'form-control','placeholder'=>'Enter Phone','value'=>$phone)); 
-					if (isset($user_id)) {  echo form_hidden('hphone',$phone); }?>
+					if (isset($user_id)) {  echo form_hidden('hphone',$phone); 
+					
+					echo form_hidden('fa_account',$fa_account); }?>
 					<?php echo form_error('phone', '<p class="text-red">', '</p>'); ?>
 				</div>
 				<div class="form-group">
