@@ -191,8 +191,7 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'organization/front-desk/customer';?>"><i class="fa fa-angle-double-right"></i>Add Customer</a></li>
-                            <li><a href="<?php echo base_url().'organization/front-desk/customers';?>"><i class="fa fa-angle-double-right"></i>Customers</a></li> 
+                            <li><a href="<?php echo base_url().'organization/front-desk/customers';?>"><i class="fa fa-angle-double-right"></i>Manage Customers</a></li> 
                                 
                             </ul>
                         </li>

@@ -125,7 +125,8 @@ class User extends CI_Controller {
 		$condition='';
 	    $per_page=10;
 	    $like_arry='';
-	    $where_arry='';
+	    $org_id=$this->session->userdata('organisation_id');
+		$where_arry['organisation_id']=$org_id;
 	if(isset($_REQUEST['search'])){
 		$title = $this->input->post('search_title');
 		$trip_model_id = $this->input->post('search_trip_model');
@@ -159,6 +160,7 @@ class User extends CI_Controller {
 	}
 	    
 		$tbl="tariff_masters";
+		$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 		$baseurl=base_url().'organization/front-desk/tarrif-masters/';
 		$uriseg ='4';
 		if($param2==''){
@@ -192,17 +194,18 @@ class User extends CI_Controller {
 	}	//start
 		$condition='';
 	    $per_page=10;
-	    $where_arry='';
+	    $org_id=$this->session->userdata('organisation_id');
+		$where_arry['organisation_id']=$org_id;
 	if(isset($_REQUEST['search'])){
 		$fdate = $this->input->post('search_from_date');
 		$tdate = $this->input->post('search_to_date');
 		//valid date check
-		if(!$this->date_check($fdate)){
+		/*if(!$this->date_check($fdate)){
 	$this->mysession->set('Err_from_date','Invalid From Date for Tariff Search!');
 	}
 		if(!$this->date_check($tdate)){
 	$this->mysession->set('Err_to_date','Invalid To Date for Tariff Search!');
-	}
+	}*/
 		if($fdate!=''&& $tdate==''){
 		$tdate=date('Y-m-d');
 		}
@@ -216,7 +219,7 @@ class User extends CI_Controller {
 	if((isset($_REQUEST['search_from_date'])|| isset($_REQUEST['search_to_date']))&& isset($_REQUEST['search'])){
 	if($param2==''){
 	$param2=0;
-	}
+	} 
 	if(($_REQUEST['search_from_date']>= $tdate)){
 	$this->session->set_userdata('Date_err','Not a valid search');
 	}
@@ -227,11 +230,11 @@ class User extends CI_Controller {
 	if($_REQUEST['search_to_date']!=null){
 	$where_arry['to_date <=']= $_REQUEST['search_to_date'];
 	}
-	else{
+	/*else{
 	$where_arry['to_date <=']= $tdate;
-	}
+	}*/
 	
-	$this->session->set_userdata(array('condition'=>array("where"=>$where_arry)));
+	$this->mysession->set('condition',array("where"=>$where_arry));
 	
 	//print_r($where_arry);
 	}
@@ -239,6 +242,7 @@ class User extends CI_Controller {
 	}
 	    
 		$tbl="tariffs";
+		$this->mysession->set('condition',array("where"=>$where_arry));
 		$baseurl=base_url().'organization/front-desk/tarrif/';
 		$uriseg ='4';
 		if($param2==''){
