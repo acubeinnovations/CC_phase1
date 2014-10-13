@@ -88,11 +88,11 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('state','State','trim|required|xss_clean');
 	 $this->form_validation->set_rules('pin_code','Pin Code','trim|required|xss_clean|regex_match[/^[0-9]{6}$/]');
 	 $this->form_validation->set_rules('license_number','License Number','trim|required|xss_clean');
-	 $this->form_validation->set_rules('phone','Phone','trim|required|xss_clean|regex_match[/^[0-9]{11}$/]');
+	 $this->form_validation->set_rules('phone','Phone Number with 11 Digits','trim|required|xss_clean|regex_match[/^[0-9]{11}$/]');
 		if($data['mobile']==$hmob){
-		$this->form_validation->set_rules('mobile','Mobile','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
+		$this->form_validation->set_rules('mobile','10 digit Mobile Number','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
 	 }else{
-	 $this->form_validation->set_rules('mobile','Mobile','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[drivers.mobile]');
+	 $this->form_validation->set_rules('mobile','10 digit Mobile Number ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[drivers.mobile]');
 	 }if($data['email']==$hmail){
 	 $this->form_validation->set_rules('email','Email','trim|required|xss_clean|valid_email');
 	 }
