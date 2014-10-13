@@ -133,7 +133,7 @@ $this->mysession->delete('post');
         
         <div class="tab-pane active" id="tab_1">
 
-    <?php if($this->session->userdata('marital_status_id') != ''||$this->session->userdata('bank_account_type_id') != ''||$this->session->userdata('id_proof_type_id') != ''||$this->session->userdata('Err_sal') != ''||$this->mysession->get('Err_join') != ''||$this->mysession->get('Err_badge') != ''){ ?>
+    <?php if($this->session->userdata('marital_status_id') != ''||$this->session->userdata('bank_account_type_id') != ''||$this->session->userdata('id_proof_type_id') != ''||$this->session->userdata('Err_sal') != ''||$this->mysession->get('Err_join') != ''||$this->mysession->get('Err_badge') != ''||$this->mysession->get('Err_license') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -145,6 +145,7 @@ $this->mysession->delete('post');
 													echo $this->session->userdata('Err_blood_group').br();
 													echo $this->mysession->get('Err_badge').br();
 													echo $this->mysession->get('Err_join').br();
+													echo $this->mysession->get('Err_license').br();
 														$this->session->set_userdata(array('marital_status_id'=>''));
 														$this->session->set_userdata(array('bank_account_type_id'=>''));
 														$this->session->set_userdata(array('id_proof_type_id'=>''));
@@ -152,6 +153,7 @@ $this->mysession->delete('post');
 														$this->session->set_userdata(array('Err_blood_group'=>''));
 														$this->mysession->delete('Err_badge');
 														$this->mysession->delete('Err_join');
+														$this->mysession->delete('Err_license');
 										?>
                                     </div>
 <?php  } ?>        
@@ -248,7 +250,7 @@ $this->mysession->delete('post');
            <?php echo form_input(array('name'=>'date_of_joining','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of Joining','value'=>$date_of_joining));?>
 	   <?php echo $this->form_functions->form_error_session('date_of_joining', '<p class="text-red">', '</p>'); ?>
         </div>	
-	
+			<div class="hide-me"><?php echo form_input(array('name'=>'h_join','value'=>$date_of_joining));?></div>
 		</fieldset> </div>
 		
 	<div class="width-30-percent-with-margin-left-20-Driver-View">
@@ -262,11 +264,12 @@ $this->mysession->delete('post');
 	
 	<div class="form-group">
 	<?php echo form_label('Date of Renewal','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'license_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of Renewal','value'=>$license_renewal_date));?>
+           <?php echo form_input(array('name'=>'license_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of License Renewal','value'=>$license_renewal_date));?>
 	   <?php echo $this->form_functions->form_error_session('license_renewal_date', '<p class="text-red">', '</p>'); 
 
 	  ?>
         </div>
+		<div class="hide-me"><?php echo form_input(array('name'=>'h_license','value'=>$license_renewal_date));?></div>
 	<div class="form-group">
 	<?php echo form_label('Badge','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'badge','class'=>'form-control','id'=>'badge','placeholder'=>'Badge','value'=>$badge)); ?>
@@ -275,8 +278,10 @@ $this->mysession->delete('post');
 	<div class="form-group">
 	<?php echo form_label('Date of Badge Renewal','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'badge_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>'Date of Badge Renewal','value'=>$badge_renewal_date));?>
-	   <?php echo $this->form_functions->form_error_session('badge_renewal_date', '<p class="text-red">', '</p>'); ?>
+	   <?php echo $this->form_functions->form_error_session('badge_renewal_date', '<p class="text-red">', '</p>'); 
+				?>
         </div>
+		<div class="hide-me"><?php echo form_input(array('name'=>'h_badge','value'=>$badge_renewal_date));?></div>
 	<div class="form-group">
 	<?php echo form_label('Mother Tongue','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'mother_tongue','class'=>'form-control','id'=>'mother_tongue','placeholder'=>'Mother Tongue','value'=>$mother_tongue)); ?>

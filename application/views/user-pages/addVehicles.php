@@ -309,7 +309,7 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
 	<?php echo form_label('Permit Renewal Date','usernamelabel'); ?>
            <?php  echo form_input(array('name'=>'permit_date','class'=>'fromdatepicker form-control' ,'value'=>$permit_date));?>
 	   <?php echo $this->form_functions->form_error_session('permit_date', '<p class="text-red">', '</p>'); ?>
-        </div>	
+        </div>	<div class="hide-me"><?php echo form_input(array('name'=>'h_permit','value'=>$permit_date));?></div>
 	<div class="form-group">
 	<?php echo form_label('Permit Renewal Amount','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>$permit_amount)); ?>
@@ -338,7 +338,7 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 		<?php echo form_label('From Date','usernamelabel');?>
            <?php echo form_input(array('name'=>'from_date','class'=>'fromdatepicker form-control' ,'value'=>$from_date));?>
 	   <?php echo $this->form_functions->form_error_session('from_date', '<p class="text-red">', '</p>'); ?>
-        </div>
+        </div> 	<div class="hide-me"><?php echo form_input(array('name'=>'h_fdate_driver','value'=>$from_date));?></div>
 		<div class="form-group">
 		<?php echo form_label('Select Device','usernamelabel'); ?>
            <?php $class="form-control";
@@ -355,7 +355,7 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 		<?php echo form_label('From Date for Device','usernamelabel');?>
            <?php echo form_input(array('name'=>'from_date_device','class'=>'fromdatepicker form-control' ,'value'=>$from_date_device));?>
 	   <?php echo $this->form_functions->form_error_session('from_date_device', '<p class="text-red">', '</p>'); ?>
-        </div>
+        </div>	<div class="hide-me"><?php echo form_input(array('name'=>'h_fdate_device','value'=>$from_date_device));?></div>
 	<div class="form-group">
 		<?php echo form_label('Registration Number','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'reg_number','class'=>'form-control','id'=>'reg_number','value'=>$reg_number)); ?>
@@ -365,7 +365,7 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 	<?php echo form_label('Registration Date','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'reg_date','class'=>'fromdatepicker form-control' ,'value'=>$reg_date));?>
 	   <?php echo $this->form_functions->form_error_session('reg_date', '<p class="text-red">', '</p>'); ?>
-        </div>
+        </div> <div class="hide-me"><?php echo form_input(array('name'=>'h_reg','value'=>$reg_date));?></div>
 	<div class="form-group">
 	<?php echo form_label('Engine Number','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'eng_num','class'=>'form-control','value'=>$eng_num));?>
@@ -386,7 +386,7 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 	<?php echo form_label('Tax Renewal Date','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'tax_date','class'=>'fromdatepicker form-control' ,'value'=>$tax_date)); ?>
 	   <?php echo $this->form_functions->form_error_session('tax_date', '<p class="text-red">', '</p>'); ?>
-        </div>
+        </div> <div class="hide-me"><?php echo form_input(array('name'=>'h_tax','value'=>$tax_date));?></div>
 	<div class='hide-me'><?php  echo $vehicle_id;
 		echo form_input(array('name'=>'hidden_id','class'=>'form-control','value'=>$vehicle_id));?></div>
 	
@@ -497,12 +497,12 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 	<?php echo form_label('Insurance Date','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'insurance_date','class'=>'fromdatepicker form-control' ,'value'=>$ins_date)); ?>
 	   <?php echo $this->form_functions->form_error_session('insurance_date', '<p class="text-red">', '</p>'); ?>
-        </div>
+        </div> <div class="hide-me"><?php echo form_input(array('name'=>'h_ins','value'=>$ins_date));?></div>
 		<div class="form-group">
 	<?php echo form_label('Insurance Renewal Date','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'insurance_renewal_date','class'=>'fromdatepicker form-control' ,'value'=>$ins_renewal_date)); ?>
 	   <?php echo $this->form_functions->form_error_session('insurance_renewal_date', '<p class="text-red">', '</p>'); ?>
-        </div>
+        </div>  <div class="hide-me"><?php echo form_input(array('name'=>'h_renew','value'=>$ins_renewal_date));?></div>
 		<div class="form-group">
 		<?php echo form_label('Insurance Premium Amount','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'insurance_pre-amount','class'=>'form-control','id'=>'insurance_pre-amount','value'=>$ins_prem_amt)); ?>
@@ -661,7 +661,7 @@ if($this->mysession->get('loan_post_all')!=null ){
 	<?php echo form_label('EMI Payment Date','usernamelabel'); ?>
 	 <?php echo form_input(array('name'=>'emi_date','class'=>'fromdatepicker form-control' ,'value'=>$l_payment_date)); ?>
 	   <?php echo $this->form_functions->form_error_session('emi_date', '<p class="text-red">', '</p>'); ?>
-        </div>
+        </div>   <div class="hide-me"><?php echo form_input(array('name'=>'h_emi','value'=>$l_payment_date));?></div>
 		
 		<div class="form-group">
 		<?php echo form_label('Loan Agency','usernamelabel'); ?>

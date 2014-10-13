@@ -192,17 +192,22 @@ class Vehicle extends CI_Controller {
 			$data['vehicle_seating_capacity_id']=$this->input->post('seat');
 			$driver_data['driver_id']=$this->input->post('driver');
 			$driver_data['from_date']=$this->input->post('from_date');
+			$h_fdate_driver=$this->input->post('h_fdate_driver');
 			$device_data['device_id']=$this->input->post('device');
 			$device_data['from_date_device']=$this->input->post('from_date_device');
+			$h_fdate_device=$this->input->post('h_fdate_device');
 			$data['registration_number']=$this->input->post('reg_number');
 			$data['registration_date']=$this->input->post('reg_date');
+			$h_reg=$this->input->post('h_reg');
 			$data['engine_number']=$this->input->post('eng_num');
 			$data['chases_number']=$this->input->post('chases_num');
 			$data['vehicle_permit_type_id']=$this->input->post('permit');
 			$data['vehicle_permit_renewal_date']=$this->input->post('permit_date');
+			$h_permit=$this->input->post('h_permit');
 			$data['vehicle_permit_renewal_amount']=$this->input->post('permit_amount');
 			$data['tax_renewal_amount']=$this->input->post('tax_amount');
 			$data['tax_renewal_date']=$this->input->post('tax_date');
+			$h_tax=$this->input->post('h_tax');
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
 			$all_data=array('data'=>$data,'driver_data'=>$driver_data,'device_data'=>$device_data);
@@ -221,21 +226,29 @@ class Vehicle extends CI_Controller {
 					 $this->form_validation->set_rules('tax_date','Tax Date','trim|required|xss_clean');
 					 //for insurance
 $err=True;
+		if($h_fdate_driver!=$data['from_date']){
 		if(!$this->date_check($driver_data['from_date'])){
 	$err=False;
 	$this->mysession->set('Err_driver_fdate','Invalid From Date for Driver!');
 	}
+	}
+	if($h_fdate_device!=$data['from_date_device']){
 	if(!$this->date_check($device_data['from_date_device'])){
 	$err=False;
 	$this->mysession->set('Err_device_fdate','Invalid From Date for Device!');
 	}
+	}
+	if($h_reg!=$data['registration_date']){
 	if(!$this->date_check($data['registration_date'])){
 	$err=False;
 	$this->mysession->set('Err_reg_date','Invalid Registration Date!');
 	}
+	}
+	if($h_tax!=$data['tax_renewal_date']){
 	if(!$this->date_check($data['tax_renewal_date'])){
 	$err=False;
 	$this->mysession->set('Err_tax_date','Invalid Tax Renewal Date !');
+	}
 	}
 	if(preg_match('#[^0-9\.]#', $data['vehicle_permit_renewal_amount'])){
 			$this->mysession->set('Err_permit_amt','Invalid Characters on Permit Amount field!');
@@ -360,7 +373,9 @@ $err=True;
 			$vehicle_id=$this->mysession->get('vehicle_id');
 			$data['insurance_number']=$this->input->post('insurance_number');
 			$data['insurance_date']=$this->input->post('insurance_date');
+			$h_ins=$this->input->post('h_ins');
 			$data['insurance_renewal_date']=$this->input->post('insurance_renewal_date');
+			$h_renew=$this->input->post('h_renew');
 			$data['insurance_premium_amount']=$this->input->post('insurance_pre-amount');
 			$data['insurance_amount']=$this->input->post('insurance_amount');
 			$data['Insurance_agency']=$this->input->post('insurance_agency');
@@ -393,14 +408,17 @@ $err=True;
 					 
 					 //for insurance
 $err=True;
+	if($h_ins!=$data['insurance_date']){
 	if(!$this->date_check($data['insurance_date'])){
 	$err=False;
 	$this->mysession->set('Err_ins_date','Invalid Insurance Date!');
 	}
-	
+	}
+	if($h_renew!=$data['insurance_renewal_date']){
 	if(!$this->date_check($data['insurance_renewal_date'])){
 	$err=False;
 	$this->mysession->set('Err_ins_renewal','Invalid Insurance Renewal Date!');
+	}
 	}
 	if(preg_match('#[^0-9\.]#', $data['insurance_amount'])){
 			$this->mysession->set('Err_insurance_amt','Invalid Characters on  Amount field!');
@@ -464,6 +482,7 @@ $err=True;
 			$data['emi_amount']=$this->input->post('emi_amt');
 			$data['number_of_paid_emi']=$this->input->post('no_paid_emi');
 			$data['emi_payment_date']=$this->input->post('emi_date');
+			$h_emi=$this->input->post('h_emi');
 			$data['loan_agency']=$this->input->post('loan_agency');
 			$data['loan_agency_address']=$this->input->post('loan_agency_address');
 			$data['loan_agency_web']=$this->input->post('loan_agency_web');
@@ -498,9 +517,11 @@ $err=True;
 					 
 					 //for insurance
 $err=True;
+	if($h_emi!=$data['emi_payment_date']){
 	if(!$this->date_check($data['emi_payment_date'])){
 	$err=False;
 	$this->mysession->set('Err_emi_date','Invalid EMI Payment Date!');
+	}
 	}
 	if(preg_match('#[^0-9\.]#', $data['total_amount'])){
 			$this->mysession->set('Err_loan_amt','Invalid Characters on Total Amount field!');
