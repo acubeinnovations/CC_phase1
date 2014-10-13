@@ -636,7 +636,8 @@ $err=True;
 			if($res) {
 			
 				//vehicle owner enter as supplier in fa 
-				//$this->account_model->add_fa_supplier($res,"VW");
+				$this->load->model('account_model');
+				$this->account_model->add_fa_supplier($res,"VW");
 
 				$this->mysession->set('owner_Success',' Added Succesfully..!');
 				$this->mysession->set('owner_Error','');
@@ -648,8 +649,9 @@ $err=True;
 
 			$res=$this->vehicle_model->UpdateOwnerdetails($data,$owner_id); 
 			if($res==true){
-				//edit vehicle owner enter as supplier in fa 
-				//$this->account_model->edit_fa_supplier($owner_id,"VW");
+				//edit vehicle owner enter as supplier in fa
+				$this->load->model('account_model');
+				$this->account_model->edit_fa_supplier($owner_id,"VW");
 
 				$this->mysession->set('owner_Success',' Updated Succesfully..!');
 		    		$this->mysession->set('owner_Error','');
