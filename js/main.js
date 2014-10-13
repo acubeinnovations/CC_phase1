@@ -1242,7 +1242,7 @@ if(error==false){
 			extrafuel:extrafuel,
 			driver_id:driver_id,
 			totexpense:totexpense,
-			no_of_days:no_of_days,
+			no_of_days:no_of_days
 			
 		},function(data){
 		  if(data!='false'){
