@@ -125,7 +125,8 @@ class User extends CI_Controller {
 		$condition='';
 	    $per_page=10;
 	    $like_arry='';
-	    $where_arry='';
+	    $org_id=$this->session->userdata('organisation_id');
+		$where_arry['organisation_id']=$org_id;
 	if(isset($_REQUEST['search'])){
 		$title = $this->input->post('search_title');
 		$trip_model_id = $this->input->post('search_trip_model');
@@ -144,7 +145,7 @@ class User extends CI_Controller {
 	
 	if($_REQUEST['search_title']!=null){
 	
-	$like_arry=array('title'=> $_REQUEST['search_title']);
+	$like_arry=array('title'=> $_REQUEST['search_title']); 
 	}
 	if($_REQUEST['search_trip_model']>0){
 	$where_arry['trip_model_id']=$_REQUEST['search_trip_model'];
@@ -152,13 +153,14 @@ class User extends CI_Controller {
 	if($_REQUEST['search_ac_type']>0){
 	$where_arry['vehicle_ac_type_id']=$_REQUEST['search_ac_type'];
 	}
-	$this->session->set_userdata(array('condition'=>array("like"=>$like_arry,"where"=>$where_arry)));
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	
 	}
 	}
 	}
 	    
 		$tbl="tariff_masters";
+		$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 		$baseurl=base_url().'organization/front-desk/tarrif-masters/';
 		$uriseg ='4';
 		if($param2==''){
@@ -192,17 +194,18 @@ class User extends CI_Controller {
 	}	//start
 		$condition='';
 	    $per_page=10;
-	    $where_arry='';
+	    $org_id=$this->session->userdata('organisation_id');
+		$where_arry['organisation_id']=$org_id;
 	if(isset($_REQUEST['search'])){
 		$fdate = $this->input->post('search_from_date');
 		$tdate = $this->input->post('search_to_date');
 		//valid date check
-		if(!$this->date_check($fdate)){
+		/*if(!$this->date_check($fdate)){
 	$this->mysession->set('Err_from_date','Invalid From Date for Tariff Search!');
 	}
 		if(!$this->date_check($tdate)){
 	$this->mysession->set('Err_to_date','Invalid To Date for Tariff Search!');
-	}
+	}*/
 		if($fdate!=''&& $tdate==''){
 		$tdate=date('Y-m-d');
 		}
@@ -216,7 +219,7 @@ class User extends CI_Controller {
 	if((isset($_REQUEST['search_from_date'])|| isset($_REQUEST['search_to_date']))&& isset($_REQUEST['search'])){
 	if($param2==''){
 	$param2=0;
-	}
+	} 
 	if(($_REQUEST['search_from_date']>= $tdate)){
 	$this->session->set_userdata('Date_err','Not a valid search');
 	}
@@ -227,11 +230,11 @@ class User extends CI_Controller {
 	if($_REQUEST['search_to_date']!=null){
 	$where_arry['to_date <=']= $_REQUEST['search_to_date'];
 	}
-	else{
+	/*else{
 	$where_arry['to_date <=']= $tdate;
-	}
+	}*/
 	
-	$this->session->set_userdata(array('condition'=>array("where"=>$where_arry)));
+	$this->mysession->set('condition',array("where"=>$where_arry));
 	
 	//print_r($where_arry);
 	}
@@ -239,6 +242,7 @@ class User extends CI_Controller {
 	}
 	    
 		$tbl="tariffs";
+		$this->mysession->set('condition',array("where"=>$where_arry));
 		$baseurl=base_url().'organization/front-desk/tarrif/';
 		$uriseg ='4';
 		if($param2==''){
@@ -944,10 +948,7 @@ public function profile() {
 		$this->mysession->delete('vehicle_id');
 		} 
 		
-		if($param2!=''){
 			
-			$data['trips']=$this->trip_booking_model->getVehicleVouchers($param2);
-			}
 			
 				if($param2==''||is_numeric($param2)){
 				$data['vehicle_tab']='active';
@@ -959,7 +960,10 @@ public function profile() {
 				
 				}
 				}
-				
+				if($param2!=''){
+					$id=$this->mysession->get('vehicle_id');
+					$data['trips']=$this->trip_booking_model->getVehicleVouchers($id);
+					}
 				if($param2=='insurance'){ 
 				$data['insurance_tab']='active';
 				}
@@ -1096,7 +1100,7 @@ public function profile() {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
-	$data['title']='List Driver| '.PRODUCT_NAME;
+	$data['title']='List Vehicles| '.PRODUCT_NAME;
 	$page='user-pages/vehicleList';
 	
 	$this->load_templates($page,$data);	

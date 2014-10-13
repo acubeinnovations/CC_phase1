@@ -732,9 +732,18 @@ start_form();
 $cnc_voucher = false;
 if(isset($_GET['NewDelivery']) && $_GET['NewDelivery'] > 0){
 	$cnc_voucher = get_cnc_voucher($_GET['NewDelivery']);
-	$_SESSION['Items']->customer_id = get_cnc_customer_id("C".$cnc_voucher['cnc_cust_id']);
-	$customer = get_customer($_SESSION['Items']->customer_id);
-	$_SESSION['Items']->customer_name = @$cnc_voucher['customer_name'] ;
+	
+	if($cnc_voucher['group_id'] > 0){
+		$_SESSION['Items']->customer_id = get_cnc_customer_id("CG".$cnc_voucher['group_id']);
+		$customer = get_customer($_SESSION['Items']->customer_id);
+		$_SESSION['Items']->customer_name = @$cnc_voucher['group_name'];
+	}else{
+		$_SESSION['Items']->customer_id = get_cnc_customer_id("C".$cnc_voucher['cnc_cust_id']);
+		$customer = get_customer($_SESSION['Items']->customer_id);
+		$_SESSION['Items']->customer_name = @$cnc_voucher['customer_name'];
+	}
+	
+	
 	$_SESSION['Items']->customer_currency = @$customer['curr_code'] ;
 	$_SESSION['Items']->sales_type = @$customer['sales_type'] ;
 	$_SESSION['Items']->Branch = get_cnc_customer_branch($_SESSION['Items']->customer_id);

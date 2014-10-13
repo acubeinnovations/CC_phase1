@@ -78,6 +78,10 @@
 		meta_forward('purchasing/inquiry/supplier_inquiry.php','DriverPaymentInquiry='.$_GET['DriverPaymentInquiry']);
 		
 	}
+	elseif(isset($_GET['OwnerPaymentInquiry'])){
+		meta_forward('purchasing/inquiry/supplier_inquiry.php','OwnerPaymentInquiry='.$_GET['DriverPaymentInquiry']);
+		
+	}
 	elseif(isset($_GET['CustomerPayment'])){
 		meta_forward('sales/customer_payments.php','CustomerPayment='.$_GET['CustomerPayment']);
 		

@@ -41,7 +41,10 @@ $mobile='';
 						 
 					    <td><?php echo form_submit("customer_search","Search","class='btn btn-primary'");
 echo form_close();?></td>
-						
+						<td><?php echo form_open(  base_url().'organization/front-desk/customer');
+								  echo form_submit("add","Add","class='btn btn-primary'");
+								  echo form_close(); 
+						?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -52,7 +55,7 @@ echo form_close();?></td>
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr>	
-						 <th>Sl No</th>
+						 
 					     <th>Name</th>
 					    <th>DOB</th>
 					    <th>Email</th>	
@@ -65,13 +68,13 @@ echo form_close();?></td>
 					for($customer_index=0;$customer_index<count($customers);$customer_index++) {
 					?>
 					<tr>
-						<td><?php echo $customers[$customer_index]['id'];?></td>
-						<td><?php echo $customers[$customer_index]['name'];?></td>
+						
+						<td><?php echo anchor(base_url().'organization/front-desk/customer/'.$customers[$customer_index]['id'],$customers[$customer_index]['name']).nbs(3);?></td>
 					    <td><?php echo $customers[$customer_index]['dob'];?></td>
 					    <td><?php echo $customers[$customer_index]['email']; ?></td>
 						 <td><?php echo $customers[$customer_index]['mobile'];?></td>	
 						 <td><?php if($customers[$customer_index]['customer_type_id']==gINVALID || $customers[$customer_index]['customer_type_id']==0){ echo "Not set";}else{echo $customer_types[$customers[$customer_index]['customer_type_id']];}?></td>
-						<td><?php echo anchor(base_url().'organization/front-desk/customer/'.$customers[$customer_index]['id'],'Edit','class="btn btn-primary"'); ?></td>
+						
 					</tr>
 					<?php 
 						}

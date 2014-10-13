@@ -38,10 +38,13 @@ class Driver extends CI_Controller {
 	$data['email']=$this->input->post('email');
 	$hmail=$this->input->post('hmail');
 	$data['license_number']=$this->input->post('license_number');
-	$data['date_of_joining']=$this->input->post('date_of_joining');//echo $data['date_of_joining'];exit;
+	$data['date_of_joining']=$this->input->post('date_of_joining');
+	$h_join=$this->input->post('h_join');
 	$data['badge']=$this->input->post('badge');
 	$data['license_renewal_date']=$this->input->post('license_renewal_date');
+	$h_license=$this->input->post('h_license');
 	$data['badge_renewal_date']=$this->input->post('badge_renewal_date');
+	$h_badge=$this->input->post('h_badge');
 	$data['mother_tongue']=$this->input->post('mother_tongue');
 	$data['pan_number']=$this->input->post('pan_number');
 	$data['bank_account_number']=$this->input->post('bank_account_number');
@@ -85,11 +88,11 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('state','State','trim|required|xss_clean');
 	 $this->form_validation->set_rules('pin_code','Pin Code','trim|required|xss_clean|regex_match[/^[0-9]{6}$/]');
 	 $this->form_validation->set_rules('license_number','License Number','trim|required|xss_clean');
-	 $this->form_validation->set_rules('phone','Phone','trim|required|xss_clean|regex_match[/^[0-9]{11}$/]');
+	 $this->form_validation->set_rules('phone','Phone Number with 11 Digits','trim|required|xss_clean|regex_match[/^[0-9]{11}$/]');
 		if($data['mobile']==$hmob){
-		$this->form_validation->set_rules('mobile','Mobile','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
+		$this->form_validation->set_rules('mobile','10 digit Mobile Number','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
 	 }else{
-	 $this->form_validation->set_rules('mobile','Mobile','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[drivers.mobile]');
+	 $this->form_validation->set_rules('mobile','10 digit Mobile Number ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[drivers.mobile]');
 	 }if($data['email']==$hmail){
 	 $this->form_validation->set_rules('email','Email','trim|required|xss_clean|valid_email');
 	 }
@@ -110,14 +113,23 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('id_proof_type_id','ID Proof','trim|required|xss_clean');
 	 $this->form_validation->set_rules('id_proof_document_number','ID Proof Number','trim|required|xss_clean');
 	 $this->form_validation->set_rules('name_on_id_proof','ID Proof Holder','trim|required|xss_clean');
-	
+	if($h_join!=$data['date_of_joining']){
 	if(!$this->date_check($data['date_of_joining'])){
 	$err=False;
 	$this->mysession->set('Err_join','Invalid Date of Joining!');
 	}
+	}
+	if($h_badge!=$data['badge_renewal_date']){
 	if(!$this->date_check($data['badge_renewal_date'])){
 	$err=False;
 	$this->mysession->set('Err_badge','Invalid Date for Badge Renewal!');
+	}
+	}
+		if($h_license!=$data['license_renewal_date']){
+	if(!$this->date_check($data['license_renewal_date'])){
+	$err=False;
+	$this->mysession->set('Err_license','Invalid Date for License Renewal!');
+	}
 	}
 	 if($this->form_validation->run()==False|| $err==False){
 		$this->mysession->set('driver_id',$dr_id);

@@ -66,11 +66,14 @@ function get_cnc_user($userid)
 	return db_fetch_assoc($result);
 }
 
+//get trip voucher details
 function get_cnc_voucher($id = 0)
 {
 	$sql = "SELECT 
 		cust.id AS cnc_cust_id,
 		cust.name AS customer_name,
+		custg.name AS group_name,
+		custg.id AS group_id,
 		vehicle.registration_number AS vehicle_no,
 		tripmd.name AS trip_model,
 		trip.id AS trip_id,
