@@ -286,9 +286,9 @@
 		todayButton:true, // 2.1.0
 		defaultSelect:true, // 2.1.0
 		
-		scrollMonth:true,
-		scrollTime:true,
-		scrollInput:true,
+		scrollMonth:false,
+		scrollTime:false,
+		scrollInput:false,
 		
 		lazyInit:false,
 		
