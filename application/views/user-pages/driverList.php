@@ -39,26 +39,27 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="box-body table-responsive no-padding">
+		<div class="box-body table-responsive no-padding driver-list-div">
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr>
-					    <th>Driver Name</th>
-					    <th>Contact Info</th>
-					    <th>Vehicle Number</th>
-						<th>Vehicle Model</th>
-						<th>City</th>
+					    <th>Driver</th>
+					    <th>Contact Details</th>
+					    <th>Vehicle Details</th>
+						<th>Current Status</th>
+						<th></th>
 					</tr>
 					<?php
 					if(isset($values)){ 
 					foreach ($values as $det):
+					$phone_numbers='';
 					?>
-					<tr>
+					<tr><?php if($det['phone']!='' && $det['mobile']!=''){ $phone_numbers=$det['phone']." , ".$det['mobile']; }else if($det['phone']!=''){ $phone_numbers=$det['phone']; }else if($det['mobile']!=''){ $phone_numbers=$det['mobile']; }?>
 					    <td><?php echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$det['name']).nbs(3);?></td>
-					    <td><?php echo $det['phone'].",".$det['mobile']?></td>	
-						<td><?php if($v_details[$det['id']]==null){ echo '';}else{echo $v_details[$det['id']]['registration_number'];} ?></td>
-						<td><?php if($v_details[$det['id']]==null){ echo '';}else{echo $v_models[$v_details[$det['id']]['vehicle_model_id']];} ?></td>
-						<td><?php echo $det['district']?></td>
+					    <td><?php echo $phone_numbers.br().$det['present_address'].br().$det['district'];?></td>	
+						<td><?php if($v_details[$det['id']]==null){ echo '';}else{echo $v_models[$v_details[$det['id']]['vehicle_model_id']].br().$v_details[$det['id']]['registration_number'].br().'Device ID';} ?></td>
+						<td><?php ?></td>
+						<td></td>
 					</tr>
 					<?php endforeach;
 					}
