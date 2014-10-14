@@ -1283,7 +1283,9 @@ $(this).siblings().find(':submit').trigger('click');
 	$('.fromdatepicker').each(function(){
 	$(this).datetimepicker({timepicker:false,format:'Y-m-d'});
 	});
-	
+	$('.fromyearpicker').each(function(){
+	$(this).datetimepicker({timepicker:false,format:'Y'});
+	});
 	//trips page js start
 
 	$('.initialize-date-picker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});

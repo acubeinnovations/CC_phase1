@@ -74,7 +74,7 @@ $this->mysession->delete('post');
 	$name=$result['name'];
 	$place_of_birth=$result['place_of_birth'];
 	$dob=$result['dob'];
-	$blood_group=$result['blood_group'];
+	$blood_group=$result['blood_group']; 
 	$marital_status_id=$result['marital_status_id'];
 	$children=$result['children'];
 	$present_address=$result['present_address'];
@@ -133,7 +133,7 @@ $this->mysession->delete('post');
         
         <div class="tab-pane active" id="tab_1">
 
-    <?php if($this->session->userdata('marital_status_id') != ''||$this->session->userdata('bank_account_type_id') != ''||$this->session->userdata('id_proof_type_id') != ''||$this->session->userdata('Err_sal') != ''||$this->mysession->get('Err_join') != ''||$this->mysession->get('Err_badge') != ''||$this->mysession->get('Err_license') != ''){ ?>
+    <?php if($this->session->userdata('marital_status_id') != ''||$this->session->userdata('bank_account_type_id') != ''||$this->session->userdata('id_proof_type_id') != ''||$this->session->userdata('Err_sal') != ''||$this->mysession->get('Err_join') != ''||$this->mysession->get('Err_badge') != ''||$this->mysession->get('Err_license') != ''||$this->session->userdata('blood group')!= ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -146,6 +146,7 @@ $this->mysession->delete('post');
 													echo $this->mysession->get('Err_badge').br();
 													echo $this->mysession->get('Err_join').br();
 													echo $this->mysession->get('Err_license').br();
+													echo $this->session->userdata('blood group').br();
 														$this->session->set_userdata(array('marital_status_id'=>''));
 														$this->session->set_userdata(array('bank_account_type_id'=>''));
 														$this->session->set_userdata(array('id_proof_type_id'=>''));
@@ -154,6 +155,7 @@ $this->mysession->delete('post');
 														$this->mysession->delete('Err_badge');
 														$this->mysession->delete('Err_join');
 														$this->mysession->delete('Err_license');
+														$this->session->set_userdata(array('blood group'=>''));
 										?>
                                     </div>
 <?php  } ?>        
@@ -180,7 +182,14 @@ $this->mysession->delete('post');
         </div>
         <div class="form-group">
 		<?php echo form_label('Blood Group','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'blood_group','class'=>'form-control','id'=>'blood_group','placeholder'=>'Blood Group','value'=>$blood_group)); ?>
+           <?php 
+		$class="form-control";
+		$msg="Blood Group ";
+		$name="blood_group";
+		$id='blood_group';
+		$group=array('A+','A-','B+','B-','O+','O-','AB+','AB-');
+	echo $this->form_functions->populate_dropdown($name,$group,$blood_group,$class,$id,$msg);
+		   ?>
 	   <?php echo $this->form_functions->form_error_session('blood_group', '<p class="text-red">', '</p>'); ?>
         </div>
 		<div class="form-group">
@@ -235,13 +244,13 @@ $this->mysession->delete('post');
         </div>
 	<div class="form-group">
 	<?php echo form_label('Mobile','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'mobile','class'=>'form-control','id'=>'mobile','placeholder'=>'Mobile','value'=>$mobile)); ?>
+           <?php echo form_input(array('name'=>'mobile','class'=>'form-control','id'=>'drivermobile','placeholder'=>'Mobile','value'=>$mobile)); ?>
 	   <?php echo $this->form_functions->form_error_session('mobile', '<p class="text-red">', '</p>'); ?>
        <div class="hide-me" > <?php echo form_input(array('name'=>"hmob",'value'=>$mobile));?></div>
 		</div>
 	<div class="form-group">
 	<?php echo form_label('E-mail ID','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'email','class'=>'form-control','id'=>'email','placeholder'=>'E-mail ID','value'=>$email)); ?>
+           <?php echo form_input(array('name'=>'email','class'=>'form-control','id'=>'driveremail','placeholder'=>'E-mail ID','value'=>$email)); ?>
 	   <?php echo $this->form_functions->form_error_session('email', '<p class="text-red">', '</p>'); ?>
 	 <div class="hide-me" >  <?php echo form_input(array('name'=>"hmail",'value'=>$email));?></div>
         </div>
@@ -263,7 +272,7 @@ $this->mysession->delete('post');
         </div>
 	
 	<div class="form-group">
-	<?php echo form_label('Date of Renewal','usernamelabel'); ?>
+	<?php echo form_label('Date of License Renewal','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'license_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>' Date of License Renewal','value'=>$license_renewal_date));?>
 	   <?php echo $this->form_functions->form_error_session('license_renewal_date', '<p class="text-red">', '</p>'); 
 

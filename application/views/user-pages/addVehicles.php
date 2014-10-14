@@ -253,7 +253,7 @@
         </div>
 	<div class="form-group">
 	<?php echo form_label(' Manufacturing Year','usernamelabel'); ?>
-           <?php  echo form_input(array('name'=>'year','class'=>'fromdatepicker form-control' ,'value'=>$year));?>
+           <?php  echo form_input(array('name'=>'year','class'=>'fromyearpicker form-control' ,'value'=>$year));?>
 	   <?php echo $this->form_functions->form_error_session('year', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">

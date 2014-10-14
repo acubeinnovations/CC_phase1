@@ -24,7 +24,7 @@ class Driver extends CI_Controller {
 	$data['name']=$this->input->post('driver_name');
 	$data['place_of_birth']=$this->input->post('place_of_birth');
 	$data['dob']=$this->input->post('dob');
-	$data['blood_group']=$this->input->post('blood_group');
+	$data['blood_group']=$this->input->post('blood_group'); 
 	$data['marital_status_id']=$this->input->post('marital_status_id');
 	$data['children']=$this->input->post('children');
 	$data['present_address']=$this->input->post('present_address');
@@ -60,6 +60,11 @@ class Driver extends CI_Controller {
 	$data['organisation_id']=$this->session->userdata('organisation_id'); 
 	$data['user_id']=$this->session->userdata('id');
 		$err=True;
+	if($data['blood_group'] ==-1){
+	$data['blood_group'] ='';
+	 $err=False;
+	 $this->session->set_userdata('blood group','Choose Blood Group');
+	 }
 	if($data['marital_status_id'] ==-1){
 	 $data['marital_status_id'] ='';
 	 $err=False;
@@ -77,7 +82,7 @@ class Driver extends CI_Controller {
 	 }
 	
 	
-	$this->form_validation->set_rules('blood_group','Blood group','trim|required|xss_clean');
+	
 	 $this->form_validation->set_rules('driver_name','Name','trim|required|xss_clean');
 	 $this->form_validation->set_rules('place_of_birth','Place Of Birth','trim|required|xss_clean');
 	 $this->form_validation->set_rules('dob','Date of Birth ','trim|required|xss_clean');
