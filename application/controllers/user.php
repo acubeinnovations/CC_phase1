@@ -523,10 +523,12 @@ class User extends CI_Controller {
 			$data['urlseg']=4;
 			$tdate=date('Y-m-d');
 			$where_arry['organisation_id']=$this->session->userdata('organisation_id');
+			$order_arry="id desc";
 			if((isset($_REQUEST['trip_pick_date'])|| isset($_REQUEST['trip_drop_date']))&& isset($_REQUEST['trip_search'])){
 				if($param2==''){
 				$param2=0;
 				}
+				
 				if($_REQUEST['trip_pick_date']!=null && $_REQUEST['trip_drop_date']!=null){
 					$data['trip_pick_date']=$_REQUEST['trip_pick_date'];
 					$data['trip_drop_date']=$_REQUEST['trip_drop_date'];
@@ -567,9 +569,10 @@ class User extends CI_Controller {
 			if($param2=='1'){
 				$param2=0;
 			}
+			
 			$data['vehicles']=$this->trip_booking_model->getVehiclesArray($condition='');
 			$data['drivers']=$this->driver_model->getDriversArray($condition='');
-			$this->mysession->set('condition',array("where"=>$where_arry));
+			$this->mysession->set('condition',array("where"=>$where_arry,"order_by"=>$order_arry));
 			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
 			if($param2==''){
 				$this->mysession->delete('condition');
