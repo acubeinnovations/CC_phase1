@@ -33,5 +33,3 @@ class Logout extends CI_Controller {
      // redirect($logout_redirect_url);
     }
 }
-
-/* Location: ./application/controllers/welcome.php */

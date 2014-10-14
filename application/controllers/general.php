@@ -147,4 +147,3 @@ class General extends CI_Controller {
 		//return 
 		}
 }
-?>

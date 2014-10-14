@@ -17,15 +17,15 @@ class Customers_model extends CI_Model {
 		$condition=array('mobile'=>$data['mobile']);
 		$res=$this->getCustomerDetails($condition);
 		if(count($res)==0){
-		$this->db->set('created', 'NOW()', FALSE);
-		$this->db->insert('customers',$data);
-		$insert_id=$this->db->insert_id();
+			$this->db->set('created', 'NOW()', FALSE);
+			$this->db->insert('customers',$data);
+			$insert_id=$this->db->insert_id();
 
-		if($insert_id > 0){
-			return $insert_id;
-		}else{
-			return false;
-		}
+			if($insert_id > 0){
+				return $insert_id;
+			}else{
+				return false;
+			}
 		}else{
 			return $res[0]['id'];
 		}

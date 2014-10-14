@@ -205,6 +205,4 @@ class Driver extends CI_Controller {
 	return true;
 	}	
 	}
-	
-	}
-	
+	}	

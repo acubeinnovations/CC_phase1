@@ -109,6 +109,4 @@ class Maps extends CI_Controller {
 		return false;
 		}
 	} 
-
 }
-	

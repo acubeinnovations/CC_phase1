@@ -65,8 +65,4 @@ class Sys_login extends CI_Controller {
 		$this->load->view('admin-pages/login',$Data);
 		
     }
-	
-	
-}
-
-
+	}

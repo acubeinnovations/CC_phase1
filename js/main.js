@@ -917,8 +917,9 @@ function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,d
 				}else{
 				var selected="";
 				}
-			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' "+selected+"></option>").text(data.data[i].registration_number+' '+vehicle_models[i]));
-				i=Number(i)+1;
+				
+			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' "+selected+"></option>").text(data.data[i].registration_number+' '+vehicle_models[Number(data.data[i].vehicle_model_id)-1]));
+				
 			}
 		
 			}else{
