@@ -62,7 +62,10 @@ class Customers extends CI_Controller {
 			$data['customer_group_id']=gINVALID;
 		$res=$this->customers_model->addCustomer($data);
 		if(isset($res) && $res!=false){
-			
+
+			//save customer in fa table
+			$this->load->model("account_model");
+			$fa_customer = $this->account_model->add_fa_customer($res,"C");
 			echo true;
 		}else{
 			echo false;
