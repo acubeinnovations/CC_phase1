@@ -77,7 +77,69 @@
                         </li>
                         
 		
+		
+
 			<li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-laptop"></i>
+                                <span>Driver</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                               
+                                <li><a href=" <?php echo base_url().'organization/front-desk/list-driver';?>"><i class="fa fa-angle-double-right"></i>Manage Drivers</a></li>
+                                
+                            </ul>
+                        </li>
+						<li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-laptop"></i>
+                                <span>Vehicle</span><i class="fa fa-angle-left pull-right"></i>
+								<ul class="treeview-menu">
+                                
+                                <li><a href=" <?php echo base_url().'organization/front-desk/list-vehicle';?>"><i class="fa fa-angle-double-right"></i>Manage Vehicles</a></li>
+                                
+                            </ul>
+                                
+                            </a>
+							<li>
+                            <a href="<?php echo base_url().'organization/front-desk/device';?>">
+                                <i class="fa fa-laptop"></i> <span> Device </span>
+                            </a>
+                       	 </li>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i>Trip Booking</a></li>
+                                
+                                
+                            </ul>
+                        </li>
+						<li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-laptop"></i>
+                                <span>Customer</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url().'organization/front-desk/customers';?>"><i class="fa fa-angle-double-right"></i>Manage Customers</a></li> 
+                                
+                            </ul>
+                        </li>
+						
+						<li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-laptop"></i>
+                                <span>Trip</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo base_url().'organization/front-desk/trip-booking';?>"><i class="fa fa-angle-double-right"></i>Trip Booking</a></li>
+						<li><a href="<?php echo base_url().'organization/front-desk/trips';?>"><i class="fa fa-angle-double-right"></i>Trips</a></li>
+                                
+                                
+                            </ul>
+                        </li>
+						
+							<li class="treeview">
                             <a href="#">
                                 <i class="fa fa-laptop"></i>
                                 <span>Accounts</span>
@@ -154,66 +216,6 @@
                             </ul>
                         </li>
 
-
-			<li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-laptop"></i>
-                                <span>Driver</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                               
-                                <li><a href=" <?php echo base_url().'organization/front-desk/list-driver';?>"><i class="fa fa-angle-double-right"></i>Manage Drivers</a></li>
-                                
-                            </ul>
-                        </li>
-						<li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-laptop"></i>
-                                <span>Vehicle</span><i class="fa fa-angle-left pull-right"></i>
-								<ul class="treeview-menu">
-                                
-                                <li><a href=" <?php echo base_url().'organization/front-desk/list-vehicle';?>"><i class="fa fa-angle-double-right"></i>Manage Vehicles</a></li>
-                                
-                            </ul>
-                                
-                            </a>
-							<li>
-                            <a href="<?php echo base_url().'organization/front-desk/device';?>">
-                                <i class="fa fa-laptop"></i> <span> Device </span>
-                            </a>
-                       	 </li>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i>Trip Booking</a></li>
-                                
-                                
-                            </ul>
-                        </li>
-						<li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-laptop"></i>
-                                <span>Customer</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                            <li><a href="<?php echo base_url().'organization/front-desk/customers';?>"><i class="fa fa-angle-double-right"></i>Manage Customers</a></li> 
-                                
-                            </ul>
-                        </li>
-						
-						<li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-laptop"></i>
-                                <span>Trip</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?php echo base_url().'organization/front-desk/trip-booking';?>"><i class="fa fa-angle-double-right"></i>Trip Booking</a></li>
-						<li><a href="<?php echo base_url().'organization/front-desk/trips';?>"><i class="fa fa-angle-double-right"></i>Trips</a></li>
-                                
-                                
-                            </ul>
-                        </li>
                         <?php } ?>
                         
                     </ul>

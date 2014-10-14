@@ -393,17 +393,17 @@ $err=True;
 					 $this->form_validation->set_rules('insurance_pre-amount','Insurance Pre Amount','trim|required|xss_clean');
 					 $this->form_validation->set_rules('insurance_agency','Insurance Agency','trim|required|xss_clean');
 					 $this->form_validation->set_rules('insurance_agency_address','Address','trim|required|xss_clean');
-					 if($hphone==$data['Insurance_agency_phone']){
+					// if($hphone==$data['Insurance_agency_phone']){
 					 $this->form_validation->set_rules('insurance_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
-					 }
+					 /*}
 					 else{
 					 $this->form_validation->set_rules('insurance_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicles_insurance.Insurance_agency_phone]');
-					 }
-					 if($hmail==$data['Insurance_agency_email']){
+					 }*/
+					 //if($hmail==$data['Insurance_agency_email']){
 					 $this->form_validation->set_rules('insurance_agency_mail','Mail ID','trim|required|xss_clean|valid_email');
-					 }else{
+					/* }else{
 					 $this->form_validation->set_rules('insurance_agency_mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicles_insurance.Insurance_agency_email]');
-					 }
+					 }*/
 					 $this->form_validation->set_rules('insurance_agency_web','Web Address','trim|required|xss_clean');
 					 
 					 //for insurance
@@ -502,17 +502,17 @@ $err=True;
 					 $this->form_validation->set_rules('loan_agency','Loan Agency','trim|required|xss_clean');
 					 $this->form_validation->set_rules('loan_agency_address','Address','trim|required|xss_clean');
 					 $this->form_validation->set_rules('loan_agency_web','Web Address','trim|required|xss_clean');
-					 if($hphone==$data['loan_agency_phone']){
+					 //if($hphone==$data['loan_agency_phone']){
 					 $this->form_validation->set_rules('loan_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
-					 }
+					/* }
 					 else{
 					 $this->form_validation->set_rules('loan_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicle_loans.loan_agency_phone]');
-					 }
-					 if($hmail==$data['loan_agency_email']){
+					 }*/
+					// if($hmail==$data['loan_agency_email']){
 					 $this->form_validation->set_rules('loan_agency_mail','Mail ID','trim|required|xss_clean|valid_email');
-					 }else{
+					/* }else{
 					 $this->form_validation->set_rules('loan_agency_mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicle_loans.loan_agency_email]');
-					 }
+					 }*/
 					
 					 
 					 //for insurance
@@ -598,17 +598,17 @@ $err=True;
 					$this->form_validation->set_rules('owner_name','Owner Name ','trim|required|xss_clean');
 					 $this->form_validation->set_rules('address','Address','trim|required|xss_clean');
 					 $this->form_validation->set_rules('dob','Date of Birth','trim|required|xss_clean');
-					 if($hphone==$data['mobile']){
+					// if($hphone==$data['mobile']){
 					 $this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
-					 }
+					/* }
 					 else{
 					 $this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicle_owners.mobile]');
-					 }
-					 if($hmail==$data['email']){
+					 }*/
+					 //if($hmail==$data['email']){
 					 $this->form_validation->set_rules('mail','Mail ID','trim|required|xss_clean|valid_email');
-					 }else{
+					 /*}else{
 					 $this->form_validation->set_rules('mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicle_owners.email]');
-					 }
+					 }*/
 					
 					 
 					 //for insurance

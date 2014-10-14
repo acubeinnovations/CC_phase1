@@ -29,7 +29,7 @@ class Tarrif extends CI_Controller {
 	 $data['user_id']=$this->session->userdata('id');
 	 
 	$err=True;
-	$this->form_validation->set_rules('title','Title','trim|required|min_length[2]|xss_clean|alpha_numeric');
+	$this->form_validation->set_rules('title','Title','trim|required|min_length[2]|xss_clean');
 	 if($data['trip_model_id'] ==-1){
 	 $data['trip_model_id'] ='';
 	 $err=False;

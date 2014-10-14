@@ -44,7 +44,7 @@ class Admin extends CI_Controller {
 		    $pwd  = $this->input->post('pwd');
 		    $mail  = $this->input->post('mail');
 		    $phn = $this->input->post('phn');
-	        $this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|is_unique[organisations.name]');
+	        $this->form_validation->set_rules('name','Organization','trim|required|min_length[2]|xss_clean|is_unique[organisations.name]|alpha_numeric');
 		$this->form_validation->set_rules('fname','First Name','trim|required|min_length[2]|xss_clean');
 		$this->form_validation->set_rules('lname','Last Name','trim|required|min_length[2]|xss_clean');
 		$this->form_validation->set_rules('addr','Address','trim|required|min_length[10]|xss_clean');
