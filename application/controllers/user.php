@@ -1083,6 +1083,9 @@ public function profile() {
 
 	}
 	$data['values']=$p_res['values'];
+	if(empty($data['values'])){
+	$data['result']="No Results Found !";
+	}
 	for ($i=0;$i<count($data['values']);$i++){
 	$id=$data['values'][$i]['vehicle_owner_id'];
 	$details[$id]=$this->user_model->getOwnerDetails($id);
