@@ -12,7 +12,14 @@ function getCount($tbl){
 	$where_arry=$arry['where'];
 	}
 	}
-	
+	if(isset($arry['order_by'])){
+	if($arry['order_by']!='' && count($arry['order_by']) > 0){
+	$order_arry=$arry['order_by'];
+	}
+	}
+		if(!empty($order_arry) && count($order_arry) > 0){
+		$this->db->order_by($order_arry);
+		}
 		
 		if(!empty($like_arry) && count($like_arry) > 0){
 		$this->db->like($like_arry);

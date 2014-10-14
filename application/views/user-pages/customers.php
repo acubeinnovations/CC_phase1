@@ -61,7 +61,7 @@ echo form_close();?></td>
 					    <th>Email</th>	
 						<th>Phone</th>	
 						<th>Customer Type</th>
-						<th>Action</th>
+						
 					</tr>
 					<?php
 					
