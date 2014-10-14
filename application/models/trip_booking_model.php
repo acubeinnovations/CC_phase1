@@ -151,7 +151,18 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 
 	}
 
+	function getTodaysTripsDriversDetails(){
+$qry='SELECT T.id,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.pick_up_city,T.drop_city,D.id,D.name FROM trips AS T LEFT JOIN drivers AS D ON  T.driver_id =D.id AND T.organisation_id = '.$this->session->userdata('organisation_id').' WHERE D.organisation_id = '.$this->session->userdata('organisation_id').' AND (T.pick_up_date="'.date('Y-m-d').'" OR T.drop_date="'.date('Y-m-d').'") OR ((T.pick_up_date < "'.date('Y-m-d').'" AND T.drop_date > "'.date('Y-m-d').'"))';
 
+	$result=$this->db->query($qry);
+	$result=$result->result_array();
+	if(count($result)>0){
+	return $result;
+	}else{
+	return false;
+	}
+
+	}
 
 
 

@@ -15,7 +15,7 @@
 
 	<div id="body">
 	     <h1>Welcome <?php echo $this->session->userdata('name'); ?></h1>                       
-	
+		 <div id="front-desk-dashboard" style="width: 100%; height: 400px;"></div>
 	</div>
 
 </div>

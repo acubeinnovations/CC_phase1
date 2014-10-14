@@ -13,6 +13,77 @@ $(this).siblings().find(':submit').trigger('click');
 $('.settings-delete').click(function(){
 $(this).siblings().find(':submit').trigger('click');
 });
+
+google.setOnLoadCallback(drawChart);
+
+function drawChart() {
+	var setup_dashboard='setup_dashboard';
+  $.post(base_url+"/user/setup_dashboard",
+		  {
+			setup_dashboard:setup_dashboard
+			
+		  },function(data){
+		  data=jQuery.parseJSON(data);
+  var container = document.getElementById('front-desk-dashboard');
+  var chart = new google.visualization.Timeline(container);
+  var dataTable = new google.visualization.DataTable();
+  dataTable.addColumn({ type: 'string', id: 'Room' });
+  dataTable.addColumn({ type: 'string', id: 'Name' });
+  dataTable.addColumn({ type: 'date', id: 'Start' });
+  dataTable.addColumn({ type: 'date', id: 'End' });
+	
+	var fullDate = new Date();
+	var month=fullDate.getMonth()+Number(1);
+	var day=fullDate.getDate();
+	var twoDigitMonth = ((month.toString().length) != 1)? (month) : ('0'+month);
+	var twoDigitDay = ((day.toString().length) != 1)? (day) : ('0'+day);
+  	var currentDate = fullDate.getFullYear() + "-"+twoDigitMonth +"-"+twoDigitDay;
+	
+	var P_time=[];
+	var D_time=[];
+	var json_obj=[];
+	json_obj.push([
+  	'All Drivers','Trips Time-Sheet of Connect and Cabs',new Date(0,0,0,0,0,0),new Date(0,0,0,24,0,0)
+	]);
+	for(var i=0;i<data.length;i++){
+		P_date=data[i].pick_up_date.split('-');
+		D_date=data[i].drop_date.split('-');
+		if(data[i].pick_up_date==currentDate){
+			P_time=data[i].pick_up_time.split(':');
+			
+		}else{
+			P_time[0]='00';
+			P_time[1]='00';
+		}
+		if(data[i].drop_date==currentDate){
+			D_time=data[i].drop_time.split(':');
+		}else{
+			D_time[0]='23';
+			D_time[1]='59';
+		}
+		var pickdate=new Date(0,0,0,P_time[0],P_time[1],00);
+		var dropdate=new Date(0,0,0,D_time[0],D_time[1],00);
+		json_obj.push([
+	  	data[i].name,data[i].pick_up_city+'to '+data[i].drop_city,pickdate,dropdate
+		]);
+		
+	}
+	
+  dataTable.addRows(json_obj);
+
+  var options = {
+    timeline: { colorByRowLabel: true },
+    backgroundColor: '#fff'
+  };
+
+  chart.draw(dataTable, options);
+ });
+}
+
+
+
+
+
 });
 //masters
  var base_url=window.location.origin;

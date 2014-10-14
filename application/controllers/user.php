@@ -56,7 +56,12 @@ class User extends CI_Controller {
 
 		$this->Device($param2);
 
+		}elseif($param1=='setup_dashboard'){
+
+		$this->setup_dashboard();
+
 		}
+
 		elseif($param1=='tarrif-masters'&& ($param2== ''|| is_numeric($param2))){
 		$this->tarrif_masters($param1,$param2);
 		}elseif($param1=='tarrif'&& ($param2== ''|| is_numeric($param2))){
@@ -340,13 +345,13 @@ class User extends CI_Controller {
 	$data[$tbl_arry[$i]]='';
 	}
 	}//echo date('Y-m-d H:i');
-	$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING,'CONCAT(pick_up_date," ",pick_up_time) >='=>date('Y-m-d H:i'));
+	$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING,'CONCAT(pick_up_date," ",pick_up_time) >='=>date('Y-m-d H:i'),'organisation_id'=>$this->session->userdata('organisation_id'));
 	$orderby = ' CONCAT(pick_up_date,pick_up_time) ASC';
 	$data['notification']=$this->trip_booking_model->getDetails($conditon,$orderby);
 	$data['customers_array']=$this->customers_model->getArray();
 
 	if($trip_id!='' && $trip_id > 0) {
-	$conditon = array('id'=>$trip_id);
+	$conditon = array('id'=>$trip_id,'organisation_id'=>$this->session->userdata('organisation_id'));
 	$result=$this->trip_booking_model->getDetails($conditon);
 	$result=$result[0];
 	if($result->trip_status_id==TRIP_STATUS_PENDING || $result->trip_status_id==TRIP_STATUS_CONFIRMED){
@@ -1115,6 +1120,16 @@ public function profile() {
 	public function date_check($date){
 	if( strtotime($date) >= strtotime(date('Y-m-d')) ){
 	return true;
+	}
+	}
+	public function setup_dashboard(){
+	if(isset($_REQUEST['setup_dashboard']) ){
+	$data=$this->trip_booking_model->getTodaysTripsDriversDetails();
+	if($data!=false){
+	echo json_encode($data);
+	}else{
+		echo 'false';
+	}
 	}
 	}
 }

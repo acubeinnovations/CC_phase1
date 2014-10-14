@@ -60,6 +60,10 @@ text-align:right;
 
 }
 /*admin template*/
+#body{
+width: 95%;
+margin: auto;
+}
 .profile-body{
 width:70%;
 margin:0 auto;
