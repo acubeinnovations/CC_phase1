@@ -118,12 +118,7 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('id_proof_type_id','ID Proof','trim|required|xss_clean');
 	 $this->form_validation->set_rules('id_proof_document_number','ID Proof Number','trim|required|xss_clean');
 	 $this->form_validation->set_rules('name_on_id_proof','ID Proof Holder','trim|required|xss_clean');
-	if($h_join!=$data['date_of_joining']){
-	if(!$this->date_check($data['date_of_joining'])){
-	$err=False;
-	$this->mysession->set('Err_join','Invalid Date of Joining!');
-	}
-	}
+	
 	if($h_badge!=$data['badge_renewal_date']){
 	if(!$this->date_check($data['badge_renewal_date'])){
 	$err=False;
