@@ -105,4 +105,3 @@ class Device extends CI_Controller {
 	}
 	// sample code
 	}
-	

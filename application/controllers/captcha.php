@@ -7,4 +7,3 @@ $code = $this->captchaimage->generateCaptcha();
 $this->session->set_userdata(array('captcha_code'=> $code));
 }
 }
-?>

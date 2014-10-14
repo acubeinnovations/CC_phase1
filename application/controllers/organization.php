@@ -523,6 +523,4 @@ public function __construct()
 			return TRUE;
 		}
 	}
-
 }
-	?>

@@ -270,8 +270,5 @@ class Trip extends CI_Controller {
 		$tbl=$_REQUEST['tbl'];
 		$res=$this->settings_model->getValues($id,$tbl);
 		echo $res[0]['id']." ".$res[0]['description']." ".$res[0]['name'];
-		
-		//return 
 		}
 }
-?>

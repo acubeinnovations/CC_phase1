@@ -259,6 +259,4 @@ class Tarrif extends CI_Controller {
 	return true;
 	}	
 	}
-	
 }
-?>

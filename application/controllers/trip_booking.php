@@ -491,8 +491,4 @@ class Trip_booking extends CI_Controller {
 		return false;
 		}
 	} 
-
-	
 }
-?>
-	

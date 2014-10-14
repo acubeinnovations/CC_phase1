@@ -1115,4 +1115,3 @@ public function profile() {
 	}
 	}
 }
-?>
