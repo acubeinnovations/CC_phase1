@@ -4,11 +4,26 @@ class Trip_booking_model extends CI_Model {
 	function getDriver($vehicle_id){
 
 	$this->db->from('vehicle_drivers');
-    $this->db->where('vehicle_id',$vehicle_id);
+	$condition=array('vehicle_id'=>$vehicle_id,'organisation_id'=>$this->session->userdata('organisation_id'));
+    $this->db->where($condition);
 	
     $results = $this->db->get()->result();
 	if(count($results)>0){
 	return $results[0]->driver_id;
+	}
+	}
+
+	function getVehicle($id){
+
+	$this->db->from('vehicles');
+	$condition=array('id'=>$id,'organisation_id'=>$this->session->userdata('organisation_id'));
+    $this->db->where($condition);
+	
+    $results = $this->db->get()->result();
+	if(count($results)>0){
+	return $results;
+	}else{
+		return false;
 	}
 	}
 
@@ -37,7 +52,7 @@ class Trip_booking_model extends CI_Model {
 	
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('trip_vouchers',$data);
-	$trip_voucher_id = $this->db->mysql_insert_id();
+	$trip_voucher_id = $this->db->insert_id();
 
 	$id=$data['trip_id'];
 	$updatedata=array('trip_status_id'=>TRIP_STATUS_TRIP_BILLED);

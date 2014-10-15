@@ -504,7 +504,7 @@ display:none;
  z-index: 1030;
 width:80%;
 margin:auto;
-top:-240px;
+top:-800px;
 background:#fff;
 }
 
@@ -540,6 +540,11 @@ box-shadow:none;
 .font-size-13-px{
 
 font-size:13px;
+}
+.font-size-18-px{
+
+font-size:18px;
+font-weight:bold;
 }
 .cursor-pointer{
 cursor: pointer;
