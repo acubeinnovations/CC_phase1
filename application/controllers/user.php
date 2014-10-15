@@ -706,6 +706,10 @@ public function	Customers($param2){
 				$data['customer_type_id']=$_REQUEST['customer_type_id'];
 				$where_arry['customer_type_id']=$_REQUEST['customer_type_id'];
 				}
+				if($_REQUEST['customer_group_id']!=null && $_REQUEST['customer_group_id']!=gINVALID){
+				$data['customer_group_id']=$_REQUEST['customer_group_id'];
+				$where_arry['customer_group_id']=$_REQUEST['customer_group_id'];
+				}
 				$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
 			}
 			if($param2==''){

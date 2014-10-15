@@ -17,6 +17,9 @@ $customer='';
 if(!isset($customer_type_id)){
 $customer_type_id='';
 }
+if(!isset($customer_group_id)){
+$customer_group_id='';
+}
 if(!isset($mobile)){
 $mobile='';
 }
@@ -40,7 +43,8 @@ $mobile='';
 						echo $this->form_functions->populate_dropdown('customer_type_id',$customer_types,$customer_type_id,$class,$id='',$msg="Select Customer Type");?> </td>
 						 <td><?php $class="form-control";
 							  $id='c_group';
-						echo $this->form_functions->populate_dropdown('customer_group_id',$customer_groups,$customer_type_id,$class,$id='',$msg="Select Customer Group");?> </td>
+							 
+						echo $this->form_functions->populate_dropdown('customer_group_id',$customer_groups,$customer_group_id,$class,$id='',$msg="Select Customer Group");?> </td>
 					    <td><?php echo form_submit("customer_search","Search","class='btn btn-primary'");
 echo form_close();?></td>
 						<td><?php echo form_open(  base_url().'organization/front-desk/customer');
