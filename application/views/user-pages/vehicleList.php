@@ -45,8 +45,8 @@
 			<div class="msg"> <?php 
 			if (isset($result)){ echo $result;} else {?></div>
 		</div>
-		<div class="box-body table-responsive no-padding">
-			<table class="table table-hover table-bordered">
+		<div class="box-body table-responsive no-padding ">
+			<table class="table table-hover table-bordered table-with-20-percent-td">
 				<tbody>
 					<tr>
 					    <th>Registration Number </th>
