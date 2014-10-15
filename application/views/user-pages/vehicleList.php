@@ -50,10 +50,10 @@
 				<tbody>
 					<tr>
 					    <th>Registration Number </th>
-						<th>Vehicle Owner</th>
-						<th>Owner's Contact Info</th>
-						<th>Owner's Location</th>
-						<th>Vehicle Model</th>
+						<th>Contact Details</th>
+						<th>Driver Details</th>
+						<th>Current Status</th>
+						<th></th>
 					    
 					</tr>
 					<?php
@@ -62,12 +62,16 @@
 				
 					?>
 					<tr> 
-					    <td><?php  echo anchor(base_url().'organization/front-desk/vehicle/'.$det['id'],$det['registration_number']).nbs(3);?></td>
-						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $vehicle_owners[$det['vehicle_owner_id']];}?></td>
-						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['mobile'];} ?></td>
-						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['address'];} ?></td>
-						<td><?php if($det['vehicle_model_id']<=0){ echo '';}else{echo $vehicle_models[$det['vehicle_model_id']];}?></td>
-						
+					    <td><?php  echo anchor(base_url().'organization/front-desk/vehicle/'.$det['id'],$det['registration_number']).br();
+						if($det['vehicle_model_id']<=0){ echo '';}else{echo $vehicle_models[$det['vehicle_model_id']].br();}
+						if($det['vehicle_make_id']<=0){ echo '';}else{echo $vehicle_makes[$det['vehicle_make_id']];} ?></td>
+						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $vehicle_owners[$det['vehicle_owner_id']].br();}?>
+						<?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['mobile'].br();} ?>
+						<?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['address'];} ?></td>
+						<td><?php if($drivers[$det['id']]['driver_name']==''){ echo '';}else{echo $drivers[$det['id']]['driver_name'].br();}
+						if($drivers[$det['id']]['mobile']==''){ echo '';}else{echo $drivers[$det['id']]['mobile'].br();}
+						if($drivers[$det['id']]['from_date']==''){ echo '';}else{echo $drivers[$det['id']]['from_date'];}?></td>
+						<td><?php ?></td>
 						<td><?php ?></td>
 					
 					    	

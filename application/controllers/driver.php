@@ -187,6 +187,8 @@ class Driver extends CI_Controller {
 			echo 'you are not authorized access this page..';
 			}
 	}*/
+
+	
 	
 	public function load_templates($page='',$data=''){
 	if($this->session_check()==true) {

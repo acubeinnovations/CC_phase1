@@ -64,7 +64,7 @@ function drawChart() {
 		var pickdate=new Date(0,0,0,P_time[0],P_time[1],00);
 		var dropdate=new Date(0,0,0,D_time[0],D_time[1],00);
 		json_obj.push([
-	  	data[i].name,data[i].pick_up_city+'to '+data[i].drop_city,pickdate,dropdate
+	  	data[i].name,data[i].pick_up_city+' to '+data[i].drop_city,pickdate,dropdate
 		]);
 		
 	}

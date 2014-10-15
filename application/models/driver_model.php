@@ -16,6 +16,22 @@ public function getDriverDetails($data){
 	return $this->db->get()->result_array();
 	
 	}
+	public function getDrivers(){ 
+	$qry='SELECT D.name,D.id,D.mobile,VD.from_date,VD.to_date,VD.driver_id,VD.vehicle_id FROM drivers AS D LEFT JOIN vehicle_drivers AS VD ON  D.id =VD.driver_id AND D.organisation_id = '.$this->session->userdata('organisation_id').' WHERE VD.organisation_id = '.$this->session->userdata('organisation_id').' AND VD.to_date="9999-12-30"';
+	$results=$this->db->query($qry);
+	$results=$results->result_array();
+	if(count($results)>0){
+	for($i=0;$i<count($results);$i++){
+		$drivers[$results[$i]['vehicle_id']]['driver_name']=$results[$i]['name'];
+		$drivers[$results[$i]['vehicle_id']]['mobile']=$results[$i]['mobile'];
+		$drivers[$results[$i]['vehicle_id']]['from_date']=$results[$i]['from_date'];
+
+		}
+		return $drivers;
+	}else{
+		return false;
+	}
+	}
 
 	function getDriversArray($condion=''){
 	$this->db->from('drivers');
