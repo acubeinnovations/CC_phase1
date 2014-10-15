@@ -624,7 +624,7 @@ $customer_type='';
 					<legend class="body-head font-size-18-px">Rough Estimate</legend>
 						<div class="box no-border-top rough-estimate-body">
                               <div class="box-body no-padding">
-									<div class="float-right form-group customer-type-container">
+									<div class="float-right form-group customer-type-container hide-me">
 										<?php $class="form-control customer-type"; 
 											echo $this->form_functions->populate_dropdown('customer_type',$customer_types,$customer_type,$class,$id='',$msg="Select Customer type").br(4);?>
 									</div>

@@ -406,7 +406,7 @@ $this->mysession->delete('post');
 					    
 					</tr>
 					<?php	
-						$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_night_halt=$tot_fuel_extra=0;
+						$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_night_halt=$tot_fuel_extra=$tot_trip_amount=0;
 					if(isset($trips) && $trips!=false){
 						for($trip_index=0;$trip_index<count($trips);$trip_index++){
 						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
@@ -416,6 +416,7 @@ $this->mysession->delete('post');
 						$tot_state_tax=$tot_state_tax+$trips[$trip_index]['state_tax'];
 						$tot_night_halt=$tot_night_halt+$trips[$trip_index]['night_halt_charges'];
 						$tot_fuel_extra=$tot_fuel_extra+$trips[$trip_index]['fuel_extra_charges'];
+						$tot_trip_amount=$tot_trip_amount+$trips[$trip_index]['total_trip_amount'];
 						
 						
 						$date1 = date_create($trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time']);
@@ -456,13 +457,12 @@ $this->mysession->delete('post');
 					<td></td>
 					<td><?php echo $full_tot_km; ?></td>
 					<td></td>
-					<td></td>
-					<td><?php echo $full_tot_km; ?></td>
 					<td><?php echo $tot_parking; ?></td>
 					<td><?php echo $tot_toll; ?></td>
 					<td><?php echo $tot_state_tax; ?></td>
 					<td><?php echo $tot_night_halt; ?></td>
 					<td><?php echo $tot_fuel_extra; ?></td>
+					<td><?php echo $tot_trip_amount; ?></td>
 					</tr>
 					<?php //endforeach;
 					//}

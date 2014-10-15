@@ -593,7 +593,7 @@ class User extends CI_Controller {
 			}
 			$data['page_links']=$paginations['page_links'];
 			$data['trips']=$paginations['values'];
-			if(empty($data['tripd'])){
+			if(empty($data['trips'])){
 				$data['result']="No Results Found !";
 					}
 			//echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
