@@ -90,7 +90,7 @@
 			$fuel=$data['vehicle_fuel_type_id'];
 			$seat=$data['vehicle_seating_capacity_id'];
 			$driver_id=$driver_data['driver_id'];
-			$from_date_device=$driver_data['from_date'];
+			$from_date=$driver_data['from_date'];
 			$device_id=$device_data['device_id'];
 			$from_date_device=$device_data['from_date_device'];
 			$reg_number=$data['registration_number'];
@@ -327,7 +327,7 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
            <?php $class="form-control";
 		$msg="Select Driver";
 		$name="driver";
-		if($driver_id!=null){
+		if($driver_id!=null){ echo $driver_id;
 	echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id,$class,$id='',$msg); 
 }else{
 echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id='',$class,$id='',$msg); 

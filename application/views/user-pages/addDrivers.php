@@ -133,32 +133,7 @@ $this->mysession->delete('post');
         
         <div class="tab-pane active" id="tab_1">
 
-    <?php if($this->session->userdata('marital_status_id') != ''||$this->session->userdata('bank_account_type_id') != ''||$this->session->userdata('id_proof_type_id') != ''||$this->session->userdata('Err_sal') != ''||$this->mysession->get('Err_join') != ''||$this->mysession->get('Err_badge') != ''||$this->mysession->get('Err_license') != ''||$this->session->userdata('blood group')!= ''){ ?>
-	<div class="alert alert-danger alert-dismissable">
-                                        <i class="fa fa-ban"></i>
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                        <b>Alert!</b><br><?php
-													echo $this->session->userdata('marital_status_id').br();
-													echo $this->session->userdata('bank_account_type_id').br();
-													echo $this->session->userdata('id_proof_type_id').br();
-													echo $this->session->userdata('Err_sal').br();
-													echo $this->session->userdata('Err_blood_group').br();
-													echo $this->mysession->get('Err_badge').br();
-													echo $this->mysession->get('Err_join').br();
-													echo $this->mysession->get('Err_license').br();
-													echo $this->session->userdata('blood group').br();
-														$this->session->set_userdata(array('marital_status_id'=>''));
-														$this->session->set_userdata(array('bank_account_type_id'=>''));
-														$this->session->set_userdata(array('id_proof_type_id'=>''));
-														$this->session->set_userdata(array('Err_sal'=>''));
-														$this->session->set_userdata(array('Err_blood_group'=>''));
-														$this->mysession->delete('Err_badge');
-														$this->mysession->delete('Err_join');
-														$this->mysession->delete('Err_license');
-														$this->session->set_userdata(array('blood group'=>''));
-										?>
-                                    </div>
-<?php  } ?>        
+       
 			 <div class="width-30-percent-with-margin-left-20-Driver-View">
 
 <fieldset class="body-border-Driver-View border-style-Driver-view" >
@@ -200,10 +175,14 @@ $this->mysession->delete('post');
 		$name="marital_status_id";
 		$id='marital_id';
 	echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id,$class,$id,$msg);
-
-	
-	
-	?></div>
+	?>
+	<p class="text-red"><?php
+ if($this->session->userdata('marital_status_id') != ''){
+	echo $this->session->userdata('marital_status_id');
+	$this->session->set_userdata(array('marital_status_id'=>''));
+ }
+	?></p>
+	</div>
 	<div class="form-group">
 	<?php 
 	
@@ -283,7 +262,12 @@ $this->mysession->delete('post');
 	<?php echo form_label('Badge','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'badge','class'=>'form-control','id'=>'badge','placeholder'=>'Badge','value'=>$badge)); ?>
 	   <?php echo $this->form_functions->form_error_session('badge', '<p class="text-red">', '</p>'); ?>
-        </div>
+       	<p class="text-red"><?php
+ if($this->mysession->get('Err_badge') != ''){
+	echo $this->mysession->get('Err_badge');
+	$this->mysession->delete('Err_badge');
+	} ?></p>
+	   </div>
 	<div class="form-group">
 	<?php echo form_label('Date of Badge Renewal','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'badge_renewal_date','class'=>'fromdatepicker form-control' ,'placeholder'=>'Date of Badge Renewal','value'=>$badge_renewal_date));?>
@@ -330,7 +314,14 @@ $this->mysession->delete('post');
 
 	echo $this->form_functions->populate_dropdown($name,$select['bank_account_types'],$bank_account_type_id,$class,$id='',$msg); 
 	
-	?></div>
+	?>
+	<p class="text-red"><?php
+ if($this->session->userdata('bank_account_type_id') != ''){
+	echo $this->session->userdata('bank_account_type_id');
+	$this->session->set_userdata(array('bank_account_type_id'=>''));
+ }
+	?></p>
+	</div>
 	<div class="form-group">
 	<?php echo form_label('IFSC Code','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'ifsc_code','class'=>'form-control','id'=>'ifsc_code','placeholder'=>'IFSC Code','value'=>$ifsc_code)); ?>
@@ -344,7 +335,14 @@ $this->mysession->delete('post');
 		$name="id_proof_type_id";
 
 	echo $this->form_functions->populate_dropdown($name,$select['id_proof_types'],$id_proof_type_id,$class,$id='',$msg); 
-	?></div>
+	?>
+	<p class="text-red"><?php
+ if($this->session->userdata('id_proof_type_id') != ''){
+	echo $this->session->userdata('id_proof_type_id');
+	$this->session->set_userdata(array('id_proof_type_id'=>''));
+ }
+	?></p>
+	</div>
 	<div class="form-group">
 	<?php echo form_label('ID Proof Document Number','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'id_proof_document_number','class'=>'form-control','id'=>'id_proof_document_number','placeholder'=>'ID Proof Document Number','value'=>$id_proof_document_number)); ?>
