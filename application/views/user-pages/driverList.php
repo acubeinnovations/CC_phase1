@@ -39,6 +39,11 @@
 				</tbody>
 			</table>
 		</div>
+		
+		<div class="msg"> <?php 
+			if (isset($result)){ echo $result;} else {?></div>
+	
+		
 		<div class="box-body table-responsive no-padding driver-list-div">
 			<table class="table table-hover table-bordered">
 				<tbody>
@@ -67,6 +72,7 @@
 				</tbody>
 			</table><?php echo $page_links;?>
 		</div>
+		<?php } ?>
 	</fieldset>
 </div>
 

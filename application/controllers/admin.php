@@ -122,6 +122,9 @@ class Admin extends CI_Controller {
 		}
 	//check company exists in fa. If exists then remove link add account for this organisation
 	$data['values']=$p_res['values'];
+	if(empty($data['values'])){
+	$data['result']="No Results Found !";
+	}
 	$data['page_links']=$p_res['page_links'];
 	$data['title']='Organization List| '.PRODUCT_NAME;
 	$page='admin-pages/orgList';

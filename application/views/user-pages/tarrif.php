@@ -76,6 +76,9 @@ if($this->session->userdata('select_tariff') != ''||$this->session->userdata('db
 echo form_close();?></td>
 </tr>
 </table>
+<div class="msg"> <?php 
+			if (isset($result)){ echo $result;} else {?></div>
+	
 </fieldset>
 <fieldset class="body-border border-style" >
 <legend class="body-head">ADD TARIFF</legend>
@@ -154,4 +157,5 @@ echo $this->form_functions->populate_dropdown($name,$masters,$det['tariff_master
 </table>
 <?php echo $page_links;?>
 </fieldset>
+<?php } ?>
 </div>

@@ -176,6 +176,9 @@ class User extends CI_Controller {
 		
 		
 	$data['values']=$p_res['values'];
+	if(empty($data['values'])){
+	$data['result']="No Results Found !";
+	}
 	$data['page_links']=$p_res['page_links'];
 	$data['title']="Tarrif Masters | ".PRODUCT_NAME;  
 	$page='user-pages/tarrif_master';
@@ -258,6 +261,9 @@ class User extends CI_Controller {
 		
 		
 	$data['values']=$p_res['values'];
+	if(empty($data['values'])){
+	$data['result']="No Results Found !";
+	}
 	$data['page_links']=$p_res['page_links'];
 	//end
 	//$data['allDetails']=$this->user_model->getAll_tarrifDetails();
@@ -313,6 +319,9 @@ class User extends CI_Controller {
 		}
 		
 	$data['values']=$p_res['values'];
+	if(empty($data['values'])){
+	$data['result']="No Results Found !";
+	}
 	$data['page_links']=$p_res['page_links'];
 	
 	$data['title']="Device | ".PRODUCT_NAME; 
@@ -583,7 +592,11 @@ class User extends CI_Controller {
 				$this->mysession->delete('condition');
 			}
 			$data['page_links']=$paginations['page_links'];
-			$data['trips']=$paginations['values'];//echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
+			$data['trips']=$paginations['values'];
+			if(empty($data['tripd'])){
+				$data['result']="No Results Found !";
+					}
+			//echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
 			//$data['trips']=$this->trip_booking_model->getDetails($conditon='');echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
 			$data['status_class']=array(TRIP_STATUS_PENDING=>'label-warning',TRIP_STATUS_CONFIRMED=>'label-success',TRIP_STATUS_CANCELLED=>'label-danger',TRIP_STATUS_CUSTOMER_CANCELLED=>'label-danger',TRIP_STATUS_ON_TRIP=>'label-primary',TRIP_STATUS_TRIP_COMPLETED=>'label-success',TRIP_STATUS_TRIP_PAYED=>'label-info',TRIP_STATUS_TRIP_BILLED=>'label-success');
 			$data['trip_statuses']=$this->user_model->getArray('trip_statuses');
@@ -613,7 +626,7 @@ class User extends CI_Controller {
 				$pagedata['customer_type_id']=$result[0]['customer_type_id'];
 			}
 			$tbl_arry=array('customer_types','customer_groups');
-	
+			
 			for ($i=0;$i<count($tbl_arry);$i++){
 			$result=$this->user_model->getArray($tbl_arry[$i]);
 			if($result!=false){
@@ -622,7 +635,7 @@ class User extends CI_Controller {
 			else{
 			$data[$tbl_arry[$i]]='';
 			}
-			}
+			} 
 			$data['title']="Customer | ".PRODUCT_NAME;
 			if(isset($pagedata)){ 
 				$data['values']=$pagedata;
@@ -656,7 +669,7 @@ class User extends CI_Controller {
 
 public function	Customers($param2){
 			if($this->session_check()==true) {
-			$tbl_arry=array('customer_types');
+			$tbl_arry=array('customer_types','customer_groups');
 	
 			for ($i=0;$i<count($tbl_arry);$i++){
 			$result=$this->user_model->getArray($tbl_arry[$i]);
@@ -705,7 +718,9 @@ public function	Customers($param2){
 			}
 			$data['page_links']=$paginations['page_links'];
 			$data['customers']=$paginations['values'];			
-	
+			if(empty($data['customers'])){
+				$data['result']="No Results Found !";
+				}
 			$data['title']="Customers | ".PRODUCT_NAME;  
 			$page='user-pages/customers';
 		    $this->load_templates($page,$data);
@@ -886,6 +901,10 @@ public function profile() {
 
 	}
 	$data['values']=$p_res['values'];
+	if(empty($data['values'])){
+				$data['result']="No Results Found !";
+				}
+	
 	for ($i=0;$i<count($data['values']);$i++){
 	$driverid=$data['values'][$i]['id'];
 	$driver_details[$driverid]=$this->user_model->getVehicleDetails($driverid);

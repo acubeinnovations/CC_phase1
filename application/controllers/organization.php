@@ -307,6 +307,9 @@ public function __construct()
 		$this->mysession->delete('condition');
 	}
 	$data['values']=$p_res['values'];
+	if(empty($data['values'])){
+	$data['result']="No Results Found !";
+	}
 	$data['page_links']=$p_res['page_links'];
 	$data['title']='User List| '.PRODUCT_NAME;
 	$page='organization-pages/userList';
