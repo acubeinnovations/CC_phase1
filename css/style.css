@@ -178,7 +178,7 @@ width:100%;
 .first-column-trip-booking{
 width:79%;
 float:left;
-margin:10px 10px 10px 10px;
+margin:3px 10px;
 }
 .second-column-trip-booking{
 margin:10px 10px 10px 1%;
@@ -247,7 +247,7 @@ margin:5px;
 width:50%;
 }
 .recurrent-yes-container{
-margin:-30px 0 0 0;
+margin:-20px 0 0 0;
 
 }
 .float-right{
@@ -504,7 +504,7 @@ display:none;
  z-index: 1030;
 width:80%;
 margin:auto;
-top:-240px;
+top:-800px;
 background:#fff;
 }
 
@@ -540,6 +540,11 @@ box-shadow:none;
 .font-size-13-px{
 
 font-size:13px;
+}
+.font-size-18-px{
+
+font-size:18px;
+font-weight:bold;
 }
 .cursor-pointer{
 cursor: pointer;

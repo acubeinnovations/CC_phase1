@@ -215,11 +215,11 @@ $customer_type='';
 		$attributes = array('autocomplete'=>'off','id'=>'trip-form');
 		 echo form_open(base_url().'trip-booking/book-trip',$attributes);?>
 		<fieldset class="body-border">
-		<legend class="body-head">Trip Booking</legend>
+		<legend class="body-head ">Trip Booking</legend>
 			<div class="inner-first-column-trip-booking div-with-50-percent-width-with-margin-10">
 				<div class="booking-source">
 					<fieldset class="body-border">
-					<legend class="body-head">Booking Source</legend>
+					<legend class="body-head font-size-18-px">Booking Source</legend>
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
 						echo $this->form_functions->populate_dropdown('booking_source',$booking_sources,$booking_source,$class,$id='',$msg="Select Source");
@@ -230,7 +230,7 @@ $customer_type='';
 				</div>
 				<div class="booking-source">
 					<fieldset class="body-border">
-					<legend class="body-head">Customer Informations</legend>
+					<legend class="body-head font-size-18-px">Customer Informations</legend>
 					<table>
 						<tr>
 							<td>
@@ -314,7 +314,7 @@ $customer_type='';
 				</div>
 				<div class="booking-source">
 					<fieldset class="body-border">
-					<legend class="body-head">Booking Informations</legend>
+					<legend class="body-head font-size-18-px">Booking Informations</legend>
 						<div class="div-with-90-percent-width-and-marigin-5">
 							<table>
 								<tr>
@@ -426,7 +426,7 @@ $customer_type='';
 			<div class="inner-second-column-trip-booking div-with-50-percent-width-with-margin-10">
 				<div class="booking-source">
 					<fieldset class="body-border">
-					<legend class="body-head">Vehicle Information</legend>
+					<legend class="body-head font-size-18-px">Vehicle Information</legend>
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
 							  $id='vehicle-type';
@@ -469,7 +469,7 @@ $customer_type='';
 								<?php
 									echo form_checkbox(array('name'=> 'pluck_card','class'=>'pluckcard-chek-box flat-red','checked'=>$pluck_card));
 								
-									echo nbs(5).form_label('Pluck Card');
+									echo nbs(5).form_label('Placard');
 								?>	
 							</td>
 							<td>
@@ -508,7 +508,7 @@ $customer_type='';
 	   					 <div class="box-body">
 							<div class="reccurent-container" slider="<?php echo $count; ?>">
 								<fieldset class="body-border ">
-								<legend class="body-head">Recurrent</legend>
+								<legend class="body-head font-size-18-px">Recurrent</legend>
 									<div class="form-group float-right recurrent-yes-container">
 											<?php
 												echo form_checkbox(array('name'=> 'recurrent_yes','class'=>'recurrent-yes-chek-box flat-red','checked'=>$recurrent_yes,'radio_button_to_be_checked'=>$recurrent));
@@ -621,10 +621,10 @@ $customer_type='';
 				</div>	
 				<div class="booking-source">
 					<fieldset class="body-border">
-					<legend class="body-head">Rough Estimate</legend>
+					<legend class="body-head font-size-18-px">Rough Estimate</legend>
 						<div class="box no-border-top rough-estimate-body">
                               <div class="box-body no-padding">
-									<div class="float-right form-group customer-type-container">
+									<div class="float-right form-group customer-type-container hide-me">
 										<?php $class="form-control customer-type"; 
 											echo $this->form_functions->populate_dropdown('customer_type',$customer_types,$customer_type,$class,$id='',$msg="Select Customer type").br(4);?>
 									</div>
@@ -713,7 +713,7 @@ $customer_type='';
 	</div>
 	<div class="second-column-trip-booking">
 		<fieldset class="body-border notify">
-		<legend class="body-head">Notification</legend>
+		<legend class="body-head font-size-18-px">Notification</legend>
 		<?php
 	
 		if(count($notification)>0 && $notification!=''){
@@ -777,12 +777,12 @@ $customer_type='';
 </div>
 
 <div class="hide-me">
-<div class="vehicle-models">
+<div class="vehicle-makes">
 <?php
 	$i=0;
- foreach ($vehicle_models as $value) {
+ foreach ($vehicle_makes as $value) {
 echo $value;
-	if($i<count($vehicle_models)-1){
+	if($i<count($vehicle_makes)-1){
 echo ',';
 	}
 	$i++;

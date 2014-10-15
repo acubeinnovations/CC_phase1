@@ -23,6 +23,10 @@ class Trip_booking extends CI_Controller {
 		
 			$this->getAvailableVehicles();
 			
+		}else if($param2=='getVehicle') {
+		
+			$this->getVehicle();
+			
 		}else if($param2=='tripVoucher') {
 		
 			$this->tripVoucher();
@@ -268,6 +272,7 @@ class Trip_booking extends CI_Controller {
 			$dbdata['customer_id']					=$this->session->userdata('customer_id');
 			$dbdata['guest_id']						=$data['guest_id'];
 			$dbdata['customer_type_id']				=$data['customer_type'];
+			$dbdata['customer_group_id']			=$data['customer_group'];
 			$dbdata['trip_status_id']				=$trip_status;
 			$dbdata['booking_date']					= date('Y-m-d');
 			$dbdata['booking_time']					= date('H:i');
@@ -306,7 +311,7 @@ class Trip_booking extends CI_Controller {
 			$dbdata['vehicle_id']					=$data['available_vehicle'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
 			$dbdata['user_id']						=$this->session->userdata('id');
-	
+			
 			$this->session->set_userdata('customer_id','');
 			$this->session->set_userdata('customer_name','');
 			$this->session->set_userdata('customer_email','');
@@ -443,7 +448,11 @@ class Trip_booking extends CI_Controller {
 	}
 	$voucher=$this->trip_booking_model->checkTripVoucherEntry($trip_id);
 	if($voucher==gINVALID){
+		if($ajax=='NO'){
+		return false;
+		}else{
 		echo 'false';
+		}
 	}else{
 		if($ajax=='NO'){
 		return $voucher;
@@ -474,7 +483,7 @@ class Trip_booking extends CI_Controller {
 	
 	$res['data']=$this->trip_booking_model->selectAvailableVehicles($data);
 	if($res['data']==false){
-	echo false;
+	echo 'false';
 	}else{
 	echo json_encode($res);
 	}
@@ -482,7 +491,16 @@ class Trip_booking extends CI_Controller {
 	}
 
 	}
-
+	public function getVehicle(){
+		if(isset($_REQUEST['id'])){
+			$res['data']=$this->trip_booking_model->getVehicle($_REQUEST['id']);
+			if($res['data']==false){
+			echo 'false';
+			}else{
+			echo json_encode($res);
+			}
+		}
+	}
 
 	public function session_check() {
 	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==FRONT_DESK)) {
