@@ -192,22 +192,22 @@ class Vehicle extends CI_Controller {
 			$data['vehicle_seating_capacity_id']=$this->input->post('seat');
 			$driver_data['driver_id']=$this->input->post('driver');
 			$driver_data['from_date']=$this->input->post('from_date');
-			$h_fdate_driver=$this->input->post('h_fdate_driver');
+			$h_fdate_driver=$this->input->post('h_fdate_driver'); //echo $h_fdate_driver."dt";exit;
 			$device_data['device_id']=$this->input->post('device');
 			$device_data['from_date_device']=$this->input->post('from_date_device');
 			$h_fdate_device=$this->input->post('h_fdate_device');
 			$data['registration_number']=$this->input->post('reg_number');
 			$data['registration_date']=$this->input->post('reg_date');
-			$h_reg=$this->input->post('h_reg');
+			
 			$data['engine_number']=$this->input->post('eng_num');
 			$data['chases_number']=$this->input->post('chases_num');
 			$data['vehicle_permit_type_id']=$this->input->post('permit');
 			$data['vehicle_permit_renewal_date']=$this->input->post('permit_date');
-			$h_permit=$this->input->post('h_permit');
+			
 			$data['vehicle_permit_renewal_amount']=$this->input->post('permit_amount');
 			$data['tax_renewal_amount']=$this->input->post('tax_amount');
 			$data['tax_renewal_date']=$this->input->post('tax_date');
-			$h_tax=$this->input->post('h_tax');
+			
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
 			$all_data=array('data'=>$data,'driver_data'=>$driver_data,'device_data'=>$device_data);
@@ -227,24 +227,20 @@ class Vehicle extends CI_Controller {
 					 //for insurance
 $err=True;
 	
-	if($h_fdate_device!=$data['from_date_device']){
+		if($h_fdate_driver!=$driver_data['from_date']){
+		if(!$this->date_check($driver_data['from_date'])){
+	$err=False;
+	$this->mysession->set('Err_driver_fdate','Invalid From Date for Driver!');
+	}
+	}
+	//if($h_fdate_device!=$device_data['from_date_device']){
 	if(!$this->date_check($device_data['from_date_device'])){
 	$err=False;
 	$this->mysession->set('Err_device_fdate','Invalid From Date for Device!');
 	}
-	}
-	if($h_reg!=$data['registration_date']){
-	if(!$this->date_check($data['registration_date'])){
-	$err=False;
-	$this->mysession->set('Err_reg_date','Invalid Registration Date!');
-	}
-	}
-	if($h_tax!=$data['tax_renewal_date']){
-	if(!$this->date_check($data['tax_renewal_date'])){
-	$err=False;
-	$this->mysession->set('Err_tax_date','Invalid Tax Renewal Date !');
-	}
-	}
+	//}
+	
+	
 	if(preg_match('#[^0-9\.]#', $data['vehicle_permit_renewal_amount'])){
 			$this->mysession->set('Err_permit_amt','Invalid Characters on Permit Amount field!');
 			$err=False;
@@ -310,7 +306,7 @@ $err=True;
 		$this->mysession->set('post_all',$data);
 		$this->mysession->set('post_driver',$driver_data);
 		$this->mysession->set('post_device',$device_data);
-		redirect(base_url().'organization/front-desk/vehicle',$data);	// ?? driver data?? device_data??
+		redirect(base_url().'organization/front-desk/vehicle/'.$v_id);	// ?? driver data?? device_data??
 	 }
 	 
 	  else{
