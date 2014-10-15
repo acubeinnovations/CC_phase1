@@ -42,7 +42,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="msg"> <?php //result notification 
+			<div class="msg"> <?php 
 			if (isset($result)){ echo $result;} else {?></div>
 		</div>
 		<div class="box-body table-responsive no-padding">

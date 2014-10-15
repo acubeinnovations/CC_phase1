@@ -72,9 +72,12 @@ echo form_input(array('name'=>'search_title','class'=>'form-control','id'=>'titl
 echo form_close();?></td>
 </tr>
 </table>
+<div class="msg"> <?php 
+			if (isset($result)){ echo $result;} else {?></div>
+
 </fieldset>
 <fieldset class="body-border border-style" >
-<legend class="body-head">ADD</legend>
+<legend class="body-head">ADD Tariff Master</legend>
 <div class="form-group">
 <table>
 <tr>
@@ -169,4 +172,5 @@ $class="form-control";
 </table>
 <?php echo $page_links;?>
 </fieldset>
+<?php } ?>
 </div>

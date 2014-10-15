@@ -69,7 +69,9 @@ echo form_close();?></td>
 			</table>
 		</div>
 	
-	
+	<div class="msg"> <?php 
+			if (isset($result)){ echo $result;} else {?></div>
+		
 		<div class="box-body table-responsive no-padding">
 			<table class="table table-hover table-bordered">
 				<tbody>
@@ -127,6 +129,7 @@ echo form_close();?></td>
 				</tbody>
 			</table><?php echo $page_links;?>
 		</div>
+		<?php } ?>
 	</fieldset>
 </div>
 

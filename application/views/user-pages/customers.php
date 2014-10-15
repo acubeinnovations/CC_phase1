@@ -17,6 +17,9 @@ $customer='';
 if(!isset($customer_type_id)){
 $customer_type_id='';
 }
+if(!isset($customer_group_id)){
+$customer_group_id='';
+}
 if(!isset($mobile)){
 $mobile='';
 }
@@ -37,19 +40,26 @@ $mobile='';
 					<td><?php echo form_input(array('name'=>'mobile','class'=>'mobile form-control' ,'placeholder'=>'Mobile Number','value'=>$mobile)); ?></td>
 						<td><?php $class="form-control";
 							  $id='vehicles';
-						echo $this->form_functions->populate_dropdown('customer_type_id',$customer_types,$customer_type_id,$class,$id='',$msg="Select Customer type");?> </td>
-						 
+						echo $this->form_functions->populate_dropdown('customer_type_id',$customer_types,$customer_type_id,$class,$id='',$msg="Select Customer Type");?> </td>
+						 <td><?php $class="form-control";
+							  $id='c_group';
+							 
+						echo $this->form_functions->populate_dropdown('customer_group_id',$customer_groups,$customer_group_id,$class,$id='',$msg="Select Customer Group");?> </td>
 					    <td><?php echo form_submit("customer_search","Search","class='btn btn-primary'");
 echo form_close();?></td>
 						<td><?php echo form_open(  base_url().'organization/front-desk/customer');
 								  echo form_submit("add","Add","class='btn btn-primary'");
 								  echo form_close(); 
 						?></td>
+						
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	
+	<div class="msg"> <?php 
+			if (isset($result)){ echo $result;} else {?></div>
+
 	
 		<div class="box-body table-responsive no-padding">
 			<table class="table table-hover table-bordered">
@@ -82,7 +92,7 @@ echo form_close();?></td>
 				</tbody>
 			</table><?php echo $page_links;?>
 		</div>
-		
+		<?php } ?>
 	</fieldset>
 </div>
 

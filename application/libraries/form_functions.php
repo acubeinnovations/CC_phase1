@@ -6,6 +6,9 @@ $form = '<select name="'.$name.'" class="'.$class.'" id="'.$id.'"/>';
 if($selected==''){
 $form.='<option value="-1" selected="selected" >--'.$msg.'--</option></br>';
 }
+else{
+$form.='<option value="-1"  >--'.$msg.'--</option></br>';
+}
 if(!empty($options)){
 foreach ($options as $key => $val)
 		{

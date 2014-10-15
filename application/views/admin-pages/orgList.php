@@ -40,6 +40,8 @@
 					</tr>
 				</tbody>
 			</table>
+				<div class="msg"> <?php 
+			if (isset($result)){ echo $result;} else {?></div>
 		</div>
 		<div class="box-body table-responsive no-padding">
 			<table class="table table-hover table-bordered">
@@ -73,6 +75,7 @@
 				</tbody>
 			</table><?php echo $page_links;?>
 		</div>
+		<?php } ?>
 	</fieldset>
 </div>
 

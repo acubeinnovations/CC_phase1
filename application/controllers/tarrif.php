@@ -82,10 +82,7 @@ class Tarrif extends CI_Controller {
 			$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
 			$err=true;
 			}
-		if(preg_match('#[^a-zA-Z0-9]#', $data['title'])){
-			$this->session->set_userdata(array('Err_title'=>'Invalid Characters on Title field!'));
-			$err=true;
-			}
+		
 		if(preg_match('#[^0-9\.]#', $data['minimum_kilometers'])){
 			$this->session->set_userdata(array('Err_kilo'=>'Invalid Characters on Kilometers field!'));
 			$err=true;
