@@ -81,7 +81,7 @@ echo form_close();?></td>
 	
 </fieldset>
 <fieldset class="body-border border-style" >
-<legend class="body-head">ADD TARIFF</legend>
+<legend class="body-head">Add New Tariff</legend>
 <div class="form-group">
 <table>
 <tr>
@@ -129,28 +129,29 @@ echo $this->form_functions->populate_dropdown($name,$masters,$tariff_master_id,$
 <td><?php echo form_label('Additional Hour Rate','additional_Hour_Rate'); ?></td>
 <td><?php echo form_label('Driver Bata','driver_Bata'); ?></td>
 <td><?php echo form_label('Night Halt','night_Halt'); ?></td>
+
 <td></td>
 <td></td>
 </tr>
 <?php 
-foreach ($values as $det):
+foreach($values as $det):
 ?>
+
 <tr>
 <td><div class="form-group"><?php echo form_open(base_url()."tarrif/tarrif_manage"); $class="form-control";
 		$msg="Select Tariff Master";
 		$name="manage_tariff";
 		
 echo $this->form_functions->populate_dropdown($name,$masters,$det['tariff_master_id'],$class,$id='',$msg); ?></div></td>
-<td>
-<div class="form-group"><?php echo form_input(array('name'=>'manage_datepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up From Date','value'=> $det['from_date'])); ?></div></td>
-<td><div class="form-group"><?php echo form_input(array('name'=>'manage_rate','class'=>'form-control','id'=>'rate','placeholder'=>'Rate','value'=> $det['rate'])); ?></div></td>
-		<td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_kilometer_rate','class'=>'form-control','id'=>'additional_kilometer_rate','placeholder'=>'Additional Kilometer Rate','value'=> $det['additional_kilometer_rate'])); ?></div></td>
-		<td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_hour_rate','class'=>'form-control','id'=>'additional_hour_rate','placeholder'=>'Additional Hour Rate','value'=> $det['additional_hour_rate'])); ?></div></td>
-		<td><div class="form-group"><?php echo form_input(array('name'=>'manage_driver_bata','class'=>'form-control','id'=>'driver_bata','placeholder'=>'Driver Bata','value'=> $det['driver_bata'])); ?></div></td>
-		<td><div class="form-group"><?php echo form_input(array('name'=>'manage_night_halt','class'=>'form-control','id'=>'night_halt','placeholder'=>'Night Halt','value'=> $det['night_halt'])); ?>
-            <div class="hide-me"><?php echo form_input(array('name'=>'manage_id','class'=>'form-control','id'=>'manage_id','value'=> $det['id'],'trigger'=>'true' ));?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_datepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up From Date','value'=> $det['from_date'])); ?></div></td>
+		<td><div class="form-group"><?php echo form_input(array('name'=>'manage_rate','class'=>'form-control','id'=>'rate','placeholder'=>'Rate','value'=> $det['rate'])); ?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_kilometer_rate','class'=>'form-control','id'=>'additional_kilometer_rate','placeholder'=>'Additional Kilometer Rate','value'=> $det['additional_kilometer_rate'])); ?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_hour_rate','class'=>'form-control','id'=>'additional_hour_rate','placeholder'=>'Additional Hour Rate','value'=> $det['additional_hour_rate'])); ?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_driver_bata','class'=>'form-control','id'=>'driver_bata','placeholder'=>'Driver Bata','value'=> $det['driver_bata'])); ?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_night_halt','class'=>'form-control','id'=>'night_halt','placeholder'=>'Night Halt','value'=> $det['night_halt'])); ?>
+           <div class="hide-me"><?php echo form_input(array('name'=>'manage_id','class'=>'form-control','id'=>'manage_id','value'=> $det['id'],'trigger'=>'true' ));?></div></td>
 <td><div  class="tarrif-edit" ><?php echo nbs(5);?><i class="fa fa-edit cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=tarrif-edit-id","class=btn");?></div></td>
-<td><div  class="tarrif-delete margin-top-18-px" ><?php echo nbs(5);?><i class="fa fa-trash-o delete cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=tarrif-delete-id","class=btn ");?></div></td>
+<td><div  class="tarrif-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=tarrif-delete-id","class=btn");?></div></td>
 <?php echo form_close();?>
 </tr>
 <?php endforeach; ?>

@@ -77,7 +77,7 @@ echo form_close();?></td>
 
 </fieldset>
 <fieldset class="body-border border-style" >
-<legend class="body-head">ADD Tariff Master</legend>
+<legend class="body-head">Add Tariff Master</legend>
 <div class="form-group">
 <table>
 <tr>

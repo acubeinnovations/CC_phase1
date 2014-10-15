@@ -226,12 +226,7 @@ class Vehicle extends CI_Controller {
 					 $this->form_validation->set_rules('tax_date','Tax Date','trim|required|xss_clean');
 					 //for insurance
 $err=True;
-		if($h_fdate_driver!=$data['from_date']){
-		if(!$this->date_check($driver_data['from_date'])){
-	$err=False;
-	$this->mysession->set('Err_driver_fdate','Invalid From Date for Driver!');
-	}
-	}
+	
 	if($h_fdate_device!=$data['from_date_device']){
 	if(!$this->date_check($device_data['from_date_device'])){
 	$err=False;
