@@ -1001,13 +1001,13 @@ public function profile() {
 				}
 				}
 				if($param2!=''){
-				//echo $param2."param";exit;
+				
 					$id=$this->mysession->get('vehicle_id');
 				if($id!=''){
 					$data['trips']=$this->trip_booking_model->getVehicleVouchers($id);
 					}
 					}
-				if($param2=='insurance'){ 
+				if($param2=='insurance' ){ 
 				$data['insurance_tab']='active';
 				}
 				if($param2=='loan'&&($param3== ''|| is_numeric($param3))){
@@ -1029,7 +1029,7 @@ public function profile() {
 				
 				$data['record_values']=$this->user_model->getRecordsById($tbl,$id);
 				$data['driver']=$data['record_values']['driver'];
-				$data['vehicle']=$data['record_values']['vehicle'];
+				$data['vehicle']=$data['record_values']['vehicle'];//print_r($data['vehicle']);exit;
 				$data['device']=$data['record_values']['device'];
 				$insurance_id=$data['vehicle']['vehicles_insurance_id'];
 				$loan_id=$data['vehicle']['vehicle_loan_id'];

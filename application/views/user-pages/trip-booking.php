@@ -231,7 +231,7 @@ $customer_type='';
 				</div>
 				<div class="booking-source">
 					<fieldset class="body-border">
-					<legend class="body-head font-size-18-px">Customer Informations</legend>
+					<legend class="body-head font-size-18-px">Customer Information</legend>
 					<table>
 						<tr>
 							<td>
@@ -320,7 +320,7 @@ $customer_type='';
 				</div>
 				<div class="booking-source">
 					<fieldset class="body-border">
-					<legend class="body-head font-size-18-px">Booking Informations</legend>
+					<legend class="body-head font-size-18-px">Booking Information</legend>
 						<div class="div-with-90-percent-width-and-marigin-5">
 							<table>
 								<tr>

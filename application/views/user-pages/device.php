@@ -56,10 +56,10 @@ echo form_close();?></td>
 </table>
 </div>
 </fieldset>
-<fieldset class="body-border">
+<fieldset class="body-border border-style">
 <legend class="body-head">Manage Devices</legend>
 <?php echo br();?>
-<table class="table table-hover table-bordered">
+<table >
 <tr>
 <td><?php echo form_label('IMEI ','imei'); ?></td>
 <td><?php echo form_label('Sim Number','sim_no'); ?></td>
@@ -71,8 +71,9 @@ foreach ($values as $det):
 
 <?php echo form_open(base_url()."device/deivceManage");?>
 <tr>
-<td><div class="form-group"><?php echo form_input(array('name'=>'imei'.$det['id'],'class'=>'form-control' ,'id'=>'imei','placeholder'=>'Enter imei','value'=>$det['imei'])).'<div class="hide-me">'.form_input(array('name'=>'h_imei'.$det['id'],'value'=>$det['imei'])); ?></div></div></td>
-		<td><div class="form-group"><?php echo form_input(array('name'=>'sim_no'.$det['id'],'class'=>'form-control','id'=>'sim','placeholder'=>'Sim Number','value'=>$det['sim_no'])).'<div class="hide-me">'.form_input(array('name'=>'h_sim_no'.$det['id'],'value'=>$det['sim_no'])); ?></div></div><div class="hide-me"><?php echo form_input(array('name'=>'device_id','class'=>'form-control','id'=>'device_id','value'=>$det['id'])); ?></div></td>
+<td><?php echo form_input(array('name'=>'imei'.$det['id'],'class'=>'form-control' ,'id'=>'imei','placeholder'=>'Enter imei','value'=>$det['imei'])).'<div class="hide-me">'.form_input(array('name'=>'h_imei'.$det['id'],'value'=>$det['imei'])); ?></div></td>
+		<td><?php echo form_input(array('name'=>'sim_no'.$det['id'],'class'=>'form-control','id'=>'sim','placeholder'=>'Sim Number','value'=>$det['sim_no'])).'<div class="hide-me">'.form_input(array('name'=>'h_sim_no'.$det['id'],'value'=>$det['sim_no'])); ?></div>
+		<div class="hide-me"><?php echo form_input(array('name'=>'device_id','class'=>'form-control','id'=>'device_id','value'=>$det['id'])); ?></div></td>
 		
 <td><div class="device-edit"><?php echo nbs(5);?><i class="fa fa-edit deviceUpdate cursor-pointer"></i><?php echo nbs(5);?><div class="hide-me xx"><?php echo form_submit("deviceUpdate","Edit","id=device-edit-id","class=btn");?></div></div></td><!--
 <td><div  class="device-delete"><?php echo nbs(5);?><i class="fa fa-trash-o deviceDelete"></i><?php echo nbs(5);?><div class="hide-me"><?php echo form_submit("deviceDelete","Delete","id=device-delete-id","class=btn ");?></div></div></td>-->
