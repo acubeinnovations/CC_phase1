@@ -1124,7 +1124,7 @@ public function profile() {
 	$data['owner_details']=$details;
 	}
 	$data['page_links']=$p_res['page_links'];
-	$tbl_arry=array('vehicle_models','vehicle_types','vehicle_owners');
+	$tbl_arry=array('vehicle_models','vehicle_types','vehicle_owners','vehicle_makes');
 	$count=count($tbl_arry);
 	for ($i=0;$i<$count;$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
@@ -1135,7 +1135,13 @@ public function profile() {
 	$data[$tbl_arry[$i]]='';
 	}
 	}
-	$data['title']='List Vehicles| '.PRODUCT_NAME;
+	$drivers=$this->driver_model->getDrivers();
+	if($drivers!=false){
+	$data['drivers']=$drivers;
+	}else{
+	$data['drivers']='';
+	}
+	$data['title']='List Vehicles | '.PRODUCT_NAME;
 	$page='user-pages/vehicleList';
 	
 	$this->load_templates($page,$data);	

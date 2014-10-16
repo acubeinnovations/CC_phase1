@@ -308,7 +308,7 @@ width:80%;
 margin:8px;
 }
 .width-80-percent-and-margin-auto{
-width:80%;
+width:90%;
 margin:auto;
 }
 .float-left{
@@ -504,7 +504,7 @@ display:none;
  z-index: 1030;
 width:80%;
 margin:auto;
-top:-800px;
+top:-300px;
 background:#fff;
 }
 
@@ -559,3 +559,11 @@ color:red;
 .driver-list-div > table > tbody > tr > td{
 width:20%;
 }
+
+.table-with-20-percent-td > tbody > tr > td{
+width:20%;
+}
+.table-with-7-percent-td > tbody > tr > td{
+width:7.6%;
+}
+
