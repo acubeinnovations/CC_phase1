@@ -417,7 +417,7 @@ $err=True;
 			
 	if($this->mysession->get('vehicle_id')==null)
 	{
-	$this->mysession->set('Err_invalid_insurance_add','Invalid Attempt!');
+	$this->mysession->set('Err_invalid_insurance_add','Invalid Attempt!  Please Add Vehicle Details !');
 	$err=False;
 	}
 	 if($this->form_validation->run()==False|| $err==False){
@@ -515,7 +515,7 @@ $err=True;
 			}
 	if($this->mysession->get('vehicle_id')==null)
 	{
-	$this->mysession->set('Err_invalid_loan_add','Invalid Attempt!');
+	$this->mysession->set('Err_invalid_loan_add','Invalid Attempt!  Please Add Vehicle Details !');
 	$err=False;
 	}
 
@@ -596,7 +596,7 @@ $err=True;
 					 //for insurance
 		if($this->mysession->get('vehicle_id')==null)
 	{
-	$this->mysession->set('Err_invalid_owner_add','Invalid Attempt!');
+	$this->mysession->set('Err_invalid_owner_add','Invalid Attempt!  Please Add Vehicle Details !');
 	$err=False;
 	}
 	

@@ -166,6 +166,12 @@ $this->mysession->delete('post');
 	echo $this->form_functions->populate_dropdown($name,$group,$blood_group,$class,$id,$msg);
 		   ?>
 	   <?php echo $this->form_functions->form_error_session('blood_group', '<p class="text-red">', '</p>'); ?>
+	   <p class="text-red"><?php
+ if($this->session->userdata('blood group') != ''){
+	echo $this->session->userdata('blood group');
+	$this->session->set_userdata(array('blood group'=>''));
+ }
+	?></p>
         </div>
 		<div class="form-group">
 		<?php echo form_label(' Marital Status','usernamelabel'); ?>
