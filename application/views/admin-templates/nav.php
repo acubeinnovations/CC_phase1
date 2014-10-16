@@ -103,10 +103,10 @@
                                 
                             </a>
 							<li>
-                            <a href="<?php echo base_url().'organization/front-desk/device';?>">
+                            <!--<a href="<?php echo base_url().'organization/front-desk/device';?>">
                                 <i class="fa fa-laptop"></i> <span> Device </span>
                             </a>
-                       	 </li>
+                       	 </li>-->
                             <ul class="treeview-menu">
                                 <li><a href="<?php echo base_url();?>"><i class="fa fa-angle-double-right"></i>Trip Booking</a></li>
                                 
@@ -197,6 +197,7 @@
 		                        
 		                    </ul>
                         	</li>
+							 <li><a href="<?php  echo base_url().'organization/front-desk/device';?>"><i class="fa fa-angle-double-right"></i>Device Settings</a></li>
 
 				<li class="treeview">
 		                    <a href="#">
