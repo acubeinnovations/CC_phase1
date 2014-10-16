@@ -151,7 +151,7 @@ $this->mysession->delete('post');
 	   <?php echo $this->form_functions->form_error_session('place_of_birth', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
-	<?php echo form_label('Date','usernamelabel'); ?>
+	<?php echo form_label('Date of Birth','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'dob','class'=>'fromdatepicker form-control' ,'placeholder'=>'Date of Birth','value'=>$dob));?>
 	   <?php echo $this->form_functions->form_error_session('dob', '<p class="text-red">', '</p>'); ?>
         </div>

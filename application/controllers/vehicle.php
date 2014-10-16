@@ -306,7 +306,13 @@ $err=True;
 		$this->mysession->set('post_all',$data);
 		$this->mysession->set('post_driver',$driver_data);
 		$this->mysession->set('post_device',$device_data);
-		redirect(base_url().'organization/front-desk/vehicle/'.$v_id);	// ?? driver data?? device_data??
+		if($v_id==gINVALID){
+		$r_id='';
+		}
+		else{
+		$r_id=$v_id;
+		}
+		redirect(base_url().'organization/front-desk/vehicle/'.$r_id);	// ?? driver data?? device_data??
 	 }
 	 
 	  else{

@@ -119,18 +119,9 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('id_proof_document_number','ID Proof Number','trim|required|xss_clean');
 	 $this->form_validation->set_rules('name_on_id_proof','ID Proof Holder','trim|required|xss_clean');
 	
-	if($h_badge!=$data['badge_renewal_date']){
-	if(!$this->date_check($data['badge_renewal_date'])){
-	$err=False;
-	$this->mysession->set('Err_badge','Invalid Date for Badge Renewal!');
-	}
-	}
-		if($h_license!=$data['license_renewal_date']){
-	if(!$this->date_check($data['license_renewal_date'])){
-	$err=False;
-	$this->mysession->set('Err_license','Invalid Date for License Renewal!');
-	}
-	}
+	
+	
+		
 	 if($this->form_validation->run()==False|| $err==False){
 		$this->mysession->set('driver_id',$dr_id);
 		$this->mysession->set('post',$data); 
