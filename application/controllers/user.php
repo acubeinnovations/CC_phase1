@@ -12,6 +12,7 @@ class User extends CI_Controller {
 	$this->load->model('trip_booking_model');
 	$this->load->model('customers_model');
     $this->load->model('tarrif_model');
+	 $this->load->model('vehicle_model');
 	no_cache();
 
 	}
@@ -920,7 +921,13 @@ public function profile() {
 	
 	
 	$data['v_models']=$this->user_model->getArray('vehicle_models');
-	
+	$data['v_makes']=$this->user_model->getArray('vehicle_makes');
+	$vehicles=$this->vehicle_model->getVehicles();
+	if($vehicles!=false){
+	$data['vehicles']=$vehicles;
+	}else{
+	$data['vehicles']='';
+	}
 	$data['page_links']=$p_res['page_links'];
 	$data['title']='List Driver| '.PRODUCT_NAME;
 	$page='user-pages/driverList';
