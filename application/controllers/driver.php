@@ -60,16 +60,16 @@ class Driver extends CI_Controller {
 	$data['organisation_id']=$this->session->userdata('organisation_id'); 
 	$data['user_id']=$this->session->userdata('id');
 		$err=True;
-	if($data['blood_group'] ==-1){
+	/*if($data['blood_group'] ==-1){
 	$data['blood_group'] ='';
 	 $err=False;
 	 $this->session->set_userdata('blood group','Choose Blood Group');
-	 }
-	if($data['marital_status_id'] ==-1){
+	 }*/
+	/*if($data['marital_status_id'] ==-1){
 	 $data['marital_status_id'] ='';
 	 $err=False;
 	 $this->session->set_userdata('marital_status_id','Choose Marital Status');
-	 }
+	 }*/
 	 if($data['bank_account_type_id'] ==-1){
 	 $data['bank_account_type_id'] ='';
 	 $err=False;
@@ -85,13 +85,13 @@ class Driver extends CI_Controller {
 	
 	 $this->form_validation->set_rules('driver_name','Name','trim|required|xss_clean');
 	 $this->form_validation->set_rules('place_of_birth','Place Of Birth','trim|required|xss_clean');
-	 $this->form_validation->set_rules('dob','Date of Birth ','trim|required|xss_clean');
+	 $this->form_validation->set_rules('dob','Date of Birth ','trim|xss_clean');
 	 $this->form_validation->set_rules('children','children','trim|xss_clean|numeric');
 	 $this->form_validation->set_rules('present_address','Present Address','trim|required|xss_clean');
-	 $this->form_validation->set_rules('permanent_address','Permanent Address','trim|required|xss_clean');
+	 $this->form_validation->set_rules('permanent_address','Permanent Address','trim|xss_clean');
 	 $this->form_validation->set_rules('district','District','trim|required|xss_clean|alpha');
-	 $this->form_validation->set_rules('state','State','trim|required|xss_clean');
-	 $this->form_validation->set_rules('pin_code','Pin Code','trim|required|xss_clean|regex_match[/^[0-9]{6}$/]');
+	 $this->form_validation->set_rules('state','State','trim|xss_clean');
+	 $this->form_validation->set_rules('pin_code','Pin Code','trim|xss_clean|regex_match[/^[0-9]{6}$/]');
 	 $this->form_validation->set_rules('license_number','License Number','trim|required|xss_clean');
 	 $this->form_validation->set_rules('phone','Phone Number with 11 Digits','trim|required|xss_clean|regex_match[/^[0-9]{11}$/]');
 		if($data['mobile']==$hmob){
@@ -99,25 +99,25 @@ class Driver extends CI_Controller {
 	 }else{
 	 $this->form_validation->set_rules('mobile','10 digit Mobile Number ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[drivers.mobile]');
 	 }if($data['email']==$hmail){
-	 $this->form_validation->set_rules('email','Email','trim|required|xss_clean|valid_email');
+	 $this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email');
 	 }
 	 else{
-	 $this->form_validation->set_rules('email','Email','trim|required|xss_clean|valid_email|is_unique[drivers.email]');
+	 $this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|is_unique[drivers.email]');
 	 }
 	 $this->form_validation->set_rules('date_of_joining','Date of Joining ','trim|required|xss_clean');
-	 $this->form_validation->set_rules('badge','Badge','trim|required|xss_clean');
-	 $this->form_validation->set_rules('license_renewal_date','License Renewal Date','trim|required|xss_clean');
-	 $this->form_validation->set_rules('badge_renewal_date','Badge Renewal Date','trim|required|xss_clean');
-	 $this->form_validation->set_rules('mother_tongue','Mother Tongue','trim|required|xss_clean');
-	 $this->form_validation->set_rules('pan_number','Pan Number','trim|required|xss_clean');
-	 $this->form_validation->set_rules('bank_account_number','Bank Account Number','trim|required|xss_clean');
-	 $this->form_validation->set_rules('name_on_bank_pass_book','Name on Bank Pass Book','trim|required|xss_clean');
-	 $this->form_validation->set_rules('bank_name','Bank Name','trim|required|xss_clean');
-	 $this->form_validation->set_rules('branch','Branch','trim|required|xss_clean');
-	 $this->form_validation->set_rules('ifsc_code','IFSC Code','trim|required|xss_clean');
-	 $this->form_validation->set_rules('id_proof_type_id','ID Proof','trim|required|xss_clean');
-	 $this->form_validation->set_rules('id_proof_document_number','ID Proof Number','trim|required|xss_clean');
-	 $this->form_validation->set_rules('name_on_id_proof','ID Proof Holder','trim|required|xss_clean');
+	 $this->form_validation->set_rules('badge','Badge','trim|xss_clean');
+	 $this->form_validation->set_rules('license_renewal_date','License Renewal Date','trim|xss_clean');
+	 $this->form_validation->set_rules('badge_renewal_date','Badge Renewal Date','trim|xss_clean');
+	 $this->form_validation->set_rules('mother_tongue','Mother Tongue','trim|xss_clean');
+	 $this->form_validation->set_rules('pan_number','Pan Number','trim|xss_clean');
+	 $this->form_validation->set_rules('bank_account_number','Bank Account Number','trim|xss_clean');
+	 $this->form_validation->set_rules('name_on_bank_pass_book','Name on Bank Pass Book','trim|xss_clean');
+	 $this->form_validation->set_rules('bank_name','Bank Name','trim|xss_clean');
+	 $this->form_validation->set_rules('branch','Branch','trim|xss_clean');
+	 $this->form_validation->set_rules('ifsc_code','IFSC Code','trim|xss_clean');
+	 $this->form_validation->set_rules('id_proof_type_id','ID Proof','trim|xss_clean');
+	 $this->form_validation->set_rules('id_proof_document_number','ID Proof Number','trim|xss_clean');
+	 $this->form_validation->set_rules('name_on_id_proof','ID Proof Holder','trim|xss_clean');
 	
 	
 	
