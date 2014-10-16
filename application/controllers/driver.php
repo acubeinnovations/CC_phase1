@@ -93,7 +93,7 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('state','State','trim|xss_clean');
 	 $this->form_validation->set_rules('pin_code','Pin Code','trim|xss_clean|regex_match[/^[0-9]{6}$/]');
 	 $this->form_validation->set_rules('license_number','License Number','trim|required|xss_clean');
-	 $this->form_validation->set_rules('phone','Phone Number with 11 Digits','trim|required|xss_clean|regex_match[/^[0-9]{11}$/]');
+	 $this->form_validation->set_rules('phone','Phone Number','trim|required|xss_clean|numeric]');
 		if($data['mobile']==$hmob){
 		$this->form_validation->set_rules('mobile','10 digit Mobile Number','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
 	 }else{

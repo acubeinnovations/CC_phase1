@@ -148,47 +148,19 @@
            </div>
        </div>
        <?php    } ?>
-			<?php if($this->mysession->get('Err_permit_amt') != ''||$this->mysession->get('Err_tax_amt') != ''||$this->mysession->get('ownership') != ''||$this->mysession->get('vehicle_type') != ''||$this->mysession->get('make') != ''||$this->mysession->get('fuel') != ''||$this->mysession->get('seat') != ''||$this->mysession->get('permit') != ''||$this->mysession->get('Driver') != ''||$this->mysession->get('ac') != ''||$this->mysession->get('date_err') != ''||$this->mysession->get('Device') != ''||$this->mysession->get('Err_driver_fdate') != ''||$this->mysession->get('Err_device_fdate') != ''||$this->mysession->get('Err_reg_date') != ''||$this->mysession->get('Err_tax_date') != ''){ ?>
+	   	  			<?php if($this->mysession->get('Err_invalid_add') != ''||$this->mysession->get('Err_tab') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                         <b>Alert!</b><br><?php
-													echo $this->mysession->get('Err_permit_amt').br();
-													echo $this->mysession->get('Err_tax_amt').br();
-													echo $this->mysession->get('ownership').br();
-													echo $this->mysession->get('vehicle_type').br();
-													echo $this->mysession->get('ac').br();
-													echo $this->mysession->get('make').br();
-													echo $this->mysession->get('fuel').br();
-													echo $this->mysession->get('seat').br();
-													echo $this->mysession->get('permit').br();
-													echo $this->mysession->get('Driver').br();
-													echo $this->mysession->get('Device').br();
-													echo $this->mysession->get('date_err').br();
-													echo $this->mysession->get('Err_driver_fdate').br();
-													echo $this->mysession->get('Err_device_fdate').br();
-													echo $this->mysession->get('Err_reg_date').br();
-													echo $this->mysession->get('Err_tax_date').br();
-														$this->mysession->delete('Err_permit_amt');
-														$this->mysession->delete('Err_tax_amt');
-														$this->mysession->delete('ownership');
-														$this->mysession->delete('vehicle_type');
-														$this->mysession->delete('ac');
-														$this->mysession->delete('make');
-														$this->mysession->delete('fuel');
-														$this->mysession->delete('seat');
-														$this->mysession->delete('permit');
-														$this->mysession->delete('Driver');
-														$this->mysession->delete('Device');
-														$this->mysession->delete('date_err');
-														$this->mysession->delete('Err_driver_fdate');
-														$this->mysession->delete('Err_device_fdate');
-														$this->mysession->delete('Err_reg_date');
-														$this->mysession->delete('Err_tax_date');
-														
-										?>
+													echo $this->mysession->get('Err_tab').br();
+													$this->mysession->delete('Err_tab');
+													echo $this->mysession->get('Err_invalid_add');
+													$this->mysession->delete('Err_invalid_add');
+?>
                                     </div>
 <?php  } ?>
+
            <div class="width-30-percent-with-margin-left-20-Driver-View">
 
 <fieldset class="body-border-Driver-View border-style-Driver-view" >
@@ -205,7 +177,12 @@
 	else{
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_ownership_types'],$ownership='',$class,$id='',$msg);
 	}?>
-	  
+	    <p class="text-red"><?php
+	if($this->mysession->get('ownership') != ''){
+	echo $this->mysession->get('ownership');
+	$this->mysession->delete('ownership');
+ }
+	?></p>
         </div>
 	
 	<div class="form-group">
@@ -213,19 +190,18 @@
            <?php $class="form-control";
 		$msg="Select Vehicle type";
 		$name="vehicle_type";
-		
-	//if(($this->session->userdata('org_id')!=null)&&($this->session->userdata('user_id')!=null)){
-	//$marital_status_id=$result[0]['marital_status_id'];
-	//echo $marital_status_id;exit;
 	if($vehicle_type!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_types'],$vehicle_type,$class,$id='',$msg);
 	}else{
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_types'],$vehicle_type='',$class,$id='',$msg);
 	}
-//}	else{
-  //echo $this->form_functions->populate_dropdown($name,$select['marital_statuses'],$marital_status_id='',$class,$id='',$msg);
-//} ?>
-	   
+ ?>
+	   <p class="text-red"><?php
+	if($this->mysession->get('vehicle_type') != ''){
+	echo $this->mysession->get('vehicle_type');
+	$this->mysession->delete('vehicle_type');
+ }
+	?></p>
         </div>
 	<div class="form-group">
 	<?php echo form_label('Vehicle Make','usernamelabel'); 
@@ -237,6 +213,12 @@
 	}else{
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_makes'],$make='',$class,$id='',$msg);
 	}?>
+	  <p class="text-red"><?php
+	if($this->mysession->get('make') != ''){
+	echo $this->mysession->get('make');
+	$this->mysession->delete('make');
+ }
+	?></p>
 	   
         </div>
 		<div class="form-group">
@@ -249,7 +231,12 @@
 	}else{
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_models'],$model='',$class,$id='',$msg);
 	}?>
-	   
+	   <p class="text-red"><?php
+	if($this->mysession->get('model') != ''){
+	echo $this->mysession->get('model');
+	$this->mysession->delete('model');
+ }
+	?></p>
         </div>
 	<div class="form-group">
 	<?php echo form_label(' Manufacturing Year','usernamelabel'); ?>
@@ -266,7 +253,12 @@
 	}else{
 	echo $this->form_functions->populate_dropdown($name,$select['vehicle_ac_types'],$ac='',$class,$id='',$msg); 
 	}?>
-	   
+	   <p class="text-red"><?php
+	if($this->mysession->get('ac') != ''){
+	echo $this->mysession->get('ac');
+	$this->mysession->delete('ac');
+ }
+	?></p>
         </div>	
 	<div class="form-group">
 	<?php echo form_label(' Fuel Type','usernamelabel'); ?>
@@ -278,7 +270,12 @@
      }else{
    echo $this->form_functions->populate_dropdown($name,$select['vehicle_fuel_types'],$fuel='',$class,$id='',$msg);
 }	?>
-	  
+	   <p class="text-red"><?php
+	if($this->mysession->get('fuel') != ''){
+	echo $this->mysession->get('fuel');
+	$this->mysession->delete('fuel');
+ }
+	?></p>
         </div>
 	<div class="form-group">
 	<?php echo form_label(' Seating Capacity','usernamelabel'); ?>
@@ -290,7 +287,12 @@
 }else{
 echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_capacity'],$seat='',$class,$id='',$msg); 
 }	?>
-	   
+	 <p class="text-red"><?php
+	if($this->mysession->get('seat') != ''){
+	echo $this->mysession->get('seat');
+	$this->mysession->delete('seat');
+ }
+	?></p>   
         </div>
 			<div class="form-group">
 	<?php echo form_label('Permit Type','usernamelabel'); ?>
@@ -314,7 +316,13 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
 	<?php echo form_label('Permit Renewal Amount','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>$permit_amount)); ?>
 	   <?php echo $this->form_functions->form_error_session('permit_amount', '<p class="text-red">', '</p>'); ?>
-        </div>
+        <p class="text-red"><?php
+	if($this->mysession->get('Err_permit_amt') != ''){
+	echo $this->mysession->get('Err_permit_amt');
+	$this->mysession->delete('Err_permit_amt');
+ }
+	?></p>
+		</div>
 		
 	
 		</fieldset> </div>
@@ -327,17 +335,30 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
            <?php $class="form-control";
 		$msg="Select Driver";
 		$name="driver";
-		if($driver_id!=null){ echo $driver_id;
+		if($driver_id!=null){
 	echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id,$class,$id='',$msg); 
 }else{
 echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id='',$class,$id='',$msg); 
 }	?>
-	   
+	     <p class="text-red"><?php
+	if($this->mysession->get('Driver') != ''){
+	echo $this->mysession->get('Driver');
+	$this->mysession->delete('Driver');
+ }
+	?></p>
         </div>
 		<div class="form-group">
-		<?php echo form_label('From Date','usernamelabel');?>
+		<?php echo form_label('From Date for Driver','usernamelabel');?>
            <?php echo form_input(array('name'=>'from_date','class'=>'fromdatepicker form-control' ,'value'=>$from_date));?>
-	   <?php echo $this->form_functions->form_error_session('from_date', '<p class="text-red">', '</p>'); ?>
+	   <?php echo $this->form_functions->form_error_session('from_date', '<p class="text-red">', '</p>');
+
+	?>
+		<p class="text-red"><?php
+ if($this->mysession->get('Err_driver_fdate') != ''){
+	echo $this->mysession->get('Err_driver_fdate');
+	$this->mysession->delete('Err_driver_fdate');
+ }
+	?></p>
         </div> 	<div class="hide-me"><?php echo form_input(array('name'=>'h_fdate_driver','value'=>$from_date));?></div>
 		<div class="form-group">
 		<?php echo form_label('Select Device','usernamelabel'); ?>
@@ -349,13 +370,24 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 }else{
 echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_id='',$class,$id='',$msg); 
 }	?>
-	   
+	   <p class="text-red"><?php
+	if($this->mysession->get('Device') != ''){
+	echo $this->mysession->get('Device');
+	$this->mysession->delete('Device');
+ }
+	?></p>
         </div>
 		<div class="form-group">
 		<?php echo form_label('From Date for Device','usernamelabel');?>
            <?php echo form_input(array('name'=>'from_date_device','class'=>'fromdatepicker form-control' ,'value'=>$from_date_device));?>
 	   <?php echo $this->form_functions->form_error_session('from_date_device', '<p class="text-red">', '</p>'); ?>
-        </div>	<div class="hide-me"><?php echo form_input(array('name'=>'h_fdate_device','value'=>$from_date_device));?></div>
+       <p class="text-red"><?php
+	if($this->mysession->get('Err_device_fdate') != ''){
+	echo $this->mysession->get('Err_device_fdate');
+	$this->mysession->delete('Err_device_fdate');
+ }
+	?></p>
+	   </div>	<div class="hide-me"><?php echo form_input(array('name'=>'h_fdate_device','value'=>$from_date_device));?></div>
 	<div class="form-group">
 		<?php echo form_label('Registration Number','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'reg_number','class'=>'form-control','id'=>'reg_number','value'=>$reg_number)); ?>
@@ -381,7 +413,13 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 	<?php echo form_label('Tax Renewal Amount ','usernamelabel'); ?>
            <?php  echo form_input(array('name'=>'tax_amount','class'=>'form-control','id'=>'tax_amount','value'=>$tax_amount));?>
 	   <?php echo $this->form_functions->form_error_session('tax_amount', '<p class="text-red">', '</p>'); ?>
-        </div>
+        <p class="text-red"><?php
+	if($this->mysession->get('Err_tax_amt') != ''){
+	echo $this->mysession->get('Err_tax_amt');
+	$this->mysession->delete('Err_tax_amt');
+ }
+	?></p>
+		</div>
 	<div class="form-group">
 	<?php echo form_label('Tax Renewal Date','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'tax_date','class'=>'fromdatepicker form-control' ,'value'=>$tax_date)); ?>
@@ -464,25 +502,7 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
        </div>
        <?php    } ?>
 	   
-	  			<?php if($this->mysession->get('Err_insurance_amt') != ''||$this->mysession->get('Err_insurance_pre_amt') != ''||$this->mysession->get('Err_invalid_insurance_add') != ''||$this->mysession->get('Err_ins_date') != ''||$this->mysession->get('Err_ins_renewal') != ''){ ?>
-	<div class="alert alert-danger alert-dismissable">
-                                        <i class="fa fa-ban"></i>
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                        <b>Alert!</b><br><?php
-													echo $this->mysession->get('Err_insurance_amt').br();
-													echo $this->mysession->get('Err_insurance_pre_amt').br();
-													echo $this->mysession->get('Err_invalid_insurance_add').br();
-													echo $this->mysession->get('Err_ins_date').br();
-													echo $this->mysession->get('Err_ins_renewal').br();
-														$this->mysession->delete('Err_insurance_amt');
-														$this->mysession->delete('Err_insurance_pre_amt');
-														$this->mysession->delete('Err_invalid_insurance_add');
-														$this->mysession->delete('Err_ins_date');
-														$this->mysession->delete('Err_ins_renewal');
-														
-										?>
-                                    </div>
-<?php  } ?>
+
              <div class="width-30-percent-with-margin-left-20-Driver-View insurance ">
 			<fieldset class="body-border-Driver-View border-style-Driver-view" >
 			<legend class="body-head">Insurance Details</legend>
@@ -507,12 +527,24 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 		<?php echo form_label('Insurance Premium Amount','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'insurance_pre-amount','class'=>'form-control','id'=>'insurance_pre-amount','value'=>$ins_prem_amt)); ?>
 	   <?php echo $this->form_functions->form_error_session('insurance_pre-amount', '<p class="text-red">', '</p>'); ?>
-        </div>
+         <p class="text-red"><?php
+	if($this->mysession->get('Err_insurance_pre_amt') != ''){
+	echo $this->mysession->get('Err_insurance_pre_amt');
+	$this->mysession->delete('Err_insurance_pre_amt');
+ }
+	?></p>
+		</div>
 		<div class="form-group">
 		<?php echo form_label('Insurance  Amount','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'insurance_amount','class'=>'form-control','id'=>'insurance_amount','value'=>$ins_amt)); ?>
 	   <?php echo $this->form_functions->form_error_session('insurance_amount', '<p class="text-red">', '</p>'); ?>
-        </div>
+       <p class="text-red"><?php
+	if($this->mysession->get('Err_insurance_amt') != ''){
+	echo $this->mysession->get('Err_insurance_amt');
+	$this->mysession->delete('Err_insurance_amt');
+ }
+	?></p>  
+		</div>
 		<div class="form-group">
 		<?php echo form_label('Insurance  Agency','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'insurance_agency','class'=>'form-control','id'=>'insurance_agency','value'=>$ins_agency)); ?>
@@ -616,19 +648,14 @@ if($this->mysession->get('loan_post_all')!=null ){
        </div>
        <?php    } ?>
 	   
-	  			<?php if($this->mysession->get('Err_loan_amt') != ''||$this->mysession->get('Err_loan_emi_amt') != ''||$this->mysession->get('Err_invalid_loan_add') != ''||$this->mysession->get('Err_emi_date') != ''){ ?>
+	  			<?php if($this->mysession->get('Err_invalid_loan_add') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                         <b>Alert!</b><br><?php
-													echo $this->mysession->get('Err_loan_amt').br();
-													echo $this->mysession->get('Err_loan_emi_amt').br();
-													echo $this->mysession->get('Err_invalid_loan_add').br();
-													echo $this->mysession->get('Err_emi_date').br();
-														$this->mysession->delete('Err_loan_amt');
-														$this->mysession->delete('Err_loan_emi_amt');
-														$this->mysession->delete('Err_invalid_loan_add');
-														$this->mysession->delete('Err_emi_date');
+		echo $this->mysession->get('Err_invalid_loan_add').br();
+		$this->mysession->delete('Err_invalid_loan_add');
+														
 														
 										?>
                                     </div>
@@ -640,7 +667,14 @@ if($this->mysession->get('loan_post_all')!=null ){
 		<?php echo form_label('Total Amount','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'total_amt','class'=>'form-control','id'=>'total_amt','value'=>$l_amt)); ?>
 	   <?php echo $this->form_functions->form_error_session('total_amt', '<p class="text-red">', '</p>'); ?>
-        </div>
+        
+		    <p class="text-red"><?php
+	if($this->mysession->get('Err_loan_amt') != ''){
+	echo $this->mysession->get('Err_loan_amt');
+	$this->mysession->delete('Err_loan_amt');
+ }
+	?></p>
+		</div>
 		
 			<div class="form-group">
 		<?php echo form_label('Number of EMI','usernamelabel'); ?>
@@ -651,7 +685,13 @@ if($this->mysession->get('loan_post_all')!=null ){
 		<?php echo form_label('EMI Amount','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'emi_amt','class'=>'form-control','id'=>'emi_amt','value'=>$l_emi_amt)); ?>
 	   <?php echo $this->form_functions->form_error_session('emi_amt', '<p class="text-red">', '</p>'); ?>
-        </div>
+           <p class="text-red"><?php
+	if($this->mysession->get('Err_loan_emi_amt') != ''){
+	echo $this->mysession->get('Err_loan_emi_amt');
+	$this->mysession->delete('Err_loan_emi_amt');
+ }
+	?></p>
+	   </div>
 		<div class="form-group">
 		<?php echo form_label('Number of Paid EMI','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'no_paid_emi','class'=>'form-control','id'=>'no_paid_emi','value'=>$l_no_paid_emi)); ?>

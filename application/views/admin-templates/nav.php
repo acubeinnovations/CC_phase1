@@ -102,8 +102,8 @@
                             </ul>
                                 
                             </a>
-							<li>
-                            <!--<a href="<?php echo base_url().'organization/front-desk/device';?>">
+							<!--<li>
+                            <a href="<?php echo base_url().'organization/front-desk/device';?>">
                                 <i class="fa fa-laptop"></i> <span> Device </span>
                             </a>
                        	 </li>-->
