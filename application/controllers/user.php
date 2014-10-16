@@ -999,8 +999,11 @@ public function profile() {
 				}
 				}
 				if($param2!=''){
+				//echo $param2."param";exit;
 					$id=$this->mysession->get('vehicle_id');
+				if($id!=''){
 					$data['trips']=$this->trip_booking_model->getVehicleVouchers($id);
+					}
 					}
 				if($param2=='insurance'){ 
 				$data['insurance_tab']='active';

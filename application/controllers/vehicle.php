@@ -217,13 +217,13 @@ class Vehicle extends CI_Controller {
 					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean');
 					 $this->form_validation->set_rules('from_date','From Date ','trim|required|xss_clean');
 					 $this->form_validation->set_rules('from_date_device','From Date ','trim|required|xss_clean');
-					 $this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
-					 $this->form_validation->set_rules('eng_num','Engine Number','trim|required|xss_clean');
-					 $this->form_validation->set_rules('chases_num','Chases Number','trim|required|xss_clean');
-					 $this->form_validation->set_rules('permit_date','Permit Renewal Date','trim|required|xss_clean');
-					 $this->form_validation->set_rules('permit_amount','Permit Renewal  Amount','trim|required|xss_clean');
-					 $this->form_validation->set_rules('tax_amount','Tax Amount','trim|required|xss_clean');
-					 $this->form_validation->set_rules('tax_date','Tax Date','trim|required|xss_clean');
+					 $this->form_validation->set_rules('reg_date','Registration Date','trim|xss_clean');
+					 $this->form_validation->set_rules('eng_num','Engine Number','trim|xss_clean');
+					 $this->form_validation->set_rules('chases_num','Chases Number','trim|xss_clean');
+					 $this->form_validation->set_rules('permit_date','Permit Renewal Date','trim|xss_clean');
+					 $this->form_validation->set_rules('permit_amount','Permit Renewal  Amount','trim|xss_clean');
+					 $this->form_validation->set_rules('tax_amount','Tax Amount','trim|xss_clean');
+					 $this->form_validation->set_rules('tax_date','Tax Date','trim|xss_clean');
 					 //for insurance
 $err=True;
 	
@@ -279,11 +279,11 @@ $err=True;
 	 $err=False;
 	 $this->mysession->set('seat','Choose Seat Capacity');
 	 }
-	  if($data['vehicle_permit_type_id'] ==-1){
+	/*  if($data['vehicle_permit_type_id'] ==-1){
 	 $data['vehicle_permit_type_id'] ='';
 	 $err=False;
 	 $this->mysession->set('permit','Choose Permit Type');
-	 }
+	 }*/
 	   if($data['vehicle_model_id'] ==-1){
 	 $data['vehicle_model_id'] ='-1';
 	 $err=False;
@@ -306,7 +306,13 @@ $err=True;
 		$this->mysession->set('post_all',$data);
 		$this->mysession->set('post_driver',$driver_data);
 		$this->mysession->set('post_device',$device_data);
-		redirect(base_url().'organization/front-desk/vehicle/'.$v_id);	// ?? driver data?? device_data??
+		if($v_id==gINVALID){
+		$r_id='';
+		}
+		else{
+		$r_id=$v_id;
+		}
+		redirect(base_url().'organization/front-desk/vehicle/'.$r_id);	// ?? driver data?? device_data??
 	 }
 	 
 	  else{
@@ -377,40 +383,29 @@ $err=True;
 			$hmail=$this->input->post('hmail');
 			$data['Insurance_agency_web']=$this->input->post('insurance_agency_web');
 			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
-					$this->form_validation->set_rules('insurance_number','Insurance Number','trim|required|xss_clean');
-					 $this->form_validation->set_rules('insurance_date','Insurance Date','trim|required|xss_clean');
-					 $this->form_validation->set_rules('insurance_renewal_date','Insurance Renewal Date ','trim|required|xss_clean');
-					 $this->form_validation->set_rules('insurance_amount','Insurance Amount','trim|required|xss_clean');
-					 $this->form_validation->set_rules('insurance_pre-amount','Insurance Pre Amount','trim|required|xss_clean');
-					 $this->form_validation->set_rules('insurance_agency','Insurance Agency','trim|required|xss_clean');
-					 $this->form_validation->set_rules('insurance_agency_address','Address','trim|required|xss_clean');
+					$this->form_validation->set_rules('insurance_number','Insurance Number','trim|xss_clean');
+					 $this->form_validation->set_rules('insurance_date','Insurance Date','trim|xss_clean');
+					 $this->form_validation->set_rules('insurance_renewal_date','Insurance Renewal Date ','trim|xss_clean');
+					 $this->form_validation->set_rules('insurance_amount','Insurance Amount','trim|xss_clean');
+					 $this->form_validation->set_rules('insurance_pre-amount','Insurance Pre Amount','trim|xss_clean');
+					 $this->form_validation->set_rules('insurance_agency','Insurance Agency','trim|xss_clean');
+					 $this->form_validation->set_rules('insurance_agency_address','Address','trim|xss_clean');
 					// if($hphone==$data['Insurance_agency_phone']){
-					 $this->form_validation->set_rules('insurance_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
+					 $this->form_validation->set_rules('insurance_agency_phn','Agency ContactInfo ','trim|xss_clean|regex_match[/^[0-9]{10}$/]');
 					 /*}
 					 else{
 					 $this->form_validation->set_rules('insurance_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicles_insurance.Insurance_agency_phone]');
 					 }*/
 					 //if($hmail==$data['Insurance_agency_email']){
-					 $this->form_validation->set_rules('insurance_agency_mail','Mail ID','trim|required|xss_clean|valid_email');
+					 $this->form_validation->set_rules('insurance_agency_mail','Mail ID','trim|xss_clean|valid_email');
 					/* }else{
 					 $this->form_validation->set_rules('insurance_agency_mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicles_insurance.Insurance_agency_email]');
 					 }*/
-					 $this->form_validation->set_rules('insurance_agency_web','Web Address','trim|required|xss_clean');
+					 $this->form_validation->set_rules('insurance_agency_web','Web Address','trim|xss_clean');
 					 
 					 //for insurance
 $err=True;
-	if($h_ins!=$data['insurance_date']){
-	if(!$this->date_check($data['insurance_date'])){
-	$err=False;
-	$this->mysession->set('Err_ins_date','Invalid Insurance Date!');
-	}
-	}
-	if($h_renew!=$data['insurance_renewal_date']){
-	if(!$this->date_check($data['insurance_renewal_date'])){
-	$err=False;
-	$this->mysession->set('Err_ins_renewal','Invalid Insurance Renewal Date!');
-	}
-	}
+	
 	if(preg_match('#[^0-9\.]#', $data['insurance_amount'])){
 			$this->mysession->set('Err_insurance_amt','Invalid Characters on  Amount field!');
 			$err=False;
@@ -419,13 +414,14 @@ $err=True;
 			$this->mysession->set('Err_insurance_pre_amt','Invalid Characters on Pre Amount field!');
 			$err=False;
 			}
+			
 	if($this->mysession->get('vehicle_id')==null)
 	{
-	$this->mysession->set('Err_invalid_insurance_add','Invalid Attempt!');
+	$this->mysession->set('Err_invalid_insurance_add','Invalid Attempt!  Please Add Vehicle Details !');
 	$err=False;
 	}
 	 if($this->form_validation->run()==False|| $err==False){
-	 
+	// echo "id".$this->mysession->get('vehicle_id');exit;
 		$this->mysession->set('insurance_id',$ins_id);
 		$this->mysession->set('ins_post_all',$data);
 		
@@ -490,17 +486,17 @@ $err=True;
 					 $this->form_validation->set_rules('emi_amt','EMI Amount ','trim|required|xss_clean');
 					 $this->form_validation->set_rules('no_paid_emi','Number of Paid EMI','trim|required|xss_clean|numeric');
 					 $this->form_validation->set_rules('emi_date','EMI Payment Date','trim|required|xss_clean');
-					 $this->form_validation->set_rules('loan_agency','Loan Agency','trim|required|xss_clean');
-					 $this->form_validation->set_rules('loan_agency_address','Address','trim|required|xss_clean');
-					 $this->form_validation->set_rules('loan_agency_web','Web Address','trim|required|xss_clean');
+					 $this->form_validation->set_rules('loan_agency','Loan Agency','trim|xss_clean');
+					 $this->form_validation->set_rules('loan_agency_address','Address','trim|xss_clean');
+					 $this->form_validation->set_rules('loan_agency_web','Web Address','trim|xss_clean');
 					 //if($hphone==$data['loan_agency_phone']){
-					 $this->form_validation->set_rules('loan_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
+					 $this->form_validation->set_rules('loan_agency_phn','Agency ContactInfo ','trim|xss_clean|regex_match[/^[0-9]{10}$/]');
 					/* }
 					 else{
 					 $this->form_validation->set_rules('loan_agency_phn','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicle_loans.loan_agency_phone]');
 					 }*/
 					// if($hmail==$data['loan_agency_email']){
-					 $this->form_validation->set_rules('loan_agency_mail','Mail ID','trim|required|xss_clean|valid_email');
+					 $this->form_validation->set_rules('loan_agency_mail','Mail ID','trim|xss_clean|valid_email');
 					/* }else{
 					 $this->form_validation->set_rules('loan_agency_mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicle_loans.loan_agency_email]');
 					 }*/
@@ -508,12 +504,7 @@ $err=True;
 					 
 					 //for insurance
 $err=True;
-	if($h_emi!=$data['emi_payment_date']){
-	if(!$this->date_check($data['emi_payment_date'])){
-	$err=False;
-	$this->mysession->set('Err_emi_date','Invalid EMI Payment Date!');
-	}
-	}
+	
 	if(preg_match('#[^0-9\.]#', $data['total_amount'])){
 			$this->mysession->set('Err_loan_amt','Invalid Characters on Total Amount field!');
 			$err=False;
@@ -524,7 +515,7 @@ $err=True;
 			}
 	if($this->mysession->get('vehicle_id')==null)
 	{
-	$this->mysession->set('Err_invalid_loan_add','Invalid Attempt!');
+	$this->mysession->set('Err_invalid_loan_add','Invalid Attempt!  Please Add Vehicle Details !');
 	$err=False;
 	}
 
@@ -587,8 +578,8 @@ $err=True;
 			
 			//$this->form_validation->set_rules('place_of_birth','Birth Place','trim|required|xss_clean|alpha');
 					$this->form_validation->set_rules('owner_name','Owner Name ','trim|required|xss_clean');
-					 $this->form_validation->set_rules('address','Address','trim|required|xss_clean');
-					 $this->form_validation->set_rules('dob','Date of Birth','trim|required|xss_clean');
+					 $this->form_validation->set_rules('address','Address','trim|xss_clean');
+					 $this->form_validation->set_rules('dob','Date of Birth','trim|xss_clean');
 					// if($hphone==$data['mobile']){
 					 $this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');
 					/* }
@@ -596,7 +587,7 @@ $err=True;
 					 $this->form_validation->set_rules('mobile','Agency ContactInfo ','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]|is_unique[vehicle_owners.mobile]');
 					 }*/
 					 //if($hmail==$data['email']){
-					 $this->form_validation->set_rules('mail','Mail ID','trim|required|xss_clean|valid_email');
+					 $this->form_validation->set_rules('mail','Mail ID','trim|xss_clean|valid_email');
 					 /*}else{
 					 $this->form_validation->set_rules('mail','Mail ID','trim|required|xss_clean|valid_email|is_unique[vehicle_owners.email]');
 					 }*/
@@ -605,7 +596,7 @@ $err=True;
 					 //for insurance
 		if($this->mysession->get('vehicle_id')==null)
 	{
-	$this->mysession->set('Err_invalid_owner_add','Invalid Attempt!');
+	$this->mysession->set('Err_invalid_owner_add','Invalid Attempt!  Please Add Vehicle Details !');
 	$err=False;
 	}
 	
