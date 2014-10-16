@@ -81,7 +81,7 @@
 
 			<li class="treeview">
                             <a href="#">
-                                <i class="fa fa-laptop"></i>
+                                <i class="fa fa-user-md"></i>
                                 <span>Driver</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
@@ -93,7 +93,7 @@
                         </li>
 						<li class="treeview">
                             <a href="#">
-                                <i class="fa fa-laptop"></i>
+                                <i class="fa fa-truck"></i>
                                 <span>Vehicle</span><i class="fa fa-angle-left pull-right"></i>
 								<ul class="treeview-menu">
                                 
@@ -115,7 +115,7 @@
                         </li>
 						<li class="treeview">
                             <a href="#">
-                                <i class="fa fa-laptop"></i>
+                                <i class="fa fa-users"></i>
                                 <span>Customer</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
@@ -127,7 +127,7 @@
 						
 						<li class="treeview">
                             <a href="#">
-                                <i class="fa fa-laptop"></i>
+                                <i class="fa fa-exchange"></i>
                                 <span>Trip</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
@@ -141,7 +141,7 @@
 						
 							<li class="treeview">
                             <a href="#">
-                                <i class="fa fa-laptop"></i>
+                                <i class="fa fa-book"></i>
                                 <span>Accounts</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
@@ -163,7 +163,7 @@
 	
 			<li class="treeview">
                             <a href="#">
-                                <i class="fa fa-laptop"></i>
+                                <i class="fa  fa-credit-card"></i>
                                 <span>Account Statements</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>

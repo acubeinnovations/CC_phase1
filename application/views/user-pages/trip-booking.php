@@ -221,9 +221,10 @@ $customer_type='';
 					<fieldset class="body-border">
 					<legend class="body-head font-size-18-px">Booking Source</legend>
 						<div class="form-group">
-						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						echo $this->form_functions->populate_dropdown('booking_source',$booking_sources,$booking_source,$class,$id='',$msg="Select Source");
-						echo form_input(array('name'=>'source','class'=>'form-control row-source-50-percent-width-with-margin-8','id'=>'source','placeholder'=>'Source','value'=>$source)); ?>
+						<?php $class="form-control row-source-100-percent-width-with-margin-8";
+						echo $this->form_functions->populate_dropdown('booking_source',$booking_sources,$booking_source,$class,$id='',$msg="Select Source");?><div class="hide-me"><?php
+						echo form_input(array('name'=>'source','class'=>'form-control','id'=>'source','placeholder'=>'Source','value'=>$source)); ?></div>
+						
 						<?php echo $this->form_functions->form_error_session('booking_sources', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('source', '<p class="text-red">', '</p>'); ?>
 						</div>
 					</fieldset>
@@ -237,14 +238,14 @@ $customer_type='';
 							<div class="div-with-90-percent-width-and-marigin-5 passenger-basic-info">
 								<div class="form-group">
 								<?php 
-								echo form_input(array('name'=>'customer','class'=>'form-control', 'id'=>'customer','placeholder'=>'Customer','value'=>$customer)).form_label('','name_error').$this->form_functions->form_error_session('customer', '<p class="text-red">', '</p>');
+								echo form_input(array('name'=>'customer','class'=>'form-control mandatory', 'id'=>'customer','placeholder'=>'Customer','value'=>$customer)).form_label('','name_error').$this->form_functions->form_error_session('customer', '<p class="text-red">', '</p>');
 								 ?>
 								<div class="hide-me"><?php echo form_input(array('name'=>'new_customer','class'=>'form-control new-customer','value'=>$new_customer)); ?></div>
 								</div>
 								<div class="form-group margin-top-less-10">
 								<?php 
 								echo form_input(array('name'=>'email', 'class'=>'form-control col-1-textbox-with-50-percent-width-and-float-left','id'=>'email','placeholder'=>'Email','value'=>$email));
-								echo form_input(array('name'=>'mobile','class'=>'form-control col-2-textbox-with-50-percent-width-and-float-left','id'=>'mobile','placeholder'=>'Mobile','value'=>$mobile)).br().form_label('','email_error').nbs(61).form_label('','mobile_error');
+								echo form_input(array('name'=>'mobile','class'=>'form-control col-2-textbox-with-50-percent-width-and-float-left mandatory','id'=>'mobile','placeholder'=>'Mobile','value'=>$mobile)).br().form_label('','email_error').nbs(61).form_label('','mobile_error');
 								?>
 								<span class="width-50-percent margin-top-less-10 float-left">
 								<?php echo $this->form_functions->form_error_session('email', '<p class="text-red">', '</p>').nbs(8);?>
@@ -256,8 +257,7 @@ $customer_type='';
 							</div>
 							</td>
 							<td>
-								<button class="btn btn-info btn-lg add-customer" type="button">ADD</button>
-								<button class="btn btn-danger btn-lg clear-customer" type="button">CLEAR</button>
+								
 							</td>
 						</tr>
 						<tr>
@@ -268,14 +268,20 @@ $customer_type='';
 									echo nbs(4).form_label('Advanced');
 									?>
 								</div>
-								<div class="form-group guest-container margin-top-less-40 float-right">
+								
+								<div class="form-group guest-container margin-top-less-40">
 									<?php
 									echo form_checkbox(array('name'=> 'guest','class'=>'guest-chek-box flat-red','checked'=>$guest));
 									echo nbs(4).form_label('Guest');
 									?>
 								</div>
+								<div class="form-group margin-top-less-20 customer-button-group  float-right">
+									<button class="btn btn-info btn-lg add-customer" type="button">ADD</button>
+									<button class="btn btn-danger btn-lg clear-customer" type="button">CLEAR</button>
+								</div>
 							</td>
-							
+							<td>
+							</td>
 						</tr>
 						<tr>
 							<td>
@@ -329,7 +335,7 @@ $customer_type='';
 								
                                         <div class="input-group-btn ">
                                             <?php 
-									echo form_input(array('name'=>'pickupcity','class'=>'form-control width-96-percent-and-margin-8 dropdown-toggle','id'=>'pickupcity','placeholder'=>'Pick up City','value'=>$pickupcity));?><div class="hide-me"><?php echo form_input(array('name'=>'pickupcitylat','id'=>'pickupcitylat','value'=>$pickupcitylat)).form_input(array('name'=>'pickupcitylng','id'=>'pickupcitylng','value'=>$pickupcitylng));?></div><?php
+									echo form_input(array('name'=>'pickupcity','class'=>'form-control width-96-percent-and-margin-8 dropdown-toggle mandatory','id'=>'pickupcity','placeholder'=>'Pick up City','value'=>$pickupcity));?><div class="hide-me"><?php echo form_input(array('name'=>'pickupcitylat','id'=>'pickupcitylat','value'=>$pickupcitylat)).form_input(array('name'=>'pickupcitylng','id'=>'pickupcitylng','value'=>$pickupcitylng));?></div><?php
 									echo $this->form_functions->form_error_session('pickupcity', '<p class="text-red">', '</p>');
 									 ?>
                                             <ul class="dropdown-menu dropdown-menu-on-key-press autofill-pickupcity">
@@ -381,7 +387,7 @@ $customer_type='';
 									<div class="form-group">
 										  <div class="input-group-btn ">
 									<?php 
-									echo form_input(array('name'=>'dropdownlocation','class'=>'form-control width-96-percent-and-margin-8','id'=>'dropdownlocation','placeholder'=>'Drop Down City','value'=>$dropdownlocation));?><div class="hide-me"><?php echo form_input(array('name'=>'dropdownlocationlat','id'=>'dropdownlocationlat','value'=>$dropdownlocationlat)).form_input(array('name'=>'dropdownlocationlng','id'=>'dropdownlocationlng','value'=>$dropdownlocationlng));?></div><?php
+									echo form_input(array('name'=>'dropdownlocation','class'=>'form-control width-96-percent-and-margin-8 mandatory','id'=>'dropdownlocation','placeholder'=>'Drop Down City','value'=>$dropdownlocation));?><div class="hide-me"><?php echo form_input(array('name'=>'dropdownlocationlat','id'=>'dropdownlocationlat','value'=>$dropdownlocationlat)).form_input(array('name'=>'dropdownlocationlng','id'=>'dropdownlocationlng','value'=>$dropdownlocationlng));?></div><?php
 									echo $this->form_functions->form_error_session('dropdownlocation', '<p class="text-red">', '</p>');
 									 ?>
 											 <ul class="dropdown-menu dropdown-menu-on-key-press autofill-dropdownlocation">
@@ -403,13 +409,13 @@ $customer_type='';
 									</div>
 									<div class="form-group">
 									<?php 
-									echo form_input(array('name'=>'pickupdatepicker','class'=>'form-control width-60-percent-with-margin-10','id'=>'pickupdatepicker','placeholder'=>'Pick up Date','value'=>$pickupdatepicker)).form_input(array('name'=>'pickuptimepicker','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'pickuptimepicker','placeholder'=>'Pick up time ','value'=>$pickuptimepicker));
+									echo form_input(array('name'=>'pickupdatepicker','class'=>'mandatory form-control width-60-percent-with-margin-10','id'=>'pickupdatepicker','placeholder'=>'Pick up Date','value'=>$pickupdatepicker)).form_input(array('name'=>'pickuptimepicker','class'=>'mandatory form-control width-30-percent-with-margin-left-20','id'=>'pickuptimepicker','placeholder'=>'Pick up time ','value'=>$pickuptimepicker));
 									echo $this->form_functions->form_error_session('pickupdatepicker', '<p class="text-red float-left right-15">', '</p>').$this->form_functions->form_error_session('pickuptimepicker', '<p class="text-red float-left left-65">', '</p>');
 									 ?>
 									</div>
 									<div class="form-group float-left">
 									<?php 
-									echo form_input(array('name'=>'dropdatepicker','class'=>'form-control width-60-percent-with-margin-10','id'=>'dropdatepicker','placeholder'=>'Drop Date','value'=>$dropdatepicker)).form_input(array('name'=>'droptimepicker','class'=>'form-control width-30-percent-with-margin-left-20','id'=>'droptimepicker','placeholder'=>'Drop time','value'=>$droptimepicker));
+									echo form_input(array('name'=>'dropdatepicker','class'=>'mandatory form-control width-60-percent-with-margin-10','id'=>'dropdatepicker','placeholder'=>'Drop Date','value'=>$dropdatepicker)).form_input(array('name'=>'droptimepicker','class'=>'mandatory form-control width-30-percent-with-margin-left-20','id'=>'droptimepicker','placeholder'=>'Drop time','value'=>$droptimepicker));
 									echo $this->form_functions->form_error_session('dropdatepicker', '<p class="text-red float-left right-15">', '</p>').$this->form_functions->form_error_session('droptimepicker', '<p class="text-red float-left left-65">', '</p>');
 									 ?>
 									</div>
@@ -714,14 +720,15 @@ $customer_type='';
 	<div class="second-column-trip-booking">
 		<fieldset class="body-border notify">
 		<legend class="body-head font-size-18-px">Notification</legend>
+		<div class="ajax-notifications">
 		<?php
-	
+		
 		if(count($notification)>0 && $notification!=''){
 		for($notification_index=0;$notification_index<count($notification);$notification_index++){?>
 		<a href="<?php echo base_url().'organization/front-desk/trip-booking/'.$notification[$notification_index]->id;?>" class="notify-link">
 		<div class="callout callout-warning no-right-padding">
 		<div class="notification<?php echo $notification_index; ?>">
-			<table style="width:100%;">
+			<table style="width:100%;" class="font-size-12-px">
 				<tr>
 					<td class='notification-trip-id'>
 						Trip ID :
@@ -732,7 +739,7 @@ $customer_type='';
 				</tr>
 				<tr>
 					<td class='notification-pickup-city'>
-						Customer :
+						Cust :
 					</td>
 					<td>
 						<?php echo $customers_array[$notification[$notification_index]->customer_id]; ?>
@@ -762,6 +769,7 @@ $customer_type='';
 
 
 		?>
+		</div>
 		</fieldset>
 	</div>
 </div>

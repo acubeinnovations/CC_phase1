@@ -799,6 +799,8 @@ $('#'+text_box_class+'lng').attr('value',data.lng);
 }
 
 
+
+
 var test = 1;
 window.onbeforeunload = function(){
 	var redirect=$('.book-trip-validate').attr('enable_redirect');
@@ -983,7 +985,7 @@ function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,d
 	var vehicle_makes=$('.vehicle-makes').html().split(',');
 	$('#available_vehicle option').remove();
 	$('#available_vehicle').append($("<option value='-1'></option>").text('--Select Vehicle--'));
-	if(available_vehicle_id!='' || available_vehicle_id!=-1 ){
+	if(Trim(available_vehicle_id)!='' && Trim(available_vehicle_id)!=-1 ){alert(available_vehicle_id);
 		$.post(base_url+"/trip-booking/getVehicle",
 		  {
 			id:available_vehicle_id
@@ -1153,7 +1155,33 @@ var h = Math.floor(total_min/60); //Get whole hours
 });
 
 
+window.setInterval(function(){
+var current_loc=window.location.href;
+current_loc=current_loc.split('/');
+current_loc.length;
+if(current_loc[current_loc.length-1]=='trip-booking' || current_loc[current_loc.length-2]=='trip-booking'){
+notify();
+}
 
+}, 5000);
+
+
+function notify(){
+var notify='notify';
+$.post(base_url+"/user/getNotifications",
+		  {
+			notify:notify
+		  },function(data){
+			data=jQuery.parseJSON(data);
+			var notify_content='';
+			for(var i=0;i<data['notifications'].length;i++){
+			
+			notify_content=notify_content+'<a href="'+base_url+'organization/front-desk/trip-booking/'+data["notifications"][i].id+'" class="notify-link"><div class="callout callout-warning no-right-padding"><div class="notification'+i+'"><table style="width:100%;" class="font-size-12-px"><tr><td class="notification-trip-id">Trip ID :</td><td>'+data["notifications"][i].id+'</td></tr><tr><td class="notification-pickup-city">Cust :</td><td>'+data["customers"][data["notifications"][i].customer_id]+'</td></tr><tr><td class="notification-trip-id">Pick up :</td><td>'+data["notifications"][i].pick_up_city+'</td></tr><tr><td class="notification-pickup-city">Date :</td><td>'+data["notifications"][i].pick_up_date+'</td></tr></table></div></div></a>';
+			}
+			$('.ajax-notifications').html(notify_content);
+		 });
+
+}
 
 //trip_bookig page-js end
 
@@ -1385,6 +1413,8 @@ $(this).siblings().find(':submit').trigger('click');
 
 
  });
+
+
 //for next previous button
 $(document).ready(function(){
 $('.prev1').click(function(){

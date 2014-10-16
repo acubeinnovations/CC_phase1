@@ -61,6 +61,8 @@ class User extends CI_Controller {
 
 		$this->setup_dashboard();
 
+		}elseif($param1=='getNotifications'){
+			$this->getNotifications();
 		}
 
 		elseif($param1=='tarrif-masters'&& ($param2== ''|| is_numeric($param2))){
@@ -1174,5 +1176,21 @@ public function profile() {
 		echo 'false';
 	}
 	}
+	}
+
+	public function getNotifications(){
+	if(isset($_REQUEST['notify']) ){
+	$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING,'CONCAT(pick_up_date," ",pick_up_time) >='=>date('Y-m-d H:i'),'organisation_id'=>$this->session->userdata('organisation_id'));
+	$orderby = ' CONCAT(pick_up_date,pick_up_time) ASC';
+	$notification=$this->trip_booking_model->getDetails($conditon,$orderby);
+	$customers_array=$this->customers_model->getArray();
+	$json_data=array('notifications'=>$notification,'customers'=>$customers_array);
+	if(count($notification)>0 && count($customers_array) >0 ){
+		echo json_encode($json_data);
+	}else{
+		echo 'false';
+	}
+	}
+
 	}
 }
