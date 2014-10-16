@@ -62,15 +62,15 @@ echo form_close();?></td>
 
 	
 		<div class="box-body table-responsive no-padding">
-			<table class="table table-hover table-bordered">
+			<table class="table table-hover table-bordered table-with-20-percent-td">
 				<tbody>
 					<tr>	
 						 
-					     <th>Name</th>
-					    <th>DOB</th>
-					    <th>Email</th>	
-						<th>Phone</th>	
-						<th>Customer Type</th>
+					     <th>Customer </th>
+					    <th>Contact Details</th>
+					    <th>Trip Details</th>	
+						<th>Current Status</th>	
+						<th>Account Statement</th>
 						
 					</tr>
 					<?php
@@ -79,11 +79,14 @@ echo form_close();?></td>
 					?>
 					<tr>
 						
-						<td><?php echo anchor(base_url().'organization/front-desk/customer/'.$customers[$customer_index]['id'],$customers[$customer_index]['name']).nbs(3);?></td>
-					    <td><?php echo $customers[$customer_index]['dob'];?></td>
-					    <td><?php echo $customers[$customer_index]['email']; ?></td>
-						 <td><?php echo $customers[$customer_index]['mobile'];?></td>	
-						 <td><?php if($customers[$customer_index]['customer_type_id']==gINVALID || $customers[$customer_index]['customer_type_id']==0){ echo "Not set";}else{echo $customer_types[$customers[$customer_index]['customer_type_id']];}?></td>
+						<td><?php echo anchor(base_url().'organization/front-desk/customer/'.$customers[$customer_index]['id'],$customers[$customer_index]['name']).br();if($customers[$customer_index]['customer_group_id']==gINVALID || $customers[$customer_index]['customer_group_id']==0){ echo " ";}else{echo $customer_groups[$customers[$customer_index]['customer_group_id']].br();}if($customers[$customer_index]['customer_type_id']==gINVALID || $customers[$customer_index]['customer_type_id']==0){ echo " ";}else{echo $customer_types[$customers[$customer_index]['customer_type_id']];}?></td>
+					    <td><?php echo $customers[$customer_index]['mobile'].br();?>
+						<?php echo $customers[$customer_index]['email'].br(); ?>
+						<?php echo $customers[$customer_index]['address']; ?>
+						</td>
+					    <td></td>
+						 <td></td>	
+						 <td></td>
 						
 					</tr>
 					<?php 

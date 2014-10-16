@@ -53,7 +53,7 @@
 						<th>Contact Details</th>
 						<th>Driver Details</th>
 						<th>Current Status</th>
-						<th></th>
+						<th>Account Statement</th>
 					    
 					</tr>
 					<?php

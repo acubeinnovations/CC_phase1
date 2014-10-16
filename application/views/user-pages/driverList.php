@@ -45,14 +45,14 @@
 	
 		
 		<div class="box-body table-responsive no-padding driver-list-div">
-			<table class="table table-hover table-bordered">
+			<table class="table table-hover table-bordered table-with-20-percent-td">
 				<tbody>
 					<tr>
 					    <th>Driver</th>
 					    <th>Contact Details</th>
 					    <th>Vehicle Details</th>
 						<th>Current Status</th>
-						<th></th>
+						<th> Account Statement</th>
 					</tr>
 					<?php 
 					if(isset($values)){ 
