@@ -17,7 +17,22 @@ if($qry>0){
 
 }
 
+public function getVehicles(){ 
+	$qry='SELECT V.registration_number,V.id,V.vehicle_model_id,V.vehicle_make_id,VD.from_date,VD.to_date,VD.driver_id,VD.vehicle_id FROM vehicles AS V LEFT JOIN vehicle_drivers AS VD ON  V.id =VD.vehicle_id AND V.organisation_id = '.$this->session->userdata('organisation_id').' WHERE VD.organisation_id = '.$this->session->userdata('organisation_id').' AND VD.to_date="9999-12-30"';
+	$results=$this->db->query($qry);
+	$results=$results->result_array();
+	if(count($results)>0){
+	for($i=0;$i<count($results);$i++){
+		$vehicles[$results[$i]['driver_id']]['registration_number']=$results[$i]['registration_number'];
+		$vehicles[$results[$i]['driver_id']]['vehicle_model_id']=$results[$i]['vehicle_model_id'];
+		$vehicles[$results[$i]['driver_id']]['vehicle_make_id']=$results[$i]['vehicle_make_id'];
 
+		}
+		return $vehicles;
+	}else{
+		return false;
+	}
+	}
 
 	
 public function insertInsurance($data){

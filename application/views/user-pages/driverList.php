@@ -54,7 +54,7 @@
 						<th>Current Status</th>
 						<th></th>
 					</tr>
-					<?php
+					<?php 
 					if(isset($values)){ 
 					foreach ($values as $det):
 					$phone_numbers='';
@@ -62,8 +62,10 @@
 					<tr><?php if($det['phone']!='' && $det['mobile']!=''){ $phone_numbers=$det['phone']." , ".$det['mobile']; }else if($det['phone']!=''){ $phone_numbers=$det['phone']; }else if($det['mobile']!=''){ $phone_numbers=$det['mobile']; }?>
 					    <td><?php echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$det['name']).nbs(3);?></td>
 					    <td><?php echo $phone_numbers.br().$det['present_address'].br().$det['district'];?></td>	
-						<td><?php if($v_details[$det['id']]==null){ echo '';}else{echo $v_models[$v_details[$det['id']]['vehicle_model_id']].br().$v_details[$det['id']]['registration_number'].br().'Device ID';} ?></td>
-						<td><?php ?></td>
+						<td><?php if( !isset($vehicles[$det['id']]['registration_number']) || $vehicles[$det['id']]['registration_number']==''){ echo '';}else{echo $vehicles[$det['id']]['registration_number'].br();}
+						if(!isset($vehicles[$det['id']]['vehicle_model_id']) || $vehicles[$det['id']]['vehicle_model_id']==gINVALID){ echo '';}else{echo $v_models[$vehicles[$det['id']]['vehicle_model_id']].br();}
+						if(!isset($vehicles[$det['id']]['vehicle_make_id']) || $vehicles[$det['id']]['vehicle_make_id']==gINVALID){ echo '';}else{echo $v_makes[$vehicles[$det['id']]['vehicle_make_id']];}?></td>
+						<td><?php  ?></td>
 						<td></td>
 					</tr>
 					<?php endforeach;
