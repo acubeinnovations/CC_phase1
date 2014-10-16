@@ -118,7 +118,7 @@ echo $this->form_functions->populate_dropdown($name,$masters,$tariff_master_id,$
 </div>
 </fieldset>
 <fieldset class="body-border border-style">
-<legend class="body-head">Manage Tarrif</legend>
+<legend class="body-head">Manage Tariff</legend>
 <?php echo br();?>
 <table>
 <tr>
