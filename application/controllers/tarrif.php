@@ -135,7 +135,7 @@ class Tarrif extends CI_Controller {
 	 $data['user_id']=$this->session->userdata('id');
 	 $this->form_validation->set_rules('select_tariff','Tariff Master','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('vehicle_model','Vehicle model','trim|required|xss_clean|numeric');
-	 $this->form_validation->set_rules('fromdatepicker','Date ','trim|required|xss_clean');
+	 $this->form_validation->set_rules('fromdatepicker','Date ','trim|xss_clean');
 	 $this->form_validation->set_rules('rate','Rate','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('additional_kilometer_rate','Kilometer Rate','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('additional_hour_rate','Hour Rate','trim|required|xss_clean|numeric');
@@ -144,7 +144,7 @@ class Tarrif extends CI_Controller {
 	 $err=true;
 	if(!$this->date_check($data['from_date'])){
 	$err=False;
-	$this->mysession->set('Err_date','Invalid Date for Tariff Add!');
+	$this->session->set_userdata('Err_dt','Invalid Date for Tariff Add!');
 	}
 	 if($data['tariff_master_id'] ==-1){
 	 $data['tariff_master_id'] ='';
@@ -187,12 +187,42 @@ class Tarrif extends CI_Controller {
 	
 	
 		$err=False;
-		if($data['tariff_master_id']==''|| $data['vehicle_model_id'] =='' ||$data['from_date']==''||$data['rate']==''||$data['additional_kilometer_rate']==''||$data['additional_hour_rate'] ==''||$data['driver_bata']==''||$data['night_halt']==''){
-			
-			$this->session->set_userdata(array('dbvalTarrif_Err'=>'Fields Required..!'));
+		if(!$this->date_check($data['from_date'])){
+		$err=true;
+		$this->session->set_userdata('Err_m_dt','Invalid Date for Tariff !');
+		}
+		if($data['tariff_master_id']==-1){
+			$this->session->set_userdata(array('Err_m_tarrif'=>'Tariff Master  Required..!'));
 			$err=true;
 			}
-		
+		if($data['vehicle_model_id']==-1){
+			$this->session->set_userdata(array('Err_m_vid'=>'Vehicle Model Required..!'));
+			$err=true;
+			}
+		if($data['from_date']==''){
+			$this->session->set_userdata(array('Err_m_date'=>'From Date Required..!'));
+			$err=true;
+			}
+		if($data['rate']==''){
+			$this->session->set_userdata(array('Err_m_rate'=>'Rate Required..!'));
+			$err=true;
+			}
+		if($data['additional_kilometer_rate']==''){
+			$this->session->set_userdata(array('Err_m_krate'=>'Additional Kilometer Rate Required..!'));
+			$err=true;
+			}
+		if($data['additional_hour_rate']==''){
+			$this->session->set_userdata(array('Err_m_hrate'=>'Additional Hour Rate Required..!'));
+			$err=true;
+			}
+		if($data['driver_bata']==''){
+			$this->session->set_userdata(array('Err_m_bata'=>'Driver Bata Required..!'));
+			$err=true;
+			}
+		if($data['night_halt']==''){
+			$this->session->set_userdata(array('Err_m_halt'=>'Night Halt Required..!'));
+			$err=true;
+			}
 		if(preg_match('#[^0-9\.]#', $data['rate'])){
 			$this->session->set_userdata(array('Err_rate'=>'Invalid Characters on Rate field!'));
 			$err=true;
@@ -262,8 +292,8 @@ class Tarrif extends CI_Controller {
 	}
 	
 	public function date_check($date){
-	if( strtotime($date) >= strtotime(date('Y-m-d')) ){
+	if( strtotime($date) >= strtotime(date('Y-m-d')) ){ 
 	return true;
-	}	
+	}
 	}
 }
