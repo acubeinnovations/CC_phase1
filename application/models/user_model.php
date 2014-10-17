@@ -2,8 +2,6 @@
 class user_model extends CI_Model {
 
     var $details;
-
-   
 	function getProfile(){
 	$this->db->from('users');
 	$this->db->where('id',$this->session->userdata('id'));
@@ -181,4 +179,5 @@ class user_model extends CI_Model {
 	$qry=$this->db->get('vehicle_owners');
 	return $qry->row_array();
 	}
+	
 }

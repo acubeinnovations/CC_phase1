@@ -12,6 +12,7 @@ class User extends CI_Controller {
 	$this->load->model('trip_booking_model');
 	$this->load->model('customers_model');
     $this->load->model('tarrif_model');
+	$this->load->model('device_model');
 	 $this->load->model('vehicle_model');
 	no_cache();
 
@@ -285,7 +286,7 @@ class User extends CI_Controller {
 	
 		$condition='';
 	    $per_page=10;
-	    $where_arry='';
+	    $like_arry='';
 		$data['s_imei']='';
 		$data['s_sim_no']='';
 	$where_arry['organisation_id']=$this->session->userdata('organisation_id');
@@ -297,17 +298,17 @@ class User extends CI_Controller {
 	
 	if($_REQUEST['s_imei']!=null){
 	$data['s_imei']=$_REQUEST['s_imei'];
-	$where_arry['imei']=$_REQUEST['s_imei'];
+	$like_arry['imei']=$_REQUEST['s_imei'];
 	}
 	if($_REQUEST['s_sim_no']!=null){
 	$data['s_sim_no']=$_REQUEST['s_sim_no'];
-	$where_arry['sim_no'] = $_REQUEST['s_sim_no'];
+	$like_arry['sim_no'] = $_REQUEST['s_sim_no'];
 	}
 	
-	$this->mysession->set('condition',array("where"=>$where_arry));
+	$this->mysession->set('condition',array("like"=>$like_arry));
 	}
 	if($param2==''){
-		$this->mysession->set('condition',array("where"=>$where_arry));
+		$this->mysession->set('condition',array("like"=>$like_arry));
 	}
 	
 	    
@@ -326,7 +327,12 @@ class User extends CI_Controller {
 	$data['result']="No Results Found !";
 	}
 	$data['page_links']=$p_res['page_links'];
-	
+	$devices=$this->device_model->getReg_Num();
+	if($devices!=false){
+	$data['devices']=$devices;
+	}else{
+	$data['devices']='';
+	}
 	$data['title']="Device | ".PRODUCT_NAME; 
 	$page='user-pages/device';
 	$this->load_templates($page,$data);
@@ -1036,7 +1042,7 @@ public function profile() {
 				$owner_id=$data['vehicle']['vehicle_owner_id'];
 				if($insurance_id!=gINVALID && $insurance_id!=0){
 				$data['get_insurance']=$this->user_model->getInsurance($insurance_id);
-				//print_r($data['get_insurance']);//continueee
+
 				}
 				if($loan_id!=gINVALID && $loan_id!=0){
 				$data['get_loan']=$this->user_model->getLoan($loan_id);
