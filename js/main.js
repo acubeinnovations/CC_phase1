@@ -521,8 +521,10 @@ var mobile=$('#guestmobile').val();
 		$(".passenger-basic-info > .form-group > label[for=name_error]").text('');
 		$(".passenger-basic-info > .form-group > label[for=email_error]").text('');
 		$(".passenger-basic-info > .form-group > label[for=mobile_error]").text('');
-		$('.advanced-container > .icheckbox_minimal > .iCheck-helper').trigger('click');	
-		$('#customer-group').val('');
+		if($('.advanced-container > .icheckbox_minimal').attr('aria-checked')=='true'){
+			$('.advanced-container > .icheckbox_minimal > .iCheck-helper').trigger('click');	
+			$('#customer-group').val('');
+		}
 
 	});
 	//clear guest information fields
@@ -998,7 +1000,7 @@ function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehic
 	var vehicle_makes=$('.vehicle-makes').html().split(',');
 	$('#available_vehicle option').remove();
 	$('#available_vehicle').append($("<option value='-1'></option>").text('--Select Vehicle--'));
-	if(Trim(available_vehicle_id)!='' && Trim(available_vehicle_id)!=-1 ){alert(available_vehicle_id);
+	if(Trim(available_vehicle_id)!='' && Trim(available_vehicle_id)!=-1 ){
 		$.post(base_url+"/trip-booking/getVehicle",
 		  {
 			id:available_vehicle_id
@@ -1355,10 +1357,6 @@ error=true;
 
 if(garageclosingkm==''){
 $('.garage-km-error').html('Garage closing km Field is required');
-error=true;
-}
-if(garageclosingtime==''){
-$('.garage-time-error').html('Garage closing time Field is required');
 error=true;
 }
 

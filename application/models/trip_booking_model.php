@@ -44,7 +44,11 @@ class Trip_booking_model extends CI_Model {
 	
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('trips',$data);
-	return true;
+	if($this->db->insert_id()>0){
+		return $this->db->insert_id();
+	}else{
+		return false;
+	}
 	 
     }	
 

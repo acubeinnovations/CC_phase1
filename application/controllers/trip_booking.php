@@ -315,7 +315,10 @@ class Trip_booking extends CI_Controller {
 			$dbdata['vehicle_id']					=$data['available_vehicle'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
 			$dbdata['user_id']						=$this->session->userdata('id');
-			
+			$customer['mob']=$this->session->userdata('customer_mobile');
+			$customer['email']=$this->session->userdata('customer_email');	
+			$customer['name']=$this->session->userdata('customer_name');
+
 			$this->session->set_userdata('customer_id','');
 			$this->session->set_userdata('customer_name','');
 			$this->session->set_userdata('customer_email','');
@@ -326,7 +329,9 @@ class Trip_booking extends CI_Controller {
 				if($res==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Updated Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
-					$this->SendTripConfirmation($dbdata);
+					if($dbdata['trip_status_id']==TRIP_STATUS_CONFIRMED){
+						$this->SendTripConfirmation($dbdata,$data['trip_id'],$customer);
+					}
 				}else{
 					$this->session->set_userdata(array('dbError'=>'Trip Updated unsuccesfully..!!'));
 					$this->session->set_userdata(array('dbSuccess'=>''));
@@ -336,10 +341,12 @@ class Trip_booking extends CI_Controller {
 
 				}else{
 				$res = $this->trip_booking_model->bookTrip($dbdata);
-				if($res==true){
+				if($res!=false && $res>0){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Booked Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
-					$this->SendTripConfirmation($dbdata);
+					if($dbdata['trip_status_id']==TRIP_STATUS_CONFIRMED){
+						$this->SendTripConfirmation($dbdata,$res,$customer);
+					}
 				}else{
 					$this->session->set_userdata(array('dbError'=>'Trip Booked unsuccesfully..!!'));
 					$this->session->set_userdata(array('dbSuccess'=>''));
@@ -388,8 +395,9 @@ class Trip_booking extends CI_Controller {
 				$trip_id			=	$this->input->post('trip_id');
 				
 				$customer_id 		=	$this->session->userdata('customer_id');
-				$customer_name 		=	$this->session->userdata('customer_name');
-				$customer_mobile 	= 	$this->session->userdata('customer_mobile');
+				$customer['name'] 		=	$this->session->userdata('customer_name');
+				$customer['mob'] 	= 	$this->session->userdata('customer_mobile');
+				$customer['email'] 	= 	$this->session->userdata('customer_email');
 
 				$driver_id			=$this->session->userdata('driver_id');	
 				$condition=array('id'=>$driver_id);
@@ -399,6 +407,7 @@ class Trip_booking extends CI_Controller {
 				if($res==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Cancelled Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
+					$this->SendTripCancellation($trip_id,$customer);
 				}else{
 					$this->session->set_userdata(array('dbError'=>'Trip Cancelled unsuccesfully..!!'));
 					$this->session->set_userdata(array('dbSuccess'=>''));
@@ -517,8 +526,23 @@ class Trip_booking extends CI_Controller {
 		return false;
 		}
 	} 
-	public function SendTripConfirmation($data){
+	public function SendTripConfirmation($data,$id,$customer){
+		$message='Hi Customer,Trip ID:'.$id.' had been confirmed.Date:'.$data['pick_up_date'].' '.$data['pick_up_time'].' Location :'.$data['pick_up_city'].'-'.$data['drop_city'].'Enjoy your trip.';
 
+	$this->sms->sendSms($customer['mob'],$message);
+	if($customer['email']!=''){
+	$subject="Connect N Cabs";
+	$this->send_email->emailMe($customer['email'],$subject,$message);
+	}
+	}
 
+	public function SendTripCancellation($id,$customer){
+		$message='Hi Customer,Trip ID:'.$id.' had been cancelled.Thank You for choosing Connect N cabs.Good Day..!!';
+
+	$this->sms->sendSms($customer['mob'],$message);
+	if($customer['email']!=''){
+	$subject="Connect N Cabs";
+	$this->send_email->emailMe($customer['email'],$subject,$message);
+	}
 	}
 }
