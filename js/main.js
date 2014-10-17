@@ -457,6 +457,10 @@ var mobile=$('#mobile').val();
 		$('#email').val(data[0].email);	
 		$('#mobile').val(data[0].mobile);
 		$('.new-customer').attr('value',false);
+		if(data[0].customer_group_id>0){
+			$('.advanced-container > .icheckbox_minimal > .iCheck-helper').trigger('click');	
+			$('#customer-group').val(data[0].customer_group_id);
+		} 	
 		$('.clear-customer').show();
 		$('.add-customer').hide();
       }else{
@@ -517,6 +521,8 @@ var mobile=$('#guestmobile').val();
 		$(".passenger-basic-info > .form-group > label[for=name_error]").text('');
 		$(".passenger-basic-info > .form-group > label[for=email_error]").text('');
 		$(".passenger-basic-info > .form-group > label[for=mobile_error]").text('');
+		$('.advanced-container > .icheckbox_minimal > .iCheck-helper').trigger('click');	
+		$('#customer-group').val('');
 
 	});
 	//clear guest information fields
