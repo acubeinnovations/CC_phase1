@@ -147,6 +147,8 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 	}
 	function getVehiclesArray($condion=''){
 	$this->db->from('vehicles');
+	$org_id=$this->session->userdata('organisation_id');
+	$this->db->where('organisation_id',$org_id);
 	if($condion!=''){
     $this->db->where($condion);
 	}
