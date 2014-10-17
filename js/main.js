@@ -847,6 +847,7 @@ alert("Add Customer Informations");
 $('#tarrif').on('change',function(){
 
 SetRoughEstimate();
+
 });
 	
 function SetRoughEstimate(){
@@ -854,7 +855,7 @@ function SetRoughEstimate(){
 var additional_kilometer_rate = $('#tarrif option:selected').attr('additional_kilometer_rate');
 var minimum_kilometers = $('#tarrif option:selected').attr('minimum_kilometers');
 var rate = $('#tarrif option:selected').attr('rate');
-var estimated_distance = 2*Number($('.estimated-distance-of-journey').attr('estimated-distance-of-journey'));
+var estimated_distance = $('.estimated-distance-of-journey').attr('estimated-distance-of-journey');
 
 var extra_charge=0;
 
@@ -944,8 +945,10 @@ alert('Select Vehicle and Tarrif correctly.');
 }
 }
 });
-
-
+$('#vehicle-type').on('change',function(){
+$('#vehicle-make').val('');
+$('#vehicle-model').val('');
+});
 //tarrif selecter
 $('#vehicle-type,#vehicle-ac-type,#vehicle-make,#vehicle-model').on('change',function(){
 GenerateVehiclesAndTarif(tarif_id='',available_vehicle_id='');
@@ -1184,7 +1187,7 @@ $.post(base_url+"/user/getNotifications",
 			var notify_content='';
 			for(var i=0;i<data['notifications'].length;i++){
 			
-			notify_content=notify_content+'<a href="'+base_url+'organization/front-desk/trip-booking/'+data["notifications"][i].id+'" class="notify-link"><div class="callout callout-warning no-right-padding"><div class="notification'+i+'"><table style="width:100%;" class="font-size-12-px"><tr><td class="notification-trip-id">Trip ID :</td><td>'+data["notifications"][i].id+'</td></tr><tr><td class="notification-pickup-city">Cust :</td><td>'+data["customers"][data["notifications"][i].customer_id]+'</td></tr><tr><td class="notification-trip-id">Pick up :</td><td>'+data["notifications"][i].pick_up_city+'</td></tr><tr><td class="notification-pickup-city">Date :</td><td>'+data["notifications"][i].pick_up_date+'</td></tr></table></div></div></a>';
+			notify_content=notify_content+'<a href="'+base_url+'/organization/front-desk/trip-booking/'+data["notifications"][i].id+'" class="notify-link"><div class="callout callout-warning no-right-padding"><div class="notification'+i+'"><table style="width:100%;" class="font-size-12-px"><tr><td class="notification-trip-id">Trip ID :</td><td>'+data["notifications"][i].id+'</td></tr><tr><td class="notification-pickup-city">Cust :</td><td>'+data["customers"][data["notifications"][i].customer_id]+'</td></tr><tr><td class="notification-trip-id">Pick up :</td><td>'+data["notifications"][i].pick_up_city+'</td></tr><tr><td class="notification-pickup-city">Date :</td><td>'+data["notifications"][i].pick_up_date+'</td></tr></table></div></div></a>';
 			}
 			$('.ajax-notifications').html(notify_content);
 		 });
