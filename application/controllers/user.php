@@ -141,7 +141,7 @@ class User extends CI_Controller {
 		$trip_model_id = $this->input->post('search_trip_model');
 		$vehicle_ac_type_id = $this->input->post('search_ac_type');
 	 if(($title=='')&& ($trip_model_id == -1) && ($vehicle_ac_type_id ==-1)){
-	 $this->session->set_userdata('Required','Choose Any Category');
+	 $this->session->set_userdata('Required','Search with value !');
 	 redirect(base_url().'organization/front-desk/tarrif-masters');
 		}
 		else {
@@ -233,7 +233,7 @@ class User extends CI_Controller {
 		$tdate=date('Y-m-d');
 		}
 	 if(($fdate=='')&& ($tdate =='')){
-	 $this->session->set_userdata('Required','Choose Date');
+	 $this->session->set_userdata('Date','Search with value');
 	 redirect(base_url().'organization/front-desk/tarrif');
 		}
 		else {

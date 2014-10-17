@@ -49,6 +49,7 @@ class user_model extends CI_Model {
 	$flag=1;
 	}
 	else{
+		$qry=$this->db->where('organisation_id',$org_id);
 		$qry=$this->db->get($tbl);
 		}
 		$count=$qry->num_rows();

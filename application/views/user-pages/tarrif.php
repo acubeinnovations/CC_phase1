@@ -23,24 +23,24 @@ $night_halt=$data['night_halt'];
 $this->session->set_userdata('post','');
 }
 
-if($this->session->userdata('select_tariff') != ''||$this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('Err_rate') != ''||$this->session->userdata('Err_add_kilo') != ''||$this->session->userdata('Err_add_hrs') != ''||$this->session->userdata('Err_bata') != ''||$this->session->userdata('Err_halt') != ''||$this->session->userdata('Required') != ''||$this->mysession->get('Err_date') != ''||$this->mysession->get('Err_from_date') != ''||$this->mysession->get('Err_to_date') != ''){ ?>
+if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('Err_rate') != ''||$this->session->userdata('Err_add_kilo') != ''||$this->session->userdata('Err_add_hrs') != ''||$this->session->userdata('Err_bata') != ''||$this->session->userdata('Err_halt') != ''||$this->session->userdata('Required') != ''||$this->mysession->get('Err_date') != ''||$this->mysession->get('Err_from_date') != ''||$this->mysession->get('Err_to_date') != ''){ ?>
 	<div class="alert alert-danger alert-dismissable">
                                         <i class="fa fa-ban"></i>
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                         <b>Alert!</b><br><?php
 													echo $this->session->userdata('dbvalTarrif_Err').nbs();
-													echo $this->session->userdata('select_tariff').nbs();
+													
 													echo $this->session->userdata('Err_rate').nbs();
 													echo $this->session->userdata('Err_add_kilo').nbs();
 													echo $this->session->userdata('Err_add_hrs').nbs();
 													echo $this->session->userdata('Err_bata').nbs();
 													echo $this->session->userdata('Err_halt').nbs();
-													echo $this->session->userdata('Required').nbs();
+												
 													echo $this->mysession->get('Err_date').nbs();
 													echo $this->mysession->get('Err_from_date').nbs();
 													echo $this->mysession->get('Err_to_date').nbs();
 														$this->session->set_userdata(array('dbvalTarrif_Err'=>''));
-														$this->session->set_userdata(array('select_tariff'=>''));
+												
 														$this->session->set_userdata(array('Err_rate'=>''));
 														$this->session->set_userdata(array('Err_add_kilo'=>''));
 														$this->session->set_userdata(array('Err_add_hrs'=>''));
@@ -78,6 +78,12 @@ if($this->session->userdata('select_tariff') != ''||$this->session->userdata('db
 echo form_close();?></td>
 </tr>
 </table>
+	<p class="text-red"><?php
+ if($this->session->userdata('Date') != ''){
+	echo $this->session->userdata('Date');
+	$this->session->set_userdata(array('Date'=>''));
+ }
+	?></p>
 <div class="msg"> <?php 
 			if (isset($result)){ echo $result;} else {?></div>
 	
@@ -117,8 +123,18 @@ echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_mod
 	</td>
 		</tr>
 		<tr>
-		<td><?php  echo  $this->form_functions->form_error_session('select_tariff','<p class="text-red">', '</p>'); ?></td>
-		<td><?php  echo  $this->form_functions->form_error_session('vehicle_model','<p class="text-red">', '</p>'); ?></td>
+		<td><p class="text-red"><?php
+ if($this->session->userdata('select_tariff') != ''){
+	echo $this->session->userdata('select_tariff');
+	$this->session->set_userdata(array('select_tariff'=>''));
+ }
+	?></p></td>
+		<td><p class="text-red"><?php
+ if($this->session->userdata('vehicle_model') != ''){
+	echo $this->session->userdata('vehicle_model');
+	$this->session->set_userdata(array('vehicle_model'=>''));
+ }
+	?></p></td>
 		<td><?php echo  $this->form_functions->form_error_session('fromdatepicker','<p class="text-red">', '</p>');?></td>
 		<td><?php echo  $this->form_functions->form_error_session('rate','<p class="text-red">', '</p>');?></td>
 		<td><?php  echo  $this->form_functions->form_error_session('additional_kilometer_rate','<p class="text-red">', '</p>'); ?></td>

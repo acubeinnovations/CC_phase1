@@ -48,7 +48,7 @@ class Tarrif extends CI_Controller {
 	 if($data['vehicle_type_id']==-1){
 	 $data['vehicle_type_id'] ='';
 	 $err=False;
-	 $this->session->set_userdata('search_vehicle_type','Choose Any Vehicle Type');
+	 $this->session->set_userdata('select_vehicle_type','Choose Any Vehicle Type');
 	 }
 	 $this->form_validation->set_rules('min_kilo','Minimum Kilometers','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('min_hours','Minimum Hours','trim|required|xss_clean|numeric');
