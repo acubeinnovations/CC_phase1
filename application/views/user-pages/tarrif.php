@@ -22,37 +22,9 @@ $driver_bata=$data['driver_bata'];
 $night_halt=$data['night_halt'];
 $this->session->set_userdata('post','');
 }
+?>
 
-if($this->session->userdata('dbvalTarrif_Err') != ''||$this->session->userdata('Err_rate') != ''||$this->session->userdata('Err_add_kilo') != ''||$this->session->userdata('Err_add_hrs') != ''||$this->session->userdata('Err_bata') != ''||$this->session->userdata('Err_halt') != ''||$this->session->userdata('Required') != ''||$this->mysession->get('Err_date') != ''||$this->mysession->get('Err_from_date') != ''||$this->mysession->get('Err_to_date') != ''){ ?>
-	<div class="alert alert-danger alert-dismissable">
-                                        <i class="fa fa-ban"></i>
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                        <b>Alert!</b><br><?php
-													echo $this->session->userdata('dbvalTarrif_Err').nbs();
-													
-													echo $this->session->userdata('Err_rate').nbs();
-													echo $this->session->userdata('Err_add_kilo').nbs();
-													echo $this->session->userdata('Err_add_hrs').nbs();
-													echo $this->session->userdata('Err_bata').nbs();
-													echo $this->session->userdata('Err_halt').nbs();
-												
-													echo $this->mysession->get('Err_date').nbs();
-													echo $this->mysession->get('Err_from_date').nbs();
-													echo $this->mysession->get('Err_to_date').nbs();
-														$this->session->set_userdata(array('dbvalTarrif_Err'=>''));
-												
-														$this->session->set_userdata(array('Err_rate'=>''));
-														$this->session->set_userdata(array('Err_add_kilo'=>''));
-														$this->session->set_userdata(array('Err_add_hrs'=>''));
-														$this->session->set_userdata(array('Err_bata'=>''));
-														$this->session->set_userdata(array('Err_halt'=>''));
-														$this->session->set_userdata(array('Required'=>''));
-														$this->mysession->delete('Err_date');
-														$this->mysession->delete('Err_from_date');
-														$this->mysession->delete('Err_to_date');
-										?>
-                                    </div>
-<?php  }  if($this->session->userdata('dbSuccess') != '') { ?>
+<?php    if($this->session->userdata('dbSuccess') != '') { ?>
         <div class="success-message">
 			
             <div class="alert alert-success alert-dismissable">
@@ -82,6 +54,18 @@ echo form_close();?></td>
  if($this->session->userdata('Date') != ''){
 	echo $this->session->userdata('Date');
 	$this->session->set_userdata(array('Date'=>''));
+ }
+	?></p>
+	<p class="text-red"><?php
+ if($this->session->userdata('Err_from_date') != ''){
+	echo $this->session->userdata('Err_from_date');
+	$this->session->set_userdata(array('Err_from_date'=>''));
+ }
+	?></p>
+	<p class="text-red"><?php
+ if($this->session->userdata('Err_to_date') != ''){
+	echo $this->session->userdata('Err_to_date');
+	$this->session->set_userdata(array('Err_to_date'=>''));
  }
 	?></p>
 <div class="msg"> <?php 
@@ -135,7 +119,14 @@ echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_mod
 	$this->session->set_userdata(array('vehicle_model'=>''));
  }
 	?></p></td>
-		<td><?php echo  $this->form_functions->form_error_session('fromdatepicker','<p class="text-red">', '</p>');?></td>
+		<td><?php echo  $this->form_functions->form_error_session('fromdatepicker','<p class="text-red">', '</p>');?>
+		<p class="text-red"><?php
+		if($this->session->userdata('Err_dt') != ''){
+		echo $this->session->userdata('Err_dt');
+		$this->session->set_userdata(array('Err_dt'=>''));
+			}
+		?></p>
+		</td>
 		<td><?php echo  $this->form_functions->form_error_session('rate','<p class="text-red">', '</p>');?></td>
 		<td><?php  echo  $this->form_functions->form_error_session('additional_kilometer_rate','<p class="text-red">', '</p>'); ?></td>
 		<td><?php echo  $this->form_functions->form_error_session('additional_hour_rate','<p class="text-red">', '</p>'); ?></td>
@@ -191,6 +182,90 @@ foreach($values as $det):
 <td><div  class="tarrif-edit" ><?php echo nbs(5);?><i class="fa fa-edit cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=tarrif-edit-id","class=btn");?></div></td>
 <td><div  class="tarrif-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=tarrif-delete-id","class=btn");?></div></td>
 <?php echo form_close();?>
+</tr>
+<tr>
+<td>
+			<p class="text-red"><?php
+			if($this->session->userdata('Err_m_tarrif') != ''){
+			echo $this->session->userdata('Err_m_tarrif');
+			$this->session->set_userdata(array('Err_m_tarrif'=>''));
+				}
+			?></p>
+</td>
+<td>
+			<p class="text-red"><?php
+			if($this->session->userdata('Err_m_vid') != ''){
+			echo $this->session->userdata('Err_m_vid');
+			$this->session->set_userdata(array('Err_m_vid'=>''));
+				}
+			?></p>
+</td>
+<td>
+			<p class="text-red"><?php
+		
+		
+			?></p>
+</td>
+<td>
+			<p class="text-red"><?php
+			if($this->session->userdata('Err_m_rate') != ''){
+			echo $this->session->userdata('Err_m_rate');
+			$this->session->set_userdata(array('Err_m_rate'=>''));
+				}
+			if($this->session->userdata('Err_rate') != ''){
+			echo $this->session->userdata('Err_rate');
+			$this->session->set_userdata(array('Err_rate'=>''));
+				}
+			?></p>
+</td>
+<td>
+			<p class="text-red"><?php
+			if($this->session->userdata('Err_m_krate') != ''){
+			echo $this->session->userdata('Err_m_krate');
+			$this->session->set_userdata(array('Err_m_krate'=>''));
+				}
+			if($this->session->userdata('Err_add_kilo') != ''){
+			echo $this->session->userdata('Err_add_kilo');
+			$this->session->set_userdata(array('Err_add_kilo'=>''));
+				}
+			?></p>
+</td>
+<td>
+			<p class="text-red"><?php
+			if($this->session->userdata('Err_m_hrate') != ''){
+			echo $this->session->userdata('Err_m_hrate');
+			$this->session->set_userdata(array('Err_m_hrate'=>''));
+				}
+			if($this->session->userdata('Err_add_hrs') != ''){
+			echo $this->session->userdata('Err_add_hrs');
+			$this->session->set_userdata(array('Err_add_hrs'=>''));
+				}
+			?></p>
+</td>
+<td>
+			<p class="text-red"><?php
+			if($this->session->userdata('Err_m_bata') != ''){
+			echo $this->session->userdata('Err_m_bata');
+			$this->session->set_userdata(array('Err_m_bata'=>''));
+				}
+			if($this->session->userdata('Err_bata') != ''){
+			echo $this->session->userdata('Err_bata');
+			$this->session->set_userdata(array('Err_bata'=>''));
+				}
+			?></p>
+</td>
+<td>
+			<p class="text-red"><?php
+			if($this->session->userdata('Err_m_halt') != ''){
+			echo $this->session->userdata('Err_m_halt');
+			$this->session->set_userdata(array('Err_m_halt'=>''));
+				}
+			if($this->session->userdata('Err_halt') != ''){
+			echo $this->session->userdata('Err_halt');
+			$this->session->set_userdata(array('Err_halt'=>''));
+				}
+			?></p>
+</td>
 </tr>
 <?php endforeach; ?>
 </table>

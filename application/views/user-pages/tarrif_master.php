@@ -21,24 +21,9 @@ $minimum_hours=$data['minimum_hours'];
 $this->session->set_userdata('post','');
 }
 
-if($this->session->userdata('dbvalErr') != ''||$this->session->userdata('Err_title') != ''||$this->session->userdata('Err_kilo') != ''||$this->session->userdata('Err_hrs') != '') { ?>
-	<div class="alert alert-danger alert-dismissable">
-                                        <i class="fa fa-ban"></i>
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                        <b>Alert!</b><br><?php
-													echo $this->session->userdata('dbvalErr').br();
-													echo $this->session->userdata('Err_title').br();
-													echo $this->session->userdata('Err_kilo').br();
-													echo $this->session->userdata('Err_hrs').br();
-													
-													 $this->session->set_userdata(array('dbvalErr'=>''));
-													 $this->session->set_userdata(array('Err_title'=>''));
-													 $this->session->set_userdata(array('Err_kilo'=>''));
-													 $this->session->set_userdata(array('Err_hrs'=>''));
-													 
-										?>
-                                    </div>
-<?php  }  if($this->session->userdata('dbSuccess') != '') { ?>
+?>
+	
+<?php   if($this->session->userdata('dbSuccess') != '') { ?>
         <div class="success-message">
 			
             <div class="alert alert-success alert-dismissable">
@@ -123,7 +108,14 @@ echo form_close();?></td>
 	</td>
 		</tr>
 		<tr>
-		<td><?php echo  $this->form_functions->form_error_session('title','<p class="text-red">', '</p>');?></td>
+		<td><?php echo  $this->form_functions->form_error_session('title','<p class="text-red">', '</p>');?>
+		<p class="text-red"><?php
+		if($this->session->userdata('Err_title') != ''){
+		echo $this->session->userdata('Err_title');
+		$this->session->set_userdata(array('Err_title'=>''));
+		}
+		?></p>
+		</td>
 		<td><p class="text-red"><?php
 			if($this->session->userdata('select_trip_model') != ''){
 			echo $this->session->userdata('select_trip_model');
@@ -148,8 +140,22 @@ echo form_close();?></td>
 			$this->session->set_userdata(array('select_ac_type'=>''));
 				}
 			?></p></td>
-		<td><?php echo  $this->form_functions->form_error_session('min_kilo','<p class="text-red">', '</p>');?></td>
-		<td><?php echo  $this->form_functions->form_error_session('min_hours','<p class="text-red">', '</p>');?></td>
+		<td><?php echo  $this->form_functions->form_error_session('min_kilo','<p class="text-red">', '</p>');?>
+			<p class="text-red"><?php
+			if($this->session->userdata('Err_kilo') != ''){
+			echo $this->session->userdata('Err_kilo');
+			$this->session->set_userdata(array('Err_kilo'=>''));
+				}
+			?></p>
+		</td>
+		<td><?php echo  $this->form_functions->form_error_session('min_hours','<p class="text-red">', '</p>');?>
+			<p class="text-red"><?php
+			if($this->session->userdata('Err_hrs') != ''){
+			echo $this->session->userdata('Err_hrs');
+			$this->session->set_userdata(array('Err_hrs'=>''));
+				}
+			?></p>
+		</td>
 		</tr>
 </table>
 </div>
