@@ -40,6 +40,18 @@ class Device_model extends CI_Model {
 		}
 
 	}
-
+	function getReg_Num(){
+	$qry='SELECT V.registration_number,V.id As vehicle_id,VD.device_id ,VD.vehicle_id FROM vehicles AS V LEFT JOIN vehicle_devices AS VD ON VD.vehicle_id =V.id AND V.organisation_id = '.$this->session->userdata('organisation_id').' WHERE VD.organisation_id = '.$this->session->userdata('organisation_id').' AND VD.to_date="9999-12-30"';
+	$results=$this->db->query($qry);
+	$results=$results->result_array();
+	if(count($results)>0){
+	for($i=0;$i<count($results);$i++){
+		$devices[$results[$i]['device_id']]=$results[$i]['registration_number'];
+		}
+		return $devices; 
+	}else{
+		return false;
+	}
+	}
 
 }?>
