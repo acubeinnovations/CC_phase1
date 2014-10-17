@@ -230,9 +230,9 @@ $customer_type='';
 					<fieldset class="body-border">
 					<legend class="body-head font-size-18-px">Booking Source</legend>
 						<div class="form-group">
-						<?php $class="form-control row-source-100-percent-width-with-margin-8";
-						echo $this->form_functions->populate_dropdown('booking_source',$booking_sources,$booking_source,$class,$id='',$msg="Select Source");?><div class="hide-me"><?php
-						echo form_input(array('name'=>'source','class'=>'form-control','id'=>'source','placeholder'=>'Source','value'=>$source)); ?></div>
+						<?php $class="form-control row-source-50-percent-width-with-margin-8";
+						echo $this->form_functions->populate_dropdown('booking_source',$booking_sources,$booking_source,$class,$id='',$msg="Select Source");?><?php
+						echo form_input(array('name'=>'source','class'=>'form-control row-source-50-percent-width-with-margin-8','id'=>'source','placeholder'=>'Source','value'=>$source)); ?>
 						
 						<?php echo $this->form_functions->form_error_session('booking_sources', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('source', '<p class="text-red">', '</p>'); ?>
 						</div>
@@ -295,7 +295,7 @@ $customer_type='';
 						<tr>
 							<td>
 								<div class="group-toggle div-with-90-percent-width-and-marigin-5">
-										<?php echo $this->form_functions->populate_dropdown('customer_group',$customer_groups,$customer_group,$class ='groups form-control',$id='',$msg="Select Groups"); ?>
+										<?php echo $this->form_functions->populate_dropdown('customer_group',$customer_groups,$customer_group,$class ='groups form-control',$id='customer-group',$msg="Select Groups"); ?>
 										<?php echo $this->form_functions->form_error_session('customer_group', '<p class="text-red">', '</p>');?>
 								</div>
 							

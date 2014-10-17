@@ -326,6 +326,7 @@ class Trip_booking extends CI_Controller {
 				if($res==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Updated Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
+					$this->SendTripConfirmation($dbdata);
 				}else{
 					$this->session->set_userdata(array('dbError'=>'Trip Updated unsuccesfully..!!'));
 					$this->session->set_userdata(array('dbSuccess'=>''));
@@ -338,6 +339,7 @@ class Trip_booking extends CI_Controller {
 				if($res==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Booked Succesfully..!!'));
 					$this->session->set_userdata(array('dbError'=>''));
+					$this->SendTripConfirmation($dbdata);
 				}else{
 					$this->session->set_userdata(array('dbError'=>'Trip Booked unsuccesfully..!!'));
 					$this->session->set_userdata(array('dbSuccess'=>''));
@@ -515,4 +517,8 @@ class Trip_booking extends CI_Controller {
 		return false;
 		}
 	} 
+	public function SendTripConfirmation($data){
+
+
+	}
 }

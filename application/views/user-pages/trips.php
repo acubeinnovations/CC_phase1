@@ -106,7 +106,8 @@ echo form_close();?></td>
 					<tr>
 						
 						<td><?php echo $trips[$trip_index]['id'];?></td>
-					    <td><?php echo $customers[$trips[$trip_index]['customer_id']];?></td>
+					    <td><?php echo $customers[$trips[$trip_index]['customer_id']].br();
+						if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $customer_groups[$trips[$trip_index]['customer_group_id']];}?></td>
 					    <td><?php echo $pickdate; ?></td>
 						 <td><?php echo $trips[$trip_index]['pick_up_city'].br();
 									 echo $trips[$trip_index]['pick_up_area'];
