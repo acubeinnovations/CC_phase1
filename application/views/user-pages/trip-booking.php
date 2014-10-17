@@ -36,6 +36,8 @@ $droptimepicker 	=	'';
 
 $vehicle_type 				=	'';
 $vehicle_ac_type			=	'';
+$vehicle_make_id			=	'';
+$vehicle_model_id			=	'';
 $beacon_light				=	'';
 $beacon_light_radio	   	    =	'';
 $pluck_card 				=	'';
@@ -137,6 +139,13 @@ $vehicle_type 				=	$data['vehicle_type'];
 if($data['vehicle_ac_type']!=-1){
 $vehicle_ac_type			=	$data['vehicle_ac_type'];
 }
+if($data['vehicle_make']!=-1){
+$vehicle_make_id			=	$data['vehicle_make'];
+}
+if($data['vehicle_model']!=-1){
+$vehicle_model_id			=	$data['vehicle_model'];
+}
+
 $beacon_light				=	$data['beacon_light'];
 $beacon_light_radio	   	    =	$data['beacon_light_radio'];
 $pluck_card 				=	$data['pluck_card'];
@@ -445,6 +454,18 @@ $customer_type='';
 						 ?>
 						</div>
 						<div class="form-group">
+						<?php 
+								$class="form-control row-source-50-percent-width-with-margin-8";	
+								$id='vehicle-make';
+						echo $this->form_functions->populate_dropdown('vehicle_make',$vehicle_makes,$vehicle_make_id,$class,$id,$msg="Select Vehicle Makes");
+						$class="form-control row-source-50-percent-width-with-margin-8";
+							  $id='vehicle-model';
+						echo $this->form_functions->populate_dropdown('vehicle_model',$vehicle_models,$vehicle_model_id,$class,$id,$msg="Select Vehicle Models");
+						echo $this->form_functions->form_error_session('vehicle_make', '<p class="text-red">', '</p>').$this->form_functions->form_error_session('vehicle_model', '<p class="text-red">', '</p>');						
+						echo br(2);
+						 ?>
+						</div>
+						<div class="form-group">
 						<table class="radio-checkbox-vehicle-group">
 						<tr>
 							<td class="beacon-light-chk-box-container">
@@ -719,7 +740,7 @@ $customer_type='';
 	</div>
 	<div class="second-column-trip-booking">
 		<fieldset class="body-border notify">
-		<legend class="body-head font-size-18-px">Notification</legend>
+		<legend class="body-head ">Notification</legend>
 		<div class="ajax-notifications">
 		<?php
 		

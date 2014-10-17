@@ -196,6 +196,17 @@ class User extends CI_Controller {
 	}
 	public function tarrif($param1,$param2){
 	if($this->session_check()==true) {
+	$tbl_arry=array('vehicle_models');
+	for ($i=0;$i<1;$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data[$tbl_arry[$i]]=$result;
+	
+	}
+	else{
+	$data[$tbl_arry[$i]]='';
+	}
+	}
 	$result=$this->user_model->getTarrif_masters();
 	if($result!=false){
 	$data['masters']=$result;
@@ -436,6 +447,8 @@ class User extends CI_Controller {
 	$dropdatetime			= $result->drop_date.' '.$result->drop_time;
 	$data1['vehicle_type']			=	$result->vehicle_type_id;
 	$data1['vehicle_ac_type']		=	$result->vehicle_ac_type_id;
+	$data1['vehicle_make']			=	$result->vehicle_make_id;
+	$data1['vehicle_model']		=	$result->vehicle_model_id;
 	$data1['recurrent_yes']			= 	'';
 	if(isset($result->vehicle_beacon_light_option_id) && $result->vehicle_beacon_light_option_id > 0){
 		$data1['beacon_light']=TRUE;

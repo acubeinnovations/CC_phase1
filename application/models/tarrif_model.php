@@ -72,8 +72,8 @@ class Tarrif_model extends CI_Model {
 	}
 
 	public function selectAvailableTariff($data){
-	$qry='SELECT T.rate,T.additional_kilometer_rate, max( T.to_date ) ,TM.minimum_kilometers,TM.vehicle_model_id,TM.vehicle_make_id,TM.title, T.tariff_master_id, T.id FROM tariffs AS T, tariff_masters AS TM WHERE T.tariff_master_id = TM.id
-AND T.organisation_id ='.$this->session->userdata('organisation_id').' AND vehicle_type_id ='.$data['vehicle_type'].' AND vehicle_ac_type_id ='.$data['vehicle_ac_type'].' GROUP BY T.tariff_master_id';
+	$qry='SELECT T.rate,T.additional_kilometer_rate, max( T.to_date ) ,TM.minimum_kilometers,T.vehicle_model_id,TM.vehicle_make_id,TM.title, T.tariff_master_id, T.id FROM tariffs AS T, tariff_masters AS TM WHERE T.tariff_master_id = TM.id
+AND T.organisation_id ='.$this->session->userdata('organisation_id').' AND TM.organisation_id ='.$this->session->userdata('organisation_id').' AND TM.vehicle_type_id ='.$data['vehicle_type'].' AND TM.vehicle_ac_type_id ='.$data['vehicle_ac_type'].' AND TM.vehicle_make_id ='.$data['vehicle_make'].' AND T.vehicle_model_id ='.$data['vehicle_model'].' GROUP BY T.tariff_master_id';
 	$result=$this->db->query($qry);
 	$result=$result->result_array();
 	return $result;

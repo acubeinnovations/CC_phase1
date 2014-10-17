@@ -124,6 +124,7 @@ class Tarrif extends CI_Controller {
 	if($this->session_check()==true) {
 	if(isset($_REQUEST['tarrif-add'])){
 	$data['tariff_master_id']=$this->input->post('select_tariff');
+	$data['vehicle_model_id']=$this->input->post('vehicle_model');
 	$data['from_date']=$this->input->post('fromdatepicker');
 	$data['rate']=$this->input->post('rate');
 	$data['additional_kilometer_rate']=$this->input->post('additional_kilometer_rate');
@@ -133,6 +134,7 @@ class Tarrif extends CI_Controller {
 	$data['organisation_id']=$this->session->userdata('organisation_id'); //print_r($data);exit;
 	 $data['user_id']=$this->session->userdata('id');
 	 $this->form_validation->set_rules('select_tariff','Tariff Master','trim|required|xss_clean|numeric');
+	 $this->form_validation->set_rules('vehicle_model','Vehicle model','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('fromdatepicker','Date ','trim|required|xss_clean');
 	 $this->form_validation->set_rules('rate','Rate','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('additional_kilometer_rate','Kilometer Rate','trim|required|xss_clean|numeric');
@@ -148,6 +150,11 @@ class Tarrif extends CI_Controller {
 	 $data['tariff_master_id'] ='';
 	 $err=False;
 	 $this->session->set_userdata('select_tariff','Choose Tariff Master');
+	 }
+	 if($data['vehicle_model_id'] ==-1){
+	 $data['vehicle_model_id'] ='';
+	 $err=False;
+	 $this->session->set_userdata('vehicle_model','Choose Vehicle Model');
 	 }
 	 if($this->form_validation->run()==False){
 		$this->session->set_userdata('post',$data);
@@ -170,6 +177,7 @@ class Tarrif extends CI_Controller {
 	if(isset($_REQUEST['edit'])){
 	 $id= $this->input->post('manage_id');
 	 $data['tariff_master_id'] = $this->input->post('manage_tariff');
+	 $data['vehicle_model_id']=$this->input->post('vehicle_model');
 	 $data['from_date'] = $this->input->post('manage_datepicker');
 	 $data['rate'] = $this->input->post('manage_rate');
 	 $data['additional_kilometer_rate'] = $this->input->post('manage_additional_kilometer_rate');
@@ -179,7 +187,7 @@ class Tarrif extends CI_Controller {
 	
 	
 		$err=False;
-		if($data['tariff_master_id']==''||$data['from_date']==''||$data['rate']==''||$data['additional_kilometer_rate']==''||$data['additional_hour_rate'] ==''||$data['driver_bata']==''||$data['night_halt']==''){
+		if($data['tariff_master_id']==''|| $data['vehicle_model_id'] =='' ||$data['from_date']==''||$data['rate']==''||$data['additional_kilometer_rate']==''||$data['additional_hour_rate'] ==''||$data['driver_bata']==''||$data['night_halt']==''){
 			
 			$this->session->set_userdata(array('dbvalTarrif_Err'=>'Fields Required..!'));
 			$err=true;
@@ -235,10 +243,12 @@ class Tarrif extends CI_Controller {
 	}
 
 	public function tariffSelecter(){
-	if(isset($_REQUEST['vehicle_type']) && isset($_REQUEST['vehicle_ac_type'])){
+	if(isset($_REQUEST['vehicle_type']) && isset($_REQUEST['vehicle_ac_type']) && isset($_REQUEST['vehicle_make']) && isset($_REQUEST['vehicle_model'])){
 
 	$data['vehicle_type']=$_REQUEST['vehicle_type'];
 	$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
+	$data['vehicle_make']=$_REQUEST['vehicle_make'];
+	$data['vehicle_model']=$_REQUEST['vehicle_model'];
 	$data['organisation_id']=$this->session->userdata('organisation_id');
 
 	$res['data']=$this->tarrif_model->selectAvailableTariff($data);

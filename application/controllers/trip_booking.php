@@ -138,6 +138,8 @@ class Trip_booking extends CI_Controller {
 				$data['droptimepicker']		=	$this->input->post('droptimepicker');
 				$data['vehicle_type']		=	$this->input->post('vehicle_type');
 				$data['vehicle_ac_type']	=	$this->input->post('vehicle_ac_type');
+				$data['vehicle_make']		=	$this->input->post('vehicle_make');
+				$data['vehicle_model']		=	$this->input->post('vehicle_model');
 				if(isset($_REQUEST['beacon_light'])){
 					$data['beacon_light']=TRUE;
 					if($this->input->post('beacon_light_radio')=='red'){
@@ -300,6 +302,8 @@ class Trip_booking extends CI_Controller {
 			$dbdata['no_of_passengers']				=$data['no_of_passengers'];
 			$dbdata['vehicle_type_id']				=$data['vehicle_type'];
 			$dbdata['vehicle_ac_type_id']			=$data['vehicle_ac_type'];
+			$dbdata['vehicle_make_id']				=$data['vehicle_make'];
+			$dbdata['vehicle_model_id']				=$data['vehicle_model'];
 			$dbdata['vehicle_seating_capacity_id']	=$data['seating_capacity'];
 			$dbdata['vehicle_beacon_light_option_id']=$data['beacon_light_id'];
 			$dbdata['pluckcard']					=$data['pluck_card'];
@@ -474,9 +478,11 @@ class Trip_booking extends CI_Controller {
 		}
 	}
 	public function getAvailableVehicles(){
-	if($_REQUEST['vehicle_type'] && $_REQUEST['vehicle_ac_type'] && $_REQUEST['pickupdatetime'] && $_REQUEST['dropdatetime']){
+	if($_REQUEST['vehicle_type'] && $_REQUEST['vehicle_ac_type'] && $_REQUEST['vehicle_make'] && $_REQUEST['vehicle_model'] && $_REQUEST['pickupdatetime'] && $_REQUEST['dropdatetime']){
 	$data['vehicle_type']=$_REQUEST['vehicle_type'];
 	$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
+	$data['vehicle_make']=$_REQUEST['vehicle_make'];
+	$data['vehicle_model']=$_REQUEST['vehicle_model'];
 	$data['pickupdatetime']=$_REQUEST['pickupdatetime'];
 	$data['dropdatetime']=$_REQUEST['dropdatetime'];
 	$data['organisation_id']=$this->session->userdata('organisation_id');

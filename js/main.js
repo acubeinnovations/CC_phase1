@@ -947,37 +947,41 @@ alert('Select Vehicle and Tarrif correctly.');
 
 
 //tarrif selecter
-$('#vehicle-type,#vehicle-ac-type').on('change',function(){
+$('#vehicle-type,#vehicle-ac-type,#vehicle-make,#vehicle-model').on('change',function(){
 GenerateVehiclesAndTarif(tarif_id='',available_vehicle_id='');
 });
 
 function GenerateVehiclesAndTarif(tarif_id='',available_vehicle_id=''){
 var vehicle_type = $('#vehicle-type').val();
 var vehicle_ac_type = $('#vehicle-ac-type').val();
+
+var vehicle_make = $('#vehicle-make').val();
+var vehicle_model = $('#vehicle-model').val();
+
 var tarif_id=tarif_id;
 var pickupdate = $('#pickupdatepicker').val();
 var pickuptime = $('#pickuptimepicker').val();
 var dropdate = $('#dropdatepicker').val();
 var droptime = $('#droptimepicker').val();
 
-if(vehicle_type!=-1 && vehicle_ac_type!=-1 && pickupdate!='' && pickuptime!='' && dropdate!='' && droptime!='' ){
+if(vehicle_type!=-1 && vehicle_ac_type!=-1 && vehicle_make!=-1 && vehicle_model!=-1 && pickupdate!='' && pickuptime!='' && dropdate!='' && droptime!='' ){
 
 var pickupdatetime = pickupdate+' '+pickuptime+':00';
 var dropdatetime   = dropdate+' '+droptime+':00';
 $('.display-me').css('display','block');
-generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id);
-generateTariffs(vehicle_type,vehicle_ac_type,tarif_id);
+generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id);
+generateTariffs(vehicle_type,vehicle_ac_type,vehicle_make,vehicle_model,tarif_id);
 
-}else if(vehicle_type!=-1 && vehicle_ac_type!=-1){
+}else if(vehicle_type!=-1 && vehicle_ac_type!=-1 && vehicle_make!=-1 && vehicle_model!=-1){
 $('.display-me').css('display','block');
-generateTariffs(vehicle_type,vehicle_ac_type,tarif_id);
+generateTariffs(vehicle_type,vehicle_ac_type,vehicle_make,vehicle_model,tarif_id);
 
 }
 
 
 }
 
-function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id=''){//alert(available_vehicle_id);
+function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id=''){//alert(available_vehicle_id);
 	//alert(vehicle_type);alert(vehicle_ac_type);alert(pickupdatetime);alert(dropdatetime);
 	var available_vehicle_id=available_vehicle_id;
 	
@@ -990,7 +994,7 @@ function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,d
 		  {
 			id:available_vehicle_id
 		  },function(data1){data1=jQuery.parseJSON(data1);
-			selected_option="<option value='"+data1.data[0].id+"' vehicle_model_id='"+data1.data[0].vehicle_model_id+"'  vehicle_make_id='"+data1.data[0].vehicle_make_id+"' "+selected+">"+data1.data[0].registration_number+' '+vehicle_makes[Number(data1.data[0].vehicle_make_id)-1]+"</option>";
+			selected_option="<option value='"+data1.data[0].id+"' vehicle_model_id='"+data1.data[0].vehicle_model_id+"'  vehicle_make_id='"+data1.data[0].vehicle_make_id+"' "+selected+">"+data1.data[0].registration_number+"</option>";
 			$('#available_vehicle').append(selected_option);
 			});
 	}
@@ -998,6 +1002,8 @@ function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,d
 		  {
 			vehicle_type:vehicle_type,
 			vehicle_ac_type:vehicle_ac_type,
+			vehicle_make:vehicle_make,
+			vehicle_model:vehicle_model,
 			pickupdatetime:pickupdatetime,
 			dropdatetime:dropdatetime
 		  },function(data){
@@ -1005,7 +1011,7 @@ function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,d
 			data=jQuery.parseJSON(data);
 			for(var i=0;i<data.data.length;i++){
 								
-			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' ></option>").text(data.data[i].registration_number+' '+vehicle_makes[Number(data.data[i].vehicle_make_id)-1]));
+			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' ></option>").text(data.data[i].registration_number));
 				
 			}
 		
@@ -1020,12 +1026,14 @@ function generateAvailableVehicles(vehicle_type,vehicle_ac_type,pickupdatetime,d
 		   });
 
 }
-function generateTariffs(vehicle_type,vehicle_ac_type,tarif_id=''){
+function generateTariffs(vehicle_type,vehicle_ac_type,vehicle_make,vehicle_model,tarif_id=''){
 	var tarif_id=tarif_id;
 	 $.post(base_url+"/tarrif/tariffSelecter",
 		  {
 			vehicle_type:vehicle_type,
-			vehicle_ac_type:vehicle_ac_type
+			vehicle_ac_type:vehicle_ac_type,
+			vehicle_make:vehicle_make,
+			vehicle_model:vehicle_model
 		  },function(data){
 			if(data!='false'){
 			data=jQuery.parseJSON(data);
