@@ -4,7 +4,7 @@
 		if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==FRONT_DESK)){
 		$dashboard_url=base_url().'organization/front-desk';
 
-		}else if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==ORGANIZATION_ADMINISTRATOR)){
+		}else if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==ORGANISATION_ADMINISTRATOR)){
 			$dashboard_url=base_url().'organization/admin';
 		}else if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==SYSTEM_ADMINISTRATOR)){
 			$dashboard_url=base_url().'admin';

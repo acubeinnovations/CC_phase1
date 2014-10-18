@@ -89,9 +89,11 @@ class User extends CI_Controller {
 		
 		elseif($param1=='list-vehicle'&&($param2== ''|| is_numeric($param2)) && ($param3== ''|| is_numeric($param3))){
 		$this->ShowVehicleList($param1,$param2,$param3);
-		}
 		}else{
 			$this->notFound();
+		}
+		}else{
+			$this->notAuthorized();
 		}
 	
     }
