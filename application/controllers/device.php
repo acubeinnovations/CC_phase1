@@ -87,7 +87,7 @@ class Device extends CI_Controller {
 	}
 	}
 	else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 			}
 	}
 	
@@ -100,8 +100,17 @@ class Device extends CI_Controller {
 		$this->load->view('admin-templates/footer');
 		}
 	else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
+	}
+	public function notAuthorized(){
+	$data['title']='Not Authorized | '.PRODUCT_NAME;
+	$page='not_authorized';
+	$this->load->view('admin-templates/header',$data);
+	$this->load->view('admin-templates/nav');
+	$this->load->view($page,$data);
+	$this->load->view('admin-templates/footer');
+	
 	}
 	// sample code
 	}

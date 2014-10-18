@@ -64,6 +64,8 @@ class User extends CI_Controller {
 
 		}elseif($param1=='getNotifications'){
 			$this->getNotifications();
+		}elseif($param1=='tripvouchers'){
+			$this->tripVouchers();
 		}
 
 		elseif($param1=='tarrif-masters'&& ($param2== ''|| is_numeric($param2))){
@@ -89,7 +91,7 @@ class User extends CI_Controller {
 		$this->ShowVehicleList($param1,$param2,$param3);
 		}
 		}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	
     }
@@ -112,7 +114,7 @@ class User extends CI_Controller {
 	$this->load_templates($page,$data);
 	}
 	else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 	public function tarrif_masters($param1,$param2) {
@@ -191,7 +193,7 @@ class User extends CI_Controller {
 	
 	}
 	else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	
 	}
@@ -288,7 +290,7 @@ class User extends CI_Controller {
 	
 	}
 	else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 
@@ -350,7 +352,7 @@ class User extends CI_Controller {
 	
 	}
 	else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 
 
@@ -531,7 +533,7 @@ class User extends CI_Controller {
 	
 	}
 	else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 
@@ -627,7 +629,7 @@ class User extends CI_Controller {
 			$page='user-pages/trips';
 		    $this->load_templates($page,$data);
 		    }else{
-				echo 'you are not authorized access this page..';
+				$this->notAuthorized();
 			}
 		
 	}	
@@ -672,7 +674,7 @@ class User extends CI_Controller {
 			$page='user-pages/customer';
 		    $this->load_templates($page,$data);
 		}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 
 	}	
@@ -685,7 +687,7 @@ class User extends CI_Controller {
 		$this->load->view('admin-templates/footer');
 		}
 	else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 
@@ -751,7 +753,7 @@ public function	Customers($param2){
 			$page='user-pages/customers';
 		    $this->load_templates($page,$data);
 		}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 }
 	
@@ -810,7 +812,7 @@ public function profile() {
 		}
 	   }	
 		else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 	public function show_profile($data) {
@@ -825,7 +827,7 @@ public function profile() {
 		    $this->load_templates($page,$data);
 		    }
 			else{
-				echo 'you are not authorized access this page..';
+				$this->notAuthorized();
 			}
 	}
 	public function changePassword() {
@@ -860,7 +862,7 @@ public function profile() {
 		}
 		           }
 		else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}	
    
@@ -870,7 +872,7 @@ public function profile() {
 				$page='user-pages/change_password';
 				 $this->load_templates($page,$data);
 		}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 	public function ShowDriverView($param2) {
@@ -890,7 +892,7 @@ public function profile() {
 				$page='user-pages/addDrivers';
 				 $this->load_templates($page,$data);
 		}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 	
@@ -955,7 +957,7 @@ public function profile() {
 	$this->load_templates($page,$data);	
 	}
 	else{
-	echo 'you are not authorized access this page..';
+	$this->notAuthorized();
 	}
 	}
 		
@@ -981,7 +983,22 @@ public function profile() {
 		
 			}
 			else{
-					echo 'you are not authorized access this page..';
+					$this->notAuthorized();
+			}
+	}
+
+	public function tripVouchers(){
+			if($this->session_check()==true) {
+		
+			$data['trips']=$this->trip_booking_model->getTripVouchers();
+			//print_r($data['trips']);exit;
+			$data['title']='Trip Vouchers | '.PRODUCT_NAME;
+			$page='user-pages/trip_vouchers';
+			$this->load_templates($page,$data);
+		
+			}
+			else{
+				$this->notAuthorized();
 			}
 	}
 	public function select_Box_Values(){
@@ -1082,7 +1099,7 @@ public function profile() {
 				$page='user-pages/addVehicles';
 				 $this->load_templates($page,$data);
 		}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 	public function select_Vehicle_Values(){
@@ -1178,7 +1195,9 @@ public function profile() {
 	$this->load_templates($page,$data);	
 	}
 	else{
-	echo 'you are not authorized access this page..';
+
+	$this->notAuthorized();
+	
 	}
 	}
 	public function date_check($date){
@@ -1195,6 +1214,15 @@ public function profile() {
 		echo 'false';
 	}
 	}
+	}
+	public function notAuthorized(){
+	$data['title']='Not Authorized | '.PRODUCT_NAME;
+	$page='not_authorized';
+	$this->load->view('admin-templates/header',$data);
+	$this->load->view('admin-templates/nav');
+	$this->load->view($page,$data);
+	$this->load->view('admin-templates/footer');
+	
 	}
 
 	public function getNotifications(){

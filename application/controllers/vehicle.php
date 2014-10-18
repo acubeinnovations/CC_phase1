@@ -54,7 +54,7 @@ class Vehicle extends CI_Controller {
 	
 		}
 		else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 			}
 	}
 		
@@ -362,7 +362,7 @@ $err=True;
 		}
 		}
 		else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 			}
 		}
 		public function insurance_validation(){
@@ -478,7 +478,7 @@ $err=True;
 		}
 		}
 		else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 			}
 		}
 		
@@ -595,7 +595,7 @@ $err=True;
 		}
 		}
 		else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 			}
 		}
 		
@@ -705,7 +705,7 @@ $err=True;
 		}
 		
 		else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 			}
 		}
 		
@@ -714,4 +714,15 @@ $err=True;
 	return true;
 	}	
 	}	
+
+	public function notAuthorized(){
+	$data['title']='Not Authorized | '.PRODUCT_NAME;
+	$page='not_authorized';
+	$this->load->view('admin-templates/header',$data);
+	$this->load->view('admin-templates/nav');
+	$this->load->view($page,$data);
+	$this->load->view('admin-templates/footer');
+	
+	}
+
 }
