@@ -73,8 +73,8 @@
 			$chases_num="";
 			$permit="";
 			$permit_date="";
-			$permit_amount="";
-			$tax_amount="";
+			$permit_amount='0000';
+			$tax_amount='0000';
 			$tax_date="";
 		if($this->mysession->get('post_all')!=null && $this->mysession->get('post_driver')!=null && $this->mysession->get('post_device')!=null){
 			$data=$this->mysession->get('post_all');
@@ -314,7 +314,7 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
         </div>	<div class="hide-me"><?php echo form_input(array('name'=>'h_permit','value'=>$permit_date));?></div>
 	<div class="form-group">
 	<?php echo form_label('Permit Renewal Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>$permit_amount)); ?>
+           <?php echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>number_format($permit_amount,2))); ?>
 	   <?php echo $this->form_functions->form_error_session('permit_amount', '<p class="text-red">', '</p>'); ?>
         <p class="text-red"><?php
 	if($this->mysession->get('Err_permit_amt') != ''){
@@ -411,7 +411,7 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 	
 	<div class="form-group">
 	<?php echo form_label('Tax Renewal Amount ','usernamelabel'); ?>
-           <?php  echo form_input(array('name'=>'tax_amount','class'=>'form-control','id'=>'tax_amount','value'=>$tax_amount));?>
+           <?php  echo form_input(array('name'=>'tax_amount','class'=>'form-control','id'=>'tax_amount','value'=>number_format($tax_amount,2)));?>
 	   <?php echo $this->form_functions->form_error_session('tax_amount', '<p class="text-red">', '</p>'); ?>
         <p class="text-red"><?php
 	if($this->mysession->get('Err_tax_amt') != ''){
@@ -451,8 +451,8 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 			$ins_number ="";
 			$ins_date="";
 			$ins_renewal_date="";
-			$ins_prem_amt="";
-			$ins_amt="";
+			$ins_prem_amt='0000';
+			$ins_amt='0000';
 			$ins_agency="";
 			$ins_address="";
 			$ins_phn="";
@@ -525,7 +525,7 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
         </div>  <div class="hide-me"><?php echo form_input(array('name'=>'h_renew','value'=>$ins_renewal_date));?></div>
 		<div class="form-group">
 		<?php echo form_label('Insurance Premium Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'insurance_pre-amount','class'=>'form-control','id'=>'insurance_pre-amount','value'=>$ins_prem_amt)); ?>
+           <?php echo form_input(array('name'=>'insurance_pre-amount','class'=>'form-control','id'=>'insurance_pre-amount','value'=>number_format($ins_prem_amt,2))); ?>
 	   <?php echo $this->form_functions->form_error_session('insurance_pre-amount', '<p class="text-red">', '</p>'); ?>
          <p class="text-red"><?php
 	if($this->mysession->get('Err_insurance_pre_amt') != ''){
@@ -536,7 +536,7 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 		</div>
 		<div class="form-group">
 		<?php echo form_label('Insurance  Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'insurance_amount','class'=>'form-control','id'=>'insurance_amount','value'=>$ins_amt)); ?>
+           <?php echo form_input(array('name'=>'insurance_amount','class'=>'form-control','id'=>'insurance_amount','value'=>number_format($ins_amt,2))); ?>
 	   <?php echo $this->form_functions->form_error_session('insurance_amount', '<p class="text-red">', '</p>'); ?>
        <p class="text-red"><?php
 	if($this->mysession->get('Err_insurance_amt') != ''){
@@ -591,9 +591,9 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 		
 				
 			$loan_id=gINVALID;
-			$l_amt ="";
+			$l_amt ='0000';
 			$l_emi_no="";
-			$l_emi_amt="";
+			$l_emi_amt='0000';
 			$l_no_paid_emi="";
 			$l_payment_date="";
 			$l_agency="";
@@ -665,7 +665,7 @@ if($this->mysession->get('loan_post_all')!=null ){
 			<legend class="body-head">Loan Details</legend>
 				<div class="form-group">
 		<?php echo form_label('Total Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'total_amt','class'=>'form-control','id'=>'total_amt','value'=>$l_amt)); ?>
+           <?php echo form_input(array('name'=>'total_amt','class'=>'form-control','id'=>'total_amt','value'=>number_format($l_amt,2))); ?>
 	   <?php echo $this->form_functions->form_error_session('total_amt', '<p class="text-red">', '</p>'); ?>
         
 		    <p class="text-red"><?php
@@ -683,7 +683,7 @@ if($this->mysession->get('loan_post_all')!=null ){
         </div>
 		<div class="form-group">
 		<?php echo form_label('EMI Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'emi_amt','class'=>'form-control','id'=>'emi_amt','value'=>$l_emi_amt)); ?>
+           <?php echo form_input(array('name'=>'emi_amt','class'=>'form-control','id'=>'emi_amt','value'=>number_format($l_emi_amt,2))); ?>
 	   <?php echo $this->form_functions->form_error_session('emi_amt', '<p class="text-red">', '</p>'); ?>
            <p class="text-red"><?php
 	if($this->mysession->get('Err_loan_emi_amt') != ''){
@@ -856,21 +856,23 @@ if($this->mysession->get('owner_post_all')!=null ){
 	   <fieldset class="body-border">
 		<legend class="body-head">Trip</legend><div class="form-group">
 	<div class="box-body table-responsive no-padding">
+	
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr>
 						<th>SlNo</th>
-					    <th>Date</th>
-					    <th>Route</th>
+						<th>Date</th>
+						<th>Route</th>
 						<th>Kilometers</th>
 						<th>No Of Days</th>
 						<!--<th>Releasing Place</th>-->
 						<th>Trip Amount</th>
+						<th>17% of Amount</th>
 					    
 					</tr>
 					<?php	
 						$full_tot_km=$total_trip_amount=0;
-					if(isset($trips) && $trips!=false){
+					if(isset($trips) && $trips!=false){ 
 						for($trip_index=0;$trip_index<count($trips);$trip_index++){
 						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
 						$full_tot_km=$full_tot_km+$tot_km;
@@ -894,11 +896,16 @@ if($this->mysession->get('owner_post_all')!=null ){
 						<tr>
 							<td><?php echo $trip_index+1; ?></td>
 							<td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
-							<td><?php echo $trips[$trip_index]['pick_up_city'].' to '.$trips[$trip_index]['drop_city']; ?></td>
+							<td><?php echo $trips[$trip_index]['id']." : " . $trips[$trip_index]['pick_up_city'].' to '.$trips[$trip_index]['drop_city']; ?></td>
 							<td><?php echo $tot_km; ?></td>
 							<td><?php echo $no_of_days; ?></td>
 							<!--<td><?php //echo $trips[$trip_index]['releasing_place'];?></td>-->
-							<td><?php echo $trips[$trip_index]['total_trip_amount']; ?></td>
+							<td><?php echo number_format($trips[$trip_index]['total_trip_amount'],2) ?></td>
+							<td><?php 
+							$amt=$trips[$trip_index]['total_trip_amount'];
+							$percent_amt=($amt*17)/100;
+							echo number_format($percent_amt,2);
+							?></td>
 						
 						</tr>
 						<?php } 
@@ -910,7 +917,7 @@ if($this->mysession->get('owner_post_all')!=null ){
 					<td></td>
 					<td><?php echo $full_tot_km; ?></td>
 					<td></td>
-					<td><?php echo $total_trip_amount; ?></td>
+					<td><?php echo number_format($total_trip_amount,2); ?></td>
 					</tr>
 					<?php //endforeach;
 					//}

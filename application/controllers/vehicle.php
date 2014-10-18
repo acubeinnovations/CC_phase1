@@ -204,8 +204,8 @@ class Vehicle extends CI_Controller {
 			$data['vehicle_permit_type_id']=$this->input->post('permit');
 			$data['vehicle_permit_renewal_date']=$this->input->post('permit_date');
 			
-			$data['vehicle_permit_renewal_amount']=$this->input->post('permit_amount');
-			$data['tax_renewal_amount']=$this->input->post('tax_amount');
+			$data['vehicle_permit_renewal_amount']=number_format($this->input->post('permit_amount'),2);
+			$data['tax_renewal_amount']=number_format($this->input->post('tax_amount'),2);
 			$data['tax_renewal_date']=$this->input->post('tax_date');
 			
 			$data['organisation_id']=$this->session->userdata('organisation_id');
@@ -241,14 +241,14 @@ $err=True;
 	}
 	
 	
-	if(preg_match('#[^0-9\.]#', $data['vehicle_permit_renewal_amount'])){
+	/*if(preg_match('#[^0-9\.]#', $data['vehicle_permit_renewal_amount'])){
 			$this->mysession->set('Err_permit_amt','Invalid Characters on Permit Amount field!');
 			$err=False;
 			}
 	if(preg_match('#[^0-9\.]#', $data['tax_renewal_amount'])){
 			$this->mysession->set('Err_tax_amt','Invalid Characters on Tax Amount field!');
 			$err=False;
-			}
+			}*/
 	if($data['vehicle_ownership_types_id'] ==-1){
 	 $data['vehicle_ownership_types_id'] ='';
 	 $err=False;
@@ -375,8 +375,8 @@ $err=True;
 			$h_ins=$this->input->post('h_ins');
 			$data['insurance_renewal_date']=$this->input->post('insurance_renewal_date');
 			$h_renew=$this->input->post('h_renew');
-			$data['insurance_premium_amount']=$this->input->post('insurance_pre-amount');
-			$data['insurance_amount']=$this->input->post('insurance_amount');
+			$data['insurance_premium_amount']=number_format($this->input->post('insurance_pre-amount'),2);
+			$data['insurance_amount']=number_format($this->input->post('insurance_amount'),2);
 			$data['Insurance_agency']=$this->input->post('insurance_agency');
 			$data['Insurance_agency_address']=$this->input->post('insurance_agency_address');
 			$data['Insurance_agency_phone']=$this->input->post('insurance_agency_phn');
@@ -486,9 +486,9 @@ $err=True;
 			if(isset($_REQUEST['loan-submit'])){
 			$loan_id=$this->input->post('hidden_loan_id');
 			$vehicle_id=$this->mysession->get('vehicle_id');
-			$data['total_amount']=$this->input->post('total_amt');
+			$data['total_amount']=number_format($this->input->post('total_amt'),2);
 			$data['number_of_emi']=$this->input->post('emi_number');
-			$data['emi_amount']=$this->input->post('emi_amt');
+			$data['emi_amount']=number_format($this->input->post('emi_amt'),2);
 			$data['number_of_paid_emi']=$this->input->post('no_paid_emi');
 			$data['emi_payment_date']=$this->input->post('emi_date');
 			$h_emi=$this->input->post('h_emi');
