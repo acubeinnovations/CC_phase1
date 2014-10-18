@@ -77,6 +77,26 @@ class Tarrif extends CI_Controller {
 	 $data['minimum_hours'] = $this->input->post('manage_min_hours');
 	
 		$err=False;
+			if($data['trip_model_id'] ==-1){
+			 $data['trip_model_id'] ='';
+			 $err=true;
+			 $this->session->set_userdata('m_trip_model','Choose Trip Model');
+			 }
+			 if($data['vehicle_type_id'] ==-1){
+			 $data['vehicle_type_id'] ='';
+			 $err=true;
+			 $this->session->set_userdata('m_vehicle_type','Choose Vehicle Type');
+			 }
+			  if($data['vehicle_make_id'] ==-1){
+			 $data['vehicle_make_id'] ='';
+			 $err=true;
+			 $this->session->set_userdata('m_vehicle_make','Choose Vehicle Make');
+			 }
+			 if($data['vehicle_ac_type_id'] ==-1){
+			 $data['vehicle_ac_type_id'] ='';
+			 $err=true;
+			 $this->session->set_userdata('m_vehicle_ac','Choose Vehicle AC Type');
+			 }
 		if($data['title']==''||$data['minimum_kilometers']==''||$data['minimum_hours']==''){
 			
 			$this->session->set_userdata(array('dbvalErr'=>'Fields Required..!'));
@@ -84,11 +104,11 @@ class Tarrif extends CI_Controller {
 			}
 		
 		if(preg_match('#[^0-9\.]#', $data['minimum_kilometers'])){
-			$this->session->set_userdata(array('Err_kilo'=>'Invalid Characters on Kilometers field!'));
+			$this->session->set_userdata(array('Err_m_kilo'=>'Invalid Characters on Kilometers field!'));
 			$err=true;
 			}
 		if(preg_match('#[^0-9\.]#', $data['minimum_hours'])){
-			$this->session->set_userdata(array('Err_hrs'=>'Invalid Characters on Hours field!'));
+			$this->session->set_userdata(array('Err_m_hrs'=>'Invalid Characters on Hours field!'));
 			$err=true;
 			}
 			if($err==true){
