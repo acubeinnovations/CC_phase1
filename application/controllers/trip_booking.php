@@ -38,13 +38,26 @@ class Trip_booking extends CI_Controller {
 		}else if($param2=='getVouchers') {
 		
 			$this->getVouchers();
+		}else{
+			$this->notFound();
 		}	
+		}else{
+			$this->notFound();
 		}
 	}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 	}
 	}
-		
+	public function notFound(){
+		if($this->session_check()==true) {
+		 $this->output->set_status_header('404'); 
+		 $data['title']="Not Found";
+      	 $page='not_found';
+         $this->load_templates($page,$data);
+		}else{
+			$this->notAuthorized();
+	}
+	}	
 	public function bookTrip() {
 			
 			if(isset($_REQUEST['book_trip'])){
@@ -544,5 +557,15 @@ class Trip_booking extends CI_Controller {
 	$subject="Connect N Cabs";
 	$this->send_email->emailMe($customer['email'],$subject,$message);
 	}
+	}
+
+	public function notAuthorized(){
+	$data['title']='Not Authorized | '.PRODUCT_NAME;
+	$page='not_authorized';
+	$this->load->view('admin-templates/header',$data);
+	$this->load->view('admin-templates/nav');
+	$this->load->view($page,$data);
+	$this->load->view('admin-templates/footer');
+	
 	}
 }

@@ -23,10 +23,21 @@ public function __construct()
 			$this->changepassword();
 		 } elseif($param1=='admin'  && $param2=='front-desk' && ($param3!= '' || $param4!= '')){
 			$this->front_desk($param3,$param4);
-		 }
+		 }else{
+				$this->notFound();
+			}
 		
 		}
-	
+	public function notFound(){
+		if($this->session_check()==true) {
+		 $this->output->set_status_header('404'); 
+		 $data['title']="Not Found";
+      	 $page='not_found';
+         $this->load_templates($page,$data);
+		}else{
+			$this->notAuthorized();
+	}
+	}
 	
 	public function checking_credentials() {
 	if($this->session_check()==true) {
@@ -85,7 +96,7 @@ public function __construct()
 		$this->load_templates($page,$data);
 
 		}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 	
@@ -208,7 +219,7 @@ public function __construct()
 					$this->show_change_password($data);
 			}
 		}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 		
 	}
@@ -443,7 +454,7 @@ public function __construct()
 		$this->load_templates($page,$data);
 		}
 	   else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 
@@ -458,7 +469,7 @@ public function __construct()
 	$this->load->view($page,$data);
 	$this->load->view('admin-templates/footer');
 	}else{
-	echo 'you are not authorized access this page..';
+	$this->notAuthorized();
 	}
 
 	}	  
@@ -478,7 +489,7 @@ public function __construct()
 				$this->load->view('admin-templates/footer');
 					}
 		else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 	
@@ -510,10 +521,21 @@ public function __construct()
 			}
 			}
 		else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
+	public function notAuthorized(){
+	$data['title']='Not Authorized | '.PRODUCT_NAME;
+	$page='not_authorized';
+	$this->load->view('admin-templates/header',$data);
+	$this->load->view('admin-templates/nav');
+	$this->load->view($page,$data);
+	$this->load->view('admin-templates/footer');
 	
+	}
+	
+
+
 	public function captcha_check($str)
 	{
 		if (trim($str) != trim($this->session->userdata('captcha_code')))

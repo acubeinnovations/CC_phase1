@@ -24,7 +24,7 @@ class Account extends CI_Controller {
 			$this->load_admin_templates($page,$data);
 			
 		}else{
-				echo 'you are not authorized access this page..';
+				$this->notAuthorized();
 		}
 	}
 	
@@ -38,7 +38,7 @@ class Account extends CI_Controller {
 			$this->load_admin_templates($page,$data);
 		}
 	  	else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 
@@ -53,7 +53,7 @@ class Account extends CI_Controller {
 			$this->load_admin_templates($page,$data);
 		}
 	  	else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 
@@ -74,7 +74,7 @@ class Account extends CI_Controller {
 				$this->load_admin_templates($page,$data);
 		}
 	  	else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 
@@ -91,7 +91,7 @@ class Account extends CI_Controller {
 			$this->load_admin_templates($page,$data);
 			
 		}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 	}
 
@@ -104,9 +104,19 @@ class Account extends CI_Controller {
 			$this->load->view($page,$data);
 			$this->load->view('admin-templates/footer');
 		}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 		}
 
+	}
+
+	public function notAuthorized(){
+	$data['title']='Not Authorized | '.PRODUCT_NAME;
+	$page='not_authorized';
+	$this->load->view('admin-templates/header',$data);
+	$this->load->view('admin-templates/nav');
+	$this->load->view($page,$data);
+	$this->load->view('admin-templates/footer');
+	
 	}
 
 	//check system administrator logged in 

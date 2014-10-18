@@ -243,7 +243,7 @@
 		
 		step:60,
 		monthChangeSpinner:true,
-		closeOnDateSelect:false,
+		closeOnDateSelect:true,
 		closeOnWithoutClick:true,
 		closeOnInputClick: true,
 		
@@ -286,8 +286,8 @@
 		todayButton:true, // 2.1.0
 		defaultSelect:true, // 2.1.0
 		
-		scrollMonth:false,
-		scrollTime:false,
+		scrollMonth:true,
+		scrollTime:true,
 		scrollInput:false,
 		
 		lazyInit:false,
