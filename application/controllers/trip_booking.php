@@ -38,13 +38,26 @@ class Trip_booking extends CI_Controller {
 		}else if($param2=='getVouchers') {
 		
 			$this->getVouchers();
+		}else{
+			$this->notFound();
 		}	
+		}else{
+			$this->notFound();
 		}
 	}else{
 			$this->notAuthorized();
 	}
 	}
-		
+	public function notFound(){
+		if($this->session_check()==true) {
+		 $this->output->set_status_header('404'); 
+		 $data['title']="Not Found";
+      	 $page='not_found';
+         $this->load_templates($page,$data);
+		}else{
+			$this->notAuthorized();
+	}
+	}	
 	public function bookTrip() {
 			
 			if(isset($_REQUEST['book_trip'])){

@@ -458,8 +458,13 @@ var mobile=$('#mobile').val();
 		$('#mobile').val(data[0].mobile);
 		$('.new-customer').attr('value',false);
 		if(data[0].customer_group_id>0){
+			if($('.advanced-container > .icheckbox_minimal').attr('aria-checked')=='true'){
+			$('#customer-group').val(data[0].customer_group_id);
+			}else{
+	
 			$('.advanced-container > .icheckbox_minimal > .iCheck-helper').trigger('click');	
 			$('#customer-group').val(data[0].customer_group_id);
+			}
 		} 	
 		$('.clear-customer').show();
 		$('.add-customer').hide();

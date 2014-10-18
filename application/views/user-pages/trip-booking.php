@@ -439,6 +439,7 @@ $customer_type='';
 				</div>
 			</div>
 			<div class="inner-second-column-trip-booking div-with-50-percent-width-with-margin-10">
+				<a href="<?php echo base_url().'organization/front-desk/trips'?>" class="btn btn-primary trips-redirect btn-sm">TRIPS</a>
 				<div class="booking-source">
 					<fieldset class="body-border">
 					<legend class="body-head font-size-18-px">Vehicle Information</legend>

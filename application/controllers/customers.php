@@ -22,9 +22,23 @@ class Customers extends CI_Controller {
 			
 			$this->Customer();
 				
+		}else{
+
+			$this->notFound();
 		}
 		
 	}else{
+			$this->notAuthorized();
+	}
+	}
+	
+		public function notFound(){
+		if($this->session_check()==true) {
+		 $this->output->set_status_header('404'); 
+		 $data['title']="Not Found";
+      	 $page='not_found';
+         $this->load_templates($page,$data);
+		}else{
 			$this->notAuthorized();
 	}
 	}

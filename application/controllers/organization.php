@@ -23,10 +23,21 @@ public function __construct()
 			$this->changepassword();
 		 } elseif($param1=='admin'  && $param2=='front-desk' && ($param3!= '' || $param4!= '')){
 			$this->front_desk($param3,$param4);
-		 }
+		 }else{
+				$this->notFound();
+			}
 		
 		}
-	
+	public function notFound(){
+		if($this->session_check()==true) {
+		 $this->output->set_status_header('404'); 
+		 $data['title']="Not Found";
+      	 $page='not_found';
+         $this->load_templates($page,$data);
+		}else{
+			$this->notAuthorized();
+	}
+	}
 	
 	public function checking_credentials() {
 	if($this->session_check()==true) {

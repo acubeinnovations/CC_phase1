@@ -12,7 +12,7 @@ class My404 extends CI_Controller {
       	 $page='not_found';
          $this->load_templates($page,$data);
 		}else{
-			echo 'you are not authorized access this page..';
+			$this->notAuthorized();
 	}
 	}
 	public function load_templates($page='',$data=''){

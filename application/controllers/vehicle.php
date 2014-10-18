@@ -35,12 +35,13 @@ class Vehicle extends CI_Controller {
 				
 				if(isset($_REQUEST['add'])){
 					$this->add($tbl,$param1);
-					}
-				if(isset($_REQUEST['edit'])){
+					}else if(isset($_REQUEST['edit'])){
 					$this->edit($tbl,$param1);
-					}
-				if(isset($_REQUEST['delete'])){
+					}else if(isset($_REQUEST['delete'])){
 					$this->delete($tbl,$param1);
+					}else{
+					$this->notFound();
+
 					}
 				//if(isset($_REQUEST['submit-vehicle'])){
 				//$this->vehicle_validation();
@@ -58,7 +59,16 @@ class Vehicle extends CI_Controller {
 			}
 	}
 		
-	
+	public function notFound(){
+		if($this->session_check()==true) {
+		 $this->output->set_status_header('404'); 
+		 $data['title']="Not Found";
+      	 $page='not_found';
+         $this->load_templates($page,$data);
+		}else{
+			$this->notAuthorized();
+	}
+	}
 	public function add($tbl,$param1){
 	
 	if(isset($_REQUEST['select'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['add'])){ 

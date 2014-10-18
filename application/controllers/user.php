@@ -91,7 +91,7 @@ class User extends CI_Controller {
 		$this->ShowVehicleList($param1,$param2,$param3);
 		}
 		}else{
-			$this->notAuthorized();
+			$this->notFound();
 		}
 	
     }
@@ -1223,6 +1223,16 @@ public function profile() {
 	$this->load->view($page,$data);
 	$this->load->view('admin-templates/footer');
 	
+	}
+	public function notFound(){
+		if($this->session_check()==true) {
+		 $this->output->set_status_header('404'); 
+		 $data['title']="Not Found";
+      	 $page='not_found';
+         $this->load_templates($page,$data);
+		}else{
+			$this->notAuthorized();
+	}
 	}
 
 	public function getNotifications(){
