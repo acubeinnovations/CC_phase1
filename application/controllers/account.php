@@ -19,7 +19,7 @@ class Account extends CI_Controller {
 	{
 		if($this->admin_session_check()==true) {
 			$data['url'] = "facnc/admin/create_coy.php?NewCompany=".$org_id."&cnc_token=".$this->session->userdata('session_id');
-			$data['title']="Create company account|".PRODUCT_NAME;	
+			$data['title']="Create company account | ".PRODUCT_NAME;	
 			$page='fa-modules/module';
 			$this->load_admin_templates($page,$data);
 			
@@ -32,7 +32,7 @@ class Account extends CI_Controller {
 	public function admin($action='None'){
 		
 		if($this->admin_session_check()==true) {
-		$data['title'] = $action.PRODUCT_NAME;
+		$data['title'] = $action." | ".PRODUCT_NAME;
 		$data['url'] = "facnc/sync_cnc.php?".$action."=Yes&cnc_token=".$this->session->userdata('session_id');
 			$page='fa-modules/module';
 			$this->load_admin_templates($page,$data);
@@ -47,7 +47,7 @@ class Account extends CI_Controller {
 	public function organization($action='None'){
 		
 		if($this->org_admin_session_check()==true) {
-		$data['title'] = $action.PRODUCT_NAME;
+		$data['title'] = $action." | ".PRODUCT_NAME;
 		$data['url'] = "facnc/sync_cnc.php?".$action."=Yes&cnc_token=".$this->session->userdata('session_id');
 			$page='fa-modules/module';
 			$this->load_admin_templates($page,$data);
@@ -61,7 +61,7 @@ class Account extends CI_Controller {
 	public function front_desk($action='None',$value='',$tab = false){
 		
 		if($this->org_user_session_check()==true) {
-			$data['title'] =$action.PRODUCT_NAME;
+			$data['title'] =$action." | ".PRODUCT_NAME;
 			if($value)
 				$data['url'] = "facnc/sync_cnc.php?".$action."=".$value."&cnc_token=".$this->session->userdata('session_id');
 			else
@@ -86,7 +86,7 @@ class Account extends CI_Controller {
 			$data['url'] = "facnc/admin/users.php?cnc_token=".$this->session->userdata('session_id');
 			if($user_id > 0)
 				$data['url'] .= "&NewUser=".$user_id;
-			$data['title']="Create User account|".PRODUCT_NAME;	
+			$data['title']="Create User account | ".PRODUCT_NAME;	
 			$page='fa-modules/module';
 			$this->load_admin_templates($page,$data);
 			
