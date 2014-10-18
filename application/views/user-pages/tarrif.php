@@ -146,8 +146,8 @@ echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_mod
 <td><?php echo form_label('Vehicle Models','v_models'); ?></td>
 <td><?php echo form_label('From Date','from_Date'); ?></td>
 <td><?php echo form_label('Rate','rate'); ?></td>
-<td><?php echo form_label('Additional Kilometer Rate','additional_Kilometer_Rate'); ?></td>
-<td><?php echo form_label('Additional Hour Rate','additional_Hour_Rate'); ?></td>
+<td><?php echo form_label('Additional Kilo Rate','additional_Kilometer_Rate'); ?></td>
+<td><?php echo form_label('Additional Hr Rate','additional_Hour_Rate'); ?></td>
 <td><?php echo form_label('Driver Bata','driver_Bata'); ?></td>
 <td><?php echo form_label('Night Halt','night_Halt'); ?></td>
 
@@ -173,11 +173,11 @@ foreach($values as $det):
 
 <td><div class="form-group"><?php echo form_input(array('name'=>'manage_datepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up From Date','value'=> $det['from_date'])); ?></div></td>
 
-		<td><div class="form-group"><?php echo form_input(array('name'=>'manage_rate','class'=>'form-control','id'=>'rate','placeholder'=>'Rate','value'=> $det['rate'])); ?></div></td>
-<td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_kilometer_rate','class'=>'form-control','id'=>'additional_kilometer_rate','placeholder'=>'Additional Kilometer Rate','value'=> $det['additional_kilometer_rate'])); ?></div></td>
-<td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_hour_rate','class'=>'form-control','id'=>'additional_hour_rate','placeholder'=>'Additional Hour Rate','value'=> $det['additional_hour_rate'])); ?></div></td>
-<td><div class="form-group"><?php echo form_input(array('name'=>'manage_driver_bata','class'=>'form-control','id'=>'driver_bata','placeholder'=>'Driver Bata','value'=> $det['driver_bata'])); ?></div></td>
-<td><div class="form-group"><?php echo form_input(array('name'=>'manage_night_halt','class'=>'form-control','id'=>'night_halt','placeholder'=>'Night Halt','value'=> $det['night_halt'])); ?>
+		<td><div class="form-group"><?php echo form_input(array('name'=>'manage_rate','class'=>'form-control','id'=>'rate','placeholder'=>'Rate','value'=> number_format($det['rate'],2))); ?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_kilometer_rate','class'=>'form-control','id'=>'additional_kilometer_rate','placeholder'=>'Additional Kilometer Rate','value'=> number_format($det['additional_kilometer_rate'],2))); ?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_hour_rate','class'=>'form-control','id'=>'additional_hour_rate','placeholder'=>'Additional Hour Rate','value'=> number_format($det['additional_hour_rate'],2))); ?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_driver_bata','class'=>'form-control','id'=>'driver_bata','placeholder'=>'Driver Bata','value'=>  number_format($det['driver_bata'],2))); ?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_night_halt','class'=>'form-control','id'=>'night_halt','placeholder'=>'Night Halt','value'=> number_format($det['night_halt'],2))); ?>
            <div class="hide-me"><?php echo form_input(array('name'=>'manage_id','class'=>'form-control','id'=>'manage_id','value'=> $det['id'],'trigger'=>'true' ));?></div></td>
 <td><div  class="tarrif-edit" ><?php echo nbs(5);?><i class="fa fa-edit cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=tarrif-edit-id","class=btn");?></div></td>
 <td><div  class="tarrif-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=tarrif-delete-id","class=btn");?></div></td>

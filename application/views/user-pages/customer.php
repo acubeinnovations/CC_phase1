@@ -158,7 +158,7 @@
 							<td><?php echo $trip_index+1; ?></td>
 							<td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
 							<td><?php echo $trips[$trip_index]['pick_up_city'].' to '.$trips[$trip_index]['drop_city']; ?></td>
-							<td><?php echo $tot_km; ?></td>
+							<td><?php echo number_format($tot_km,2); ?></td>
 							<td><?php echo $no_of_days; ?></td>
 							<!--<td><?php //echo $trips[$trip_index]['releasing_place'];?></td>-->
 							<td><?php echo $trips[$trip_index]['total_trip_amount']; ?></td>
@@ -173,7 +173,7 @@
 					<td></td>
 					<td><?php echo $full_tot_km; ?></td>
 					<td></td>
-					<td><?php echo $total_trip_amount; ?></td>
+					<td><?php echo number_format($total_trip_amount,2); ?></td>
 					</tr>
 					<?php //endforeach;
 					//}

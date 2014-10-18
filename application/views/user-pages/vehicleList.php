@@ -30,7 +30,8 @@
 						//echo $this->form_functions->populate_dropdown('v_type',$vehicle_types,$selected='',$class,$id='',$msg='Select Vehicle Type')?></td>-->
 						<td><?php $class="form-control";
 						echo $this->form_functions->populate_dropdown('v_model',$vehicle_models,$selected='',$class,$id='',$msg='Select Vehicle Model')?></td>
-						
+						 <td><?php $class="form-control";
+						echo $this->form_functions->populate_dropdown('ownership',$vehicle_ownership_types,$selected='',$class,$id='',$msg='Select Vehicle Ownership')?> </td>
 					    <td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
 					    <?php echo form_close();?>
 						<td><?php echo nbs(55); ?></td>

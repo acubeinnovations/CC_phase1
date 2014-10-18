@@ -361,7 +361,7 @@ $this->mysession->delete('post');
         </div>
 	<div class="form-group">
 	<?php echo form_label('Salary','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'salary','class'=>'form-control','id'=>'ifsc_code','placeholder'=>'Salary','value'=>'2500','readonly'=>'readonly')); ?>
+           <?php echo form_input(array('name'=>'salary','class'=>'form-control','id'=>'ifsc_code','placeholder'=>'Salary','value'=>'2500.00','readonly'=>'readonly')); ?>
 	   <?php echo $this->form_functions->form_error_session('salary', '<p class="text-red">', '</p>'); ?>
         </div>
 	<div class="form-group">
@@ -444,12 +444,12 @@ $this->mysession->delete('post');
 							<td><?php echo $tot_km; ?></td>
 							<td><?php echo $no_of_days; ?></td>
 							<!--<td><?php //echo $trips[$trip_index]['releasing_place'];?></td>-->
-							<td><?php echo $trips[$trip_index]['parking_fees']; ?></td>
-							<td><?php echo $trips[$trip_index]['toll_fees']; ?></td>
-							<td><?php echo $trips[$trip_index]['state_tax']; ?></td>
-							<td><?php echo $trips[$trip_index]['night_halt_charges']; ?></td>
-							<td><?php echo $trips[$trip_index]['fuel_extra_charges']; ?></td>
-							<td><?php echo $trips[$trip_index]['total_trip_amount']; ?></td>
+							<td><?php echo number_format($trips[$trip_index]['parking_fees'],2);?></td>
+							<td><?php echo number_format($trips[$trip_index]['toll_fees'],2); ?></td>
+							<td><?php echo number_format($trips[$trip_index]['state_tax'],2); ?></td>
+							<td><?php echo number_format($trips[$trip_index]['night_halt_charges'],2); ?></td>
+							<td><?php echo number_format($trips[$trip_index]['fuel_extra_charges'],2); ?></td>
+							<td><?php echo number_format($trips[$trip_index]['total_trip_amount'],2); ?></td>
 						
 						</tr>
 						<?php } 
@@ -461,12 +461,12 @@ $this->mysession->delete('post');
 					<td></td>
 					<td><?php echo $full_tot_km; ?></td>
 					<td></td>
-					<td><?php echo $tot_parking; ?></td>
-					<td><?php echo $tot_toll; ?></td>
-					<td><?php echo $tot_state_tax; ?></td>
-					<td><?php echo $tot_night_halt; ?></td>
-					<td><?php echo $tot_fuel_extra; ?></td>
-					<td><?php echo $tot_trip_amount; ?></td>
+					<td><?php echo number_format($tot_parking,2); ?></td>
+					<td><?php echo number_format($tot_toll,2); ?></td>
+					<td><?php echo number_format($tot_state_tax,2); ?></td>
+					<td><?php echo number_format($tot_night_halt,2); ?></td>
+					<td><?php echo number_format($tot_fuel_extra,2); ?></td>
+					<td><?php echo number_format($tot_trip_amount,2); ?></td>
 					</tr>
 					<?php //endforeach;
 					//}

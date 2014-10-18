@@ -170,8 +170,8 @@ echo form_close();?></td>
 <td><?php echo form_label('Vehicle Types','vehicle_types'); ?></td>
 <td><?php echo form_label('Vehicle Makes','vehicle_Makes'); ?></td>
 <td><?php echo form_label('Ac Type','ac_Type'); ?></td>
-<td><?php echo form_label('Minimum Kilometers','min_Kilometers'); ?></td>
-<td><?php echo form_label('Minimum Hours','min_Hours'); ?></td>
+<td><?php echo form_label('Min Kilo','min_Kilometers'); ?></td>
+<td><?php echo form_label('Min Hrs','min_Hours'); ?></td>
 
 <td></td>
 <td></td>

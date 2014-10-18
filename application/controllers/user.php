@@ -1138,6 +1138,9 @@ public function profile() {
 	if($_REQUEST['owner']>0){
 	$where_arry['vehicle_owner_id']=$_REQUEST['owner'];
 	}
+	if($_REQUEST['ownership']>0){
+	$where_arry['vehicle_ownership_types_id']=$_REQUEST['ownership'];
+	}
 	/*if($_REQUEST['v_type']>0){
 	$where_arry['vehicle_type_id']=$_REQUEST['v_type'];
 	}*/
@@ -1174,7 +1177,7 @@ public function profile() {
 	$data['owner_details']=$details;
 	}
 	$data['page_links']=$p_res['page_links'];
-	$tbl_arry=array('vehicle_models','vehicle_types','vehicle_owners','vehicle_makes');
+	$tbl_arry=array('vehicle_models','vehicle_types','vehicle_owners','vehicle_makes','vehicle_ownership_types');
 	$count=count($tbl_arry);
 	for ($i=0;$i<$count;$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
