@@ -68,6 +68,9 @@ class FrontReport extends Cpdf
 	var $contactData; // contact data for sending emials/reportlanguage selection
 	
 	var $dest;	// destination: email or printer
+
+	
+	
 	
 	function FrontReport($title, $filename, $size = 'A4', $fontsize = 9, $orientation = 'P', $margins = NULL, $excelColWidthFactor = NULL)
 	{
@@ -439,6 +442,27 @@ class FrontReport extends Cpdf
 
 		$this->row = $temp;
 	}
+
+	//invoice print
+	function Header4()
+	{
+		global $path_to_root, $print_as_quote,
+			$print_invoice_no, $packing_slip, $dflt_lang; // FIXME should be passed as params
+
+		$doctype = $this->formData['doctype'];
+		$header2type = true;
+
+		$this->SetLang(@$this->formData['rep_lang'] ? $this->formData['rep_lang']
+ 			: ($_SESSION["wa_current_user"]->prefs->language ? $_SESSION["wa_current_user"]->prefs->language : $dflt_lang));
+
+ 		 // leave layout files names without path to enable including
+ 		 // modified versions from company/x/reporting directory
+		include("includes/doctext.inc");
+		include("includes/header4.inc");
+
+		$this->row = $temp;
+	}
+
 
 	// Alternate header style which also supports a simple footer
 	function Header3()
@@ -860,6 +884,14 @@ class FrontReport extends Cpdf
 		$this->SetLineWidth($oldLineWidth);
 	}
 
+	function Line1($row, $height = 0, $left=null, $right=null, $dummy3=null)
+	{
+		$oldLineWidth = $this->GetLineWidth();
+		$this->SetLineWidth($height + 1);
+		parent::line($right, $row ,$left, $row);
+		$this->SetLineWidth($oldLineWidth);
+	}
+
 	/**
 	* Underlines the contents of a cell, but not the cell padding area.
 	* Primarily useful for the last line before a "totals" line.
@@ -943,6 +975,8 @@ class FrontReport extends Cpdf
 
 		if (method_exists($this, $this->headerTmpl))	// draw predefined page layout if any
 			$this->{$this->headerTmpl}();
+
+		
 	}
 
 	function End($email=0, $subject='')

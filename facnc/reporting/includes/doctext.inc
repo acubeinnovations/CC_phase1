@@ -121,6 +121,10 @@
 				_("Delivery Note No.") => implode(',', $deliveries),
 				_("Due Date") => sql2date($this->formData['due_date']),
 			);
+
+			$this->headers = array(_('Sl.No.'),	_('Indent No.'), _('Date'),	_('Vehicle No.'),
+		_('User Name'), _('Particulars'), _('Amount'));
+
 			break;
 
 		case ST_SUPPAYMENT:

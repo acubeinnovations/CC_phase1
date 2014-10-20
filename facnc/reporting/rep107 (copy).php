@@ -28,19 +28,6 @@ include_once($path_to_root . "/sales/includes/sales_db.inc");
 
 print_invoices();
 
-function get_trip($voucher = 0)
-{
-	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount";
-	$sql .= " FROM trip_vouchers voucher";
-	$sql .= " LEFT JOIN trips trip ON trip.id = voucher.trip_id";
-	$sql .= " LEFT JOIN vehicles vehicle ON trip.vehicle_id = vehicle.id";
-	$sql .= " WHERE voucher.id = ".db_escape($voucher);
-
-	$result = db_query($sql, "Error getting order details");
-	return db_fetch_assoc($result);
-	
-}
-
 //----------------------------------------------------------------------------------------------------
 
 function print_invoices()
@@ -68,15 +55,12 @@ function print_invoices()
 	$from = min($fno[0], $tno[0]);
 	$to = max($fno[0], $tno[0]);
 
-	//$cols = array(4, 60, 225, 300, 325, 385, 450, 515);
-	$cols = array(4, 30, 110, 140, 230, 300, 500, 535);
+	$cols = array(4, 60, 225, 300, 325, 385, 450, 515);
 
 	// $headers in doctext.inc
-	$aligns = array('center','center','center', 'center', 'center', 'left', 'center');
+	$aligns = array('left',	'left',	'right', 'left', 'right', 'right', 'right');
 
 	$params = array('comments' => $comments);
-
-	
 
 	$cur = get_company_Pref('curr_default');
 
@@ -90,9 +74,7 @@ function print_invoices()
 				continue;
 			$sign = 1;
 			$myrow = get_customer_trans($i, ST_SALESINVOICE);
-			
-			
-			
+
 			if($customer && $myrow['debtor_no'] != $customer) {
 				continue;
 			}
@@ -107,7 +89,7 @@ function print_invoices()
 				$rep->title = _('INVOICE');
 				$rep->filename = "Invoice" . $myrow['reference'] . ".pdf";
 			}	
-			$rep->SetHeaderType('Header4');
+			$rep->SetHeaderType('Header2');
 			$rep->currency = $cur;
 			$rep->Font();
 			$rep->Info($params, $cols, null, $aligns);
@@ -118,43 +100,51 @@ function print_invoices()
 			$rep->NewPage();
    			$result = get_customer_trans_details(ST_SALESINVOICE, $i);
 			$SubTotal = 0;
-			$slno = 1;
-
-			
-
-
 			while ($myrow2=db_fetch($result))
 			{
-				$memo = get_comments_string(ST_SALESINVOICE, $myrow2['id']);
-			
-				$trip = get_trip($myrow2['trip_voucher']);
-				
-				$rep->TextCol(0, 1,  $slno);
-				$rep->TextCol(1, 2,  @$trip['voucher_no']);
-				$rep->TextCol(2, 3,  @$trip['trip_date']);
-				$rep->TextCol(3, 4,  @$trip['vehicle_no']);
-				$rep->TextCol(4, 5,  "OFFICER");
-				$rep->TextColLines(5, 6,  $memo);
+				if ($myrow2["quantity"] == 0)
+					continue;
 
 				$Net = round2($sign * ((1 - $myrow2["discount_percent"]) * $myrow2["unit_price"] * $myrow2["quantity"]),
 				   user_price_dec());
 				$SubTotal += $Net;
-		    		
-		    		$DisplayNet = number_format2($Net,$dec);
-
-				
-				$rep->TextCol(6, 7,  $DisplayNet);
-
-				$rep->NewLine(2);
-
-				$slno++;
+	    		$DisplayPrice = number_format2($myrow2["unit_price"],$dec);
+	    		$DisplayQty = number_format2($sign*$myrow2["quantity"],get_qty_dec($myrow2['stock_id']));
+	    		$DisplayNet = number_format2($Net,$dec);
+	    		if ($myrow2["discount_percent"]==0)
+		  			$DisplayDiscount ="";
+	    		else
+		  			$DisplayDiscount = number_format2($myrow2["discount_percent"]*100,user_percent_dec()) . "%";
+				$rep->TextCol(0, 1,	$myrow2['stock_id'], -2);
+				$oldrow = $rep->row;
+				$rep->TextColLines(1, 2, $myrow2['StockDescription'], -2);
+				$newrow = $rep->row;
+				$rep->row = $oldrow;
+				if ($Net != 0.0 || !is_service($myrow2['mb_flag']) || !isset($no_zero_lines_amount) || $no_zero_lines_amount == 0)
+				{
+					$rep->TextCol(2, 3,	$DisplayQty, -2);
+					$rep->TextCol(3, 4,	$myrow2['units'], -2);
+					$rep->TextCol(4, 5,	$DisplayPrice, -2);
+					$rep->TextCol(5, 6,	$DisplayDiscount, -2);
+					$rep->TextCol(6, 7,	$DisplayNet, -2);
+				}	
+				$rep->row = $newrow;
+				//$rep->NewLine(1);
+				if ($rep->row < $rep->bottomMargin + (15 * $rep->lineHeight))
+					$rep->NewPage();
 			}
 
+			$memo = get_comments_string(ST_SALESINVOICE, $i);
+			if ($memo != "")
+			{
+				$rep->NewLine();
+				$rep->TextColLines(1, 5, $memo, -2);
+			}
 
    			$DisplaySubTot = number_format2($SubTotal,$dec);
    			$DisplayFreight = number_format2($sign*$myrow["ov_freight"],$dec);
 
-    			$rep->row = $rep->bottomMargin + (15 * $rep->lineHeight);
+    		$rep->row = $rep->bottomMargin + (15 * $rep->lineHeight);
 			$doctype = ST_SALESINVOICE;
 
 			$rep->TextCol(3, 6, _("Sub-total"), -2);
@@ -165,44 +155,43 @@ function print_invoices()
 			$rep->NewLine();
 			$tax_items = get_trans_tax_details(ST_SALESINVOICE, $i);
 			$first = true;
+    		while ($tax_item = db_fetch($tax_items))
+    		{
+    			if ($tax_item['amount'] == 0)
+    				continue;
+    			$DisplayTax = number_format2($sign*$tax_item['amount'], $dec);
+    			
+    			if (isset($suppress_tax_rates) && $suppress_tax_rates == 1)
+    				$tax_type_name = $tax_item['tax_type_name'];
+    			else
+    				$tax_type_name = $tax_item['tax_type_name']." (".$tax_item['rate']."%) ";
 
-	    		while ($tax_item = db_fetch($tax_items))
-	    		{
-	    			if ($tax_item['amount'] == 0)
-	    				continue;
-	    			$DisplayTax = number_format2($sign*$tax_item['amount'], $dec);
-	    			
-	    			if (isset($suppress_tax_rates) && $suppress_tax_rates == 1)
-	    				$tax_type_name = $tax_item['tax_type_name'];
-	    			else
-	    				$tax_type_name = $tax_item['tax_type_name']." (".$tax_item['rate']."%) ";
-
-	    			if ($tax_item['included_in_price'])
-	    			{
-	    				if (isset($alternative_tax_include_on_docs) && $alternative_tax_include_on_docs == 1)
-	    				{
-	    					if ($first)
-	    					{
-								$rep->TextCol(3, 6, _("Total Tax Excluded"), -2);
-								$rep->TextCol(6, 7,	number_format2($sign*$tax_item['net_amount'], $dec), -2);
-								$rep->NewLine();
-	    					}
-							$rep->TextCol(3, 6, $tax_type_name, -2);
-							$rep->TextCol(6, 7,	$DisplayTax, -2);
-							$first = false;
-	    				}
-	    				else
-							$rep->TextCol(3, 7, _("Included") . " " . $tax_type_name . _("Amount") . ": " . $DisplayTax, -2);
-					}
-	    			else
-	    			{
+    			if ($tax_item['included_in_price'])
+    			{
+    				if (isset($alternative_tax_include_on_docs) && $alternative_tax_include_on_docs == 1)
+    				{
+    					if ($first)
+    					{
+							$rep->TextCol(3, 6, _("Total Tax Excluded"), -2);
+							$rep->TextCol(6, 7,	number_format2($sign*$tax_item['net_amount'], $dec), -2);
+							$rep->NewLine();
+    					}
 						$rep->TextCol(3, 6, $tax_type_name, -2);
 						$rep->TextCol(6, 7,	$DisplayTax, -2);
-					}
-					$rep->NewLine();
-	    		}
+						$first = false;
+    				}
+    				else
+						$rep->TextCol(3, 7, _("Included") . " " . $tax_type_name . _("Amount") . ": " . $DisplayTax, -2);
+				}
+    			else
+    			{
+					$rep->TextCol(3, 6, $tax_type_name, -2);
+					$rep->TextCol(6, 7,	$DisplayTax, -2);
+				}
+				$rep->NewLine();
+    		}
 
-    			$rep->NewLine();
+    		$rep->NewLine();
 			$DisplayTotal = number_format2($sign*($myrow["ov_freight"] + $myrow["ov_gst"] +
 				$myrow["ov_amount"]+$myrow["ov_freight_tax"]),$dec);
 			$rep->Font('bold');
