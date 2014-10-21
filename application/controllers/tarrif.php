@@ -146,21 +146,21 @@ class Tarrif extends CI_Controller {
 	$data['tariff_master_id']=$this->input->post('select_tariff');
 	$data['vehicle_model_id']=$this->input->post('vehicle_model');
 	$data['from_date']=$this->input->post('fromdatepicker');
-	$data['rate']=$this->input->post('rate');
-	$data['additional_kilometer_rate']=$this->input->post('additional_kilometer_rate');
-	$data['additional_hour_rate']=$this->input->post('additional_hour_rate');
-	$data['driver_bata']=$this->input->post('driver_bata');
-	$data['night_halt']=$this->input->post('night_halt');
+	$data['rate']=str_replace(",","",$this->input->post('rate'));
+	$data['additional_kilometer_rate']=str_replace(",","",$this->input->post('additional_kilometer_rate'));
+	$data['additional_hour_rate']=str_replace(",","",$this->input->post('additional_hour_rate'));
+	$data['driver_bata']=str_replace(",","",$this->input->post('driver_bata'));
+	$data['night_halt']= str_replace(",","",$this->input->post('night_halt'));
 	$data['organisation_id']=$this->session->userdata('organisation_id'); //print_r($data);exit;
 	 $data['user_id']=$this->session->userdata('id');
 	 $this->form_validation->set_rules('select_tariff','Tariff Master','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('vehicle_model','Vehicle model','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('fromdatepicker','Date ','trim|xss_clean');
-	 $this->form_validation->set_rules('rate','Rate','trim|required|xss_clean|numeric');
-	 $this->form_validation->set_rules('additional_kilometer_rate','Kilometer Rate','trim|required|xss_clean|numeric');
-	 $this->form_validation->set_rules('additional_hour_rate','Hour Rate','trim|required|xss_clean|numeric');
-	 $this->form_validation->set_rules('driver_bata','Driver Bata','trim|required|xss_clean|numeric');
-	 $this->form_validation->set_rules('night_halt','Night Halt','trim|required|xss_clean|numeric');
+	 $this->form_validation->set_rules('rate','Rate','trim|required|xss_clean');
+	 $this->form_validation->set_rules('additional_kilometer_rate','Kilometer Rate','trim|required|xss_clean');
+	 $this->form_validation->set_rules('additional_hour_rate','Hour Rate','trim|required|xss_clean');
+	 $this->form_validation->set_rules('driver_bata','Driver Bata','trim|required|xss_clean');
+	 $this->form_validation->set_rules('night_halt','Night Halt','trim|required|xss_clean');
 	 $err=true;
 	if(!$this->date_check($data['from_date'])){
 	$err=False;
@@ -200,11 +200,11 @@ class Tarrif extends CI_Controller {
 	 $data['vehicle_model_id']=$this->input->post('vehicle_model');
 	 $data['from_date'] = $this->input->post('manage_datepicker');
 	 $h_dtpicker=$this->input->post('h_dtpicker');
-	 $data['rate'] = $this->input->post('manage_rate');
-	 $data['additional_kilometer_rate'] = $this->input->post('manage_additional_kilometer_rate');
-	 $data['additional_hour_rate'] = $this->input->post('manage_additional_hour_rate');
-	 $data['driver_bata'] = $this->input->post('manage_driver_bata');
-	 $data['night_halt'] = $this->input->post('manage_night_halt');
+	 $data['rate'] =  str_replace(",","",$this->input->post('manage_rate'));
+	 $data['additional_kilometer_rate'] = str_replace(",","",$this->input->post('manage_additional_kilometer_rate'));
+	 $data['additional_hour_rate'] = str_replace(",","",$this->input->post('manage_additional_hour_rate'));
+	 $data['driver_bata'] = str_replace(",","",$this->input->post('manage_driver_bata'));
+	 $data['night_halt'] = str_replace(",","",$this->input->post('manage_night_halt'));
 	
 	
 		$err=False;
@@ -246,26 +246,26 @@ class Tarrif extends CI_Controller {
 			$this->session->set_userdata(array('Err_m_halt'=>'Night Halt Required..!'));
 			$err=true;
 			}
-		if(preg_match('#[^0-9\.]#', $data['rate'])){
+		/*if(preg_match('#[^0-9\.]#', $data['rate'])){
 			$this->session->set_userdata(array('Err_rate'=>'Invalid Characters on Rate field!'));
 			$err=true;
-			}
-		if(preg_match('#[^0-9\.]#', $data['additional_kilometer_rate'])){
+			}*/
+		/*if(preg_match('#[^0-9\.]#', $data['additional_kilometer_rate'])){
 			$this->session->set_userdata(array('Err_add_kilo'=>'Invalid Characters on Kilometers field!'));
 			$err=true;
-			}
-		if(preg_match('#[^0-9\.]#', $data['additional_hour_rate'])){
+			}*/
+		/*if(preg_match('#[^0-9\.]#', $data['additional_hour_rate'])){
 			$this->session->set_userdata(array('Err_add_hrs'=>'Invalid Characters on Hours field!'));
 			$err=true;
-			}
-		if(preg_match('#[^0-9\.]#', $data['driver_bata'])){
+			}*/
+		/*if(preg_match('#[^0-9\.]#', $data['driver_bata'])){
 			$this->session->set_userdata(array('Err_bata'=>'Invalid Characters on Driver Bata field!'));
 			$err=true;
 			}	
 		if(preg_match('#[^0-9\.]#', $data['night_halt'])){
 			$this->session->set_userdata(array('Err_halt'=>'Invalid Characters on Night Halt field!'));
 			$err=true;
-			}
+			}*/
 			if($err==true){
 			redirect(base_url().'organization/front-desk/tarrif');
 			}

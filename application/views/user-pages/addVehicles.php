@@ -73,8 +73,8 @@
 			$chases_num="";
 			$permit="";
 			$permit_date="";
-			$permit_amount='0000';
-			$tax_amount='0000';
+			$permit_amount="";
+			$tax_amount="";
 			$tax_date="";
 		if($this->mysession->get('post_all')!=null && $this->mysession->get('post_driver')!=null && $this->mysession->get('post_device')!=null){
 			$data=$this->mysession->get('post_all');
@@ -314,7 +314,13 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
         </div>	<div class="hide-me"><?php echo form_input(array('name'=>'h_permit','value'=>$permit_date));?></div>
 	<div class="form-group">
 	<?php echo form_label('Permit Renewal Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>number_format($permit_amount,2))); ?>
+	<?php 
+	if($permit_amount=='') {
+	echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>$permit_amount));
+	}
+	else {
+	echo form_input(array('name'=>'permit_amount','class'=>'form-control','id'=>'license_number','value'=>number_format($permit_amount,2)));
+	}	?>
 	   <?php echo $this->form_functions->form_error_session('permit_amount', '<p class="text-red">', '</p>'); ?>
         <p class="text-red"><?php
 	if($this->mysession->get('Err_permit_amt') != ''){
@@ -411,7 +417,13 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 	
 	<div class="form-group">
 	<?php echo form_label('Tax Renewal Amount ','usernamelabel'); ?>
-           <?php  echo form_input(array('name'=>'tax_amount','class'=>'form-control','id'=>'tax_amount','value'=>number_format($tax_amount,2)));?>
+           <?php  
+	   if($tax_amount==""){
+	   echo form_input(array('name'=>'tax_amount','class'=>'form-control','id'=>'tax_amount','value'=>$tax_amount));
+	   }
+	   else{
+	   echo form_input(array('name'=>'tax_amount','class'=>'form-control','id'=>'tax_amount','value'=>number_format($tax_amount,2)));
+	   }?>
 	   <?php echo $this->form_functions->form_error_session('tax_amount', '<p class="text-red">', '</p>'); ?>
         <p class="text-red"><?php
 	if($this->mysession->get('Err_tax_amt') != ''){
@@ -451,8 +463,8 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 			$ins_number ="";
 			$ins_date="";
 			$ins_renewal_date="";
-			$ins_prem_amt='0000';
-			$ins_amt='0000';
+			$ins_prem_amt="";
+			$ins_amt="";
 			$ins_agency="";
 			$ins_address="";
 			$ins_phn="";
@@ -525,7 +537,12 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
         </div>  <div class="hide-me"><?php echo form_input(array('name'=>'h_renew','value'=>$ins_renewal_date));?></div>
 		<div class="form-group">
 		<?php echo form_label('Insurance Premium Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'insurance_pre-amount','class'=>'form-control','id'=>'insurance_pre-amount','value'=>number_format($ins_prem_amt,2))); ?>
+           <?php if($ins_prem_amt==""){
+	   echo form_input(array('name'=>'insurance_pre-amount','class'=>'form-control','id'=>'insurance_pre-amount','value'=>$ins_prem_amt)); 
+	   }
+	   else{
+	   echo form_input(array('name'=>'insurance_pre-amount','class'=>'form-control','id'=>'insurance_pre-amount','value'=>number_format($ins_prem_amt,2))); 
+	   }?>
 	   <?php echo $this->form_functions->form_error_session('insurance_pre-amount', '<p class="text-red">', '</p>'); ?>
          <p class="text-red"><?php
 	if($this->mysession->get('Err_insurance_pre_amt') != ''){
@@ -536,7 +553,13 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 		</div>
 		<div class="form-group">
 		<?php echo form_label('Insurance  Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'insurance_amount','class'=>'form-control','id'=>'insurance_amount','value'=>number_format($ins_amt,2))); ?>
+           <?php 
+	   if($ins_amt==""){
+	   echo form_input(array('name'=>'insurance_amount','class'=>'form-control','id'=>'insurance_amount','value'=>$ins_amt)); 
+	   }
+	   else{
+	    echo form_input(array('name'=>'insurance_amount','class'=>'form-control','id'=>'insurance_amount','value'=>number_format($ins_amt,2))); 
+	   }?>
 	   <?php echo $this->form_functions->form_error_session('insurance_amount', '<p class="text-red">', '</p>'); ?>
        <p class="text-red"><?php
 	if($this->mysession->get('Err_insurance_amt') != ''){
@@ -591,9 +614,9 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 		
 				
 			$loan_id=gINVALID;
-			$l_amt ='0000';
+			$l_amt ="";
 			$l_emi_no="";
-			$l_emi_amt='0000';
+			$l_emi_amt="";
 			$l_no_paid_emi="";
 			$l_payment_date="";
 			$l_agency="";
@@ -605,7 +628,7 @@ if($this->mysession->get('loan_post_all')!=null ){
 		$data=$this->mysession->get('loan_post_all');
 			$loan_id=$this->mysession->get('loan_id');
 			$l_addrs=$data['loan_agency_address'];
-            $l_amt =$data['total_amount'];
+			$l_amt =$data['total_amount'];
 			$l_emi_no=$data['number_of_emi'];
 			$l_emi_amt=$data['emi_amount'];
 			$l_no_paid_emi=$data['number_of_paid_emi'];
@@ -620,7 +643,7 @@ if($this->mysession->get('loan_post_all')!=null ){
 	
 			$loan_id=$get_loan['id'];
 			$l_addrs=$get_loan['loan_agency_address'];
-            $l_amt =$get_loan['total_amount'];
+			$l_amt =$get_loan['total_amount'];
 			$l_emi_no=$get_loan['number_of_emi'];
 			$l_emi_amt=$get_loan['emi_amount'];
 			$l_no_paid_emi=$get_loan['number_of_paid_emi'];
@@ -665,7 +688,14 @@ if($this->mysession->get('loan_post_all')!=null ){
 			<legend class="body-head">Loan Details</legend>
 				<div class="form-group">
 		<?php echo form_label('Total Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'total_amt','class'=>'form-control','id'=>'total_amt','value'=>number_format($l_amt,2))); ?>
+           <?php 
+	   if($l_amt==""){
+	   echo form_input(array('name'=>'total_amt','class'=>'form-control','id'=>'total_amt','value'=>$l_amt)); 
+	   }
+	   else
+	   {
+	    echo form_input(array('name'=>'total_amt','class'=>'form-control','id'=>'total_amt','value'=>number_format($l_amt,2))); 
+	   }?>
 	   <?php echo $this->form_functions->form_error_session('total_amt', '<p class="text-red">', '</p>'); ?>
         
 		    <p class="text-red"><?php
@@ -683,7 +713,13 @@ if($this->mysession->get('loan_post_all')!=null ){
         </div>
 		<div class="form-group">
 		<?php echo form_label('EMI Amount','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'emi_amt','class'=>'form-control','id'=>'emi_amt','value'=>number_format($l_emi_amt,2))); ?>
+           <?php 
+	   if($l_emi_amt==""){
+	   echo form_input(array('name'=>'emi_amt','class'=>'form-control','id'=>'emi_amt','value'=>$l_emi_amt)); 
+	   }
+	   else{
+	   echo form_input(array('name'=>'emi_amt','class'=>'form-control','id'=>'emi_amt','value'=>number_format($l_emi_amt,2))); 
+	   }?>
 	   <?php echo $this->form_functions->form_error_session('emi_amt', '<p class="text-red">', '</p>'); ?>
            <p class="text-red"><?php
 	if($this->mysession->get('Err_loan_emi_amt') != ''){
