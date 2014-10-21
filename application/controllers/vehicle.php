@@ -190,7 +190,7 @@ class Vehicle extends CI_Controller {
 		public function vehicle_validation(){
 		if($this->session_check()==true) {
 		if(isset($_REQUEST['vehicle-submit'])){
-		
+	
 			$v_id=$this->input->post('hidden_id');//exit;
 			$data['vehicle_ownership_types_id']=$this->input->post('ownership');
 			$data['vehicle_type_id']=$this->input->post('vehicle_type');
@@ -214,8 +214,8 @@ class Vehicle extends CI_Controller {
 			$data['vehicle_permit_type_id']=$this->input->post('permit');
 			$data['vehicle_permit_renewal_date']=$this->input->post('permit_date');
 			
-			$data['vehicle_permit_renewal_amount']=number_format($this->input->post('permit_amount'),2);
-			$data['tax_renewal_amount']=number_format($this->input->post('tax_amount'),2);
+			$data['vehicle_permit_renewal_amount']=str_replace(",","",$this->input->post('permit_amount'));
+			$data['tax_renewal_amount']=str_replace(",","",$this->input->post('tax_amount'));
 			$data['tax_renewal_date']=$this->input->post('tax_date');
 			
 			$data['organisation_id']=$this->session->userdata('organisation_id');
@@ -385,8 +385,8 @@ $err=True;
 			$h_ins=$this->input->post('h_ins');
 			$data['insurance_renewal_date']=$this->input->post('insurance_renewal_date');
 			$h_renew=$this->input->post('h_renew');
-			$data['insurance_premium_amount']=number_format($this->input->post('insurance_pre-amount'),2);
-			$data['insurance_amount']=number_format($this->input->post('insurance_amount'),2);
+			$data['insurance_premium_amount']=str_replace(",","",$this->input->post('insurance_pre-amount'));
+			$data['insurance_amount']=str_replace(",","",$this->input->post('insurance_amount'));
 			$data['Insurance_agency']=$this->input->post('insurance_agency');
 			$data['Insurance_agency_address']=$this->input->post('insurance_agency_address');
 			$data['Insurance_agency_phone']=$this->input->post('insurance_agency_phn');
@@ -418,14 +418,14 @@ $err=True;
 					 //for insurance
 $err=True;
 	
-	if(preg_match('#[^0-9\.]#', $data['insurance_amount'])){
+	/*if(preg_match('#[^0-9\.]#', $data['insurance_amount'])){
 			$this->mysession->set('Err_insurance_amt','Invalid Characters on  Amount field!');
 			$err=False;
 			}
 	if(preg_match('#[^0-9\.]#', $data['insurance_premium_amount'])){
 			$this->mysession->set('Err_insurance_pre_amt','Invalid Characters on Pre Amount field!');
 			$err=False;
-			}
+			}*/
 			
 	if($this->mysession->get('vehicle_id')==null)
 	{
@@ -496,9 +496,9 @@ $err=True;
 			if(isset($_REQUEST['loan-submit'])){
 			$loan_id=$this->input->post('hidden_loan_id');
 			$vehicle_id=$this->mysession->get('vehicle_id');
-			$data['total_amount']=number_format($this->input->post('total_amt'),2);
+			$data['total_amount']=str_replace(",","",$this->input->post('total_amt'));
 			$data['number_of_emi']=$this->input->post('emi_number');
-			$data['emi_amount']=number_format($this->input->post('emi_amt'),2);
+			$data['emi_amount']=str_replace(",","",$this->input->post('emi_amt')); 
 			$data['number_of_paid_emi']=$this->input->post('no_paid_emi');
 			$data['emi_payment_date']=$this->input->post('emi_date');
 			$h_emi=$this->input->post('h_emi');
@@ -537,14 +537,14 @@ $err=True;
 					 //for insurance
 $err=True;
 	
-	if(preg_match('#[^0-9\.]#', $data['total_amount'])){
+	/*if(preg_match('#[^0-9\.]#', $data['total_amount'])){
 			$this->mysession->set('Err_loan_amt','Invalid Characters on Total Amount field!');
 			$err=False;
 			}
 	if(preg_match('#[^0-9\.]#', $data['emi_amount'])){
 			$this->mysession->set('Err_loan_emi_amt','Invalid Characters on EMI Amount field!');
 			$err=False;
-			}
+			}*/
 	if($this->mysession->get('vehicle_id')==null)
 	{
 	$this->mysession->set('Err_invalid_add','Invalid Attempt!  Please Add Vehicle Details !');

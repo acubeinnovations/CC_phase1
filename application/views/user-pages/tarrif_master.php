@@ -64,8 +64,6 @@ echo form_close();?></td>
 	$this->session->set_userdata(array('Required'=>''));
  }
 	?></p>
-<div class="msg"> <?php 
-			if (isset($result)){ echo $result;} else {?></div>
 
 </fieldset>
 <fieldset class="body-border border-style" >
@@ -160,6 +158,9 @@ echo form_close();?></td>
 </table>
 </div>
 </fieldset>
+<div class="msg"> <?php 
+			if (isset($result)){ echo $result;} else {?></div>
+
 <fieldset class="body-border border-style">
 <legend class="body-head">Manage</legend>
 <?php echo br();?>

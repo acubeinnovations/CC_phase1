@@ -68,8 +68,7 @@ echo form_close();?></td>
 	$this->session->set_userdata(array('Err_to_date'=>''));
  }
 	?></p>
-<div class="msg"> <?php 
-			if (isset($result)){ echo $result;} else {?></div>
+
 	
 </fieldset>
 <fieldset class="body-border " >
@@ -97,11 +96,43 @@ echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_mod
 ?></div></td>
 		
 		<td><div class="form-group"><?php echo form_input(array('name'=>'fromdatepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>' From Date','value'=>$from_date)); ?></div></td>
-		<td><div class="form-group"><?php echo form_input(array('name'=>'rate','class'=>'form-control','id'=>'rate','placeholder'=>'Rate','value'=>$rate)); ?></div></td>
-		<td><div class="form-group"><?php echo form_input(array('name'=>'additional_kilometer_rate','class'=>'form-control','id'=>'additional_kilometer_rate','placeholder'=>'Additional Kilometer Rate','value'=>$additional_kilometer_rate)); ?></div></td>
-		<td><div class="form-group"><?php echo form_input(array('name'=>'additional_hour_rate','class'=>'form-control','id'=>'additional_hour_rate','placeholder'=>'Additional Hour Rate','value'=>$additional_hour_rate)); ?></div></td>
-		<td><div class="form-group"><?php echo form_input(array('name'=>'driver_bata','class'=>'form-control','id'=>'driver_bata','placeholder'=>'Driver Bata','value'=>$driver_bata)); ?></div></td>
-		<td><div class="form-group"><?php echo form_input(array('name'=>'night_halt','class'=>'form-control','id'=>'night_halt','placeholder'=>'Night Halt','value'=>$night_halt)); ?></div></td>
+		<td><div class="form-group"><?php 
+		if($rate==""){
+		echo form_input(array('name'=>'rate','class'=>'form-control','id'=>'rate','placeholder'=>'Rate','value'=>$rate)); 
+		}
+		else
+		{
+		echo form_input(array('name'=>'rate','class'=>'form-control','id'=>'rate','placeholder'=>'Rate','value'=>number_format($rate,2))); 
+		}?></div></td>
+		<td><div class="form-group"><?php 
+		if($additional_kilometer_rate==""){
+		echo form_input(array('name'=>'additional_kilometer_rate','class'=>'form-control','id'=>'additional_kilometer_rate','placeholder'=>'Additional Kilometer Rate','value'=>$additional_kilometer_rate)); 
+		}
+		else{
+		echo form_input(array('name'=>'additional_kilometer_rate','class'=>'form-control','id'=>'additional_kilometer_rate','placeholder'=>'Additional Kilometer Rate','value'=>number_format($additional_kilometer_rate,2))); 
+		}
+		?></div></td>
+		<td><div class="form-group"><?php 
+		if($additional_hour_rate==""){
+		echo form_input(array('name'=>'additional_hour_rate','class'=>'form-control','id'=>'additional_hour_rate','placeholder'=>'Additional Hour Rate','value'=>$additional_hour_rate)); 
+		}
+		else{
+		echo form_input(array('name'=>'additional_hour_rate','class'=>'form-control','id'=>'additional_hour_rate','placeholder'=>'Additional Hour Rate','value'=>number_format($additional_hour_rate,2))); 
+		}?></div></td>
+		<td><div class="form-group"><?php
+		if($driver_bata==""){
+			echo form_input(array('name'=>'driver_bata','class'=>'form-control','id'=>'driver_bata','placeholder'=>'Driver Bata','value'=>$driver_bata)); 
+			}
+			else{
+			echo form_input(array('name'=>'driver_bata','class'=>'form-control','id'=>'driver_bata','placeholder'=>'Driver Bata','value'=>number_format($driver_bata,2))); 
+			}?></div></td>
+		<td><div class="form-group"><?php 
+		if($night_halt==""){
+		echo form_input(array('name'=>'night_halt','class'=>'form-control','id'=>'night_halt','placeholder'=>'Night Halt','value'=>$night_halt)); 
+		}
+		else{
+		echo form_input(array('name'=>'night_halt','class'=>'form-control','id'=>'night_halt','placeholder'=>'Night Halt','value'=>number_format($night_halt,2))); 
+		}?></div></td>
 		<td><div  class="tarrif-add" ><?php echo nbs(5);?><i class="fa fa-plus-circle cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("tarrif-add","Add","id=tarrif-add-id","class=btn");?></div
 	>
 	</td>
@@ -137,6 +168,8 @@ echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_mod
 <?php echo form_close();?>
 </div>
 </fieldset>
+<div class="msg"> <?php 
+			if (isset($result)){ echo $result;} else {?></div>
 <fieldset class="body-border ">
 <legend class="body-head">Manage Tariff</legend>
 <?php echo br();?>
@@ -176,10 +209,10 @@ foreach($values as $det):
 </td>
 
 		<td><div class="form-group"><?php echo form_input(array('name'=>'manage_rate','class'=>'form-control','id'=>'rate','placeholder'=>'Rate','value'=> number_format($det['rate'],2))); ?></div></td>
-<td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_kilometer_rate','class'=>'form-control','id'=>'additional_kilometer_rate','placeholder'=>'Additional Kilometer Rate','value'=> number_format($det['additional_kilometer_rate'],2))); ?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_kilometer_rate','class'=>'form-control','id'=>'additional_kilometer_rate','placeholder'=>'Additional Kilometer Rate','value'=>number_format($det['additional_kilometer_rate'],2))); ?></div></td>
 <td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_hour_rate','class'=>'form-control','id'=>'additional_hour_rate','placeholder'=>'Additional Hour Rate','value'=> number_format($det['additional_hour_rate'],2))); ?></div></td>
-<td><div class="form-group"><?php echo form_input(array('name'=>'manage_driver_bata','class'=>'form-control','id'=>'driver_bata','placeholder'=>'Driver Bata','value'=>  number_format($det['driver_bata'],2))); ?></div></td>
-<td><div class="form-group"><?php echo form_input(array('name'=>'manage_night_halt','class'=>'form-control','id'=>'night_halt','placeholder'=>'Night Halt','value'=> number_format($det['night_halt'],2))); ?>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_driver_bata','class'=>'form-control','id'=>'driver_bata','placeholder'=>'Driver Bata','value'=> number_format($det['driver_bata'],2))); ?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_night_halt','class'=>'form-control','id'=>'night_halt','placeholder'=>'Night Halt','value'=>number_format($det['night_halt'],2))); ?>
            <div class="hide-me"><?php echo form_input(array('name'=>'manage_id','class'=>'form-control','id'=>'manage_id','value'=> $det['id'],'trigger'=>'true' ));?></div></td>
 <td><div  class="tarrif-edit" ><?php echo nbs(5);?><i class="fa fa-edit cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me xx"><?php echo form_submit("edit","Edit","id=tarrif-edit-id","class=btn");?></div></td>
 <td><div  class="tarrif-delete" ><?php echo nbs(5);?><i class="fa fa-trash-o cursor-pointer"></i><?php echo nbs(5);?></div><div class="hide-me"><?php echo form_submit("delete","Delete","id=tarrif-delete-id","class=btn");?></div></td>
