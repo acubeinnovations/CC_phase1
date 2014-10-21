@@ -442,6 +442,8 @@ if (isset($_POST['update'])) {
 
 if (isset($_POST['ProcessOrder']) && can_process()) {
 	
+	
+	
 	copy_to_cart();
 	$modified = ($_SESSION['Items']->trans_no != 0);
 	$so_type = $_SESSION['Items']->so_type;
@@ -580,7 +582,7 @@ function handle_new_item()
 			return;
 	}
 	add_to_order($_SESSION['Items'], get_post('stock_id'), input_num('qty'),
-		input_num('price'), input_num('Disc') / 100, get_post('stock_id_text'));
+		input_num('price'), input_num('Disc') / 100, get_post('stock_id_text'),get_post('trip_voucher'));
 
 	unset($_POST['_stock_id_edit'], $_POST['stock_id']);
 	page_modified();
@@ -747,13 +749,13 @@ if(isset($_GET['NewDelivery']) && $_GET['NewDelivery'] > 0){
 	$_SESSION['Items']->customer_currency = @$customer['curr_code'] ;
 	$_SESSION['Items']->sales_type = @$customer['sales_type'] ;
 	$_SESSION['Items']->Branch = get_cnc_customer_branch($_SESSION['Items']->customer_id);
-	echo "<pre>";
-	//print_r($cnc_voucher);
-	echo "</pre>";
+	
 
-	//trip item code -> 101
+	//------------trip item code -> 101---------------------------
 	add_to_order($_SESSION['Items'],101, 1,
-		@$cnc_voucher['amount'], 0 / 100);
+		@$cnc_voucher['amount'], 0 / 100,'',0,$cnc_voucher['voucher_no']);
+
+	
 		
 }
 //-----------------------------------

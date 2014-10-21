@@ -121,6 +121,15 @@
 				_("Delivery Note No.") => implode(',', $deliveries),
 				_("Due Date") => sql2date($this->formData['due_date']),
 			);
+
+			$this->headers = array(_('Sl.No.'),	_('Indent No.'), _('Date'),	_('Vehicle No.'),
+		_('User Name'), _('Particulars'), _('Amount'));
+
+			$registered_office = "B 2102, Jawaharlal Nehru International Stadium, \nKaloor, Cochin-682017. \nPhone: 0484- 3240293 Mobile : 9846089669";
+			
+			
+			
+
 			break;
 
 		case ST_SUPPAYMENT:
