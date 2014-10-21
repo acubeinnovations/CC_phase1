@@ -146,8 +146,8 @@ echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_mod
 <td><?php echo form_label('Vehicle Models','v_models'); ?></td>
 <td><?php echo form_label('From Date','from_Date'); ?></td>
 <td><?php echo form_label('Rate','rate'); ?></td>
-<td><?php echo form_label('Additional Kilo Rate','additional_Kilometer_Rate'); ?></td>
-<td><?php echo form_label('Additional Hr Rate','additional_Hour_Rate'); ?></td>
+<td><?php echo form_label('Ad Kilo Rate','additional_Kilometer_Rate'); ?></td>
+<td><?php echo form_label('Ad Hr Rate','additional_Hour_Rate'); ?></td>
 <td><?php echo form_label('Driver Bata','driver_Bata'); ?></td>
 <td><?php echo form_label('Night Halt','night_Halt'); ?></td>
 
@@ -171,7 +171,9 @@ foreach($values as $det):
 		echo $this->form_functions->populate_dropdown($name,$vehicle_models,$det['vehicle_model_id'],$class,$id='',$msg); ?></div>
 </td>
 
-<td><div class="form-group"><?php echo form_input(array('name'=>'manage_datepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up From Date','value'=> $det['from_date'])); ?></div></td>
+<td><div class="form-group"><?php echo form_input(array('name'=>'manage_datepicker','class'=>'fromdatepicker form-control' ,'placeholder'=>'Pick up From Date','value'=> $det['from_date'])); ?></div>
+	 <div class="hide-me"><?php echo form_input(array('name'=>'h_dtpicker','class'=>'form-control','id'=>'h_dtpicker','value'=> $det['from_date'] ));?></div>
+</td>
 
 		<td><div class="form-group"><?php echo form_input(array('name'=>'manage_rate','class'=>'form-control','id'=>'rate','placeholder'=>'Rate','value'=> number_format($det['rate'],2))); ?></div></td>
 <td><div class="form-group"><?php echo form_input(array('name'=>'manage_additional_kilometer_rate','class'=>'form-control','id'=>'additional_kilometer_rate','placeholder'=>'Additional Kilometer Rate','value'=> number_format($det['additional_kilometer_rate'],2))); ?></div></td>

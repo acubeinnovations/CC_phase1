@@ -199,6 +199,7 @@ class Tarrif extends CI_Controller {
 	 $data['tariff_master_id'] = $this->input->post('manage_tariff');
 	 $data['vehicle_model_id']=$this->input->post('vehicle_model');
 	 $data['from_date'] = $this->input->post('manage_datepicker');
+	 $h_dtpicker=$this->input->post('h_dtpicker');
 	 $data['rate'] = $this->input->post('manage_rate');
 	 $data['additional_kilometer_rate'] = $this->input->post('manage_additional_kilometer_rate');
 	 $data['additional_hour_rate'] = $this->input->post('manage_additional_hour_rate');
@@ -207,9 +208,11 @@ class Tarrif extends CI_Controller {
 	
 	
 		$err=False;
+		if($h_dtpicker!=$data['from_date'] ){
 		if(!$this->date_check($data['from_date'])){
 		$err=true;
 		$this->session->set_userdata('Err_m_dt','Invalid Date for Tariff !');
+		}
 		}
 		if($data['tariff_master_id']==-1){
 			$this->session->set_userdata(array('Err_m_tarrif'=>'Tariff Master  Required..!'));
