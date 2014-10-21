@@ -68,8 +68,7 @@ echo form_close();?></td>
 	$this->session->set_userdata(array('Err_to_date'=>''));
  }
 	?></p>
-<div class="msg"> <?php 
-			if (isset($result)){ echo $result;} else {?></div>
+
 	
 </fieldset>
 <fieldset class="body-border " >
@@ -169,6 +168,8 @@ echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_mod
 <?php echo form_close();?>
 </div>
 </fieldset>
+<div class="msg"> <?php 
+			if (isset($result)){ echo $result;} else {?></div>
 <fieldset class="body-border ">
 <legend class="body-head">Manage Tariff</legend>
 <?php echo br();?>
