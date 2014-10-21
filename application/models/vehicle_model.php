@@ -80,7 +80,7 @@ public function  UpdateVehicledetails($data,$v_id){
 	
 	$this->db->where('id',$v_id );
 	$this->db->set('updated', 'NOW()', FALSE);
-	$this->db->update('vehicles',$data);
+	$this->db->update('vehicles',$data); 
 	return true;
 
 
