@@ -595,3 +595,9 @@ padding-left:10%;
 margin-top: -30px;
 float: right;
 }
+.email-table{
+border:1px solid #333;
+}
+.td-width-50-percent{
+width:50%;
+}

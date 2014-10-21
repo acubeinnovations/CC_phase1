@@ -4,12 +4,23 @@ class Trip_booking_model extends CI_Model {
 	function getDriver($vehicle_id){
 
 	$this->db->from('vehicle_drivers');
-	$condition=array('vehicle_id'=>$vehicle_id,'organisation_id'=>$this->session->userdata('organisation_id'));
+	$condition=array('vehicle_id'=>$vehicle_id,'organisation_id'=>$this->session->userdata('organisation_id'),'to_date'=>'9999-12-30');
     $this->db->where($condition);
 	
     $results = $this->db->get()->result();
 	if(count($results)>0){
 	return $results[0]->driver_id;
+	}
+	}
+	function getTripBokkingDate($id){
+
+	$this->db->from('trips');
+	$condition=array('id'=>$id,'organisation_id'=>$this->session->userdata('organisation_id'));
+    $this->db->where($condition);
+	
+    $results = $this->db->get()->result();
+	if(count($results)>0){
+	return $results[0]->booking_date;
 	}
 	}
 
@@ -24,6 +35,18 @@ class Trip_booking_model extends CI_Model {
 	return $results;
 	}else{
 		return false;
+	}
+	}
+
+	function getDriverDetails($id){
+
+	$this->db->from('drivers');
+	$condition=array('id'=>$id,'organisation_id'=>$this->session->userdata('organisation_id'));
+    $this->db->where($condition);
+	
+    $results = $this->db->get()->result();
+	if(count($results)>0){
+	return $results;
 	}
 	}
 

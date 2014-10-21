@@ -5,6 +5,7 @@ class Trip_booking extends CI_Controller {
 		parent::__construct();
 		$this->load->model("trip_booking_model");
 		$this->load->model("tarrif_model");
+		$this->load->model("user_model");
 		$this->load->model("driver_model");
 		$this->load->model("customers_model");
 		$this->load->helper('my_helper');
@@ -328,9 +329,11 @@ class Trip_booking extends CI_Controller {
 			$dbdata['vehicle_id']					=$data['available_vehicle'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
 			$dbdata['user_id']						=$this->session->userdata('id');
+
 			$customer['mob']=$this->session->userdata('customer_mobile');
 			$customer['email']=$this->session->userdata('customer_email');	
 			$customer['name']=$this->session->userdata('customer_name');
+			
 
 			$this->session->set_userdata('customer_id','');
 			$this->session->set_userdata('customer_name','');
@@ -360,6 +363,7 @@ class Trip_booking extends CI_Controller {
 					if($dbdata['trip_status_id']==TRIP_STATUS_CONFIRMED){
 						$this->SendTripConfirmation($dbdata,$res,$customer);
 					}
+				 redirect(base_url().'organization/front-desk/trip-booking');
 				}else{
 					$this->session->set_userdata(array('dbError'=>'Trip Booked unsuccesfully..!!'));
 					$this->session->set_userdata(array('dbSuccess'=>''));
@@ -540,12 +544,27 @@ class Trip_booking extends CI_Controller {
 		}
 	} 
 	public function SendTripConfirmation($data,$id,$customer){
-		$message='Hi Customer,Trip ID:'.$id.' had been confirmed.Date:'.$data['pick_up_date'].' '.$data['pick_up_time'].' Location :'.$data['pick_up_city'].'-'.$data['drop_city'].'Enjoy your trip.';
-
+		$message='Hi Customer,Your Trip ID:'.$id.' has been confirmed.Date:'.$data['pick_up_date'].' '.$data['pick_up_time'].' Location :'.$data['pick_up_city'].'-'.$data['drop_city'].' Enjoy your trip.';
+	$tbl_arry=array('vehicle_types','vehicle_ac_types','vehicle_makes','vehicle_models');
+	
+	for ($i=0;$i<4;$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data1[$tbl_arry[$i]]=$result;
+	}
+	else{
+	$data1[$tbl_arry[$i]]='';
+	}
+	}
+	$driver=$this->trip_booking_model->getDriverDetails($data['driver_id']);
+	$vehicle=$this->trip_booking_model->getVehicle($data['vehicle_id']);
 	$this->sms->sendSms($customer['mob'],$message);
+	$booking_date=$this->trip_booking_model->getTripBokkingDate($id);
+	$email_content="<table style='border:1px solid #333;'><tbody><tr><td colspan='3' style='border-bottom: 1px solid;'>Passenger Information</td></tr><tr><td style='width:250px;'>Name</td><td>:</td><td style='width:250px;'>".$customer['name']."</td></tr><tr><td style='width:250px;'>Contact</td><td>:</td><td style='width:250px;'>".$customer['mob']."</td></tr><tr><td style='width:250px;'>No of Passengers</td><td>:</td><td style='width:250px;'>".$data['no_of_passengers']."</td></tr><tr><td colspan='3' style='border-bottom: 1px solid;border-top: 1px solid;'>Booking Information</td></tr><tr><td style='width:250px;'>Trip From</td><td>:</td><td style='width:250px;'>".$data['pick_up_city']."</td></tr><tr><td style='width:250px;'>Trip to</td><td>:</td><td style='width:250px;'>".$data['drop_city']."</td></tr><tr><td style='width:250px;'>Booking Date</td><td>:</td><td style='width:250px;'>".$booking_date."</td></tr><tr><td style='width:250px;'>Trip Date :</td><td>:</td><td style='width:250px;'>".$data['pick_up_date']."</td></tr><tr><td style='width:250px;'>Reporting Time</td><td>:</td><td style='width:250px;'>".$data['pick_up_time']."</td></tr><tr><td style='width:250px;''>Pick up</td><td>:</td><td style='width:250px;'>".$data['pick_up_landmark']."</td></tr><tr><td colspan='3' style='border-bottom: 1px solid;border-top: 1px solid;'>Vehicle Information</td></tr><tr><td style='width:250px;'>Type</td><td>:</td><td style='width:250px;'>".$data1['vehicle_makes'][$data['vehicle_make_id']]." ".$data1['vehicle_models'][$data['vehicle_model_id']]."-".$data1['vehicle_types'][$data['vehicle_type_id']]."</td></tr><tr><td style='width:250px;'>Reg No</td><td>:</td><td style='width:250px;'>".$vehicle[0]->registration_number."</td></tr><tr><td style='width:250px;'>Driver</td><td>:</td><td style='width:250px;'>".$driver[0]->name."</td></tr><tr><td colspan='3' style='border-bottom: 1px solid;border-top: 1px solid;'>Other Remarks</td></tr><tr><td>".br(3)."</td></tr><tr><td></td></tr></tbody></table>";
+	
 	if($customer['email']!=''){
 	$subject="Connect N Cabs";
-	$this->send_email->emailMe($customer['email'],$subject,$message);
+	$this->send_email->emailMe($customer['email'],$subject,$email_content);
 	}
 	}
 
