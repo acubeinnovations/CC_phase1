@@ -70,7 +70,11 @@ class FrontReport extends Cpdf
 	var $dest;	// destination: email or printer
 
 	
-	
+	var $totals_row;
+	var $totals_column;
+
+	var $words_row;
+	var $words_column;
 	
 	function FrontReport($title, $filename, $size = 'A4', $fontsize = 9, $orientation = 'P', $margins = NULL, $excelColWidthFactor = NULL)
 	{
@@ -461,6 +465,10 @@ class FrontReport extends Cpdf
 		include("includes/header4.inc");
 
 		$this->row = $temp;
+		$this->totals_row = $totals_row;
+		$this->totals_column = $totals_column;
+		$this->words_row = $words_row;
+		$this->words_column = $words_column;
 	}
 
 

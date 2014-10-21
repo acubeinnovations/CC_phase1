@@ -157,6 +157,8 @@
 		$this->LineTo($l_box_right, $head_right1 , $l_box_right, $head_right4);
 		//---------------------------------------------------------------------------------
 		
+
+		//draw table
 		$this->row = $sub_head;
 		$this->SetDrawColor(0, 0, 0);
 		$this->NewLine();
@@ -168,7 +170,13 @@
 		$this->Line($tb_line2);
 		$this->Line($tb_line3);
 		$this->LineTo($this->leftMargin, $tb_line1 ,$this->leftMargin, $tb_line3);
-		$this->LineTo($this->cols[$cols - 2] + 4, $tb_line1 ,$this->cols[$cols - 2] + 4, $tb_line3);
+		$col = $this->leftMargin;
+		for ($i = 1; $i < 7; $i++)
+		{
+			$this->LineTo($this->cols[$i], $tb_line1,$this->cols[$i], $tb_line3);
+		}
+		
+		//$this->LineTo($this->cols[$cols - 2] + 4, $tb_line1 ,$this->cols[$cols - 2] + 4, $tb_line3);
 		$this->LineTo($right, $tb_line1 ,$right, $tb_line3);
 
 		// Line headers
@@ -181,33 +189,55 @@
 			$this->TextCol($i, $i + 1, $this->headers[$i], -2);
 		$this->Font();
 
+		//bottom box left
+		$bottom_box1 = $tb_line3 - 3;
+		$bottom_box2 = $bottom_box1 - 100;
+		$this->Line1($bottom_box1,0,$this->leftMargin,$l_box_right);
+		$this->Line1($bottom_box2,0,$this->leftMargin,$l_box_right);
+
+		$this->LineTo($this->leftMargin, $bottom_box1 ,$this->leftMargin, $bottom_box2);
+		$this->LineTo($l_box_right, $bottom_box1 ,$l_box_right, $bottom_box2);
+	
+		//bottom box right
+		$this->Line1($bottom_box1,0,$r_box_left,$this->pageWidth - $this->rightMargin);
+		$this->Line1($bottom_box2,0,$r_box_left,$this->pageWidth - $this->rightMargin);
 		
+		$this->LineTo($r_box_left, $bottom_box1 ,$r_box_left, $bottom_box2);
+		$this->LineTo($right, $bottom_box1 ,$right, $bottom_box2);
 
+
+
+		//footer
+		$ftr_line1 = $bottom_box2 - 3;
+		$ftr_line2 = $bottom_box2 - 50;
+		$this->Line($ftr_line1);
+		$this->Line($ftr_line2);
 		
+		$sign_column = $r_box_left + 40;
+		$this->LineTo($this->leftMargin, $ftr_line1 , $this->leftMargin, $ftr_line2);
+		$this->LineTo($sign_column, $ftr_line1 , $sign_column, $ftr_line2);
+		$this->LineTo($right, $ftr_line1 ,$right, $ftr_line2);
 
-		// Footer
-		$this->Font('italic');
-		$this->row = $tb_line3 - $this->lineHeight - 6;
+		//footer left content
+		$this->row =  $ftr_line1 - 12;
+		$this->Text($ccol, _("Registered Office"));
 
-		foreach ($Footer as $line => $txt)
-		{
-			if (!is_numeric($line))	// title => link
-			{
-				$this->fontSize -= 2;
-				$this->TextWrap($ccol, $this->row, $right - $ccol, $line, 'C');
-				$this->row -= $this->lineHeight;
-				$this->SetTextColor(0, 0, 255);
-				$this->TextWrap($ccol, $this->row, $right - $ccol, $txt, 'C');
-				$this->SetTextColor(0, 0, 0);
-				$this->addLink($txt, $ccol, $this->row, $this->pageWidth - $this->rightMargin, $this->row + $this->lineHeight);
-				$this->fontSize += 2;
-			}
-			else
-				$this->TextWrap($ccol, $this->row, $right - $ccol, $txt, 'C');
-			$this->row -= $this->lineHeight;
+		$this->TextWrapLines($ccol+100, $sign_column-2,$registered_office);
 
-		}
-
-		$this->Font();
+		//footer right content
+		$this->row =  $ftr_line1 - 12;
+		$this->TextWrap($sign_column, $this->row, $right-$sign_column,"For ".$this->company['coy_name']." Tours & Travels Pvt. Ltd.", 'center');
+		$this->NewLine(2);
+		$this->TextWrap($sign_column, $this->row, $right-$sign_column,"Authorised Signatory", 'center');
+		//$this->Text($sign_column + 2, _("Registered Office"));
+		
+		
+		//table content row
 		$temp = $tb_line2 - $this->lineHeight - 2;
+		//totals cell
+		$totals_row =  $bottom_box1 - $this->lineHeight - 2;
+		$totals_column = $r_box_left;
+		//price in words cell
+		$words_row =  $bottom_box1 - $this->lineHeight - 2;
+		$words_column = $ccol;
 ?>

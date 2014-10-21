@@ -69,10 +69,10 @@ function print_invoices()
 	$to = max($fno[0], $tno[0]);
 
 	//$cols = array(4, 60, 225, 300, 325, 385, 450, 515);
-	$cols = array(4, 30, 110, 140, 230, 300, 500, 535);
+	$cols = array(4, 30, 80, 140, 210, 270, 500, 535);
 
 	// $headers in doctext.inc
-	$aligns = array('center','center','center', 'center', 'center', 'left', 'center');
+	$aligns = array('center','center','center', 'center', 'center', 'center', 'center');
 
 	$params = array('comments' => $comments);
 
@@ -136,12 +136,10 @@ function print_invoices()
 				$rep->TextCol(4, 5,  "OFFICER");
 				$rep->TextColLines(5, 6,  $memo);
 
-				$Net = round2($sign * ((1 - $myrow2["discount_percent"]) * $myrow2["unit_price"] * $myrow2["quantity"]),
-				   user_price_dec());
+				$Net = round2($sign * ((1 - $myrow2["discount_percent"]) * $myrow2["unit_price"] * $myrow2["quantity"]), user_price_dec());
 				$SubTotal += $Net;
 		    		
 		    		$DisplayNet = number_format2($Net,$dec);
-
 				
 				$rep->TextCol(6, 7,  $DisplayNet);
 
@@ -157,63 +155,57 @@ function print_invoices()
     			$rep->row = $rep->bottomMargin + (15 * $rep->lineHeight);
 			$doctype = ST_SALESINVOICE;
 
-			$rep->TextCol(3, 6, _("Sub-total"), -2);
-			$rep->TextCol(6, 7,	$DisplaySubTot, -2);
-			$rep->NewLine();
-			$rep->TextCol(3, 6, _("Shipping"), -2);
-			$rep->TextCol(6, 7,	$DisplayFreight, -2);
-			$rep->NewLine();
 			$tax_items = get_trans_tax_details(ST_SALESINVOICE, $i);
 			$first = true;
-
+			$Tax = 0;
 	    		while ($tax_item = db_fetch($tax_items))
 	    		{
 	    			if ($tax_item['amount'] == 0)
 	    				continue;
-	    			$DisplayTax = number_format2($sign*$tax_item['amount'], $dec);
+				$Tax += $tax_item['amount'];
+	    			
 	    			
 	    			if (isset($suppress_tax_rates) && $suppress_tax_rates == 1)
 	    				$tax_type_name = $tax_item['tax_type_name'];
 	    			else
 	    				$tax_type_name = $tax_item['tax_type_name']." (".$tax_item['rate']."%) ";
 
-	    			if ($tax_item['included_in_price'])
-	    			{
-	    				if (isset($alternative_tax_include_on_docs) && $alternative_tax_include_on_docs == 1)
-	    				{
-	    					if ($first)
-	    					{
-								$rep->TextCol(3, 6, _("Total Tax Excluded"), -2);
-								$rep->TextCol(6, 7,	number_format2($sign*$tax_item['net_amount'], $dec), -2);
-								$rep->NewLine();
-	    					}
-							$rep->TextCol(3, 6, $tax_type_name, -2);
-							$rep->TextCol(6, 7,	$DisplayTax, -2);
-							$first = false;
-	    				}
-	    				else
-							$rep->TextCol(3, 7, _("Included") . " " . $tax_type_name . _("Amount") . ": " . $DisplayTax, -2);
-					}
-	    			else
-	    			{
-						$rep->TextCol(3, 6, $tax_type_name, -2);
-						$rep->TextCol(6, 7,	$DisplayTax, -2);
-					}
-					$rep->NewLine();
 	    		}
+			$DisplayTax = number_format2($Tax, $dec);
 
-    			$rep->NewLine();
 			$DisplayTotal = number_format2($sign*($myrow["ov_freight"] + $myrow["ov_gst"] +
 				$myrow["ov_amount"]+$myrow["ov_freight_tax"]),$dec);
+			$advance = 0;
+			$DisplayAdvance = number_format2($advance,$dec);
+			$DisplayBalance = number_format2($myrow['Total']-$advance,$dec);
+			
+
 			$rep->Font('bold');
-			$rep->TextCol(3, 6, _("TOTAL INVOICE"), - 2);
-			$rep->TextCol(6, 7, $DisplayTotal, -2);
-			$words = price_in_words($myrow['Total'], ST_SALESINVOICE);
+			$words = price_in_words_custom($myrow['Total']);
+			$rep->row = $rep->words_row;	
+			$rep->NewLine();
 			if ($words != "")
-			{
-				$rep->NewLine(1);
-				$rep->TextCol(1, 7, $myrow['curr_code'] . ": " . $words, - 2);
+				$rep->Text($rep->words_column, "Rupees : ".$words);
+			else
+				$rep->Text($rep->words_column, "Rupees : ");
+
+			$totals = array(
+					'Service Tax' => $DisplayTax,
+					'GRAND TOTAL' => $DisplayTotal,
+					'Cash Advance' => $DisplayAdvance,
+					'BALANCE' => $DisplayBalance			
+					);
+
+			$rep->row = $rep->totals_row;	
+			
+			$rep->NewLine();
+			foreach($totals as $key=>$value){
+				$rep->Text($rep->totals_column + 5, $key);
+				$rep->Text($rep->totals_column + 90, ":");
+				$rep->Text($rep->totals_column + 95, $value);
+				$rep->NewLine(2);
 			}
+			
 			$rep->Font();
 			if ($email == 1)
 			{
