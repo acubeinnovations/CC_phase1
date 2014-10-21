@@ -120,12 +120,12 @@ function print_invoices()
 			$SubTotal = 0;
 			$slno = 1;
 
-			
-
 
 			while ($myrow2=db_fetch($result))
 			{
-				$memo = get_comments_string(ST_SALESINVOICE, $myrow2['id']);
+				//$memo = get_comments_string(ST_SALESINVOICE, $myrow2['id']);
+			
+				$memo = get_comment_value(ST_CUSTDELIVERY, $myrow2['src_id']);
 			
 				$trip = get_trip($myrow2['trip_voucher']);
 				

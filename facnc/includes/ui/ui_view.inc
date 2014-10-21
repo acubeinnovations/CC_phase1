@@ -379,6 +379,19 @@ function get_comments_string($type, $type_no)
 	return $str_return;
 }
 
+function get_comment_value($type, $type_no)
+{
+	$str_return = "";
+	$result = get_comments($type, $type_no);
+	while ($comment = db_fetch($result))
+	{
+		if (strlen($str_return))
+			$str_return = $str_return . " \n";
+		$str_return = $str_return . $comment["memo_"];
+	}
+	return $str_return;
+}
+
 //--------------------------------------------------------------------------------------
 
 function view_stock_status($stock_id, $description=null, $echo=true)
