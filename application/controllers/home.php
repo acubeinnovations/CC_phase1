@@ -16,8 +16,9 @@ class Home extends CI_Controller {
 			 redirect(base_url().'organization/front-desk');
 		}
 		}else{
-		$Title['title']="Home | ".PRODUCT_NAME;		
+		$Title['title']="Login | ".PRODUCT_NAME;		
 		$this->load->view('home',$Title);
+		redirect(base_url().'organization/login');
 		}
 	}
 }

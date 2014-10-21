@@ -44,7 +44,10 @@ public function __construct()
         	
 				 redirect(base_url().'organization/admin');
 				 
-		} else if(isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
+		}else if($this->front_desk_session_check()==true){
+
+				redirect(base_url().'organization/front-desk');
+			} else if(isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
 			 $this->load->model('organization_model');
 			 $username=$this->input->post('username');
 			 $this->organization_model->LoginAttemptsChecks($username);
@@ -480,7 +483,13 @@ public function __construct()
 		return false;
 		}
 	}
-	
+	public function front_desk_session_check() {
+	if(($this->session->userdata('isLoggedIn')==true ) && ($this->session->userdata('type')==FRONT_DESK) ) {
+		return true;
+		} else {
+		return false;
+		}
+	}
 	public function show_user_reset_password($data){
 	if($this->session_check()==true) {
 				$this->load->view('admin-templates/header',$data);
