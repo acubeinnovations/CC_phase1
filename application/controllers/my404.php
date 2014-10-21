@@ -29,7 +29,7 @@ class My404 extends CI_Controller {
 		
 	public function notAuthorized(){
 	$data['title']='Not Authorized | '.PRODUCT_NAME;
-	$page='user-pages/not_authorized';
+	$page='not_authorized';
 	$this->load->view('admin-templates/header',$data);
 	$this->load->view('admin-templates/nav');
 	$this->load->view($page,$data);
