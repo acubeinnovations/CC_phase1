@@ -34,7 +34,7 @@ public function getVehicles(){
 	}
 	}
 public function getCurrentStatuses($id){ 
-	$qry='SELECT * FROM trips WHERE CONCAT(pick_up_date," ",pick_up_time) <= NOW() AND CONCAT(drop_date," ",drop_time) >= NOW() AND vehicle_id="'.$id.'" AND trip_status_id='.TRIP_STATUS_CONFIRMED;
+	$qry='SELECT * FROM trips WHERE CONCAT(pick_up_date," ",pick_up_time) <= NOW() AND CONCAT(drop_date," ",drop_time) >= NOW() AND vehicle_id="'.$id.'" AND organisation_id = '.$this->session->userdata('organisation_id').' AND trip_status_id='.TRIP_STATUS_CONFIRMED;
 	$results=$this->db->query($qry);
 	$results=$results->result_array();
 	if(count($results)>0){
