@@ -65,7 +65,7 @@ class User extends CI_Controller {
 		}elseif($param1=='getNotifications'){
 			$this->getNotifications();
 		}elseif($param1=='tripvouchers'){
-			$this->tripVouchers();
+			$this->tripVouchers($param2);
 		}
 
 		elseif($param1=='tarrif-masters'&& ($param2== ''|| is_numeric($param2))){
@@ -180,7 +180,7 @@ class User extends CI_Controller {
 		$this->session->set_userdata('condition','');
 		}
 		
-		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
 		
 		
 	$data['values']=$p_res['values'];
@@ -276,7 +276,7 @@ class User extends CI_Controller {
 		$this->session->set_userdata('condition','');
 		}
 		
-		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
 		
 		
 	$data['values']=$p_res['values'];
@@ -332,7 +332,7 @@ class User extends CI_Controller {
 		$uriseg ='4';
 		
 		
-		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
 		if($param2==''){
 		$this->session->set_userdata('condition','');
 		}
@@ -459,6 +459,7 @@ class User extends CI_Controller {
 	$data1['vehicle_ac_type']		=	$result->vehicle_ac_type_id;
 	$data1['vehicle_make']			=	$result->vehicle_make_id;
 	$data1['vehicle_model']			=	$result->vehicle_model_id;
+	$data1['remarks']				=	$result->remarks;
 	$data1['recurrent_yes']			= 	'';
 	if(isset($result->vehicle_beacon_light_option_id) && $result->vehicle_beacon_light_option_id > 0){
 		$data1['beacon_light']=TRUE;
@@ -613,7 +614,7 @@ class User extends CI_Controller {
 			$data['vehicles']=$this->trip_booking_model->getVehiclesArray($condition='');
 			$data['drivers']=$this->driver_model->getDriversArray($condition='');
 			$this->mysession->set('condition',array("where"=>$where_arry,"order_by"=>$order_arry));
-			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
 			if($param2==''){
 				$this->mysession->delete('condition');
 			}
@@ -742,12 +743,25 @@ public function	Customers($param2){
 			$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
 			}
 						
-			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
 			if($param2==''){echo $param2;
 				$this->mysession->delete('condition');
 			}
 			$data['page_links']=$paginations['page_links'];
-			$data['customers']=$paginations['values'];			
+			$data['customers']=$paginations['values'];	
+				for($i=0;$i<count($data['customers']);$i++){
+					$id=$data['customers'][$i]['id'];
+					$availability=$this->customers_model->getCurrentStatuses($id);
+					if($availability==false){
+					$customer_statuses[$id]='NotBooked';
+					$customer_trips[$id]=gINVALID;
+					}else{
+					$customer_statuses[$id]='OnTrip';
+					$customer_trips[$id]=$availability[0]['id'];
+					}
+				}//print_r($customer_statuses);print_r($customer_trips);exit;
+				$data['customer_statuses']=$customer_statuses;
+				$data['customer_trips']=$customer_trips;		
 			if(empty($data['customers'])){
 				$data['result']="No Results Found !";
 				}
@@ -925,12 +939,27 @@ public function profile() {
 	$baseurl=base_url().'organization/front-desk/list-driver/';
 	$uriseg ='4';
 
-	   $p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+	   $p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
 	if($param2==''){
 	$this->mysession->delete('condition');
 
 	}
 	$data['values']=$p_res['values'];
+	$driver_trips='';
+	$driver_statuses='';
+	for($i=0;$i<count($data['values']);$i++){
+		$id=$data['values'][$i]['id'];
+		$availability=$this->driver_model->getCurrentStatuses($id);
+		if($availability==false){
+		$driver_statuses[$id]='Available';
+		$driver_trips[$id]=gINVALID;
+		}else{
+		$driver_statuses[$id]='OnTrip';
+		$driver_trips[$id]=$availability[0]['id'];
+		}
+	}//print_r($driver_statuses);print_r($driver_trips);exit;
+	$data['driver_statuses']=$driver_statuses;
+	$data['driver_trips']=$driver_trips;
 	if(empty($data['values'])){
 				$data['result']="No Results Found !";
 				}
@@ -989,17 +1018,101 @@ public function profile() {
 			}
 	}
 
-	public function tripVouchers(){
+	public function tripVouchers($param2){
 			if($this->session_check()==true) {
 		
-			$data['trips']=$this->trip_booking_model->getTripVouchers();
+			//$data['trips']=$this->trip_booking_model->getTripVouchers();
 			//print_r($data['trips']);exit;
+			$baseurl=base_url().'organization/front-desk/tripvouchers/';
+			$per_page=10;
+			$uriseg ='4';
+			$data['from_date']='';
+			$data['to_date']='';
+			$data['trip_id']='';
+			$qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id AND TV.organisation_id = '.$this->session->userdata('organisation_id').' WHERE T.organisation_id = '.$this->session->userdata('organisation_id').' ';
+			if($param2=='1' ){
+				$param2='0';
+			}
+			if((isset($_REQUEST['trip_id'])|| isset($_REQUEST['from_date']) || isset($_REQUEST['to_date']))&& isset($_REQUEST['voucher_search'])){	
+				
+				if($param2==''){
+				$param2='0';
+				}
+				if($_REQUEST['trip_id']!=null){
+					$data['trip_id']=$_REQUEST['trip_id'];
+					$qry.='AND T.id ='.$_REQUEST['trip_id'];
+					$where_arry['trip_id']=$_REQUEST['trip_id'];
+				}
+				
+				if($_REQUEST['from_date']!=null && $_REQUEST['to_date']!=null){
+				$data['from_date']=$_REQUEST['from_date'];
+				$data['to_date']=$_REQUEST['to_date'];
+				$qry.=' AND T.pick_up_date >="'.$_REQUEST['from_date'].'" AND T.drop_date <="'.$_REQUEST['to_date'].'"';
+				$where_arry['from_date']=$_REQUEST['from_date'];
+				$where_arry['to_date']=$_REQUEST['to_date'];
+				}else if($_REQUEST['from_date']!=null && $_REQUEST['to_date']==null ){
+				$data['from_date']=$_REQUEST['from_date'];
+				$data['to_date']=$_REQUEST['to_date'];
+				$qry.=' AND T.pick_up_date ="'.$_REQUEST['from_date'].'"';
+				$where_arry['from_date']=$_REQUEST['from_date'];
+				$where_arry['to_date']=$_REQUEST['to_date'];
+
+				}else if($_REQUEST['from_date']==null && $_REQUEST['to_date']!=null ){
+				$data['from_date']=$_REQUEST['from_date'];
+				$data['to_date']=$_REQUEST['to_date'];
+				$qry.=' AND T.drop_date ="'.$_REQUEST['to_date'].'"';
+				$where_arry['from_date']=$_REQUEST['from_date'];
+				$where_arry['to_date']=$_REQUEST['to_date'];
+
+				}
+				if(isset($where_arry)){
+				$this->mysession->set('condition',array("where"=>$where_arry));
+				}
+			}else if($this->mysession->get('condition')!=''){
+				$condition=$this->mysession->get('condition');
+				if(isset($condition['where']['trip_id'])){
+				$data['trip_id']=$condition['where']['trip_id'];
+				$qry.=' AND T.id ='.$condition['where']['trip_id'];
+				}
+				if($condition['where']['from_date']!=null && $condition['where']['to_date']!=null){
+				$data['from_date']=$condition['where']['from_date'];
+				$data['to_date']=$condition['where']['to_date'];
+				$qry.=' AND T.pick_up_date >="'.$condition['where']['from_date'].'" AND T.drop_date <="'.$condition['where']['to_date'].'"';
+				
+				}else if($condition['where']['from_date']!=null && $condition['where']['to_date']==null ){
+				$data['from_date']=$condition['where']['from_date'];
+				$data['to_date']=$condition['where']['to_date'];
+				$qry.='AND T.pick_up_date ="'.$condition['where']['from_date'].'"';
+				
+				}else if($condition['where']['from_date']==null && $condition['where']['to_date']!=null ){
+				$data['from_date']=$condition['where']['from_date'];
+				$data['to_date']=$condition['where']['to_date'];
+				$qry.=' AND T.drop_date ="'.$condition['where']['to_date'].'"';
+				
+
+				}
+
+			}
+			
+						
+			$paginations=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
+			if($param2==''){
+				$this->mysession->delete('condition');
+			}
+			$data['page_links']=$paginations['page_links'];
+			$data['trips']=$paginations['values'];			
+			if(empty($data['customers'])){
+				$data['result']="No Results Found !";
+				}
+
+
+
+
 			$data['title']='Trip Vouchers | '.PRODUCT_NAME;
 			$page='user-pages/trip_vouchers';
 			$this->load_templates($page,$data);
 		
-			}
-			else{
+			}else{
 				$this->notAuthorized();
 			}
 	}
@@ -1158,13 +1271,29 @@ public function profile() {
 	$baseurl=base_url().'organization/front-desk/list-vehicle/';
 	$uriseg ='4';
 
-	   $p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg);
+	   $p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
 	   
 	if($param2==''){
 	$this->mysession->delete('condition');
 
 	}
+	
 	$data['values']=$p_res['values'];
+	$vehicle_trips='';
+	$vehicle_statuses='';
+	for($i=0;$i<count($data['values']);$i++){
+		$id=$data['values'][$i]['id'];
+		$availability=$this->vehicle_model->getCurrentStatuses($id);
+		if($availability==false){
+		$vehicle_statuses[$id]='Available';
+		$vehicle_trips[$id]=gINVALID;
+		}else{
+		$vehicle_statuses[$id]='OnTrip';
+		$vehicle_trips[$id]=$availability[0]['id'];
+		}
+	}//print_r($vehicle_statuses);print_r($vehicle_trips);exit;
+	$data['vehicle_statuses']=$vehicle_statuses;
+	$data['vehicle_trips']=$vehicle_trips;
 	if(empty($data['values'])){
 	$data['result']="No Results Found !";
 	}

@@ -7,3 +7,6 @@ ALTER TABLE `tariffs` ADD `vehicle_model_id` INT NOT NULL AFTER `tariff_master_i
 ALTER TABLE `trips` ADD `vehicle_model_id` INT NOT NULL AFTER `vehicle_make_id` ,ADD INDEX ( `vehicle_model_id` ) ;
 
 /*need to b updated*/
+
+/*2014-10-22*/
+ALTER TABLE `trips` ADD `remarks` TEXT NOT NULL AFTER `total_amount` ;

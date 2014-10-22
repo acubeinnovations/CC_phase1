@@ -154,6 +154,7 @@ class Trip_booking extends CI_Controller {
 				$data['vehicle_ac_type']	=	$this->input->post('vehicle_ac_type');
 				$data['vehicle_make']		=	$this->input->post('vehicle_make');
 				$data['vehicle_model']		=	$this->input->post('vehicle_model');
+				$data['remarks']			=	$this->input->post('remarks');
 				if(isset($_REQUEST['beacon_light'])){
 					$data['beacon_light']=TRUE;
 					if($this->input->post('beacon_light_radio')=='red'){
@@ -327,8 +328,11 @@ class Trip_booking extends CI_Controller {
 			$dbdata['tariff_id']					=$data['tariff'];
 			$dbdata['driver_id']					=$data['driver_id'];
 			$dbdata['vehicle_id']					=$data['available_vehicle'];
+			$dbdata['remarks']						=$data['remarks'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
 			$dbdata['user_id']						=$this->session->userdata('id');
+			
+
 
 			$customer['mob']=$this->session->userdata('customer_mobile');
 			$customer['email']=$this->session->userdata('customer_email');	
