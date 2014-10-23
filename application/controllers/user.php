@@ -619,7 +619,7 @@ class User extends CI_Controller {
 				$this->mysession->delete('condition');
 			}
 			$data['page_links']=$paginations['page_links'];
-			$data['trips']=$paginations['values'];
+			$data['trips']=$paginations['values'];print_r($data['trips'][0]);//exit;
 			if(empty($data['trips'])){
 				$data['result']="No Results Found !";
 					}
