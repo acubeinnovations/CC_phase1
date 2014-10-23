@@ -558,44 +558,98 @@ class User extends CI_Controller {
 			
 			$tbl="trips";
 			$baseurl=base_url().'organization/front-desk/trips/';
-			$per_page=10;
+			$per_page=3;
 			$data['slno_per_page']=10;
 			$uriseg ='4';
 			$data['urlseg']=4;
 			$tdate=date('Y-m-d');
-			$where_arry['organisation_id']=$this->session->userdata('organisation_id');
-			$order_arry="id desc";
-			if((isset($_REQUEST['trip_pick_date'])|| isset($_REQUEST['trip_drop_date']))&& isset($_REQUEST['trip_search'])){
+			$data['trip_pick_date']='';
+			$data['trip_drop_date']='';
+			$data['vehicles']='';
+			$data['drivers']='';
+			$data['trip_status_id']='';
+			$qry='SELECT VO.name as ownership,T.customer_id,T.customer_group_id,T.vehicle_model_id,T.driver_id,T.vehicle_id,T.guest_id,V.vehicle_ownership_types_id,T.tariff_id,T.trip_status_id,T.id as trip_id,T.booking_date,T.drop_date,T.drop_time,T.pick_up_date,T.pick_up_time,VM.name as model,V.registration_number,T.pick_up_city,T.pick_up_area,G.name as guest_name,G.mobile as guest_info,T.drop_city,T.drop_area,C.name as customer_name,C.mobile as customer_mobile,CG.name as customer_group,D.name as driver,D.mobile as driver_info FROM trips T LEFT JOIN vehicle_models VM ON VM.id=T.vehicle_model_id LEFT JOIN vehicles V ON V.id=T.vehicle_id LEFT JOIN customers G ON G.id=T.guest_id LEFT JOIN customers C ON C.id=T.customer_id LEFT JOIN customer_groups CG ON CG.id=T.customer_group_id LEFT JOIN drivers D ON D.id=T.driver_id LEFT JOIN vehicle_ownership_types VO ON V.vehicle_ownership_types_id=VO.id where T.organisation_id='.$this->session->userdata('organisation_id');
+			if($param2=='1' ){
+				$param2='0';
+			}
+			//$where_arry['organisation_id']=$this->session->userdata('organisation_id');
+			//$order_arry="id desc";
+			if((isset($_REQUEST['trip_pick_date'])|| isset($_REQUEST['trip_drop_date'])|| isset($_REQUEST['vehicles'])|| isset($_REQUEST['drivers'])|| isset($_REQUEST['trip_status_id']))&& isset($_REQUEST['trip_search'])){
 				if($param2==''){
-				$param2=0;
+				$param2='0';
 				}
-				
+				echo $param2;
 				if($_REQUEST['trip_pick_date']!=null && $_REQUEST['trip_drop_date']!=null){
 					$data['trip_pick_date']=$_REQUEST['trip_pick_date'];
 					$data['trip_drop_date']=$_REQUEST['trip_drop_date'];
-					$where_arry['pick_up_date >=']=$_REQUEST['trip_pick_date'];
-					$where_arry['drop_date <=']= $_REQUEST['trip_drop_date'];
+					$qry.=' AND T.pick_up_date >="'.$_REQUEST['trip_pick_date'].'" AND T.drop_date <="'.$_REQUEST['trip_drop_date'].'"';
+					$where_arry['trip_pick_date']=$_REQUEST['trip_pick_date'];
+					$where_arry['trip_drop_date']=$_REQUEST['trip_drop_date'];
 				}else if($_REQUEST['trip_pick_date']!=null){
 				$data['trip_pick_date']=$_REQUEST['trip_pick_date'];
-				$where_arry['pick_up_date =']=$_REQUEST['trip_pick_date'];
+				$qry.=' AND T.pick_up_date ="'.$_REQUEST['trip_pick_date'].'"';
+				$where_arry['trip_pick_date']=$_REQUEST['trip_pick_date'];
 				}else if($_REQUEST['trip_drop_date']!=null){
-				$where_arry['drop_date =']= $_REQUEST['trip_drop_date'];
 				$data['trip_drop_date']=$_REQUEST['trip_drop_date'];
+				$qry.=' AND T.drop_date ="'.$_REQUEST['trip_drop_date'].'"';
+				$where_arry['trip_drop_date']=$_REQUEST['trip_drop_date'];
 				}
 				if($_REQUEST['vehicles']!=null && $_REQUEST['vehicles']!=gINVALID){
 					$data['vehicle_id']= $_REQUEST['vehicles'];
-					$where_arry['vehicle_id']= $_REQUEST['vehicles'];
+					$qry.=' AND T.vehicle_id ="'.$_REQUEST['vehicles'].'"';
+					$where_arry['vehicle_id']=$_REQUEST['vehicles'];
 				}
 				if($_REQUEST['drivers']!=null && $_REQUEST['drivers']!=gINVALID){
 					$data['driver_id']= $_REQUEST['drivers'];
-					$where_arry['driver_id']= $_REQUEST['drivers'];
+					$qry.=' AND T.driver_id ="'.$_REQUEST['drivers'].'"';
+					$where_arry['driver_id']=$_REQUEST['drivers'];
 				}
 				if($_REQUEST['trip_status_id']!=null && $_REQUEST['trip_status_id']!=gINVALID){
 					$data['trip_status_id']= $_REQUEST['trip_status_id'];
-					$where_arry['trip_status_id']= $_REQUEST['trip_status_id'];
+					$qry.=' AND T.trip_status_id ="'.$_REQUEST['trip_status_id'].'"';
+					$where_arry['trip_status_id']=$_REQUEST['trip_status_id'];
+				}
+				if(isset($where_arry)){
+				$this->mysession->set('condition',array("where"=>$where_arry));
 				}
 				
+			}else if($this->mysession->get('condition')!=''){ 
+				$condition=$this->mysession->get('condition');//print_r($condition);
+				/*if(isset($condition['where']['trip_id'])){
+				$data['trip_id']=$condition['where']['trip_id'];
+				$qry.=' AND T.id ='.$condition['where']['trip_id'];
+				}*/
+				if(isset($condition['where']['trip_pick_date'])  && isset($condition['where']['trip_drop_date']) ){
+				$data['pick_up_date']=$condition['where']['trip_pick_date'];
+				$data['drop_date ']=$condition['where']['trip_drop_date'];
+				$qry.=' AND T.pick_up_date >="'.$condition['where']['trip_pick_date'].'" AND T.drop_date <="'.$condition['where']['trip_drop_date'].'"';
+				
+				}else if(isset($condition['where']['trip_pick_date'])){
+				$data['pick_up_date']=$condition['where']['trip_pick_date'];
+				$qry.='AND T.pick_up_date ="'.$condition['where']['trip_pick_date'].'"';
+				
+				}else if(isset($condition['where']['trip_drop_date'])){
+				$data['drop_date']=$condition['where']['trip_drop_date'];
+				$qry.=' AND T.drop_date ="'.$condition['where']['trip_drop_date'].'"';
+				
+
+				}
+				if(isset($condition['where']['vehicle_id']) && $condition['where']['vehicle_id']!=null){
+				$data['vehicle_id']=$condition['where']['vehicle_id'];
+				$qry.=' AND T.vehicle_id ="'.$condition['where']['vehicle_id'].'"';
+				}
+				if(isset($condition['where']['driver_id']) && $condition['where']['driver_id']!=null){
+				$data['driver_id']=$condition['where']['driver_id'];
+				$qry.=' AND T.driver_id ="'.$condition['where']['driver_id'].'"';
+				}
+				if(isset($condition['where']['trip_status_id']) && $condition['where']['trip_status_id']!=null){
+				$data['trip_status_id']=$condition['where']['trip_status_id'];
+				$qry.=' AND T.trip_status_id ="'.$condition['where']['trip_status_id'].'"';
+				}
+
 			}
+			$qry.=' order by T.id desc';
+			
 			$tbl_arry=array('trip_statuses','customer_groups');
 	
 			for ($i=0;$i<count($tbl_arry);$i++){
@@ -607,26 +661,25 @@ class User extends CI_Controller {
 			$data[$tbl_arry[$i]]='';
 			}
 			}
-			if($param2=='1'){
+			/*if($param2=='1'){
 				$param2=0;
-			}
+			}*/
 			
 			$data['vehicles']=$this->trip_booking_model->getVehiclesArray($condition='');
-			$data['drivers']=$this->driver_model->getDriversArray($condition='');
-			$this->mysession->set('condition',array("where"=>$where_arry,"order_by"=>$order_arry));
-			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
-			if($param2==''){
+			$data['drivers']=$this->driver_model->getDriversArray($condition=''); 
+			$paginations=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
+			if($param2==''){// echo 'k';
 				$this->mysession->delete('condition');
 			}
 			$data['page_links']=$paginations['page_links'];
-			$data['trips']=$paginations['values'];print_r($data['trips'][0]);//exit;
+			$data['trips']=$paginations['values'];
 			if(empty($data['trips'])){
 				$data['result']="No Results Found !";
 					}
 			//echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
 			//$data['trips']=$this->trip_booking_model->getDetails($conditon='');echo '<pre>';print_r($data['trips']);echo '</pre>';exit;
 			$data['status_class']=array(TRIP_STATUS_PENDING=>'label-warning',TRIP_STATUS_CONFIRMED=>'label-success',TRIP_STATUS_CANCELLED=>'label-danger',TRIP_STATUS_CUSTOMER_CANCELLED=>'label-danger',TRIP_STATUS_ON_TRIP=>'label-primary',TRIP_STATUS_TRIP_COMPLETED=>'label-success',TRIP_STATUS_TRIP_PAYED=>'label-info',TRIP_STATUS_TRIP_BILLED=>'label-success');
-			$data['trip_statuses']=$this->user_model->getArray('trip_statuses');
+			$data['trip_statuses']=$this->user_model->getArray('trip_statuses'); 
 			$data['customers']=$this->customers_model->getArray();
 			$data['title']="Trips | ".PRODUCT_NAME;  
 			$page='user-pages/trips';
