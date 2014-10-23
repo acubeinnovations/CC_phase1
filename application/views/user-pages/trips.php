@@ -19,11 +19,11 @@ $trip_drop_date='';
 if(!isset($customer)){
 $customer='';
 }
-if(!isset($driver)){
-$driver='';
+if(!isset($driver_id)){
+$driver_id='';
 }
-if(!isset($vehicle)){
-$vehicle='';
+if(!isset($vehicle_id)){
+$vehicle_id='';
 }
 if(!isset($trip_status_id)){
 $trip_status_id='';
@@ -54,10 +54,10 @@ $trip_sl_no=$page;
 					    <td><?php  echo form_input(array('name'=>'trip_drop_date','class'=>'dropdatepicker initialize-date-picker form-control' ,'placeholder'=>'Drop Date','value'=>$trip_drop_date)); ?></td>
 						 <td><?php $class="form-control";
 							  $id='vehicles';
-						echo $this->form_functions->populate_dropdown('vehicles',$vehicles,$vehicle,$class,$id,$msg="Select Vehicle");?></td>
+						echo $this->form_functions->populate_dropdown('vehicles',$vehicles,$vehicle_id,$class,$id,$msg="Select Vehicle");?></td>
 						 <td><?php $class="form-control";
 							  $id='drivers';
-						echo $this->form_functions->populate_dropdown('drivers',$drivers,$driver,$class,$id,$msg="Select Driver");?></td>
+						echo $this->form_functions->populate_dropdown('drivers',$drivers,$driver_id,$class,$id,$msg="Select Driver");?></td>
 						<td><?php $class="form-control";
 							  $id='trip-status';
 						echo $this->form_functions->populate_dropdown('trip_status_id',$trip_statuses,$trip_status_id,$class,$id,$msg="Select Trip Status");?></td>

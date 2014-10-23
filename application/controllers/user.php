@@ -578,7 +578,7 @@ class User extends CI_Controller {
 				if($param2==''){
 				$param2='0';
 				}
-				echo $param2;
+				
 				if($_REQUEST['trip_pick_date']!=null && $_REQUEST['trip_drop_date']!=null){
 					$data['trip_pick_date']=$_REQUEST['trip_pick_date'];
 					$data['trip_drop_date']=$_REQUEST['trip_drop_date'];
@@ -620,16 +620,16 @@ class User extends CI_Controller {
 				$qry.=' AND T.id ='.$condition['where']['trip_id'];
 				}*/
 				if(isset($condition['where']['trip_pick_date'])  && isset($condition['where']['trip_drop_date']) ){
-				$data['pick_up_date']=$condition['where']['trip_pick_date'];
-				$data['drop_date ']=$condition['where']['trip_drop_date'];
+				$data['trip_pick_date']=$condition['where']['trip_pick_date'];
+				$data['trip_drop_date']=$condition['where']['trip_drop_date'];
 				$qry.=' AND T.pick_up_date >="'.$condition['where']['trip_pick_date'].'" AND T.drop_date <="'.$condition['where']['trip_drop_date'].'"';
 				
 				}else if(isset($condition['where']['trip_pick_date'])){
-				$data['pick_up_date']=$condition['where']['trip_pick_date'];
+				$data['trip_pick_date']=$condition['where']['trip_pick_date'];
 				$qry.='AND T.pick_up_date ="'.$condition['where']['trip_pick_date'].'"';
 				
 				}else if(isset($condition['where']['trip_drop_date'])){
-				$data['drop_date']=$condition['where']['trip_drop_date'];
+				$data['trip_drop_date']=$condition['where']['trip_drop_date'];
 				$qry.=' AND T.drop_date ="'.$condition['where']['trip_drop_date'].'"';
 				
 
@@ -668,7 +668,7 @@ class User extends CI_Controller {
 			$data['vehicles']=$this->trip_booking_model->getVehiclesArray($condition='');
 			$data['drivers']=$this->driver_model->getDriversArray($condition=''); 
 			$paginations=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
-			if($param2==''){// echo 'k';
+			if($param2==''){
 				$this->mysession->delete('condition');
 			}
 			$data['page_links']=$paginations['page_links'];
@@ -797,7 +797,7 @@ public function	Customers($param2){
 			}
 						
 			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
-			if($param2==''){echo $param2;
+			if($param2==''){
 				$this->mysession->delete('condition');
 			}
 			$data['page_links']=$paginations['page_links'];
