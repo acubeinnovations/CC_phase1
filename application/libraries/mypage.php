@@ -12,6 +12,7 @@ function paging($tbl,$per_page,$offset='',$baseurl,$Uriseg,$custom='',$qry=''){
 			$config['total_rows'] =$count;
 			$data['values']=$CI->page_model->getDetails($tbl,$config['per_page'],$offset,$qry);
 		}else if($tbl=='' && $custom=='yes' && $qry!='' ) {
+		
 			$count=$CI->page_model->getCustomCount($qry);
 			$config['total_rows'] =$count;
 			$data['values']=$CI->page_model->getCustomDetails($config['per_page'],$offset,$qry);

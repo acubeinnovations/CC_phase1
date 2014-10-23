@@ -1,7 +1,7 @@
 <?php
 class Page_model extends CI_Model {
 function getCount($tbl){
-	$arry=$this->mysession->get('condition'); 
+	
 	if(isset($arry['like'])){
 	if($arry['like']!=''&& count($arry['like']) > 0){
 	$like_arry=$arry['like'];
@@ -59,13 +59,12 @@ function getCount($tbl){
 		if(!empty($order_arry) && count($order_arry) > 0){
 		$this->db->order_by($order_arry);
 		}
-		$qry= $this->db->get($tbl,$num,$offset);//echo $this->db->last_query();
+		$qry= $this->db->get($tbl,$num,$offset); //echo $this->db->last_query();exit;
 	   return $qry->result_array();
 	}
 
 	
 	function getCustomCount($qry){
-	
 	$result=$this->db->query($qry);
 	$result=$result->result_array();
 	if(count($result)>0){
@@ -85,7 +84,7 @@ function getCount($tbl){
 	 $qry.=' LIMIT '.$offset.','.$num;
 	}
 	$result=$this->db->query($qry);
-	$result=$result->result_array();//echo $this->db->last_query();
+	$result=$result->result_array();//echo $this->db->last_query();exit;
 	if(count($result)>0){
 		return $result;
 	}else{

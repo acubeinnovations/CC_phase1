@@ -204,7 +204,6 @@ class cart
 
 		if ($trans_no[0]) { // read old transaction
 			if ($type == ST_SALESORDER || $type == ST_SALESQUOTE) { // sales order || sales quotation
-				read_sales_order($trans_no[0], $this, $type);
 			} else {	// other type of sales transaction
 					read_sales_trans($type, $trans_no, $this); 
 					if ($this->order_no) { // free hand credit notes have no order_no
@@ -490,18 +489,32 @@ class cart
 	{
 		$items = array();
 		$prices = array();
+		
 		if($shipping_cost==null)
 			$shipping_cost = $this->freight_cost;
 
 		foreach ($this->line_items as $ln_itm) {
 			$items[] = $ln_itm->stock_id;
-			$prices[] = round(((
+			
+			
+			$taxable_price = round(((
 				$this->trans_type==ST_SALESORDER ? 	$ln_itm->quantity : $ln_itm->qty_dispatched) *
-				$ln_itm->line_price()* (1 - $ln_itm->discount_percent)),  user_price_dec());
+				$ln_itm->unit_taxable_amount * (1 - $ln_itm->discount_percent)),  user_price_dec());
+			
+
+			/*$prices[] = round(((
+				$this->trans_type==ST_SALESORDER ? 	$ln_itm->quantity : $ln_itm->qty_dispatched) *
+				$ln_itm->line_price()* (1 - $ln_itm->discount_percent)),  user_price_dec());*/
+			
+
+			$prices[] =  $taxable_price;
+			
 		}
 
 		$taxes = get_tax_for_items($items, $prices, $shipping_cost,
 		  $this->tax_group_id, $this->tax_included,  $this->tax_group_array);
+
+
 
     // Adjustment for swiss franken, we always have 5 rappen = 1/20 franken
     if ($this->customer_currency == 'CHF') {
@@ -601,6 +614,8 @@ class line_details
 	var $qty_done;
 	var $qty_dispatched;
 	var $qty_old = 0;
+	var $trip_voucher = 0;
+	var $unit_taxable_amount;
 
 
 	function line_details ($stock_id, $qty, $prc, $disc_percent,
@@ -635,6 +650,7 @@ class line_details
 		$this->standard_cost = $standard_cost;
 		$this->valid = true;
 		$this->trip_voucher = $trip_voucher;
+		$this->unit_taxable_amount = $prc * 0.4;
 	}
 
 	// get unit price as stated on document

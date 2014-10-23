@@ -323,6 +323,9 @@ function display_trip_data($cnc_data, &$order)
 		$display_sub_total = price_format($total + input_num('freight_cost'));
 		label_row(_("Sub-total"), $display_sub_total, "colspan=$colspan align=right","align=right");
 		$taxes = $order->get_taxes(input_num('freight_cost'));
+
+	//print_r($taxes);exit;
+		
 		$tax_total = display_edit_tax_items($taxes, $colspan, $order->tax_included, 2);
 
 		$display_total = price_format(($total + input_num('freight_cost') + $tax_total));

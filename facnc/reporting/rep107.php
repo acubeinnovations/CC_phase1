@@ -145,6 +145,9 @@ function print_invoices()
 
 				$rep->NewLine(2);
 
+				if ($rep->row < $rep->bottomMargin + (15 * $rep->lineHeight))
+					$rep->NewPage();
+
 				$slno++;
 			}
 
@@ -185,9 +188,12 @@ function print_invoices()
 			$rep->row = $rep->words_row;	
 			$rep->NewLine();
 			if ($words != "")
-				$rep->Text($rep->words_column, "Rupees : ".$words);
+				$rep->TextWrapLines($rep->words_column, $rep->words_column + 250,"Rupees : ".$words." Only", 'right');
 			else
 				$rep->Text($rep->words_column, "Rupees : ");
+
+			$rep->NewLine(3);
+			$rep->Text($rep->words_column+100,"Net Payable ".$DisplayBalance);
 
 			$totals = array(
 					'Service Tax' => $DisplayTax,

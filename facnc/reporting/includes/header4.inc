@@ -124,14 +124,18 @@
 		$this->NewLine(2);
 		$this->Text($r_txt_left, _("Service Tax Reg. No."));
 		$this->Text($mcol + 120, " : ");
+		$this->Text($mcol + 130, "AADCC0959NST001");
 
 		$this->NewLine();
 		$this->Text($r_txt_left, _("Category"));
 		$this->Text($mcol + 120, " : ");
+		$this->Text($mcol + 130, "Tour Operator / Cab Operator");
 
 		$this->NewLine();
 		$this->Text($r_txt_left, _("PAN No."));
 		$this->Text($mcol + 120, " : ");
+		$this->Text($mcol + 130, "AADCC0959N");
+
 		$sub_head = $this->row;
 		$head_right4 = $this->row - 6;
 		$this->Line1($head_right4,0,$r_box_left,$this->pageWidth - $this->rightMargin);
