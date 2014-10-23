@@ -60,6 +60,7 @@ function get_tax_free_price_for_item($stock_id, $price, $tax_group, $tax_include
 //
 function get_full_price_for_item($stock_id, $price, $tax_group, $tax_included, $tax_group_array=null)
 {
+	
 	// if price is zero, then can't be taxed !
 	if ($price == 0)
 		return 0;
@@ -88,7 +89,14 @@ function get_full_price_for_item($stock_id, $price, $tax_group, $tax_included, $
 			$tax_multiplier += $taxitem["rate"];
 	}
 	
-	return round($price * (1 + ($tax_multiplier / 100)),  user_price_dec());
+
+	$taxable_amount = $price * 0.4;
+	//echo "price-".$price."<br/>";
+	//echo "taxable_amount-".$taxable_amount."<br/>";
+	//echo round($taxable_amount * (1 + ($tax_multiplier / 100)),  user_price_dec());exit;
+	
+	//return round($price * (1 + ($tax_multiplier / 100)),  user_price_dec());
+	return round($taxable_amount * (1 + ($tax_multiplier / 100)),  user_price_dec());
 }
 
 //---------------------------------------------------------------------------------

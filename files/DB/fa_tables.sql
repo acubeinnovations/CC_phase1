@@ -610,6 +610,7 @@ CREATE TABLE IF NOT EXISTS `0_debtor_trans_details` (
   `stock_id` varchar(20) NOT NULL DEFAULT '',
   `description` tinytext,
   `unit_price` double NOT NULL DEFAULT '0',
+  `unit_taxable_amount` double NOT NULL DEFAULT '0',
   `unit_tax` double NOT NULL DEFAULT '0',
   `quantity` double NOT NULL DEFAULT '0',
   `discount_percent` double NOT NULL DEFAULT '0',
@@ -620,7 +621,7 @@ CREATE TABLE IF NOT EXISTS `0_debtor_trans_details` (
   PRIMARY KEY (`id`),
   KEY `Transaction` (`debtor_trans_type`,`debtor_trans_no`),
   KEY `src_id` (`src_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 

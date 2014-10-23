@@ -344,7 +344,7 @@ $customer_type='';
 								
                                         <div class="input-group-btn ">
                                             <?php 
-									echo form_input(array('name'=>'pickupcity','class'=>'form-control width-96-percent-and-margin-8 dropdown-toggle mandatory','id'=>'pickupcity','placeholder'=>'Pick up City','value'=>$pickupcity));?><div class="hide-me"><?php echo form_input(array('name'=>'pickupcitylat','id'=>'pickupcitylat','value'=>$pickupcitylat)).form_input(array('name'=>'pickupcitylng','id'=>'pickupcitylng','value'=>$pickupcitylng));?></div><?php
+									echo form_input(array('name'=>'pickupcity','class'=>'bold form-control width-96-percent-and-margin-8 dropdown-toggle mandatory','id'=>'pickupcity','placeholder'=>'Pick up City','value'=>$pickupcity));?><div class="hide-me"><?php echo form_input(array('name'=>'pickupcitylat','id'=>'pickupcitylat','value'=>$pickupcitylat)).form_input(array('name'=>'pickupcitylng','id'=>'pickupcitylng','value'=>$pickupcitylng));?></div><?php
 									echo $this->form_functions->form_error_session('pickupcity', '<p class="text-red">', '</p>');
 									 ?>
                                             <ul class="dropdown-menu dropdown-menu-on-key-press autofill-pickupcity">
@@ -396,7 +396,7 @@ $customer_type='';
 									<div class="form-group">
 										  <div class="input-group-btn ">
 									<?php 
-									echo form_input(array('name'=>'dropdownlocation','class'=>'form-control width-96-percent-and-margin-8 mandatory','id'=>'dropdownlocation','placeholder'=>'Drop Down City','value'=>$dropdownlocation));?><div class="hide-me"><?php echo form_input(array('name'=>'dropdownlocationlat','id'=>'dropdownlocationlat','value'=>$dropdownlocationlat)).form_input(array('name'=>'dropdownlocationlng','id'=>'dropdownlocationlng','value'=>$dropdownlocationlng));?></div><?php
+									echo form_input(array('name'=>'dropdownlocation','class'=>'bold form-control width-96-percent-and-margin-8 mandatory','id'=>'dropdownlocation','placeholder'=>'Drop Down City','value'=>$dropdownlocation));?><div class="hide-me"><?php echo form_input(array('name'=>'dropdownlocationlat','id'=>'dropdownlocationlat','value'=>$dropdownlocationlat)).form_input(array('name'=>'dropdownlocationlng','id'=>'dropdownlocationlng','value'=>$dropdownlocationlng));?></div><?php
 									echo $this->form_functions->form_error_session('dropdownlocation', '<p class="text-red">', '</p>');
 									 ?>
 											 <ul class="dropdown-menu dropdown-menu-on-key-press autofill-dropdownlocation">
