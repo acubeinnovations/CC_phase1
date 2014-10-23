@@ -263,7 +263,7 @@ function get_sales_order_header($order_no, $trans_type)
 //----------------------------------------------------------------------------------------
 
 function get_sales_order_details($order_no, $trans_type) {
-	$sql = "SELECT id, stk_code, unit_price, trip_voucher, "
+	$sql = "SELECT id, stk_code, unit_price, trip_voucher,"
 		.TB_PREF."sales_order_details.description,"
 		.TB_PREF."sales_order_details.quantity,
 		  discount_percent,
@@ -320,7 +320,7 @@ function read_sales_order($order_no, &$order, $trans_type)
 		{
 			$order->add_to_cart($line_no,$myrow["stk_code"],$myrow["quantity"],
 				$myrow["unit_price"], $myrow["discount_percent"],
-				$myrow["qty_done"], $myrow["standard_cost"], $myrow["description"], $myrow["id"],0,0,$myrow["trip_voucher"] );
+				$myrow["qty_done"], $myrow["standard_cost"], $myrow["description"], $myrow["id"],0,0,$myrow["trip_voucher"]);
 		$line_no++;
 		}
 	}

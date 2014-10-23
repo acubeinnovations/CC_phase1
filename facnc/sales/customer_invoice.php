@@ -493,6 +493,7 @@ $has_marked = false;
 $show_qoh = true;
 
 $dn_line_cnt = 0;
+	
 
 foreach ($_SESSION['Items']->line_items as $line=>$ln_itm) {
 	if ($ln_itm->quantity == $ln_itm->qty_done) {
@@ -518,6 +519,8 @@ foreach ($_SESSION['Items']->line_items as $line=>$ln_itm) {
 	$display_discount_percent = percent_format($ln_itm->discount_percent*100) . " %";
 
 	$line_total = ($ln_itm->qty_dispatched * $ln_itm->price * (1 - $ln_itm->discount_percent));
+
+	
 
 	amount_cell($ln_itm->price);
 	label_cell($ln_itm->tax_type_name);
@@ -576,7 +579,10 @@ label_row(_("Sub-total"), $display_sub_total, "colspan=$colspan align=right","al
 $taxes = $_SESSION['Items']->get_taxes(input_num('ChargeFreightCost'));
 $tax_total = display_edit_tax_items($taxes, $colspan, $_SESSION['Items']->tax_included, $is_batch_invoice ? 2:0);
 
+
 $display_total = price_format(($inv_items_total + input_num('ChargeFreightCost') + $tax_total));
+
+
 
 label_row(_("Invoice Total"), $display_total, "colspan=$colspan align=right","align=right", $is_batch_invoice ? 2 : 0);
 

@@ -53,8 +53,10 @@ function void_customer_trans_details($type, $type_no)
 //----------------------------------------------------------------------------------------
 
 function write_customer_trans_detail_item($debtor_trans_type, $debtor_trans_no, $stock_id, $description,
-	$quantity, $unit_price, $unit_tax, $discount_percent, $std_cost, $src_id, $line_id=0,$trip_voucher=0)
+	$quantity, $unit_price, $unit_tax, $discount_percent, $std_cost, $src_id, $line_id=0,$trip_voucher=0,$unit_taxable_amount)
 {
+
+	
 	if ($line_id!=0)
 		$sql = "UPDATE ".TB_PREF."debtor_trans_details SET
 			stock_id=".db_escape($stock_id).",
@@ -69,11 +71,11 @@ function write_customer_trans_detail_item($debtor_trans_type, $debtor_trans_no, 
 	else
 			$sql = "INSERT INTO ".TB_PREF."debtor_trans_details (debtor_trans_no,
 				debtor_trans_type, stock_id, description, quantity, unit_price,
-				unit_tax, discount_percent, standard_cost, src_id,trip_voucher)
+				unit_tax, discount_percent, standard_cost, src_id,trip_voucher,unit_taxable_amount)
 			VALUES (".db_escape($debtor_trans_no).", ".db_escape($debtor_trans_type).", ".db_escape($stock_id).
 			", ".db_escape($description).",
 				$quantity, $unit_price, $unit_tax, 
-				$discount_percent, $std_cost,".db_escape($src_id).",".db_escape($trip_voucher).")";
+				$discount_percent, $std_cost,".db_escape($src_id).",".db_escape($trip_voucher).",$unit_taxable_amount)";
 
 	db_query($sql, "The debtor transaction detail could not be written");
 }

@@ -85,15 +85,19 @@ function write_sales_invoice(&$invoice)
 			$invoice_line->price * $qty, 0, $invoice->tax_included,
 			$invoice->tax_group_array);
 
+		//$line_tax = get_full_price_for_item($invoice_line->stock_id,
+			//$invoice_line->price * $qty, 0, $invoice->tax_included,
+			//$invoice->tax_group_array) - $line_taxfree_price;
+
 		$line_tax = get_full_price_for_item($invoice_line->stock_id,
 			$invoice_line->price * $qty, 0, $invoice->tax_included,
-			$invoice->tax_group_array) - $line_taxfree_price;
+			$invoice->tax_group_array) - $invoice_line->unit_taxable_amount;
 
 		write_customer_trans_detail_item(ST_SALESINVOICE, $invoice_no, $invoice_line->stock_id,
 			$invoice_line->item_description, $invoice_line->qty_dispatched,
 			$invoice_line->line_price(), $qty ? $line_tax/$qty : 0, $invoice_line->discount_percent,
 			$invoice_line->standard_cost, $invoice_line->src_id,
-			$trans_no ? $invoice_line->id : 0,$invoice_line->trip_voucher);
+			$trans_no ? $invoice_line->id : 0,$invoice_line->trip_voucher,$invoice_line->unit_taxable_amount);
 
 		// Update delivery items for the quantity invoiced
 		if ($invoice_line->qty_old != $invoice_line->qty_dispatched)

@@ -448,6 +448,10 @@ if (isset($_POST['ProcessOrder']) && can_process()) {
 	$modified = ($_SESSION['Items']->trans_no != 0);
 	$so_type = $_SESSION['Items']->so_type;
 
+	//echo "<pre>";
+	//print_r($_SESSION['Items']);
+	//echo "</pre>";exit;
+
 	$ret = $_SESSION['Items']->write(1);
 	if ($ret == -1)
 	{

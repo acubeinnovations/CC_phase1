@@ -68,8 +68,14 @@ function write_sales_delivery(&$delivery,$bo_policy)
 			$delivery_line->price, 0, $delivery->tax_included,
 			$delivery->tax_group_array);
 
+		//$line_tax = get_full_price_for_item($delivery_line->stock_id, $delivery_line->price,
+			//0, $delivery->tax_included, $delivery->tax_group_array) - $line_taxfree_price;
+
 		$line_tax = get_full_price_for_item($delivery_line->stock_id, $delivery_line->price,
-			0, $delivery->tax_included, $delivery->tax_group_array) - $line_taxfree_price;
+			0, $delivery->tax_included, $delivery->tax_group_array) - $delivery_line->unit_taxable_amount;
+		
+
+
 
 		//if ($trans_no != 0) // Inserted 2008-09-25 Joe Hunt. This condition is removed after experience by Chaitanya
 			$delivery_line->standard_cost = get_standard_cost($delivery_line->stock_id);
@@ -79,7 +85,7 @@ function write_sales_delivery(&$delivery,$bo_policy)
 			$delivery_line->item_description, $delivery_line->qty_dispatched,
 			$delivery_line->line_price(), $line_tax,
 			$delivery_line->discount_percent, $delivery_line->standard_cost, $delivery_line->src_id,
-			$trans_no ? $delivery_line->id : 0, $delivery_line->trip_voucher);
+			$trans_no ? $delivery_line->id : 0, $delivery_line->trip_voucher,$delivery_line->unit_taxable_amount);
 
 	// Now update sales_order_details for the quantity delivered
 		if ($delivery_line->qty_old != $delivery_line->qty_dispatched)
