@@ -367,7 +367,7 @@ class Trip_booking extends CI_Controller {
 					if($dbdata['trip_status_id']==TRIP_STATUS_CONFIRMED){
 						$this->SendTripConfirmation($dbdata,$res,$customer);
 					}
-				 redirect(base_url().'organization/front-desk/trip-booking');
+				
 				}else{
 					$this->session->set_userdata(array('dbError'=>'Trip Booked unsuccesfully..!!'));
 					$this->session->set_userdata(array('dbSuccess'=>''));
@@ -407,7 +407,7 @@ class Trip_booking extends CI_Controller {
 						}
 					}
 				}
-				redirect(base_url().'organization/front-desk/trip-booking');
+				 redirect(base_url().'organization/front-desk/trip-booking');
 			}
 		}
 		}else if(isset($_REQUEST['cancel_trip'])){
@@ -444,22 +444,22 @@ class Trip_booking extends CI_Controller {
 	}
 	public function tripVoucher(){
 	if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['garageclosingkm'] && $_REQUEST['garageclosingtime'] && $_REQUEST['trip_id']){
-	$data['start_km_reading']=$_REQUEST['startkm'];
-	$data['end_km_reading']=$_REQUEST['endkm'];
-	$data['driver_id']=$_REQUEST['driver_id'];
-	$data['garage_closing_kilometer_reading']=$_REQUEST['garageclosingkm'];
-	$data['garage_closing_time']=$_REQUEST['garageclosingtime'];
-	$data['releasing_place']=$_REQUEST['releasingplace'];
-	$data['parking_fees']=$_REQUEST['parkingfee'];
-	$data['toll_fees']=$_REQUEST['tollfee'];
-	$data['state_tax']=$_REQUEST['statetax'];
-	$data['night_halt_charges']=$_REQUEST['nighthalt'];
-	$data['fuel_extra_charges']=$_REQUEST['extrafuel'];
-	$data['total_trip_amount']=$_REQUEST['totexpense'];
-	$data['no_of_days']=$_REQUEST['no_of_days'];
-	$data['user_id']=$this->session->userdata('id');
-	$data['trip_id']=$_REQUEST['trip_id'];
-	$data['organisation_id']=$this->session->userdata('organisation_id');
+	$data['start_km_reading']					=	$_REQUEST['startkm'];
+	$data['end_km_reading']						=	$_REQUEST['endkm'];
+	$data['driver_id']							=	$_REQUEST['driver_id'];
+	$data['garage_closing_kilometer_reading']	=	$_REQUEST['garageclosingkm'];
+	$data['garage_closing_time']				=	$_REQUEST['garageclosingtime'];
+	$data['releasing_place']					=	$_REQUEST['releasingplace'];
+	$data['parking_fees']						=	$_REQUEST['parkingfee'];
+	$data['toll_fees']							=	$_REQUEST['tollfee'];
+	$data['state_tax']							=	$_REQUEST['statetax'];
+	$data['night_halt_charges']					=	$_REQUEST['nighthalt'];
+	$data['fuel_extra_charges']					=	$_REQUEST['extrafuel'];
+	$data['total_trip_amount']					=	$_REQUEST['totexpense'];
+	$data['no_of_days']							=	$_REQUEST['no_of_days'];
+	$data['user_id']							=	$this->session->userdata('id');
+	$data['trip_id']							=	$_REQUEST['trip_id'];
+	$data['organisation_id']					=	$this->session->userdata('organisation_id');
 
 	$voucher=$this->getVouchers($data['trip_id'],$ajax='NO');
 	if($voucher==false){
