@@ -601,3 +601,7 @@ border:1px solid #333;
 .td-width-50-percent{
 width:50%;
 }
+
+.bold{
+	font-weight:bold;
+}
