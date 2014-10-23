@@ -1372,7 +1372,8 @@ public function profile() {
 	public function getNotifications(){
 	if(isset($_REQUEST['notify']) ){
 	$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING,'CONCAT(pick_up_date," ",pick_up_time) >='=>date('Y-m-d H:i'),'organisation_id'=>$this->session->userdata('organisation_id'));
-	$orderby = ' CONCAT(pick_up_date,pick_up_time) ASC';
+	//$where_or=array('trip_status_id'=>TRIP_STATUS_CONFIRMED,'trip_status_id'=>TRIP_STATUS_ONTRIP);
+	$orderby = ' CONCAT(pick_up_date," ",pick_up_time) ASC';
 	$notification=$this->trip_booking_model->getDetails($conditon,$orderby);
 	$customers_array=$this->customers_model->getArray();
 	$json_data=array('notifications'=>$notification,'customers'=>$customers_array);

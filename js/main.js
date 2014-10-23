@@ -1187,7 +1187,7 @@ if(current_loc[current_loc.length-1]=='trip-booking' || current_loc[current_loc.
 notify();
 }
 
-}, 5000);
+}, 60000);
 
 
 function notify(){
@@ -1195,7 +1195,7 @@ var notify='notify';
 $.post(base_url+"/user/getNotifications",
 		  {
 			notify:notify
-		  },function(data){
+		  },function(data){//alert(data);
 			data=jQuery.parseJSON(data);
 			var notify_content='';
 			for(var i=0;i<data['notifications'].length;i++){
