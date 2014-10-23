@@ -16,6 +16,18 @@ public function getDriverDetails($data){
 	return $this->db->get()->result_array();
 	
 	}
+	public function getCurrentStatuses($id){ 
+	$qry='SELECT * FROM trips WHERE CONCAT(pick_up_date," ",pick_up_time) <= NOW() AND CONCAT(drop_date," ",drop_time) >= NOW() AND driver_id="'.$id.'" AND organisation_id = '.$this->session->userdata('organisation_id').' AND trip_status_id='.TRIP_STATUS_CONFIRMED;
+	$results=$this->db->query($qry);
+	$results=$results->result_array();
+	if(count($results)>0){
+	
+		return $results;
+	}else{
+		return false;
+	}
+	}
+
 	public function getDrivers(){ 
 	$qry='SELECT D.name,D.id,D.mobile,VD.from_date,VD.to_date,VD.driver_id,VD.vehicle_id FROM drivers AS D LEFT JOIN vehicle_drivers AS VD ON  D.id =VD.driver_id AND D.organisation_id = '.$this->session->userdata('organisation_id').' WHERE VD.organisation_id = '.$this->session->userdata('organisation_id').' AND VD.to_date="9999-12-30"';
 	$results=$this->db->query($qry);

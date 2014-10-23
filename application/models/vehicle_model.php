@@ -33,7 +33,17 @@ public function getVehicles(){
 		return false;
 	}
 	}
-
+public function getCurrentStatuses($id){ 
+	$qry='SELECT * FROM trips WHERE CONCAT(pick_up_date," ",pick_up_time) <= NOW() AND CONCAT(drop_date," ",drop_time) >= NOW() AND vehicle_id="'.$id.'" AND organisation_id = '.$this->session->userdata('organisation_id').' AND trip_status_id='.TRIP_STATUS_CONFIRMED;
+	$results=$this->db->query($qry);
+	$results=$results->result_array();
+	if(count($results)>0){
+	
+		return $results;
+	}else{
+		return false;
+	}
+	}
 	
 public function insertInsurance($data){
 $v_id=$this->mysession->get('vehicle_id');

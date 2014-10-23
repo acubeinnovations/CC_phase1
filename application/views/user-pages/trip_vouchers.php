@@ -1,4 +1,26 @@
     <div class="page-outer">
+		<fieldset class="body-border">
+		<legend class="body-head">Search</legend><div class="form-group">
+			<div class="box-body table-responsive no-padding">
+			
+			<?php echo form_open(base_url()."organization/front-desk/tripvouchers"); ?>
+			<table class="table list-trip-table no-border">
+				<tbody>
+					<tr>
+						<!--<td><?php echo form_input(array('name'=>'customer','class'=>'customer form-control' ,'placeholder'=>'Customer name','value'=>$customer)); ?></td>-->
+					    <td><?php echo form_input(array('name'=>'trip_id','class'=>'trip_id form-control' ,'placeholder'=>'Trip Id','value'=>$trip_id)); ?></td>
+					<td><?php echo form_input(array('name'=>'from_date','class'=>'initialize-date-picker form-control' ,'placeholder'=>'From Date','value'=>$from_date)); ?></td>
+						<td><?php echo form_input(array('name'=>'to_date','class'=>'initialize-date-picker form-control' ,'placeholder'=>'To Date','value'=>$to_date)); ?> </td>
+						 
+					    <td><?php echo form_submit("voucher_search","Search","class='btn btn-primary'");
+echo form_close();?></td>
+						
+						
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</fieldset>
 	   <fieldset class="body-border">
 		<legend class="body-head">Trip Vouchers</legend><div class="form-group">
 		<div class="box-body table-responsive no-padding">
@@ -88,7 +110,7 @@
 					//}
 					?>
 				</tbody>
-			</table><?php //echo $page_links;?>
+			</table><?php echo $page_links;?>
 		</div>
 </div>
 </fieldset>

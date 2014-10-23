@@ -16,7 +16,7 @@ $customer_group		=	'';
 $guestname			=	'';
 $guestemail			=	'';
 $guestmobile		=	'';
-
+$remarks			=	'';
 
 $trip_model			=	'';		
 $no_of_passengers	=	'';
@@ -132,7 +132,7 @@ $pickupdatepicker			=	$data['pickupdatepicker'];
 $dropdatepicker				=	$data['dropdatepicker'];
 $pickuptimepicker			=	$data['pickuptimepicker'];
 $droptimepicker 			=	$data['droptimepicker'];
-
+$remarks					=	$data['remarks'];
 if($data['vehicle_type']!=-1){
 $vehicle_type 				=	$data['vehicle_type'];
 }
@@ -698,6 +698,21 @@ $customer_type='';
 									</table>
                                 </div><!-- /.box-body -->
                             </div>
+					</fieldset>
+				</div>
+				<div class="booking-source">
+					<fieldset class="body-border">
+					<legend class="body-head font-size-18-px">Remarks</legend>
+					<?php	$data = array(
+						  'name'        => 'remarks',
+						  'id'          => 'txt_area',
+						  'value'       => $remarks,
+						  'rows'        => '2',
+						  'cols'        => '10',
+						  'style'       => 'width:100%',
+						);
+
+  					echo form_textarea($data);?>
 					</fieldset>
 				</div>
 

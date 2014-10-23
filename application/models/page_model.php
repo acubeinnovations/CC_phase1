@@ -59,8 +59,38 @@ function getCount($tbl){
 		if(!empty($order_arry) && count($order_arry) > 0){
 		$this->db->order_by($order_arry);
 		}
-		$qry= $this->db->get($tbl,$num,$offset);
+		$qry= $this->db->get($tbl,$num,$offset);//echo $this->db->last_query();
 	   return $qry->result_array();
+	}
+
+	
+	function getCustomCount($qry){
+	
+	$result=$this->db->query($qry);
+	$result=$result->result_array();
+	if(count($result)>0){
+		return count($result);
+	}else{
+		return false;
+	}
+
+	}
+	
+
+	function getCustomDetails($num,$offset,$qry) {
+	
+	if($offset==''){
+		$qry.=' LIMIT '.$num;
+	}else{
+	 $qry.=' LIMIT '.$offset.','.$num;
+	}
+	$result=$this->db->query($qry);
+	$result=$result->result_array();//echo $this->db->last_query();
+	if(count($result)>0){
+		return $result;
+	}else{
+		return false;
+	}
 	}
 }
 ?>

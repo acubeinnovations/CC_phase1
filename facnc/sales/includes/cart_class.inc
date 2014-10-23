@@ -76,6 +76,7 @@ class cart
 	var $trip_ref;
 
 
+
 	
 	
 	
@@ -271,6 +272,9 @@ class cart
 	// Makes parent documents for direct delivery/invoice by recurent call.
 	// $policy - 0 or 1:  writeoff/return for IV, back order/cancel for DN
 	function write($policy=0) { 
+		
+		
+
 		begin_transaction(); // prevents partial database changes in case of direct delivery/invoice
 		if ($this->reference != 'auto' && $this->trans_no == 0 && !is_new_reference($this->reference, $this->trans_type))
 		{
@@ -303,6 +307,7 @@ class cart
 			$this->line_items[$lineno]->stock_id = @html_entity_decode($line->stock_id, ENT_QUOTES);
 			$this->line_items[$lineno]->item_description = @html_entity_decode($line->item_description, ENT_QUOTES);
 		}
+		
 		switch($this->trans_type) {
 			case ST_SALESINVOICE:
 				$ret = write_sales_invoice($this); break;
@@ -373,10 +378,10 @@ class cart
 	}
 
 	function add_to_cart($line_no, $stock_id, $qty, $price, $disc, $qty_done=0, $standard_cost=0, $description=null, $id=0, $src_no=0,
-		$src_id=0)
+		$src_id=0,$trip_voucher=0)
 	{
 		$line = new line_details($stock_id, $qty, $price, $disc,
-			$qty_done,  $standard_cost, $description, $id, $src_no, $src_id);
+			$qty_done,  $standard_cost, $description, $id, $src_no, $src_id,$trip_voucher);
 
 		if ($line->valid) {
 			$this->line_items[$line_no] = $line;
@@ -599,7 +604,7 @@ class line_details
 
 
 	function line_details ($stock_id, $qty, $prc, $disc_percent,
-		$qty_done, $standard_cost, $description, $id=0, $src_no=0, $src_id=0)
+		$qty_done, $standard_cost, $description, $id=0, $src_no=0, $src_id=0,$trip_voucher=0)
 	{
 	/* Constructor function to add a new LineDetail object with passed params */
 
@@ -629,6 +634,7 @@ class line_details
 		$this->qty_done = $qty_done;
 		$this->standard_cost = $standard_cost;
 		$this->valid = true;
+		$this->trip_voucher = $trip_voucher;
 	}
 
 	// get unit price as stated on document

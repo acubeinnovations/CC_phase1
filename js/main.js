@@ -267,7 +267,7 @@ $('#reccurent_alternatives_droptimepicker'+i).datetimepicker({datepicker:false,
 
 
 }
-
+if($('#vehicle-type').val()!=-1 && $('#vehicle-ac-type').val()!=-1 && $('#vehicle-make').val()!=-1 && $('#vehicle-model').val()!=-1){
 
 if($('.vehicle-tarif-checker').attr('tariff_id')!='' && $('.vehicle-tarif-checker').attr('available_vehicle_id')!=''){
 
@@ -279,10 +279,13 @@ GenerateVehiclesAndTarif(tariff_id,available_vehicle_id);
 available_vehicle_id=$('.vehicle-tarif-checker').attr('available_vehicle_id');
 GenerateVehiclesAndTarif(tariff_id='',available_vehicle_id);
 }else if($('.vehicle-tarif-checker').attr('tariff_id')!=''){
-tariff_id=$('.vehicle-tarif-checker').attr('tariff_id');
+tariff_id=$('.vehicle-tarif-checker').attr('tariff_id');//alert(tariff_id);
 GenerateVehiclesAndTarif(tariff_id,available_vehicle_id='');
+}else{
+GenerateVehiclesAndTarif(tarif_id='',available_vehicle_id='');
 }
 
+}
 
 }
 
@@ -330,10 +333,7 @@ $('.guest-toggle').toggle();
 
 
 });
-if($('#vehicle-type').val()!=-1 && $('#vehicle-ac-type').val()!=-1){
 
-
-}
 
 
 

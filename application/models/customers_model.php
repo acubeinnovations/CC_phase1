@@ -31,6 +31,18 @@ class Customers_model extends CI_Model {
 		}
 	
 	}
+	public function getCurrentStatuses($id){ 
+	$qry='SELECT * FROM trips WHERE CONCAT(pick_up_date," ",pick_up_time) <= NOW() AND CONCAT(drop_date," ",drop_time) >= NOW() AND customer_id="'.$id.'" AND organisation_id = '.$this->session->userdata('organisation_id').' AND trip_status_id='.TRIP_STATUS_CONFIRMED;
+	$results=$this->db->query($qry);
+	$results=$results->result_array();//echo $this->db->last_query();
+	if(count($results)>0){
+	
+		return $results;
+	}else{
+		return false;
+	}
+	}
+	
 	function  updateCustomers($data,$id) {
 	$this->db->where('id',$id );
 	$this->db->set('updated', 'NOW()', FALSE);

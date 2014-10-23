@@ -616,6 +616,7 @@ CREATE TABLE IF NOT EXISTS `0_debtor_trans_details` (
   `standard_cost` double NOT NULL DEFAULT '0',
   `qty_done` double NOT NULL DEFAULT '0',
   `src_id` int(11) NOT NULL,
+  `trip_voucher` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `Transaction` (`debtor_trans_type`,`debtor_trans_no`),
   KEY `src_id` (`src_id`)
@@ -1245,6 +1246,7 @@ CREATE TABLE IF NOT EXISTS `0_sales_order_details` (
   `unit_price` double NOT NULL DEFAULT '0',
   `quantity` double NOT NULL DEFAULT '0',
   `discount_percent` double NOT NULL DEFAULT '0',
+  `trip_voucher` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sorder` (`trans_type`,`order_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

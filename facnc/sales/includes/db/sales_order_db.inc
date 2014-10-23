@@ -12,6 +12,7 @@
 //----------------------------------------------------------------------------------------
 function add_sales_order(&$order)
 {
+	
 	global $loc_notification, $path_to_root, $Refs;
 
 	begin_transaction();
@@ -57,12 +58,13 @@ function add_sales_order(&$order)
 		if ($loc_notification == 1 && is_inventory_item($line->stock_id))
 			$loc = calculate_reorder_level($order->Location, $line, $st_ids, $st_names, $st_num, $st_reorder); 
 
-		$sql = "INSERT INTO ".TB_PREF."sales_order_details (order_no, trans_type, stk_code, description, unit_price, quantity, discount_percent) VALUES (";
+		$sql = "INSERT INTO ".TB_PREF."sales_order_details (order_no, trans_type, stk_code, description, unit_price, quantity, discount_percent, trip_voucher) VALUES (";
 		$sql .= $order_no . ",".$order->trans_type .
 				",".db_escape($line->stock_id).", "
 				.db_escape($line->item_description).", $line->price,
 				$line->quantity,
-				$line->discount_percent)";
+				$line->discount_percent,".db_escape($line->trip_voucher).")";
+
 		db_query($sql, "order Details Cannot be Added");
 
 	// Now mark quotation line as processed
@@ -261,7 +263,7 @@ function get_sales_order_header($order_no, $trans_type)
 //----------------------------------------------------------------------------------------
 
 function get_sales_order_details($order_no, $trans_type) {
-	$sql = "SELECT id, stk_code, unit_price, "
+	$sql = "SELECT id, stk_code, unit_price, trip_voucher, "
 		.TB_PREF."sales_order_details.description,"
 		.TB_PREF."sales_order_details.quantity,
 		  discount_percent,
@@ -318,7 +320,7 @@ function read_sales_order($order_no, &$order, $trans_type)
 		{
 			$order->add_to_cart($line_no,$myrow["stk_code"],$myrow["quantity"],
 				$myrow["unit_price"], $myrow["discount_percent"],
-				$myrow["qty_done"], $myrow["standard_cost"], $myrow["description"], $myrow["id"] );
+				$myrow["qty_done"], $myrow["standard_cost"], $myrow["description"], $myrow["id"],0,0,$myrow["trip_voucher"] );
 		$line_no++;
 		}
 	}
