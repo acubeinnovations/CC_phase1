@@ -582,7 +582,8 @@ class User extends CI_Controller {
 				if($_REQUEST['trip_pick_date']!=null && $_REQUEST['trip_drop_date']!=null){
 					$data['trip_pick_date']=$_REQUEST['trip_pick_date'];
 					$data['trip_drop_date']=$_REQUEST['trip_drop_date'];
-					$qry.=' AND T.pick_up_date >="'.$_REQUEST['trip_pick_date'].'" AND T.drop_date <="'.$_REQUEST['trip_drop_date'].'"';
+					//$qry.=' AND T.pick_up_date >='.$_REQUEST['trip_pick_date'].' AND T.drop_date <='.$_REQUEST['trip_drop_date'];
+					$qry.=' AND T.pick_up_date BETWEEN "'.$_REQUEST['trip_pick_date'].'" AND "'.$_REQUEST['trip_drop_date'].'" AND T.drop_date BETWEEN "'.$_REQUEST['trip_pick_date'].'" AND "'.$_REQUEST['trip_drop_date'].'"';		
 					$where_arry['trip_pick_date']=$_REQUEST['trip_pick_date'];
 					$where_arry['trip_drop_date']=$_REQUEST['trip_drop_date'];
 				}else if($_REQUEST['trip_pick_date']!=null){
@@ -622,11 +623,11 @@ class User extends CI_Controller {
 				if(isset($condition['where']['trip_pick_date'])  && isset($condition['where']['trip_drop_date']) ){
 				$data['trip_pick_date']=$condition['where']['trip_pick_date'];
 				$data['trip_drop_date']=$condition['where']['trip_drop_date'];
-				$qry.=' AND T.pick_up_date >="'.$condition['where']['trip_pick_date'].'" AND T.drop_date <="'.$condition['where']['trip_drop_date'].'"';
-				
+				//$qry.=' AND T.pick_up_date >="'.$condition['where']['trip_pick_date'].'" AND T.drop_date <="'.$condition['where']['trip_drop_date'].'"';
+				$qry.=' AND T.pick_up_date BETWEEN "'.$condition['where']['trip_pick_date'].'" AND "'.$condition['where']['trip_drop_date'].'" AND T.drop_date BETWEEN "'.$condition['where']['trip_pick_date'].'" AND "'.$condition['where']['trip_drop_date'].'"';
 				}else if(isset($condition['where']['trip_pick_date'])){
 				$data['trip_pick_date']=$condition['where']['trip_pick_date'];
-				$qry.='AND T.pick_up_date ="'.$condition['where']['trip_pick_date'].'"';
+				$qry.=' AND T.pick_up_date ="'.$condition['where']['trip_pick_date'].'"';
 				
 				}else if(isset($condition['where']['trip_drop_date'])){
 				$data['trip_drop_date']=$condition['where']['trip_drop_date'];
@@ -664,7 +665,7 @@ class User extends CI_Controller {
 			/*if($param2=='1'){
 				$param2=0;
 			}*/
-			
+			//echo $qry;exit;
 			$data['vehicles']=$this->trip_booking_model->getVehiclesArray($condition='');
 			$data['drivers']=$this->driver_model->getDriversArray($condition=''); 
 			$paginations=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
