@@ -225,11 +225,11 @@ $('#reccurent_continues_dropdatepicker').daterangepicker({format: 'MM/DD/YYYY'})
 
 $('#reccurent_continues_pickuptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#reccurent_continues_droptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 
 
@@ -256,11 +256,11 @@ $('#reccurent_alternatives_dropdatepicker'+i).datetimepicker({timepicker:false,f
 
 $('#reccurent_alternatives_pickuptimepicker'+i).datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#reccurent_alternatives_droptimepicker'+i).datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 }
 }
@@ -306,11 +306,11 @@ $('#pickupdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDat
 $('#dropdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
 $('#pickuptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#droptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 
 
@@ -358,11 +358,11 @@ $('#reccurent_continues_dropdatepicker').daterangepicker({format: 'MM/DD/YYYY'})
 
 $('#reccurent_continues_pickuptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#reccurent_continues_droptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 
 
@@ -383,11 +383,11 @@ $('#reccurent_alternatives_dropdatepicker0').datetimepicker({timepicker:false,fo
 
 $('#reccurent_alternatives_pickuptimepicker0').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#reccurent_alternatives_droptimepicker0').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 
 });
@@ -408,11 +408,11 @@ $('#reccurent_alternatives_dropdatepicker'+count).datetimepicker({timepicker:fal
 
 $('#reccurent_alternatives_pickuptimepicker'+count).datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#reccurent_alternatives_droptimepicker'+count).datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 
 $('.add-reccurent-dates').attr('count',Number(count)+1);
