@@ -187,10 +187,10 @@ function print_invoices()
 			$words = price_in_words_custom($myrow['Total']);
 			$rep->row = $rep->words_row;	
 			$rep->NewLine();
+			$rep->Text($rep->words_column, "Rupees : ");
 			if ($words != "")
-				$rep->TextWrapLines($rep->words_column, $rep->words_column + 250,"Rupees : ".$words." Only", 'right');
-			else
-				$rep->Text($rep->words_column, "Rupees : ");
+				$rep->TextWrapLines($rep->words_column+50, $rep->words_column + 200, $words." Only", 'left');
+			
 
 			$rep->NewLine(3);
 			$rep->Text($rep->words_column+100,"Net Payable ".$DisplayBalance);
