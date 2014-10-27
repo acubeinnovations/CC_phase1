@@ -1,8 +1,10 @@
-<div class="page-outer">    
-	<fieldset class="body-border">
-		<legend class="body-head">Trip List</legend>
-		
-				<div class="box-body table-responsive no-padding">
+<?php
+set_time_limit(0);
+header("Content-type: application/vnd.ms-excel");
+header("Content-Disposition: attachment; filename=Fee_Details.xls");
+header("Cache-Control: cache, must-revalidate");
+header("Pragma: public");
+?>
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr>	
@@ -87,7 +89,4 @@
 					?>
 				</tbody>
 			</table>
-		</div>
 		
-	</fieldset>
-</div>
