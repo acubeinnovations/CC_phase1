@@ -56,9 +56,20 @@ class Download_xl extends CI_Controller {
 	$name= $this->input->get('name');
 	$city= $this->input->get('city');
 	$qry='select * from drivers where organisation_id='.$this->session->userdata('organisation_id');
-		if($name!=null && $city!=null){
-		$qry.=' AND T.drop_date ="'.$_REQUEST['trip_drop_date'].'"';
+		if(isset($name)&& $name!=null && isset($city)&& $city!=null){
+		$qry.=' AND name LIKE "%'.$name.'%" AND district LIKE "%'.$city.'%" ';
 		}
+		if($name!=null && $city==null){
+		$qry.=' AND name LIKE "%'.$name.'%" ';
+		}
+		if($name==null && $city!=null){
+		$qry.=' AND district LIKE "%'.$city.'%" ';
+		}
+	
+	$data['values']=$this->print_model->all_details($qry);
+	$data['title']='Driver List| '.PRODUCT_NAME;
+	$page='user-pages/print_listDrivers';
+	$this->load_templates($page,$data);	
 
 	}
 

@@ -1,21 +1,25 @@
-<div class="page-outer">    
-	<fieldset class="body-border">
-		<legend class="body-head">Driver List</legend>
-		
-		<table>
+<?php
+set_time_limit(0);
+header("Content-type: application/vnd.ms-excel");
+header("Content-Disposition: attachment; filename=drivers.xls");
+header("Cache-Control: cache, must-revalidate");
+header("Pragma: public");
+?>
+	<table class="table table-hover table-bordered">
+	<tbody>
 		<tr>
-		<td>Name</td>
-		<td>Contact Info</td>
-		<td>Address</td>
+		<th>Name</th>
+		<th>Contact Info</th>
+		<th>Address</th>
+		<th>District</th>
 		</tr>
 		<?php foreach ($values as $val): ?>
 		<tr>
-		<td><?php echo $val['']; ?></td>
-		<td><?php echo $val['']; ?></td>
-		<td><?php echo $val[''];?></td>
+		<td><?php echo $val['name']; ?></td>
+		<td><?php echo $val['phone'].br().$val['mobile']; ?></td>
+		<td><?php echo $val['present_address'];?></td>
+		<td><?php echo $val['district'];?></td>
 		</tr>
 		<?php endforeach;?>
-		</table>
-		
-	</fieldset>
-</div>
+	</tbody>
+	</table>
