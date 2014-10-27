@@ -114,7 +114,7 @@ url=url+'&trip_status='+trip_status;
 
 }
 
-window.location.replace(url);
+window.open(url, '_blank');
 }
 });
 $('.print-driver').on('click',function(){
@@ -130,7 +130,7 @@ if(city!=''){
 url=url+'&city='+city;
 
 }
-window.location.replace(url);
+window.open(url, '_blank');
 }
 });
 $('.print-vehicle').on('click',function(){
@@ -157,7 +157,8 @@ if(vehicle_ownership!='-1'){
 url=url+'&vehicle_ownership='+vehicle_ownership;
 
 }
-window.location.replace(url);
+window.open(url, '_blank');
+//window.location.replace(url);
 }
 
 });
