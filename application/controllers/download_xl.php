@@ -53,12 +53,21 @@ class Download_xl extends CI_Controller {
     public function driverXL(){
 		//echo $this->input->get('name');
 		//echo $this->input->get('age');
-	$name= $this->input->get('name');
-	$city= $this->input->get('city');
+	$name= $_REQUEST['name'];
+	$city= $_REQUEST['city'];
+	echo $name ." ". $city;exit;
 	$qry='select * from drivers where organisation_id='.$this->session->userdata('organisation_id');
 		if($name!=null && $city!=null){
-		$qry.=' AND T.drop_date ="'.$_REQUEST['trip_drop_date'].'"';
+		$qry.=' AND name LIKE "%'.$name.'%" AND district LIKE "%'.$city.'%" ';
 		}
+		if($name!=null){
+		$qry.=' AND name LIKE "%"'.$name.'"%" ';
+		}
+		if($city!=null){
+		$qry.=' AND district LIKE "%"'.$city.'"%" ';
+		}
+	
+	$data['values']=$this->print_model->all_details($qry); print_r($data['values']);exit;
 
 	}
 	public function vehicleXL(){
