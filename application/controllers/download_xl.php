@@ -47,6 +47,7 @@ class Download_xl extends CI_Controller {
     public function driverXL(){
 		//echo $this->input->get('name');
 		//echo $this->input->get('age');
+	
 
 	}
 	public function vehicleXL(){

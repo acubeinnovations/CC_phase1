@@ -37,7 +37,7 @@
 						<td><?php echo form_open( base_url().'organization/front-desk/driver-profile');
 								  echo form_submit("add","Add","class='btn btn-primary'");
 								  echo form_close(); ?></td>
-						<td><?php echo form_button('print-driver','Print',"class='btn btn-primary'"); ?></td>
+						<td><?php echo form_button('print-driver','Print',"class='btn btn-primary print-driver'"); ?></td>
 					</tr>
 				</tbody>
 			</table>

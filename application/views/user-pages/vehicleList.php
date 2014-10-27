@@ -44,7 +44,7 @@
 								  echo form_submit("add","Add","class='btn btn-primary'");
 								  echo form_close(); 
 						?></td>
-						<td><?php echo form_button('print-vehicle','Print',"class='btn btn-primary'"); ?></td>
+						<td><?php echo form_button('print-vehicle','Print',"class='btn btn-primary print-vehicle'"); ?></td>
 					</tr>
 				</tbody>
 			</table>
