@@ -12,12 +12,20 @@ header("Pragma: public");
 					    <th style="width:2%">Trip ID </th>
 					    <th style="width:4%">Booking Date</th>
 					    <th style="width:4%">Pickup Date</th>
-					    <th style="width:11%">Vehicle</th>
-					    <th  style="width:11%">Pickup Loc</th>
+					    <th style="width:11%">Vehicle Reg Number</th>
+						 <th style="width:11%">Vehicle Model</th>
+						 <th style="width:11%">Vehicle Ownerships Types</th>
+					    <th  style="width:11%">Pickup City</th>
+						  <th  style="width:11%">Pickup Area</th>
 					    <th  style="width:11%">Guest</th>
-					    <th style="width:11%">Visit To</th>
-					    <th style="width:11%">Called By</th>						
+						 <th  style="width:11%">Guest Contact</th>
+					    <th style="width:11%">Drop City</th>
+						  <th style="width:11%">Drop Area</th>
+					    <th style="width:11%">Customer</th>	
+						 <th style="width:11%">Customer Group</th>
+						 <th style="width:11%">Customer Contact</th>					
 					    <th style="width:11%">Driver</th>
+						<th style="width:11%">Driver Contact</th>
 					    <th style="width:11%">Status</th>
 					    
 					</tr>
@@ -46,34 +54,41 @@ header("Pragma: public");
 						if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $customer_groups[$trips[$trip_index]['customer_group_id']];}?></td>-->
 					    <td><?php echo $pickdate; ?></td>
 					    <td><?php 
-					    if($trips[$trip_index]['vehicle_id']==gINVALID || $trips[$trip_index]['vehicle_id']==0){echo 'Vehicle Not Allocated';}else{ echo $trips[$trip_index]['registration_number'].br();
-					    }
+					    if($trips[$trip_index]['vehicle_id']==gINVALID || $trips[$trip_index]['vehicle_id']==0){echo 'Vehicle Not Allocated';}else{ echo $trips[$trip_index]['registration_number'];
+					    }?></td><td> <?php 
 					    if($trips[$trip_index]['vehicle_model_id']==gINVALID || $trips[$trip_index]['vehicle_model_id']==0){echo '';}else{ echo $trips[$trip_index]['model'].br();
-					    }
+					    }?></td><td> <?php 
 					    if($trips[$trip_index]['vehicle_ownership_types_id']==gINVALID || $trips[$trip_index]['vehicle_ownership_types_id']==0){echo '';}else{ echo $trips[$trip_index]['ownership'].br();
 					    }
 					    ?></td>
-						 <td><?php echo $trips[$trip_index]['pick_up_city'].br();
+						 <td><?php echo $trips[$trip_index]['pick_up_city'];?></td>
+						 <td><?php 
 									 echo $trips[$trip_index]['pick_up_area'];
 						 ?></td>
 					  <td>
-					  <?php if($trips[$trip_index]['guest_id']==gINVALID || $trips[$trip_index]['guest_id']==0){echo '';}else{ echo $trips[$trip_index]['guest_name'].br().$trips[$trip_index]['guest_info'];
+					  <?php if($trips[$trip_index]['guest_id']==gINVALID || $trips[$trip_index]['guest_id']==0){echo '';}else{ echo $trips[$trip_index]['guest_name'];	} ?></td>
+						 <td><?php 
+						if($trips[$trip_index]['guest_id']==gINVALID || $trips[$trip_index]['guest_id']==0){echo '';}else{ echo $trips[$trip_index]['guest_info'];
 					    } ?>
 					  </td>
-						 <td><?php echo $trips[$trip_index]['drop_city'].br();
+						 <td><?php echo $trips[$trip_index]['drop_city']; ?></td>
+						 <td><?php 
 									echo $trips[$trip_index]['drop_area'];
 						 ?></td>
-					 <td><?php if($trips[$trip_index]['customer_id']==gINVALID || $trips[$trip_index]['customer_id']==0){echo '';}else{ echo $trips[$trip_index]['customer_name'].br();
-					    }
-					    if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $trips[$trip_index]['customer_group'].br();
-					    }
+					 <td><?php if($trips[$trip_index]['customer_id']==gINVALID || $trips[$trip_index]['customer_id']==0){echo '';}else{ echo $trips[$trip_index]['customer_name'];
+					    }?></td>
+						 <td><?php 
+					    if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $trips[$trip_index]['customer_group'];
+					    }?></td>
+						 <td><?php 
 					    if($trips[$trip_index]['customer_id']==gINVALID || $trips[$trip_index]['customer_id']==0){echo '';}else{ echo $trips[$trip_index]['customer_mobile'];
 					    }
 					    ?></td>
 					    
 					  <td><?php
-						if($trips[$trip_index]['driver_id']==gINVALID || $trips[$trip_index]['driver_id']==0){echo 'Driver Not Allocated';}else{ echo $trips[$trip_index]['driver'].br().$trips[$trip_index]['driver_info'];
-					    }
+						if($trips[$trip_index]['driver_id']==gINVALID || $trips[$trip_index]['driver_id']==0){echo 'Driver Not Allocated';}else{ echo $trips[$trip_index]['driver']; } ?></td>
+						 <td><?php if(isset($trips[$trip_index]['driver_info']) && $trips[$trip_index]['driver_info']!=''){ echo $trips[$trip_index]['driver_info'];}
+					   
 						?></td>
 					    <td>
 							<span class="label --><?php echo $status_class[$trips[$trip_index]['trip_status_id']]; ?>"><?php echo $trip_statuses[$trips[$trip_index]['trip_status_id']];?></span>
