@@ -91,6 +91,8 @@ var vehicles=$('#vehicles').val();
 var drivers=$('#drivers').val();
 var trip_status=$('#trip-status').val();
 var url=base_url+'/organization/front-desk/trips?';
+
+if(pickupdatepicker!='' || dropdatepicker!='' || vehicles!='-1' || drivers!='-1' || rip_status!='-1' ){
 if(pickupdatepicker!=''){
 url=url+'pickupdate='+pickupdatepicker;
 
@@ -99,26 +101,27 @@ if(dropdatepicker!=''){
 url=url+'dropdate='+dropdatepicker;
 
 }
-if(vehicles!=''){
+if(vehicles!='-1'){
 url=url+'vehicles='+vehicles;
 
 }
-if(drivers!=''){
+if(drivers!='-1'){
 url=url+'drivers='+drivers;
 
 }
-if(trip_status!=''){
+if(trip_status!='-1'){
 url=url+'trip_status='+trip_status;
 
 }
 
 window.location.replace(url);
-
+}
 });
 $('.print-driver').on('click',function(){
 var name=$('#driver_name').val();
 var city=$('#driver_city').val();
 var url=base_url+'/organization/front-desk/driver?';
+if(name!='' || city!=''){
 if(name!=''){
 url=url+'name='+name;
 
@@ -128,7 +131,7 @@ url=url+'city='+city;
 
 }
 window.location.replace(url);
-
+}
 });
 $('.print-vehicle').on('click',function(){
 
@@ -137,23 +140,25 @@ var vehicle_owner=$('#vehicle-owner').val();
 var vehicle_model=$('#vehicle-model').val();
 var vehicle_ownership=$('#vehicle-ownership').val();
 var url=base_url+'/organization/front-desk/driver?';
+if(reg_num!='' || vehicle_owner!='-1' || vehicle_model!='-1' || vehicle_ownership!='-1' ){
 if(reg_num!=''){
 url=url+'reg_num='+reg_num;
 
 }
-if(vehicle_owner!=''){
+if(vehicle_owner!='-1'){
 url=url+'vehicle_owner='+vehicle_owner;
 
 }
-if(vehicle_model!=''){
+if(vehicle_model!='-1'){
 url=url+'vehicle_model='+vehicle_model;
 
 }
-if(vehicle_ownership!=''){
+if(vehicle_ownership!='-1'){
 url=url+'vehicle_ownership='+vehicle_ownership;
 
 }
 window.location.replace(url);
+}
 
 });
 
@@ -188,6 +193,8 @@ window.location.replace(url);
 			
 	});
 
+});
+
 //for tarrif trigger
 $(document).ready(function(){
 
@@ -221,7 +228,7 @@ function Trim(strInput) {
     }
    return strInput;
 	
-}base_url+'/
+}
 
 var API_KEY='AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
 $(document).ready(function(){
