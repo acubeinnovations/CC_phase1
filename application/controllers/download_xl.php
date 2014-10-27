@@ -6,6 +6,12 @@ class Download_xl extends CI_Controller {
 {
     parent::__construct();
     $this->load->helper('my_helper');
+    $this->load->model('print_model');
+    $this->load->model('driver_model');
+    $this->load->model('vehicle_model');
+    $this->load->model('customers_model');
+    $this->load->model('user_model');
+    $this->load->model('trip_booking_model');
     no_cache();
 
 }
@@ -47,7 +53,12 @@ class Download_xl extends CI_Controller {
     public function driverXL(){
 		//echo $this->input->get('name');
 		//echo $this->input->get('age');
-	
+	$name= $this->input->get('name');
+	$city= $this->input->get('city');
+	$qry='select * from drivers where organisation_id='.$this->session->userdata('organisation_id');
+		if($name!=null && $city!=null){
+		$qry.=' AND T.drop_date ="'.$_REQUEST['trip_drop_date'].'"';
+		}
 
 	}
 	public function vehicleXL(){
