@@ -19,7 +19,7 @@ header("Pragma: public");
 					    <th style="width:11%">Called By</th>						
 					    <th style="width:11%">Driver</th>
 					    <th style="width:11%">Status</th>
-					    <th style="width:13%">Action</th>
+					    
 					</tr>
 					<?php
 					
