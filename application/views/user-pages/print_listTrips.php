@@ -1,7 +1,7 @@
 <?php
 set_time_limit(0);
 header("Content-type: application/vnd.ms-excel");
-header("Content-Disposition: attachment; filename=Fee_Details.xls");
+header("Content-Disposition: attachment; filename=trips.xls");
 header("Cache-Control: cache, must-revalidate");
 header("Pragma: public");
 ?>
@@ -76,7 +76,7 @@ header("Pragma: public");
 					    }
 						?></td>
 					    <td>
-							<!--<span class="label --><?php echo $status_class[$trips[$trip_index]['trip_status_id']]; ?>"><?php echo $trip_statuses[$trips[$trip_index]['trip_status_id']];?><!--</span>--> 
+							<span class="label --><?php echo $status_class[$trips[$trip_index]['trip_status_id']]; ?>"><?php echo $trip_statuses[$trips[$trip_index]['trip_status_id']];?></span>
 						
 						</td>	
 						
@@ -84,7 +84,7 @@ header("Pragma: public");
 					
 					</tr>
 					<?php 
-						$trip_sl_no++;
+						
 						}
 					?>
 				</tbody>
