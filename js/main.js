@@ -90,7 +90,7 @@ var dropdatepicker=$('.dropdatepicker').val();
 var vehicles=$('#vehicles').val();
 var drivers=$('#drivers').val();
 var trip_status=$('#trip-status').val();
-var url=base_url+'/organization/front-desk/trips?';
+var url=base_url+'/organization/front-desk/download_xl/trips?';
 
 if(pickupdatepicker!='' || dropdatepicker!='' || vehicles!='-1' || drivers!='-1' || trip_status!='-1' ){
 if(pickupdatepicker!=''){
@@ -120,7 +120,7 @@ window.location.replace(url);
 $('.print-driver').on('click',function(){
 var name=$('#driver_name').val();
 var city=$('#driver_city').val();
-var url=base_url+'/organization/front-desk/driver?';
+var url=base_url+'/organization/front-desk/download_xl/driver?';
 if(name!='' || city!=''){
 if(name!=''){
 url=url+'name='+name;
@@ -139,7 +139,7 @@ var reg_num=$('#reg_num').val();
 var vehicle_owner=$('#vehicle-owner').val();
 var vehicle_model=$('#vehicle-model').val();
 var vehicle_ownership=$('#vehicle-ownership').val();
-var url=base_url+'/organization/front-desk/driver?';
+var url=base_url+'/organization/front-desk/download_xl/vehicle?';
 if(reg_num!='' || vehicle_owner!='-1' || vehicle_model!='-1' || vehicle_ownership!='-1' ){
 if(reg_num!=''){
 url=url+'reg_num='+reg_num;
