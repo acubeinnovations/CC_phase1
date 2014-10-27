@@ -98,19 +98,19 @@ url=url+'pickupdate='+pickupdatepicker;
 
 }
 if(dropdatepicker!=''){
-url=url+'dropdate='+dropdatepicker;
+url=url+'&dropdate='+dropdatepicker;
 
 }
 if(vehicles!='-1'){
-url=url+'vehicles='+vehicles;
+url=url+'&vehicles='+vehicles;
 
 }
 if(drivers!='-1'){
-url=url+'drivers='+drivers;
+url=url+'&drivers='+drivers;
 
 }
 if(trip_status!='-1'){
-url=url+'trip_status='+trip_status;
+url=url+'&trip_status='+trip_status;
 
 }
 
@@ -127,7 +127,7 @@ url=url+'name='+name;
 
 }
 if(city!=''){
-url=url+'city='+city;
+url=url+'&city='+city;
 
 }
 window.location.replace(url);
@@ -146,15 +146,15 @@ url=url+'reg_num='+reg_num;
 
 }
 if(vehicle_owner!='-1'){
-url=url+'vehicle_owner='+vehicle_owner;
+url=url+'&vehicle_owner='+vehicle_owner;
 
 }
 if(vehicle_model!='-1'){
-url=url+'vehicle_model='+vehicle_model;
+url=url+'&vehicle_model='+vehicle_model;
 
 }
 if(vehicle_ownership!='-1'){
-url=url+'vehicle_ownership='+vehicle_ownership;
+url=url+'&vehicle_ownership='+vehicle_ownership;
 
 }
 window.location.replace(url);

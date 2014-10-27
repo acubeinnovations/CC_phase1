@@ -1,8 +1,10 @@
-<div class="page-outer">    
-	<fieldset class="body-border">
-		<legend class="body-head">Trip List</legend>
-		
-				<div class="box-body table-responsive no-padding">
+<?php
+set_time_limit(0);
+header("Content-type: application/vnd.ms-excel");
+header("Content-Disposition: attachment; filename=trips.xls");
+header("Cache-Control: cache, must-revalidate");
+header("Pragma: public");
+?>
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr>	
@@ -74,7 +76,7 @@
 					    }
 						?></td>
 					    <td>
-							<!--<span class="label --><?php echo $status_class[$trips[$trip_index]['trip_status_id']]; ?>"><?php echo $trip_statuses[$trips[$trip_index]['trip_status_id']];?><!--</span>--> 
+							<span class="label --><?php echo $status_class[$trips[$trip_index]['trip_status_id']]; ?>"><?php echo $trip_statuses[$trips[$trip_index]['trip_status_id']];?></span>
 						
 						</td>	
 						
@@ -82,12 +84,9 @@
 					
 					</tr>
 					<?php 
-						$trip_sl_no++;
+						
 						}
 					?>
 				</tbody>
 			</table>
-		</div>
 		
-	</fieldset>
-</div>
