@@ -1,7 +1,7 @@
 <?php
 set_time_limit(0);
 header("Content-type: application/vnd.ms-excel");
-header("Content-Disposition: attachment; filename=trips.xls");
+header("Content-Disposition: attachment; filename=drivers.xls");
 header("Cache-Control: cache, must-revalidate");
 header("Pragma: public");
 ?>

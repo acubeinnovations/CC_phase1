@@ -72,9 +72,78 @@ class Download_xl extends CI_Controller {
 	$this->load_templates($page,$data);	
 
 	}
+
+
 	public function vehicleXL(){
 		//echo $this->input->get('name');
 		//echo $this->input->get('age');
+	$qry='select * from vehicles where organisation_id='.$this->session->userdata('organisation_id');
+	
+	if(isset($_REQUEST['reg_num'])){
+	$qry.= ' AND registration_number LIKE "%'.$_REQUEST['reg_num'].'%"';
+	}
+	if(isset($_REQUEST['vehicle_owner']) &&$_REQUEST['vehicle_owner'] >0){
+	$qry.= ' AND vehicle_owner_id='.$_REQUEST['vehicle_owner'];
+	}
+	if(isset($_REQUEST['vehicle_ownership']) && $_REQUEST['vehicle_ownership']>0){
+	$qry.= ' AND vehicle_ownership_types_id='.$_REQUEST['vehicle_ownership'];
+	
+	}
+	
+	if(isset($_REQUEST['vehicle_model']) && $_REQUEST['vehicle_model']>0){
+	$qry.= ' AND vehicle_model_id='.$_REQUEST['vehicle_model'];
+	
+	}
+
+	$data['values']=$this->print_model->all_details($qry);
+	$vehicle_trips='';
+	$vehicle_statuses='';
+	for($i=0;$i<count($data['values']);$i++){
+		$id=$data['values'][$i]['id'];
+		$availability=$this->vehicle_model->getCurrentStatuses($id);
+		if($availability==false){
+		$vehicle_statuses[$id]='Available';
+		$vehicle_trips[$id]=gINVALID;
+		}else{
+		$vehicle_statuses[$id]='OnTrip';
+		$vehicle_trips[$id]=$availability[0]['id'];
+		}
+	}
+	$data['vehicle_statuses']=$vehicle_statuses;
+	$data['vehicle_trips']=$vehicle_trips;
+	if(empty($data['values'])){
+	$data['result']="No Results Found !";
+	}
+	for ($i=0;$i<count($data['values']);$i++){
+	$id=$data['values'][$i]['vehicle_owner_id'];
+	$details[$id]=$this->user_model->getOwnerDetails($id);
+	
+	}
+	if(!empty($details)){
+	$data['owner_details']=$details;
+	}
+	
+	$tbl_arry=array('vehicle_models','vehicle_types','vehicle_owners','vehicle_makes','vehicle_ownership_types');
+	$count=count($tbl_arry);
+	for ($i=0;$i<$count;$i++){
+	$result=$this->user_model->getArray($tbl_arry[$i]);
+	if($result!=false){
+	$data[$tbl_arry[$i]]=$result;
+	}
+	else{
+	$data[$tbl_arry[$i]]='';
+	}
+	}
+	$drivers=$this->driver_model->getDrivers();
+	if($drivers!=false){
+	$data['drivers']=$drivers;
+	}else{
+	$data['drivers']='';
+	}
+	$data['title']='List Vehicles | '.PRODUCT_NAME;
+	$page='user-pages/print_listVehicles';
+	
+	$this->load_templates($page,$data);	
 
 	}
 	public function tripsXL(){
@@ -87,7 +156,7 @@ class Download_xl extends CI_Controller {
 				
 				if(isset($_REQUEST['pickupdate']) && isset($_REQUEST['dropdate'])){
 					
-					$qry.=' AND T.pick_up_date BETWEEN "'.$_REQUEST['pickdate'].'" AND "'.$_REQUEST['dropdate'].'" AND T.drop_date BETWEEN "'.$_REQUEST['pickdate'].'" AND "'.$_REQUEST['dropdate'].'"';		
+					$qry.=' AND T.pick_up_date BETWEEN "'.$_REQUEST['pickupdate'].'" AND "'.$_REQUEST['dropdate'].'" AND T.drop_date BETWEEN "'.$_REQUEST['pickupdate'].'" AND "'.$_REQUEST['dropdate'].'"';		
 					
 				}else if(isset($_REQUEST['pickupdate'])){
 				
@@ -96,6 +165,7 @@ class Download_xl extends CI_Controller {
 				}else if(isset($_REQUEST['dropdate'])){
 				
 				$qry.=' AND T.drop_date ="'.$_REQUEST['dropdate'].'"';
+
 				}
 				if(isset($_REQUEST['vehicles']) && $_REQUEST['vehicles']!=gINVALID){
 					
@@ -115,23 +185,7 @@ class Download_xl extends CI_Controller {
 				}
 		
 					$qry.=' order by T.id desc';
-				$tbl_arry=array('trip_statuses','customer_groups');
-	
-			for ($i=0;$i<count($tbl_arry);$i++){
-			$result=$this->user_model->getArray($tbl_arry[$i]);
-			if($result!=false){
-			$data[$tbl_arry[$i]]=$result;
-			}
-			else{
-			$data[$tbl_arry[$i]]='';
-			}
-			}
-			/*if($param2=='1'){
-				$param2=0;
-			}*/
-			//echo $qry;exit;
-			$data['vehicles']=$this->trip_booking_model->getVehiclesArray($condition='');
-			$data['drivers']=$this->driver_model->getDriversArray($condition=''); 
+			
 			
 			$data['trips']=$this->print_model->all_details($qry);
 			if(empty($data['trips'] || $data['trips']==false)){
@@ -139,7 +193,7 @@ class Download_xl extends CI_Controller {
 			}
 			$data['status_class']=array(TRIP_STATUS_PENDING=>'label-warning',TRIP_STATUS_CONFIRMED=>'label-success',TRIP_STATUS_CANCELLED=>'label-danger',TRIP_STATUS_CUSTOMER_CANCELLED=>'label-danger',TRIP_STATUS_ON_TRIP=>'label-primary',TRIP_STATUS_TRIP_COMPLETED=>'label-success',TRIP_STATUS_TRIP_PAYED=>'label-info',TRIP_STATUS_TRIP_BILLED=>'label-success');
 			$data['trip_statuses']=$this->user_model->getArray('trip_statuses'); 
-			$data['customers']=$this->customers_model->getArray();
+			
 			$data['title']="Trips | ".PRODUCT_NAME;  
 			$page='user-pages/print_listTrips';
 		    $this->load_templates($page,$data);
