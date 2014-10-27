@@ -12,7 +12,9 @@ header("Pragma: public");
 					    <th>Registration Number </th>
 					    <th>Model</th>
 					    <th>Make</th>
-					    <th>Owner Info</th>
+					    <th>Owner Name</th>
+					    <th>Contact Info</th>
+					    <th>Address</th>
 						<!--<th>Driver Details</th>
 						<th>Current Status</th>-->
 						
@@ -27,9 +29,9 @@ header("Pragma: public");
 					    <td><?php  echo $det['registration_number'].br();?></td>
 						<td><?php if($det['vehicle_model_id']<=0){ echo '';}else{echo $vehicle_models[$det['vehicle_model_id']].br();} ?></td>
 						<td><?php if($det['vehicle_make_id']<=0){ echo '';}else{echo $vehicle_makes[$det['vehicle_make_id']];} ?></td>
-						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $vehicle_owners[$det['vehicle_owner_id']].br();}?>
-						<?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['mobile'].br();} ?>
-						<?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['address'];} ?></td>
+						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $vehicle_owners[$det['vehicle_owner_id']].br();}?></td>
+						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['mobile'].br();} ?></td>
+						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['address'];} ?></td>
 						<!--<td><?php if(!isset($drivers[$det['id']]['driver_name']) || $drivers[$det['id']]['driver_name']==''){ echo '';}else{echo $drivers[$det['id']]['driver_name'].br();}
 						if(!isset($drivers[$det['id']]['mobile']) || $drivers[$det['id']]['mobile']==''){ echo '';}else{echo $drivers[$det['id']]['mobile'].br();}
 						if(!isset($drivers[$det['id']]['from_date']) || $drivers[$det['id']]['from_date']==''){ echo '';}else{echo $drivers[$det['id']]['from_date']; } ?></td>
