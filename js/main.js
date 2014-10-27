@@ -92,7 +92,7 @@ var drivers=$('#drivers').val();
 var trip_status=$('#trip-status').val();
 var url=base_url+'/organization/front-desk/trips?';
 
-if(pickupdatepicker!='' || dropdatepicker!='' || vehicles!='-1' || drivers!='-1' || rip_status!='-1' ){
+if(pickupdatepicker!='' || dropdatepicker!='' || vehicles!='-1' || drivers!='-1' || trip_status!='-1' ){
 if(pickupdatepicker!=''){
 url=url+'pickupdate='+pickupdatepicker;
 
