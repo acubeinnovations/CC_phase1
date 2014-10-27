@@ -82,11 +82,82 @@ function drawChart() {
 
 
 
+ var base_url=window.location.origin;
 
+$('.print-trip').on('click',function(){
+var pickupdatepicker=$('.pickupdatepicker').val();
+var dropdatepicker=$('.dropdatepicker').val();
+var vehicles=$('#vehicles').val();
+var drivers=$('#drivers').val();
+var trip_status=$('#trip-status').val();
+var url=base_url+'/organization/front-desk/trips?';
+if(pickupdatepicker!=''){
+url=url+'pickupdate='+pickupdatepicker;
+
+}
+if(dropdatepicker!=''){
+url=url+'dropdate='+dropdatepicker;
+
+}
+if(vehicles!=''){
+url=url+'vehicles='+vehicles;
+
+}
+if(drivers!=''){
+url=url+'drivers='+drivers;
+
+}
+if(trip_status!=''){
+url=url+'trip_status='+trip_status;
+
+}
+
+window.location.replace(url);
 
 });
+$('.print-driver').on('click',function(){
+var name=$('#driver_name').val();
+var city=$('#driver_city').val();
+var url=base_url+'/organization/front-desk/driver?';
+if(name!=''){
+url=url+'name='+name;
+
+}
+if(city!=''){
+url=url+'city='+city;
+
+}
+window.location.replace(url);
+
+});
+$('.print-vehicle').on('click',function(){
+
+var reg_num=$('#reg_num').val();
+var vehicle_owner=$('#vehicle-owner').val();
+var vehicle_model=$('#vehicle-model').val();
+var vehicle_ownership=$('#vehicle-ownership').val();
+var url=base_url+'/organization/front-desk/driver?';
+if(reg_num!=''){
+url=url+'reg_num='+reg_num;
+
+}
+if(vehicle_owner!=''){
+url=url+'vehicle_owner='+vehicle_owner;
+
+}
+if(vehicle_model!=''){
+url=url+'vehicle_model='+vehicle_model;
+
+}
+if(vehicle_ownership!=''){
+url=url+'vehicle_ownership='+vehicle_ownership;
+
+}
+window.location.replace(url);
+
+});
+
 //masters
- var base_url=window.location.origin;
 	$('select').change(function(){ 
 	 var edit=$('.edit').attr('for_edit');
 	  if(edit=='false'){
@@ -150,7 +221,7 @@ function Trim(strInput) {
     }
    return strInput;
 	
-}
+}base_url+'/
 
 var API_KEY='AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
 $(document).ready(function(){
