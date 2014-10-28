@@ -29,12 +29,15 @@
 						//echo $this->form_functions->populate_dropdown('model',$v_models,$selected='',$class,$id='',$msg='Select Vehicle Model')?> </td>-->
 					    
 						<td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
+						
 					    <?php echo form_close();?>
 						<td><?php echo nbs(55); ?></td>
 						<td><?php echo nbs(35); ?></td>
+						
 						<td><?php echo form_open( base_url().'organization/front-desk/driver-profile');
 								  echo form_submit("add","Add","class='btn btn-primary'");
 								  echo form_close(); ?></td>
+						<td><?php echo form_button('print-driver','Print',"class='btn btn-primary print-driver'"); ?></td>
 					</tr>
 				</tbody>
 			</table>

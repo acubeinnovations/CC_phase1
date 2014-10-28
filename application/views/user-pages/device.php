@@ -55,6 +55,8 @@ echo form_close();?></td>
 <?php echo form_close(); ?>
 </div>
 </fieldset>
+<div class="msg"> <?php 
+			if (isset($result)){ echo $result;} else {?></div>
 <fieldset class="body-border border-style">
 <legend class="body-head">Manage Devices</legend>
 <?php echo br();?>
@@ -88,4 +90,5 @@ foreach ($values as $det):
 </table>
 <?php echo $page_links;?>
 </fieldset>
+<?php } ?>
 </div>

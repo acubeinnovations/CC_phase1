@@ -82,11 +82,88 @@ function drawChart() {
 
 
 
+ var base_url=window.location.origin;
 
+$('.print-trip').on('click',function(){
+var pickupdatepicker=$('.pickupdatepicker').val();
+var dropdatepicker=$('.dropdatepicker').val();
+var vehicles=$('#vehicles').val();
+var drivers=$('#drivers').val();
+var trip_status=$('#trip-status').val();
+var url=base_url+'/organization/front-desk/download_xl/trips?';
+
+if(pickupdatepicker!='' || dropdatepicker!='' || vehicles!='-1' || drivers!='-1' || trip_status!='-1' ){
+if(pickupdatepicker!=''){
+url=url+'pickupdate='+pickupdatepicker;
+
+}
+if(dropdatepicker!=''){
+url=url+'&dropdate='+dropdatepicker;
+
+}
+if(vehicles!='-1'){
+url=url+'&vehicles='+vehicles;
+
+}
+if(drivers!='-1'){
+url=url+'&drivers='+drivers;
+
+}
+if(trip_status!='-1'){
+url=url+'&trip_status='+trip_status;
+
+}
+
+window.open(url, '_blank');
+}
+});
+$('.print-driver').on('click',function(){
+var name=$('#driver_name').val();
+var city=$('#driver_city').val();
+var url=base_url+'/organization/front-desk/download_xl/driver?';
+if(name!='' || city!=''){
+if(name!=''){
+url=url+'name='+name;
+
+}
+if(city!=''){
+url=url+'&city='+city;
+
+}
+window.open(url, '_blank');
+}
+});
+$('.print-vehicle').on('click',function(){
+
+var reg_num=$('#reg_num').val();
+var vehicle_owner=$('#vehicle-owner').val();
+var vehicle_model=$('#vehicle-model').val();
+var vehicle_ownership=$('#vehicle-ownership').val();
+var url=base_url+'/organization/front-desk/download_xl/vehicle?';
+if(reg_num!='' || vehicle_owner!='-1' || vehicle_model!='-1' || vehicle_ownership!='-1' ){
+if(reg_num!=''){
+url=url+'reg_num='+reg_num;
+
+}
+if(vehicle_owner!='-1'){
+url=url+'&vehicle_owner='+vehicle_owner;
+
+}
+if(vehicle_model!='-1'){
+url=url+'&vehicle_model='+vehicle_model;
+
+}
+if(vehicle_ownership!='-1'){
+url=url+'&vehicle_ownership='+vehicle_ownership;
+
+}
+window.open(url, '_blank');
+//window.location.replace(url);
+}
 
 });
+
 //masters
- var base_url=window.location.origin;
 	$('select').change(function(){ 
 	 var edit=$('.edit').attr('for_edit');
 	  if(edit=='false'){
@@ -116,6 +193,8 @@ function drawChart() {
 		}	
 			
 	});
+
+});
 
 //for tarrif trigger
 $(document).ready(function(){
@@ -225,11 +304,11 @@ $('#reccurent_continues_dropdatepicker').daterangepicker({format: 'MM/DD/YYYY'})
 
 $('#reccurent_continues_pickuptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#reccurent_continues_droptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 
 
@@ -256,11 +335,11 @@ $('#reccurent_alternatives_dropdatepicker'+i).datetimepicker({timepicker:false,f
 
 $('#reccurent_alternatives_pickuptimepicker'+i).datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#reccurent_alternatives_droptimepicker'+i).datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 }
 }
@@ -306,11 +385,11 @@ $('#pickupdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDat
 $('#dropdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
 $('#pickuptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#droptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 
 
@@ -358,11 +437,11 @@ $('#reccurent_continues_dropdatepicker').daterangepicker({format: 'MM/DD/YYYY'})
 
 $('#reccurent_continues_pickuptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#reccurent_continues_droptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 
 
@@ -383,11 +462,11 @@ $('#reccurent_alternatives_dropdatepicker0').datetimepicker({timepicker:false,fo
 
 $('#reccurent_alternatives_pickuptimepicker0').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#reccurent_alternatives_droptimepicker0').datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 
 });
@@ -408,11 +487,11 @@ $('#reccurent_alternatives_dropdatepicker'+count).datetimepicker({timepicker:fal
 
 $('#reccurent_alternatives_pickuptimepicker'+count).datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 $('#reccurent_alternatives_droptimepicker'+count).datetimepicker({datepicker:false,
 	format:'H:i',
-	step:5
+	step:30
 });
 
 $('.add-reccurent-dates').attr('count',Number(count)+1);

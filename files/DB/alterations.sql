@@ -6,7 +6,13 @@ ALTER TABLE `vehicles` CHANGE `vehicle_manufacturing_year` `vehicle_manufacturin
 ALTER TABLE `tariffs` ADD `vehicle_model_id` INT NOT NULL AFTER `tariff_master_id` ,ADD INDEX ( `vehicle_model_id` ) ;
 ALTER TABLE `trips` ADD `vehicle_model_id` INT NOT NULL AFTER `vehicle_make_id` ,ADD INDEX ( `vehicle_model_id` ) ;
 ALTER TABLE `trips` ADD `remarks` TEXT NOT NULL AFTER `total_amount` ;
+CREATE TABLE IF NOT EXISTS `app_request_log` (
+  `id` bigint(20) NOT NULL,
+  `ip_address` text NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 /*need to b updated*/
-
 
