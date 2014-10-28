@@ -45,7 +45,17 @@ class General extends CI_Controller {
 			$this->notAuthorized();
 	}
 	}
-	
+	public function load_templates($page='',$data=''){
+	if($this->session_check()==true) {
+		$this->load->view('admin-templates/header',$data);
+		$this->load->view('admin-templates/nav');
+		$this->load->view($page,$data);
+		$this->load->view('admin-templates/footer');
+		}
+	else{
+			$this->notAuthorized();
+		}
+	}
 	public function add($tbl,$param1){
 	
 		if(isset($_REQUEST['select'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['add'])){ 

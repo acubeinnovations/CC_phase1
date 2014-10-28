@@ -47,6 +47,17 @@ class Customers extends CI_Controller {
 	}
 		
 	
+	public function load_templates($page='',$data=''){
+	if($this->session_check()==true) {
+		$this->load->view('admin-templates/header',$data);
+		$this->load->view('admin-templates/nav');
+		$this->load->view($page,$data);
+		$this->load->view('admin-templates/footer');
+		}
+	else{
+			$this->notAuthorized();
+		}
+	}
 		public function checkCustomer(){
 		if(isset($_REQUEST['mobile']) && $_REQUEST['mobile']!=''){
 			$data['mobile']=$_REQUEST['mobile'];
