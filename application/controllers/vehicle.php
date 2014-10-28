@@ -129,7 +129,8 @@ class Vehicle extends CI_Controller {
 			}
 			
 			if($err==true){
-			redirect(base_url().'user/settings');
+			//redirect(base_url().'user/settings');
+			redirect(base_url().'organization/front-desk/settings');
 			}
 			else{
 			$id=$this->input->post('id_val');
@@ -141,7 +142,8 @@ class Vehicle extends CI_Controller {
 		if($result==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Details Updated Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'user/settings');
+				    //redirect(base_url().'user/settings');
+				    redirect(base_url().'organization/front-desk/settings');
 						}
 			
 			}

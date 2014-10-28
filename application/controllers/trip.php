@@ -91,14 +91,16 @@ class Trip extends CI_Controller {
 	        $this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean');
 			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
 		if($this->form_validation->run()==False){
-        redirect(base_url().'user/settings');
+       // redirect(base_url().'user/settings');
+       redirect(base_url().'organization/front-desk/settings');
 		}
       else {
 		$result=$this->settings_model->updateValues($tbl[$param1],$data,$id);
 		if($result==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Details Updated Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'user/settings');
+				  //  redirect(base_url().'user/settings');
+				  redirect(base_url().'organization/front-desk/settings');
 						}
 			}
 							}
