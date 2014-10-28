@@ -87,6 +87,28 @@ class Customers extends CI_Controller {
 		}
 		}
 
+	        //Import all cnc customers into fa 
+		public function importToFa()
+		{
+			
+			//get all customerids
+			$Ids = $this->customers_model->getAllIds();
+			$count = 0;
+			foreach($Ids as $id){
+				if($id > 0){
+					//save customer in fa table
+					$this->load->model("account_model");
+					$fa_customer = $this->account_model->edit_fa_customer($id,"C");
+					if($fa_customer)
+						$count++;
+				}
+			}
+
+			if($count > 0)
+				$this->session->set_userdata(array('dbSuccess'=>$count.' Customers added in accounts'));
+			redirect(base_url().'organization/front-desk/customers');
+		}
+
 		public function Customer(){
 		if(isset($_REQUEST['customer-add-update'])){
 			$customer_id=$this->input->post('customer_id');
@@ -183,4 +205,5 @@ class Customers extends CI_Controller {
 	$this->session->set_userdata($session_data);
 	
 	}
+	
 }

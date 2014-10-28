@@ -65,6 +65,14 @@ class Customers_model extends CI_Model {
 			return false;
 			}
 	}
+	public function getAllIds(){
+	$qry=$this->db->select('id');
+	$this->db->from('customers');
+	$qry=$this->db->get();
+	$result= $qry->result_array();print_r($result);exit;
+	return $result;
 	
+	
+	}
 }
 ?>
