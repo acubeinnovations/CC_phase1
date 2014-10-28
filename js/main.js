@@ -121,7 +121,7 @@ $('.print-driver').on('click',function(){
 var name=$('#driver_name').val();
 var city=$('#driver_city').val();
 var url=base_url+'/organization/front-desk/download_xl/driver?';
-if(name!='' || city!=''){
+
 if(name!=''){
 url=url+'name='+name;
 
@@ -131,7 +131,7 @@ url=url+'&city='+city;
 
 }
 window.open(url, '_blank');
-}
+
 });
 $('.print-vehicle').on('click',function(){
 
@@ -140,7 +140,7 @@ var vehicle_owner=$('#vehicle-owner').val();
 var vehicle_model=$('#vehicle-model').val();
 var vehicle_ownership=$('#vehicle-ownership').val();
 var url=base_url+'/organization/front-desk/download_xl/vehicle?';
-if(reg_num!='' || vehicle_owner!='-1' || vehicle_model!='-1' || vehicle_ownership!='-1' ){
+
 if(reg_num!=''){
 url=url+'reg_num='+reg_num;
 
@@ -159,7 +159,7 @@ url=url+'&vehicle_ownership='+vehicle_ownership;
 }
 window.open(url, '_blank');
 //window.location.replace(url);
-}
+
 
 });
 

@@ -188,7 +188,7 @@ class Download_xl extends CI_Controller {
 			
 			
 			$data['trips']=$this->print_model->all_details($qry);
-			if(empty($data['trips'] || $data['trips']==false)){
+			if(empty($data['trips']) || $data['trips']==false){
 				$data['result']="No Results Found !";
 			}
 			$data['status_class']=array(TRIP_STATUS_PENDING=>'label-warning',TRIP_STATUS_CONFIRMED=>'label-success',TRIP_STATUS_CANCELLED=>'label-danger',TRIP_STATUS_CUSTOMER_CANCELLED=>'label-danger',TRIP_STATUS_ON_TRIP=>'label-primary',TRIP_STATUS_TRIP_COMPLETED=>'label-success',TRIP_STATUS_TRIP_PAYED=>'label-info',TRIP_STATUS_TRIP_BILLED=>'label-success');
