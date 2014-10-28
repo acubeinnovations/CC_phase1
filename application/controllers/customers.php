@@ -22,7 +22,10 @@ class Customers extends CI_Controller {
 			
 			$this->Customer();
 				
-		}else{
+		}else if($param1=='importToFa'){
+		 $this->importToFa();
+		}
+		else{
 
 			$this->notFound();
 		}
@@ -89,9 +92,7 @@ class Customers extends CI_Controller {
 
 	        //Import all cnc customers into fa 
 		public function importToFa()
-		{
-			
-			//get all customerids
+		{ //get all customerids
 			$Ids = $this->customers_model->getAllIds();
 			$count = 0;
 			foreach($Ids as $id){
