@@ -94,6 +94,7 @@ class Customers extends CI_Controller {
 		public function importToFa()
 		{ //get all customerids
 			$Ids = $this->customers_model->getAllIds();
+		
 			$count = 0;
 			foreach($Ids as $id){
 				if($id > 0){
@@ -106,7 +107,7 @@ class Customers extends CI_Controller {
 			}
 
 			if($count > 0)
-				$this->session->set_userdata(array('dbSuccess'=>$count.' Customers added in accounts'));
+				$this->session->set_userdata(array('dbSuccess'=>$count.' Customers updated in accounts'));
 			redirect(base_url().'organization/front-desk/customers');
 		}
 

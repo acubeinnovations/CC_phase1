@@ -87,37 +87,41 @@ class account_model extends CI_Model {
 		{
 				
 			$cnc_cust = $this->get_cnc_cust_or_group($id,$type);
-			$ref = $type.$cnc_cust['id'];
 
-			$prefs = $this->get_company_prefs();
-			$data = array(
-				'name'=>$cnc_cust['name'],
-				'debtor_ref'=>$ref,
-				'curr_code'=>@$prefs['curr_default'],
-				'payment_terms'=>@$prefs['default_payment_terms'],
-				'credit_limit'=>@$prefs['default_credit_limit'],
-				'sales_type'=>@$prefs['base_sales'],
-				);
-			if(isset($cnc_cust['address']))
-				$data['address'] = $cnc_cust['address'];
-			//print_r($data);exit;
-			$this->db->insert($fa_customer_table,$data);
+			if($cnc_cust)
+			{
+				$ref = $type.$cnc_cust['id'];
+
+				$prefs = $this->get_company_prefs();
+				$data = array(
+					'name'=>$cnc_cust['name'],
+					'debtor_ref'=>$ref,
+					'curr_code'=>@$prefs['curr_default'],
+					'payment_terms'=>@$prefs['default_payment_terms'],
+					'credit_limit'=>@$prefs['default_credit_limit'],
+					'sales_type'=>@$prefs['base_sales'],
+					);
+				if(isset($cnc_cust['address']))
+					$data['address'] = $cnc_cust['address'];
+				//print_r($data);exit;
+				$this->db->insert($fa_customer_table,$data);
 		
-			//insert branch
-			if($this->db->insert_id()){
-				$fa_branch_table = $this->session->userdata('organisation_id')."_cust_branch";
+				//insert branch
+				if($this->db->insert_id()){
+					$fa_branch_table = $this->session->userdata('organisation_id')."_cust_branch";
 
-				if($this->check_fa_table_exists($fa_branch_table))
-				{
-					$data = array(
-						'debtor_no'=>$this->db->insert_id(),
-						'branch_ref'=>$ref,
-						'br_name'=>$cnc_cust['name'],
-						'tax_group_id' =>1,
-						'default_location' =>'DEF'
-						);
-					$this->db->insert($fa_branch_table,$data);
-				}	
+					if($this->check_fa_table_exists($fa_branch_table))
+					{
+						$data = array(
+							'debtor_no'=>$this->db->insert_id(),
+							'branch_ref'=>$ref,
+							'br_name'=>$cnc_cust['name'],
+							'tax_group_id' =>1,
+							'default_location' =>'DEF'
+							);
+						$this->db->insert($fa_branch_table,$data);
+					}	
+				}
 			}
 			return true;
 
