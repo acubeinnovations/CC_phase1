@@ -73,7 +73,7 @@ echo form_close();?></td>
 	<div class="msg"> <?php 
 			if (isset($result)){ echo $result;} else {?></div>
 		
-		<div class="box-body table-responsive no-padding">
+		<div class="box-body table-responsive no-padding trips-table">
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr>	
