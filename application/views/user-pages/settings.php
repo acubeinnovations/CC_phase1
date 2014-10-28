@@ -37,7 +37,7 @@
 <td>
 <fieldset class="body-border">
 <legend class="body-head">General</legend>
-<table class="table-with-7-percent-td">
+<table class="">
 <tr><td><div class="form-group">
 	<?php echo form_open(base_url()."general/languages");?>
 	<?php echo form_label('Languages');?></td>
@@ -241,7 +241,7 @@
 <fieldset class="body-border">
 <legend class="body-head">Vehicle</legend>
 
-<table class="table-with-7-percent-td">
+<table class="">
 <tr>
 <td><div class="form-group">
 	<?php echo form_open(base_url()."vehicle/vehicle-ownership");?>
@@ -457,7 +457,7 @@
 <?php // vehicle ends?>
 <fieldset class="body-border">
 <legend class="body-head">Trip</legend>
-<table class="table-with-7-percent-td">
+<table class="">
 <tr> 
 <td><div class="form-group">
 	<?php echo form_open(base_url()."trip/trip-models");?>
