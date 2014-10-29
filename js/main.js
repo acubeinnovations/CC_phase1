@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+	
 $('.settings-add').click(function(){
 var trigger = $(this).parent().prev().prev().find('#editbox').attr('trigger');
 if(trigger=='true'){
@@ -225,10 +225,10 @@ window.open(url, '_blank');
 			
 	});
 
-});
+
 
 //for tarrif trigger
-$(document).ready(function(){
+
 
 $('.tarrif-add').click(function(){
 $('#tarrif-add-id').trigger('click');
@@ -243,7 +243,7 @@ $('.tarrif-delete').click(function(){
 $(this).siblings().find(':submit').trigger('click');
 
 });
-});
+
 
 
 function Trim(strInput) {
@@ -263,8 +263,6 @@ function Trim(strInput) {
 }
 
 var API_KEY='AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
-$(document).ready(function(){
-
 
 
 //trip_bookig page-js start
@@ -1326,6 +1324,8 @@ var driver_id=$(this).attr('driver_id');
 var tarrif_id=$(this).attr('tarrif_id');
 var no_of_days=$(this).attr('no_of_days');
 $('.overlay-container').css('display','block');
+var top=-1*(Number($('.trips-table').height())+70);
+$('.modal-body').css('top',top);
 $('.trip-voucher-save').attr('trip_id',trip_id);
 $('.trip-voucher-save').attr('driver_id',driver_id);
 	$.post(base_url+"/trip-booking/getVouchers",
@@ -1540,20 +1540,20 @@ $(this).siblings().find(':submit').trigger('click');
 	$('.initialize-time-picker').datetimepicker({datepicker:false,format:'H:i',step:5});
 
 
+//for next previous button
+
+$('.prev1').click(function(){
+$('#tab_1').trigger('click');
+});
+
+//for marital status
+
+$('#marital_id').change(function(){
+//alert($(this).value());exit;
+});
+
 
 
  });
 
 
-//for next previous button
-$(document).ready(function(){
-$('.prev1').click(function(){
-$('#tab_1').trigger('click');
-});
-});
-//for marital status
-$(document).ready(function(){
-$('#marital_id').change(function(){
-alert($(this).value());exit;
-});
-});
