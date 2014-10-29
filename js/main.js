@@ -163,6 +163,37 @@ window.open(url, '_blank');
 
 });
 
+$('.print-customer').on('click',function(){
+
+var cust_name=$('#name').val();
+var cust_mobile=$('#mobile').val();
+var cust_type=$('#c_type').val();
+var cust_group=$('#c_group').val();
+//alert("hi");exit;
+var url=base_url+'/organization/front-desk/download_xl/customers?';
+
+if(cust_name!=''){
+url=url+'cust_name='+cust_name;
+
+}
+if(cust_mobile!=''){
+url=url+'&cust_mobile='+cust_mobile;
+
+}
+if(cust_type!='-1'){
+url=url+'&cust_type='+cust_type;
+
+}
+if(cust_group!='-1'){
+url=url+'&cust_group='+cust_group;
+
+}
+window.open(url, '_blank');
+//window.location.replace(url);
+
+
+});
+
 //masters
 	$('select').change(function(){ 
 	 var edit=$('.edit').attr('for_edit');
@@ -412,7 +443,7 @@ $('.guest-toggle').toggle();
 });
 
 
-
+ var base_url=window.location.origin;
 
 
 $('.recurrent-yes-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
