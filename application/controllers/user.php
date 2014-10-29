@@ -694,6 +694,8 @@ class User extends CI_Controller {
 	public function Customer($param2=''){
 		if($this->session_check()==true) {
 		$data['mode']=$param2;
+		
+		
 			if($param2!=''){
 				$condition=array('id'=>$param2);
 				$result=$this->customers_model->getCustomerDetails($condition);
