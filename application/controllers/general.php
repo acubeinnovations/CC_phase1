@@ -68,7 +68,7 @@ class General extends CI_Controller {
 			$this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean');
 			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
 			if($this->form_validation->run()==False){
-				redirect(base_url().'user/settings');
+				 redirect(base_url().'organization/front-desk/settings');
 			}else {
 
 				$result=$this->settings_model->addValues_returnId($tbl[$param1],$data);
@@ -84,7 +84,7 @@ class General extends CI_Controller {
 
 					$this->session->set_userdata(array('dbSuccess'=>'Details Added Succesfully..!'));
 					$this->session->set_userdata(array('dbError'=>''));
-					redirect(base_url().'user/settings');
+					 redirect(base_url().'organization/front-desk/settings');
 				}
 			}
 		}
@@ -130,7 +130,7 @@ class General extends CI_Controller {
 			//$this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
 			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
 			if($this->form_validation->run()==False){
-        			redirect(base_url().'user/settings');
+        			 redirect(base_url().'organization/front-desk/settings');
 			}
       		else {
 			$result=$this->settings_model->deleteValues($tbl[$param1],$id);
@@ -144,7 +144,7 @@ class General extends CI_Controller {
 				//-----------fa code ends here---------------------------
 				$this->session->set_userdata(array('dbSuccess'=>'Details Deleted Succesfully..!'));
 				$this->session->set_userdata(array('dbError'=>''));
-				redirect(base_url().'user/settings');
+				 redirect(base_url().'organization/front-desk/settings');
 						}
 			}
 		}
