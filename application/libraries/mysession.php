@@ -7,7 +7,9 @@ class Mysession
 {
     public function __construct()
     {
+        ob_start();
         session_start();
+		ob_end_flush();
     }
 
     public function set( $key, $value )
