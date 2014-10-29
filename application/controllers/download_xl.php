@@ -39,7 +39,12 @@ class Download_xl extends CI_Controller {
 				
 				$this->tripsXL();
 
-			}else{
+			}else if($param1=='customers'){
+				
+				$this->customersXL();
+
+			}
+			else{
 
 				$this->notFound();
 			}
@@ -210,6 +215,58 @@ class Download_xl extends CI_Controller {
 		}
 
     }  
+    
+	   public function customersXL(){
+	
+		
+				$qry='select * from customers where organisation_id='.$this->session->userdata('organisation_id');
+				
+				 if(isset($_REQUEST['cust_name'])&& $_REQUEST['cust_name']!=null){
+				
+				$qry.=' AND name Like "%'.$_REQUEST['cust_name'].'%"';
+				
+				}else if(isset($_REQUEST['cust_mobile'])&& $_REQUEST['cust_mobile']!=null){
+				
+				$qry.=' AND mobile Like "%'.$_REQUEST['cust_mobile'].'%"';
+
+				}
+				if(isset($_REQUEST['cust_type']) &&$_REQUEST['cust_type']!=gINVALID){
+					
+					$qry.=' AND customer_type_id ="'.$_REQUEST['cust_type'].'"';
+				
+				}
+				if(isset($_REQUEST['cust_group']) && $_REQUEST['cust_group']!=gINVALID){
+					
+					$qry.=' AND customer_group_id ="'.$_REQUEST['cust_group'].'"';
+					
+				}
+			
+			
+			$data['customers']=$this->print_model->all_details($qry);
+			//print_r($data['customers']);exit;
+			for($i=0;$i<count($data['customers']);$i++){
+					$id=$data['customers'][$i]['id'];
+					$availability=$this->customers_model->getCurrentStatuses($id);
+					if($availability==false){
+					$customer_statuses[$id]='NotBooked';
+					$customer_trips[$id]=gINVALID;
+					}else{
+					$customer_statuses[$id]='OnTrip';
+					$customer_trips[$id]=$availability[0]['id'];
+					}
+				}
+				$data['customer_statuses']=$customer_statuses;
+				$data['customer_trips']=$customer_trips;	
+			if(empty($data['customers']) || $data['customers']==false){
+				$data['result']="No Results Found !";
+			}
+			$data['title']="Customers | ".PRODUCT_NAME;  
+			$page='user-pages/print_Customers';
+		    $this->load_templates($page,$data);
+	
+
+	}
+    
 	public function notAuthorized(){
 	$data['title']='Not Authorized | '.PRODUCT_NAME;
 	$page='not_authorized';

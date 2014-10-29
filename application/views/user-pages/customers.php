@@ -35,28 +35,29 @@ $mobile='';
 			<table class="table list-trip-table no-border">
 				<tbody>
 					<tr>
-						<!--<td><?php echo form_input(array('name'=>'customer','class'=>'customer form-control' ,'placeholder'=>'Customer name','value'=>$customer)); ?></td>-->
-					    <td><?php echo form_input(array('name'=>'customer','class'=>'customer form-control' ,'placeholder'=>'Customer Name','value'=>$customer)); ?></td>
-					<td><?php echo form_input(array('name'=>'mobile','class'=>'mobile form-control' ,'placeholder'=>'Mobile Number','value'=>$mobile)); ?></td>
+						<!--<td><?php echo form_input(array('name'=>'customer','id'=>'name','class'=>'customer form-control' ,'placeholder'=>'Customer name','value'=>$customer)); ?></td>-->
+					    <td><?php echo form_input(array('name'=>'customer','id'=>'name','class'=>'customer form-control' ,'placeholder'=>'Customer Name','value'=>$customer)); ?></td>
+					<td><?php echo form_input(array('name'=>'mobile','id'=>'mobile','class'=>'mobile form-control' ,'placeholder'=>'Mobile Number','value'=>$mobile)); ?></td>
 						<td><?php $class="form-control";
-							  $id='vehicles';
-						echo $this->form_functions->populate_dropdown('customer_type_id',$customer_types,$customer_type_id,$class,$id='',$msg="Select Customer Type");?> </td>
+							  $id='c_type';
+						echo $this->form_functions->populate_dropdown('customer_type_id',$customer_types,$customer_type_id,$class,$id,$msg="Select Customer Type");?> </td>
 						 <td><?php $class="form-control";
 							  $id='c_group';
 							 
-						echo $this->form_functions->populate_dropdown('customer_group_id',$customer_groups,$customer_group_id,$class,$id='',$msg="Select Customer Group");?> </td>
+						echo $this->form_functions->populate_dropdown('customer_group_id',$customer_groups,$customer_group_id,$class,$id,$msg="Select Customer Group");?> </td>
 					    <td><?php echo form_submit("customer_search","Search","class='btn btn-primary'");
 echo form_close();?></td>
 						<td><?php echo form_open(  base_url().'organization/front-desk/customer');
 								  echo form_submit("add","Add","class='btn btn-primary'");
 								  echo form_close(); 
 						?></td>
-						<td>
+						<!--<td>
 						<?php echo form_open(  base_url().'customers/importToFa');
 								  echo form_submit("Import","Import","class='btn btn-primary'");
 								  echo form_close(); 
 						?>
-						</td>
+						</td>-->
+						<td><?php echo form_button('print-customer','Print',"class='btn btn-primary print-customer'"); ?></td>
 						
 					</tr>
 				</tbody>
@@ -91,8 +92,8 @@ if($customers[$customer_index]['customer_group_id']==gINVALID || $customers[$cus
 						<?php echo $customers[$customer_index]['email'].br(); ?>
 						<?php echo $customers[$customer_index]['address']; ?>
 						</td>
-					    <td></td>
-						 <td><?php if($customer_statuses[$customers[$customer_index]['id']]!='NotBooked'){ echo '<span class="label label-info">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); }else{ echo '<span class="label label-danger">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); } if($customer_trips[$customers[$customer_index]['id']]!=gINVALID){ echo anchor(base_url().'organization/front-desk/trip-booking/'.$customer_trips[$customers[$customer_index]['id']],'Trip ID :'.$customer_trips[$customers[$customer_index]['id']]); } else{ echo ''; } ?></td>	
+					    <td><?php if($customer_trips[$customers[$customer_index]['id']]!=gINVALID){ echo anchor(base_url().'organization/front-desk/trip-booking/'.$customer_trips[$customers[$customer_index]['id']],'Trip ID :'.$customer_trips[$customers[$customer_index]['id']]); } else{ echo ''; } ?></td>
+						 <td><?php if($customer_statuses[$customers[$customer_index]['id']]!='NotBooked'){ echo '<span class="label label-info">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); }else{ echo '<span class="label label-danger">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); } ?></td>	
 						 <td></td>
 						
 					</tr>

@@ -5,7 +5,6 @@ header("Content-Disposition: attachment; filename=vehicles.xls");
 header("Cache-Control: cache, must-revalidate");
 header("Pragma: public");
 ?>
-	
 <table class="table table-hover table-bordered table-with-20-percent-td">
 				<tbody>
 					<tr>
@@ -42,4 +41,3 @@ header("Pragma: public");
 					?>
 				</tbody>
 			</table>
-
