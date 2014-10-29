@@ -31,7 +31,7 @@ class Vehicle extends CI_Controller {
 				$this->owner_validation();
 				}
 			
-			if($param1) {
+			if(isset($param1)&& $param1!='getDescription') {
 				
 				if(isset($_REQUEST['add'])){
 					$this->add($tbl,$param1);
@@ -129,7 +129,8 @@ class Vehicle extends CI_Controller {
 			}
 			
 			if($err==true){
-			redirect(base_url().'user/settings');
+			//redirect(base_url().'user/settings');
+			redirect(base_url().'organization/front-desk/settings');
 			}
 			else{
 			$id=$this->input->post('id_val');
@@ -141,7 +142,8 @@ class Vehicle extends CI_Controller {
 		if($result==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Details Updated Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'user/settings');
+				    //redirect(base_url().'user/settings');
+				    redirect(base_url().'organization/front-desk/settings');
 						}
 			
 			}
@@ -733,6 +735,17 @@ $err=True;
 	$this->load->view($page,$data);
 	$this->load->view('admin-templates/footer');
 	
+	}
+	public function load_templates($page='',$data=''){
+	if($this->session_check()==true) {
+		$this->load->view('admin-templates/header',$data);
+		$this->load->view('admin-templates/nav');
+		$this->load->view($page,$data);
+		$this->load->view('admin-templates/footer');
+		}
+	else{
+			$this->notAuthorized();
+		}
 	}
 
 }
