@@ -76,7 +76,7 @@ class Customers extends CI_Controller {
 		echo false;
 		}
 		
-		}
+}
 
 		public function addCustomer(){
 		if(isset($_REQUEST['mobile']) && $_REQUEST['mobile']!=''  && isset($_REQUEST['name']) && $_REQUEST['name']!=''){
