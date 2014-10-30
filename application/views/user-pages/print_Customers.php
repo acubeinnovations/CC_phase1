@@ -25,8 +25,8 @@ header("Pragma: public");
 					?>
 					<tr>
 						
-						<td><?php echo $customers[$customer_index]['name'].br();
-if($customers[$customer_index]['customer_group_id']==gINVALID || $customers[$customer_index]['customer_group_id']==0){ echo " ";}else{echo $customer_groups[$customers[$customer_index]['customer_group_id']].br();}if($customers[$customer_index]['customer_type_id']==gINVALID || $customers[$customer_index]['customer_type_id']==0){ echo " ";}else{echo $customer_types[$customers[$customer_index]['customer_type_id']];}?></td>
+						<td><?php echo $customers[$customer_index]['name'].br();?></td>
+<td><?php if($customers[$customer_index]['customer_group_id']==gINVALID || $customers[$customer_index]['customer_group_id']==0){ echo " ";}else{echo $customer_groups[$customers[$customer_index]['customer_group_id']].br();}if($customers[$customer_index]['customer_type_id']==gINVALID || $customers[$customer_index]['customer_type_id']==0){ echo " ";}else{echo $customer_types[$customers[$customer_index]['customer_type_id']];}?></td>
 					    <td><?php echo $customers[$customer_index]['mobile'].br();?>
 						<td><?php echo $customers[$customer_index]['email'].br(); ?></td>
 						<td><?php echo $customers[$customer_index]['address']; ?></td>
