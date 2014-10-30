@@ -31,7 +31,7 @@ if($customers[$customer_index]['customer_group_id']==gINVALID || $customers[$cus
 						<td><?php echo $customers[$customer_index]['email'].br(); ?></td>
 						<td><?php echo $customers[$customer_index]['address']; ?></td>
 						</td>
-					    <td><?php if($customer_trips[$customers[$customer_index]['id']]!=gINVALID){ echo anchor(base_url().'organization/front-desk/trip-booking/'.$customer_trips[$customers[$customer_index]['id']],'Trip ID :'.$customer_trips[$customers[$customer_index]['id']]); } else{ echo ''; }  ?></td>
+					    <td><?php if($customer_trips[$customers[$customer_index]['id']]!=gINVALID){ echo 'Trip ID :'.$customer_trips[$customers[$customer_index]['id']]; } else{ echo ''; }  ?></td>
 						 <td><?php if($customer_statuses[$customers[$customer_index]['id']]!='NotBooked'){ echo '<span class="label label-info">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); }else{ echo '<span class="label label-danger">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); }  ?></td>	
 						 <td></td>
 						

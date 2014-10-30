@@ -260,6 +260,17 @@ class Download_xl extends CI_Controller {
 			if(empty($data['customers']) || $data['customers']==false){
 				$data['result']="No Results Found !";
 			}
+			$tbl_arry=array('customer_types','customer_groups');
+	
+			for ($i=0;$i<count($tbl_arry);$i++){
+			$result=$this->user_model->getArray($tbl_arry[$i]);
+			if($result!=false){
+			$data[$tbl_arry[$i]]=$result;
+			}
+			else{
+			$data[$tbl_arry[$i]]='';
+			}
+			}
 			$data['title']="Customers | ".PRODUCT_NAME;  
 			$page='user-pages/print_Customers';
 		    $this->load_templates($page,$data);
