@@ -21,7 +21,7 @@ header("Pragma: public");
 					</tr>
 					<?php
 					
-					for($customer_index=0;$customer_index<count($customers);$customer_index++) {
+					for($customer_index=0;$customer_index<count($customers);$customer_index++){
 					?>
 					<tr>
 						
