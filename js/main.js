@@ -1020,7 +1020,7 @@ extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
 total=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 
 }else{
-total=Math.round(Number(minimum_kilometers)*Number(rate)).toFixed(2);
+total=Math.round((Number(minimum_kilometers)*Number(no_of_days))*Number(rate)).toFixed(2);
 
 }
 
@@ -1507,7 +1507,7 @@ charge=(Number(minimum_kilometers)*Number(no_of_days))*Number(rate);
 extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
 totexpense=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 }else{
-totexpense=Math.round(Number(totkmtravelled)*Number(rate)).toFixed(2);
+totexpense=Math.round((Number(minimum_kilometers)*Number(no_of_days))*Number(rate)).toFixed(2);
 }
 }else{
 
@@ -1517,7 +1517,7 @@ charge=Number(minimum_kilometers)*Number(rate);
 extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
 totexpense=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 }else{
-totexpense=Math.round(Number(totkmtravelled)*Number(rate)).toFixed(2);
+totexpense=Math.round(Number(minimum_kilometers)*Number(rate)).toFixed(2);
 }
 }
 
