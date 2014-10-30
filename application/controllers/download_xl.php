@@ -43,6 +43,10 @@ class Download_xl extends CI_Controller {
 				
 				$this->customersXL();
 
+			}else if($param1=='tariffs'){
+				
+				$this->tariffsXL();
+
 			}
 			else{
 
@@ -296,6 +300,62 @@ class Download_xl extends CI_Controller {
 		}else{
 			$this->notAuthorized();
 	}
+	}
+	
+	public function tariffsXL(){
+			
+			$tbl_arry=array('vehicle_models','vehicle_ac_types');
+	
+			for ($i=0;$i<count($tbl_arry);$i++){
+			$result=$this->user_model->getArray($tbl_arry[$i]);
+			if($result!=false){
+			$data[$tbl_arry[$i]]=$result;
+			}
+			else{
+			$data[$tbl_arry[$i]]='';
+			}
+			}
+		
+				$qry='SELECT TM.id,TM.title,TM. vehicle_ac_type_id,TM.minimum_kilometers,T.vehicle_model_id,T.rate FROM tariff_masters As TM LEFT JOIN tariffs As T ON TM.id=T.tariff_master_id where TM.organisation_id='.$this->session->userdata('organisation_id');
+				
+				 if(isset($_REQUEST['title'])&& $_REQUEST['title']!=null){
+				
+				$qry.=' AND TM.title Like "%'.$_REQUEST['title'].'%"';
+				
+				}
+				if(isset($_REQUEST['trip_model']) &&$_REQUEST['trip_model']!=gINVALID){
+					
+					$qry.=' AND TM.trip_model_id ="'.$_REQUEST['trip_model'].'"';
+				
+				}
+				if(isset($_REQUEST['ac_type']) && $_REQUEST['ac_type']!=gINVALID){
+					
+					$qry.=' AND TM.vehicle_ac_type_id ="'.$_REQUEST['ac_type'].'"';
+					
+				}
+			
+			
+			$data['res']=$this->print_model->all_details($qry);
+				$count=count($data['res']);
+				$tm= $data['res'];
+				//echo '<pre>';print_r($tm);echo '</pre>';exit;
+				for($i=0;$i<$count;$i++){
+				$values[$tm[$i]['id']][$tm[$i]['vehicle_ac_type_id']][$tm[$i]['vehicle_model_id']]['rate']=$tm[$i]['rate'];
+				$values[$tm[$i]['id']][$tm[$i]['vehicle_ac_type_id']][$tm[$i]['vehicle_model_id']]['minimum_kilometers']=$tm[$i]['minimum_kilometers'];
+				$values[$tm[$i]['id']]['title']=$tm[$i]['title'];
+				$values[$tm[$i]['id']]['model']=$tm[$i]['vehicle_model_id'];
+				}
+				$data['tariffs']=$values;
+		//echo '<pre>';	print_r($data['tariffs']);echo '</pre>';exit;
+			if(empty($data['tariffs']) || $data['tariffs']==false){
+				$data['result']="No Results Found !";
+			}
+		
+			$data['title']="Tarrifs | ".PRODUCT_NAME;  
+			$page='user-pages/print_tariffmaster';
+		    $this->load_templates($page,$data);
+	
+
 	}
 
 }
