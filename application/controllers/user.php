@@ -816,8 +816,12 @@ public function	Customers($param2){
 					$customer_trips[$id]=$availability[0]['id'];
 					}
 				}//print_r($customer_statuses);print_r($customer_trips);exit;
+				if(isset($customer_statuses) && count($customer_statuses)>0){
 				$data['customer_statuses']=$customer_statuses;
-				$data['customer_trips']=$customer_trips;		
+				}	
+				if(isset($customer_trips) && count($customer_trips)>0){
+				$data['customer_trips']=$customer_trips;
+				}		
 			if(empty($data['customers'])){
 				$data['result']="No Results Found !";
 				}

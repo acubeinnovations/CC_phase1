@@ -36,7 +36,7 @@ header("Pragma: public");
 						<td><?php echo $customers[$customer_index]['address']; ?></td>
 						</td>
 					    <td><?php if($customer_trips[$customers[$customer_index]['id']]!=gINVALID){ echo 'Trip ID :'.$customer_trips[$customers[$customer_index]['id']]; } else{ echo ''; }  ?></td>
-						 <td><?php if($customer_statuses[$customers[$customer_index]['id']]!='NotBooked'){ echo '<span class="label label-info">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); }else{ echo '<span class="label label-danger">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); }  ?></td>	
+						 <td><?php if($customer_statuses[$customers[$customer_index]['id']]!='NoBookings'){ echo '<span class="label label-info">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); }else{ echo '<span class="label label-danger">'.$customer_statuses[$customers[$customer_index]['id']].'</span>'.br(); }  ?></td>	
 						 <td></td>
 						
 					</tr>

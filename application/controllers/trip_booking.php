@@ -99,7 +99,7 @@ class Trip_booking extends CI_Controller {
 				$this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|');
 				$this->form_validation->set_rules('mobile','Mobile','trim|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 				$this->form_validation->set_rules('booking_source','Booking source','trim|xss_clean');
-				$this->form_validation->set_rules('source','Source','trim|min_length[2]|xss_clean|alpha');
+				$this->form_validation->set_rules('source','Source','trim|min_length[2]|xss_clean');
 				$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
 				$this->form_validation->set_rules('no_of_passengers','No of passengers','trim|xss_clean');
 				$this->form_validation->set_rules('pickupcity','Pickup city','trim|required|xss_clean');

@@ -50,7 +50,9 @@ class user_model extends CI_Model {
 	}
 	else{
 		$qry=$this->db->where('organisation_id',$org_id);
+		$qry=$this->db->order_by("name", "Asc"); 
 		$qry=$this->db->get($tbl);
+		
 		}
 		$count=$qry->num_rows();
 			$l= $qry->result_array();
