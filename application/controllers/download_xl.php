@@ -304,17 +304,9 @@ class Download_xl extends CI_Controller {
 	
 	public function tariffsXL(){
 			
-			$tbl_arry=array('vehicle_models','vehicle_ac_types');
+			$data['vehicle_models']=$this->print_model->getModels();
 	
-			for ($i=0;$i<count($tbl_arry);$i++){
-			$result=$this->user_model->getArray($tbl_arry[$i]);
-			if($result!=false){
-			$data[$tbl_arry[$i]]=$result;
-			}
-			else{
-			$data[$tbl_arry[$i]]='';
-			}
-			}
+			
 		
 				$qry='SELECT TM.id,TM.title,TM. vehicle_ac_type_id,TM.minimum_kilometers,T.vehicle_model_id,T.rate FROM tariff_masters As TM LEFT JOIN tariffs As T ON TM.id=T.tariff_master_id where TM.organisation_id='.$this->session->userdata('organisation_id');
 				
