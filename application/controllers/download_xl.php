@@ -252,7 +252,7 @@ class Download_xl extends CI_Controller {
 					$id=$data['customers'][$i]['id'];
 					$availability=$this->customers_model->getCurrentStatuses($id);
 					if($availability==false){
-					$customer_statuses[$id]='NotBooked';
+					$customer_statuses[$id]='NoBookings';
 					$customer_trips[$id]=gINVALID;
 					}else{
 					$customer_statuses[$id]='OnTrip';
