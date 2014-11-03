@@ -31,6 +31,10 @@ class Mysession
     {
         unset( $_SESSION[$key] );
     }
+	public function destroy( $key )
+    {
+       session_destroy();
+    }
 }
 
 ?>

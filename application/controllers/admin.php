@@ -87,13 +87,13 @@ class Admin extends CI_Controller {
 	$this->load->model('admin_model');
 	$data['status']=$this->admin_model->getStatus();
 	$condition='';
-	$per_page=5;
+	$per_page=3;
 	$like_arry='';
 	$where_arry='';
 	//for search
     if((isset($_REQUEST['sname'])|| isset($_REQUEST['status']))&& isset($_REQUEST['search'])){
 	if($secondaction==''){
-	$secondaction=0;
+	$secondaction='0';
 	}
 	$this->mysession->delete('condition');
 	if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
@@ -110,6 +110,9 @@ class Admin extends CI_Controller {
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	$data['status_id']=$_REQUEST['status'];
 	$data['sname']=$_REQUEST['sname'];
+	}
+	if(is_null($this->mysession->get('condition'))){
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	}
 	$tbl='organisations';
 	$data['org_status']=$this->admin_model->getStatus();

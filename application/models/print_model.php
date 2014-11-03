@@ -9,5 +9,12 @@ public function all_details($qry){
 		return false;
 	}
 }
+public function getModels(){
+	$qry=$this->db->select('id,name');
+	$qry=$this->db->from('vehicle_models');
+	$qry=$this->db->get();
+	$result=$qry->result_array();
+	return $result;
+	}
 }
 ?>

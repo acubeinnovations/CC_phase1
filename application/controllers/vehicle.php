@@ -203,9 +203,11 @@ class Vehicle extends CI_Controller {
 			$data['vehicle_fuel_type_id']=$this->input->post('fuel');
 			$data['vehicle_seating_capacity_id']=$this->input->post('seat');
 			$driver_data['driver_id']=$this->input->post('driver');
+			$hid_driver=$this->input->post('hid_driver');
 			$driver_data['from_date']=$this->input->post('from_date');
 			$h_fdate_driver=$this->input->post('h_fdate_driver'); 
 			$device_data['device_id']=$this->input->post('device');
+			$hid_device=$this->input->post('hid_device');
 			$device_data['from_date_device']=$this->input->post('from_date_device');
 			$h_fdate_device=$this->input->post('h_fdate_device');
 			$data['registration_number']=$this->input->post('reg_number');
@@ -227,9 +229,9 @@ class Vehicle extends CI_Controller {
 					
 					$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
 					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean');
-					 $this->form_validation->set_rules('from_date','From Date ','trim|required|xss_clean');
-					 $this->form_validation->set_rules('from_date_device','From Date ','trim|required|xss_clean');
-					 $this->form_validation->set_rules('reg_date','Registration Date','trim|xss_clean');
+					 $this->form_validation->set_rules('from_date','From Date ','trim|xss_clean');
+					 $this->form_validation->set_rules('from_date_device','From Date ','trim|xss_clean');
+					 $this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
 					 $this->form_validation->set_rules('eng_num','Engine Number','trim|xss_clean');
 					 $this->form_validation->set_rules('chases_num','Chases Number','trim|xss_clean');
 					 $this->form_validation->set_rules('permit_date','Permit Renewal Date','trim|xss_clean');
@@ -238,11 +240,25 @@ class Vehicle extends CI_Controller {
 					 $this->form_validation->set_rules('tax_date','Tax Date','trim|xss_clean');
 					 //for insurance
 $err=True;
+
+	if($hid_driver!=$driver_data['driver_id']){
+		if(!$this->date_check($driver_data['driver_id'])){
+		
+	$err=False;
+	$this->mysession->set('Err_driver_name','Invalid From Date for Driver!');
+	}
+	}
 	
 		if($h_fdate_driver!=$driver_data['from_date']){
 		if(!$this->date_check($driver_data['from_date'])){
 	$err=False;
 	$this->mysession->set('Err_driver_fdate','Invalid From Date for Driver!');
+	}
+	}
+	if($hid_device!=$device_data['device_id']){
+	if(!$this->date_check($device_data['device_id'])){
+	$err=False;
+	$this->mysession->set('Err_device_name','Invalid From Date for Device!');
 	}
 	}
 	if($h_fdate_device!=$device_data['from_date_device']){
@@ -301,16 +317,16 @@ $err=True;
 	 $err=False;
 	 $this->mysession->set('model','Choose Model Type');
 	 }
-	  if($driver_data['driver_id'] ==-1){
+	 /* if($driver_data['driver_id'] ==-1){
 	 $driver_data['driver_id'] ='';
 	 $err=False;
 	 $this->mysession->set('Driver','Choose Any Driver');
-	 } 
-	  if($device_data['device_id'] ==-1){
+	 } */
+	 /* if($device_data['device_id'] ==-1){
 	 $device_data['device_id'] ='';
 	 $err=False;
 	 $this->mysession->set('Device','Choose Any Device');
-	 } 
+	 } */
 	 if($this->form_validation->run()==False|| $err==False){
 	 //echo "err";exit;
 	

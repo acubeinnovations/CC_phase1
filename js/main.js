@@ -194,6 +194,33 @@ window.open(url, '_blank');
 
 });
 
+$('.print-tariff').on('click',function(){
+//alert "hi";
+var title=$('#title1').val();
+var trip_model=$('#model').val();
+var ac_type=$('#ac_type').val();
+//alert("hi");exit;
+var url=base_url+'/organization/front-desk/download_xl/tariffs?';
+
+if(title!=''){
+url=url+'&title='+title;
+
+}
+if(trip_model!='-1'){
+url=url+'&trip_model='+trip_model;
+
+}
+if(ac_type!='-1'){
+url=url+'&ac_type='+ac_type;
+
+}
+
+window.open(url, '_blank');
+//window.location.replace(url);
+
+
+});
+
 //masters
 	$('select').change(function(){ 
 	 var edit=$('.edit').attr('for_edit');
