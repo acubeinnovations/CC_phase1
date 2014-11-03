@@ -292,13 +292,13 @@ public function __construct()
 	$like_arry='';
 	$where_arry['user_type_id']=FRONT_DESK;
 	$where_arry['organisation_id']=$this->session->userdata('organisation_id');
-	if(isset($where_arry) && count($where_arry)>0) {
-		$this->mysession->set('condition',array('where'=>$where_arry));
-	}
+	//if(isset($where_arry) && count($where_arry)>0) {
+	//	$this->mysession->set('condition',array('where'=>$where_arry));
+	//}
 	//for search
     if((isset($_REQUEST['sname'])|| isset($_REQUEST['status']))&& isset($_REQUEST['search'])){
 	if($secondaction==''){
-		$secondaction=0;
+		$secondaction='0';
 	}
 	$this->mysession->delete('condition');
 	if($_REQUEST['sname']!=null&& $_REQUEST['status']!=-1){
@@ -312,6 +312,9 @@ public function __construct()
 	$like_arry['username']= $_REQUEST['sname'];
 	}
 		$this->mysession->set('condition',array('like'=>$like_arry,'where'=>$where_arry));
+	}
+	if(empty($this->mysession->get('condition'))){
+	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	}
 	$tbl='users';
 	$baseurl=base_url().'organization/admin/front-desk/list/';
@@ -383,7 +386,7 @@ public function __construct()
 		
 		$data['title']='Profile Update |'.PRODUCT_NAME;
 		if(isset($_REQUEST['user-profile-update'])){
-		echo $this->input->post('fa_account');exit;
+		//echo $this->input->post('fa_account');exit;
 			$data['firstname']= trim($this->input->post('firstname'));
 			$data['lastname'] = trim($this->input->post('lastname'));
 			$data['address']  = $this->input->post('address');

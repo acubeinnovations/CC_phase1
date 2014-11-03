@@ -229,9 +229,9 @@ class Vehicle extends CI_Controller {
 					
 					$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
 					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean');
-					 $this->form_validation->set_rules('from_date','From Date ','trim|required|xss_clean');
-					 $this->form_validation->set_rules('from_date_device','From Date ','trim|required|xss_clean');
-					 $this->form_validation->set_rules('reg_date','Registration Date','trim|xss_clean');
+					 $this->form_validation->set_rules('from_date','From Date ','trim|xss_clean');
+					 $this->form_validation->set_rules('from_date_device','From Date ','trim|xss_clean');
+					 $this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
 					 $this->form_validation->set_rules('eng_num','Engine Number','trim|xss_clean');
 					 $this->form_validation->set_rules('chases_num','Chases Number','trim|xss_clean');
 					 $this->form_validation->set_rules('permit_date','Permit Renewal Date','trim|xss_clean');
@@ -317,16 +317,16 @@ $err=True;
 	 $err=False;
 	 $this->mysession->set('model','Choose Model Type');
 	 }
-	  if($driver_data['driver_id'] ==-1){
+	 /* if($driver_data['driver_id'] ==-1){
 	 $driver_data['driver_id'] ='';
 	 $err=False;
 	 $this->mysession->set('Driver','Choose Any Driver');
-	 } 
-	  if($device_data['device_id'] ==-1){
+	 } */
+	 /* if($device_data['device_id'] ==-1){
 	 $device_data['device_id'] ='';
 	 $err=False;
 	 $this->mysession->set('Device','Choose Any Device');
-	 } 
+	 } */
 	 if($this->form_validation->run()==False|| $err==False){
 	 //echo "err";exit;
 	
