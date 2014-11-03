@@ -111,7 +111,7 @@ class Admin extends CI_Controller {
 	$data['status_id']=$_REQUEST['status'];
 	$data['sname']=$_REQUEST['sname'];
 	}
-	if(empty($this->mysession->get('condition'))){
+	if(is_null($this->mysession->get('condition'))){
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	}
 	$tbl='organisations';

@@ -173,7 +173,7 @@ class User extends CI_Controller {
 	}
 	    
 		$tbl="tariff_masters";
-		if(empty($this->mysession->get('condition'))){
+		if(is_null($this->mysession->get('condition'))){
 		$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 		}
 		$baseurl=base_url().'organization/front-desk/tarrif-masters/';
@@ -271,7 +271,7 @@ class User extends CI_Controller {
 	}
 	    
 		$tbl="tariffs";
-		if(empty($this->mysession->get('condition'))){
+		if(is_null($this->mysession->get('condition'))){
 		$this->mysession->set('condition',array("where"=>$where_arry));
 		}
 		$baseurl=base_url().'organization/front-desk/tarrif/';
@@ -811,7 +811,7 @@ public function	Customers($param2){
 				}
 				$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
 			}
-			if(empty($this->mysession->get('condition'))){
+			if(is_null($this->mysession->get('condition'))){
 			$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
 			}
 						
@@ -1019,7 +1019,7 @@ public function profile() {
 	$condition=array("like"=>$like_arry,"where"=>$where_arry);
 	}
 	//print_r($this->mysession->get('condition'));exit;
-	if(empty($this->mysession->get('condition'))){
+	if(is_null($this->mysession->get('condition'))){
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	}
 	$tbl="drivers";
@@ -1362,7 +1362,7 @@ public function profile() {
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	$condition=array("like"=>$like_arry,"where"=>$where_arry); 
 	}
-	if(empty($this->mysession->get('condition'))){
+	if(is_null($this->mysession->get('condition'))){
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	}
 	$tbl="vehicles";

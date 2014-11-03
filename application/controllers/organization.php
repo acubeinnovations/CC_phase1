@@ -313,7 +313,7 @@ public function __construct()
 	}
 		$this->mysession->set('condition',array('like'=>$like_arry,'where'=>$where_arry));
 	}
-	if(empty($this->mysession->get('condition'))){
+	if(is_null($this->mysession->get('condition'))){
 	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 	}
 	$tbl='users';
