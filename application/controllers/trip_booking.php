@@ -80,7 +80,7 @@ class Trip_booking extends CI_Controller {
 					if($_REQUEST['guest_id']==gINVALID){
 					$this->form_validation->set_rules('guestname','Guest name','trim|required|xss_clean');
 					$this->form_validation->set_rules('guestemail','Guest email','trim|valid_email');
-					$this->form_validation->set_rules('guestmobile','Guest mobile','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');	
+					$this->form_validation->set_rules('guestmobile','Guest mobile','trim|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');	
 					}
 					$data['guest']=TRUE;
 					$data['guestname']=$this->input->post('guestname');
@@ -295,9 +295,9 @@ class Trip_booking extends CI_Controller {
 			$dbdata['booking_time']					= date('H:i');
 			$dbdata['booking_source_id']			=$data['booking_source'];
 			$dbdata['source']						=$data['source'];
-			$dbdata['pick_up_date']					=$data['pickupdatepicker'];
+			$dbdata['pick_up_date']					=date("Y-m-d", strtotime($data['pickupdatepicker']));
 			$dbdata['pick_up_time']					=$data['pickuptimepicker'];
-			$dbdata['drop_date']					=$data['dropdatepicker'];
+			$dbdata['drop_date']					=date("Y-m-d", strtotime($data['dropdatepicker']));
 			$dbdata['drop_time']					=$data['droptimepicker'];
 			$dbdata['pick_up_city']					=$data['pickupcity'];
 			$dbdata['pick_up_lat']					=$data['pickupcitylat'];
