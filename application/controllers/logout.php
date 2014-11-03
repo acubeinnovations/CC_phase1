@@ -29,6 +29,7 @@ class Logout extends CI_Controller {
 		$ret = 2;
 	  }
       $this->session->sess_destroy();
+	  $this->mysession->destroy();
 	redirect(base_url()."facnc/access/logout.php?ret=".$ret);
      // redirect($logout_redirect_url);
     }

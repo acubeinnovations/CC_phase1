@@ -619,7 +619,9 @@ class User extends CI_Controller {
 				}
 				
 			}else if($this->mysession->get('condition')!=''){ 
-				$condition=$this->mysession->get('condition');//print_r($condition);
+				$condition=$this->mysession->get('condition');
+				if(isset($condition['where']['trip_pick_date']) || isset($condition['where']['trip_drop_date'])|| isset($condition['where']['vehicle_id']) || isset($condition['where']['driver_id'])|| isset($condition['where']['trip_status_id'])){
+				//print_r($condition);
 				/*if(isset($condition['where']['trip_id'])){
 				$data['trip_id']=$condition['where']['trip_id'];
 				$qry.=' AND T.id ='.$condition['where']['trip_id'];
@@ -653,6 +655,7 @@ class User extends CI_Controller {
 				$qry.=' AND T.trip_status_id ="'.$condition['where']['trip_status_id'].'"';
 				}
 				}
+			}
 			}
 			$qry.=' order by T.id desc';
 			
@@ -757,6 +760,14 @@ class User extends CI_Controller {
 
 public function	Customers($param2){
 			if($this->session_check()==true) {
+				if($this->mysession->get('condition')!=null){
+						$condition=$this->mysession->get('condition');
+						if(isset($condition['like']['name']) || isset($condition['like']['mobile'])|| isset($condition['where']['customer_type_id']) || isset($condition['where']['customer_group_id'])){
+						}
+						else{
+						$this->mysession->delete('condition');
+						}
+						}
 			$tbl_arry=array('customer_types','customer_groups');
 	
 			for ($i=0;$i<count($tbl_arry);$i++){
@@ -979,6 +990,14 @@ public function profile() {
 	
 	  public function ShowDriverList($param1,$param2) {
 	if($this->session_check()==true) {
+	if($this->mysession->get('condition')!=null){
+	$condition=$this->mysession->get('condition');
+	if(isset($condition['like']['name']) || isset($condition['like']['district']) ){
+	}
+	else{
+	$this->mysession->delete('condition');
+	}
+	}
 	$condition='';
 	$per_page=10;
 	$like_arry=''; 
@@ -1054,6 +1073,8 @@ public function profile() {
 	$data['title']='List Driver| '.PRODUCT_NAME;
 	$page='user-pages/driverList';
 	$this->load_templates($page,$data);	
+	
+	
 	}
 	else{
 	$this->notAuthorized();
@@ -1303,6 +1324,14 @@ public function profile() {
 	
 	public function ShowVehicleList($param1,$param2) {
 	if($this->session_check()==true) {
+			if($this->mysession->get('condition')!=null){
+						$condition=$this->mysession->get('condition');
+						if(isset($condition['like']['registration_number'])|| isset($condition['where']['vehicle_owner_id']) || isset($condition['where']['vehicle_ownership_types_id'])  || isset($condition['where']['vehicle_model_id'])){
+						}
+						else{
+						$this->mysession->delete('condition');
+						}
+						}
 	$condition='';
 	$per_page=10;
 	$like_arry=''; 
