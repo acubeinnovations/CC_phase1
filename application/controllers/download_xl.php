@@ -39,7 +39,16 @@ class Download_xl extends CI_Controller {
 				
 				$this->tripsXL();
 
-			}else{
+			}else if($param1=='customers'){
+				
+				$this->customersXL();
+
+			}else if($param1=='tariffs'){
+				
+				$this->tariffsXL();
+
+			}
+			else{
 
 				$this->notFound();
 			}
@@ -184,7 +193,7 @@ class Download_xl extends CI_Controller {
 					
 				}
 		
-					$qry.=' order by T.id desc';
+					$qry.=' order by CONCAT(T.pick_up_date," ",T.pick_up_time) ASC';
 			
 			
 			$data['trips']=$this->print_model->all_details($qry);
@@ -210,6 +219,69 @@ class Download_xl extends CI_Controller {
 		}
 
     }  
+    
+	   public function customersXL(){
+	
+		
+				$qry='select * from customers where organisation_id='.$this->session->userdata('organisation_id');
+				
+				 if(isset($_REQUEST['cust_name'])&& $_REQUEST['cust_name']!=null){
+				
+				$qry.=' AND name Like "%'.$_REQUEST['cust_name'].'%"';
+				
+				}else if(isset($_REQUEST['cust_mobile'])&& $_REQUEST['cust_mobile']!=null){
+				
+				$qry.=' AND mobile Like "%'.$_REQUEST['cust_mobile'].'%"';
+
+				}
+				if(isset($_REQUEST['cust_type']) &&$_REQUEST['cust_type']!=gINVALID){
+					
+					$qry.=' AND customer_type_id ="'.$_REQUEST['cust_type'].'"';
+				
+				}
+				if(isset($_REQUEST['cust_group']) && $_REQUEST['cust_group']!=gINVALID){
+					
+					$qry.=' AND customer_group_id ="'.$_REQUEST['cust_group'].'"';
+					
+				}
+			
+			
+			$data['customers']=$this->print_model->all_details($qry);
+			//print_r($data['customers']);exit;
+			for($i=0;$i<count($data['customers']);$i++){
+					$id=$data['customers'][$i]['id'];
+					$availability=$this->customers_model->getCurrentStatuses($id);
+					if($availability==false){
+					$customer_statuses[$id]='NoBookings';
+					$customer_trips[$id]=gINVALID;
+					}else{
+					$customer_statuses[$id]='OnTrip';
+					$customer_trips[$id]=$availability[0]['id'];
+					}
+				}
+				$data['customer_statuses']=$customer_statuses;
+				$data['customer_trips']=$customer_trips;	
+			if(empty($data['customers']) || $data['customers']==false){
+				$data['result']="No Results Found !";
+			}
+			$tbl_arry=array('customer_types','customer_groups');
+	
+			for ($i=0;$i<count($tbl_arry);$i++){
+			$result=$this->user_model->getArray($tbl_arry[$i]);
+			if($result!=false){
+			$data[$tbl_arry[$i]]=$result;
+			}
+			else{
+			$data[$tbl_arry[$i]]='';
+			}
+			}
+			$data['title']="Customers | ".PRODUCT_NAME;  
+			$page='user-pages/print_Customers';
+		    $this->load_templates($page,$data);
+	
+
+	}
+    
 	public function notAuthorized(){
 	$data['title']='Not Authorized | '.PRODUCT_NAME;
 	$page='not_authorized';
@@ -228,6 +300,54 @@ class Download_xl extends CI_Controller {
 		}else{
 			$this->notAuthorized();
 	}
+	}
+	
+	public function tariffsXL(){
+			
+			$data['vehicle_models']=$this->print_model->getModels();
+	
+			
+		
+				$qry='SELECT TM.id,TM.title,TM. vehicle_ac_type_id,TM.minimum_kilometers,T.vehicle_model_id,T.rate FROM tariff_masters As TM LEFT JOIN tariffs As T ON TM.id=T.tariff_master_id where TM.organisation_id='.$this->session->userdata('organisation_id');
+				
+				 if(isset($_REQUEST['title'])&& $_REQUEST['title']!=null){
+				
+				$qry.=' AND TM.title Like "%'.$_REQUEST['title'].'%"';
+				
+				}
+				if(isset($_REQUEST['trip_model']) &&$_REQUEST['trip_model']!=gINVALID){
+					
+					$qry.=' AND TM.trip_model_id ="'.$_REQUEST['trip_model'].'"';
+				
+				}
+				if(isset($_REQUEST['ac_type']) && $_REQUEST['ac_type']!=gINVALID){
+					
+					$qry.=' AND TM.vehicle_ac_type_id ="'.$_REQUEST['ac_type'].'"';
+					
+				}
+			
+			
+			$data['res']=$this->print_model->all_details($qry);
+				$count=count($data['res']);
+				$tm= $data['res'];
+				//echo '<pre>';print_r($tm);echo '</pre>';exit;
+				for($i=0;$i<$count;$i++){
+				$values[$tm[$i]['id']][$tm[$i]['vehicle_ac_type_id']][$tm[$i]['vehicle_model_id']]['rate']=$tm[$i]['rate'];
+				$values[$tm[$i]['id']][$tm[$i]['vehicle_ac_type_id']][$tm[$i]['vehicle_model_id']]['minimum_kilometers']=$tm[$i]['minimum_kilometers'];
+				$values[$tm[$i]['id']]['title']=$tm[$i]['title'];
+				$values[$tm[$i]['id']]['model']=$tm[$i]['vehicle_model_id'];
+				}
+				$data['tariffs']=$values;
+		//echo '<pre>';	print_r($data['tariffs']);echo '</pre>';exit;
+			if(empty($data['tariffs']) || $data['tariffs']==false){
+				$data['result']="No Results Found !";
+			}
+		
+			$data['title']="Tarrifs | ".PRODUCT_NAME;  
+			$page='user-pages/print_tariffmaster';
+		    $this->load_templates($page,$data);
+	
+
 	}
 
 }

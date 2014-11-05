@@ -295,6 +295,16 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
 	?></p>   
         </div>
 			<div class="form-group">
+		<?php echo form_label('Registration Number','usernamelabel'); ?>
+           <?php echo form_input(array('name'=>'reg_number','class'=>'form-control','id'=>'reg_number','value'=>$reg_number)); ?>
+	   <?php echo $this->form_functions->form_error_session('reg_number', '<p class="text-red">', '</p>'); ?>
+        </div>
+		<div class="form-group">
+	<?php echo form_label('Registration Date','usernamelabel'); ?>
+           <?php echo form_input(array('name'=>'reg_date','class'=>'fromdatepicker form-control' ,'value'=>$reg_date));?>
+	   <?php echo $this->form_functions->form_error_session('reg_date', '<p class="text-red">', '</p>'); ?>
+        </div> <div class="hide-me"><?php echo form_input(array('name'=>'h_reg','value'=>$reg_date));?></div>
+			<div class="form-group">
 	<?php echo form_label('Permit Type','usernamelabel'); ?>
            <?php $class="form-control";
 		$msg="Select Permit Type";
@@ -307,6 +317,14 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
 	?>
 	  
         </div>
+
+		
+	
+		</fieldset> </div>
+		
+		<div class="width-30-percent-with-margin-left-20-Driver-View">
+<fieldset class="body-border-Driver-View border-style-Driver-view" >
+<legend class="body-head">Other Details</legend>
 	<div class="form-group">
 	<?php echo form_label('Permit Renewal Date','usernamelabel'); ?>
            <?php  echo form_input(array('name'=>'permit_date','class'=>'fromdatepicker form-control' ,'value'=>$permit_date));?>
@@ -329,13 +347,6 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
  }
 	?></p>
 		</div>
-		
-	
-		</fieldset> </div>
-		
-		<div class="width-30-percent-with-margin-left-20-Driver-View">
-<fieldset class="body-border-Driver-View border-style-Driver-view" >
-<legend class="body-head">Other Details</legend>
 	<div class="form-group">
 		<?php echo form_label('Select Driver','usernamelabel'); ?>
            <?php $class="form-control";
@@ -352,7 +363,8 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 	$this->mysession->delete('Driver');
  }
 	?></p>
-        </div>
+        </div>	<div class="hide-me"><?php 
+		echo form_input(array('name'=>'hid_driver','value'=>$driver_id));?></div>
 		<div class="form-group">
 		<?php echo form_label('From Date for Driver','usernamelabel');?>
            <?php echo form_input(array('name'=>'from_date','class'=>'fromdatepicker form-control' ,'value'=>$from_date));?>
@@ -363,6 +375,10 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
  if($this->mysession->get('Err_driver_fdate') != ''){
 	echo $this->mysession->get('Err_driver_fdate');
 	$this->mysession->delete('Err_driver_fdate');
+ }
+ if($this->mysession->get('Err_driver_name') != ''){
+	echo $this->mysession->get('Err_driver_name');
+	$this->mysession->delete('Err_driver_name');
  }
 	?></p>
         </div> 	<div class="hide-me"><?php echo form_input(array('name'=>'h_fdate_driver','value'=>$from_date));?></div>
@@ -383,6 +399,8 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
  }
 	?></p>
         </div>
+		<div class="hide-me"><?php 
+		echo form_input(array('name'=>'hid_device','value'=>$device_id));?></div>
 		<div class="form-group">
 		<?php echo form_label('From Date for Device','usernamelabel');?>
            <?php echo form_input(array('name'=>'from_date_device','class'=>'fromdatepicker form-control' ,'value'=>$from_date_device));?>
@@ -392,18 +410,13 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 	echo $this->mysession->get('Err_device_fdate');
 	$this->mysession->delete('Err_device_fdate');
  }
+	if($this->mysession->get('Err_device_name') != ''){
+	echo $this->mysession->get('Err_device_name');
+	$this->mysession->delete('Err_device_name');
+ }
 	?></p>
 	   </div>	<div class="hide-me"><?php echo form_input(array('name'=>'h_fdate_device','value'=>$from_date_device));?></div>
-	<div class="form-group">
-		<?php echo form_label('Registration Number','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'reg_number','class'=>'form-control','id'=>'reg_number','value'=>$reg_number)); ?>
-	   <?php echo $this->form_functions->form_error_session('reg_number', '<p class="text-red">', '</p>'); ?>
-        </div>
-		<div class="form-group">
-	<?php echo form_label('Registration Date','usernamelabel'); ?>
-           <?php echo form_input(array('name'=>'reg_date','class'=>'fromdatepicker form-control' ,'value'=>$reg_date));?>
-	   <?php echo $this->form_functions->form_error_session('reg_date', '<p class="text-red">', '</p>'); ?>
-        </div> <div class="hide-me"><?php echo form_input(array('name'=>'h_reg','value'=>$reg_date));?></div>
+
 	<div class="form-group">
 	<?php echo form_label('Engine Number','usernamelabel'); ?>
            <?php echo form_input(array('name'=>'eng_num','class'=>'form-control','value'=>$eng_num));?>

@@ -80,7 +80,7 @@ class Trip_booking extends CI_Controller {
 					if($_REQUEST['guest_id']==gINVALID){
 					$this->form_validation->set_rules('guestname','Guest name','trim|required|xss_clean');
 					$this->form_validation->set_rules('guestemail','Guest email','trim|valid_email');
-					$this->form_validation->set_rules('guestmobile','Guest mobile','trim|required|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');	
+					$this->form_validation->set_rules('guestmobile','Guest mobile','trim|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');	
 					}
 					$data['guest']=TRUE;
 					$data['guestname']=$this->input->post('guestname');
@@ -99,7 +99,7 @@ class Trip_booking extends CI_Controller {
 				$this->form_validation->set_rules('email','Email','trim|xss_clean|valid_email|');
 				$this->form_validation->set_rules('mobile','Mobile','trim|regex_match[/^[0-9]{10}$/]|numeric|xss_clean');
 				$this->form_validation->set_rules('booking_source','Booking source','trim|xss_clean');
-				$this->form_validation->set_rules('source','Source','trim|min_length[2]|xss_clean|alpha');
+				$this->form_validation->set_rules('source','Source','trim|min_length[2]|xss_clean');
 				$this->form_validation->set_rules('trip_model','Trip models','trim|required|xss_clean');
 				$this->form_validation->set_rules('no_of_passengers','No of passengers','trim|xss_clean');
 				$this->form_validation->set_rules('pickupcity','Pickup city','trim|required|xss_clean');
@@ -295,9 +295,9 @@ class Trip_booking extends CI_Controller {
 			$dbdata['booking_time']					= date('H:i');
 			$dbdata['booking_source_id']			=$data['booking_source'];
 			$dbdata['source']						=$data['source'];
-			$dbdata['pick_up_date']					=$data['pickupdatepicker'];
+			$dbdata['pick_up_date']					=date("Y-m-d", strtotime($data['pickupdatepicker']));
 			$dbdata['pick_up_time']					=$data['pickuptimepicker'];
-			$dbdata['drop_date']					=$data['dropdatepicker'];
+			$dbdata['drop_date']					=date("Y-m-d", strtotime($data['dropdatepicker']));
 			$dbdata['drop_time']					=$data['droptimepicker'];
 			$dbdata['pick_up_city']					=$data['pickupcity'];
 			$dbdata['pick_up_lat']					=$data['pickupcitylat'];

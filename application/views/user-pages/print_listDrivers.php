@@ -4,9 +4,6 @@ header("Content-type: application/vnd.ms-excel");
 header("Content-Disposition: attachment; filename=drivers.xls");
 header("Cache-Control: cache, must-revalidate");
 header("Pragma: public");
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-ob_clean();
-$objWriter->save('php://output');
 ?>
 	<table class="table table-hover table-bordered">
 	<tbody>

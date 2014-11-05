@@ -12,6 +12,7 @@ header("Pragma: public");
 					    <th style="width:2%">Trip ID </th>
 					    <th style="width:4%">Booking Date</th>
 					    <th style="width:4%">Pickup Date</th>
+						 <th style="width:4%">Pickup Time</th>
 					    <th style="width:11%">Vehicle Reg Number</th>
 						 <th style="width:11%">Vehicle Model</th>
 						 <th style="width:11%">Vehicle Ownerships Types</th>
@@ -52,7 +53,8 @@ header("Pragma: public");
 						<td><?php echo $trips[$trip_index]['booking_date'];?></td>
 					   <!-- <td><?php echo $customers[$trips[$trip_index]['customer_id']].br();
 						if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $customer_groups[$trips[$trip_index]['customer_group_id']];}?></td>-->
-					    <td><?php echo $pickdate; ?></td>
+					    <td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
+						 <td><?php echo $trips[$trip_index]['pick_up_time']; ?></td>
 					    <td><?php 
 					    if($trips[$trip_index]['vehicle_id']==gINVALID || $trips[$trip_index]['vehicle_id']==0){echo 'Vehicle Not Allocated';}else{ echo $trips[$trip_index]['registration_number'];
 					    }?></td><td> <?php 

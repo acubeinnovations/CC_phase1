@@ -69,7 +69,7 @@ class Driver extends CI_Controller {
 	 $data['marital_status_id'] ='';
 	 $err=False;
 	 $this->session->set_userdata('marital_status_id','Choose Marital Status');
-	 }*/
+	 }
 	 if($data['bank_account_type_id'] ==-1){
 	 $data['bank_account_type_id'] ='';
 	 $err=False;
@@ -79,7 +79,7 @@ class Driver extends CI_Controller {
 	 $data['id_proof_type_id'] ='';
 	 $err=False;
 	 $this->session->set_userdata('id_proof_type_id','Choose Identity Proof');
-	 }
+	 }*/
 	
 	
 	
@@ -92,7 +92,7 @@ class Driver extends CI_Controller {
 	 $this->form_validation->set_rules('district','District','trim|required|xss_clean|alpha');
 	 $this->form_validation->set_rules('state','State','trim|xss_clean');
 	 $this->form_validation->set_rules('pin_code','Pin Code','trim|xss_clean|regex_match[/^[0-9]{6}$/]');
-	 $this->form_validation->set_rules('license_number','License Number','trim|required|xss_clean');
+	 $this->form_validation->set_rules('license_number','License Number','trim|xss_clean');
 	 $this->form_validation->set_rules('phone','Phone Number','trim|required|xss_clean|numeric]');
 		if($data['mobile']==$hmob){
 		$this->form_validation->set_rules('mobile','10 digit Mobile Number','trim|required|xss_clean|regex_match[/^[0-9]{10}$/]');

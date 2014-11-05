@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+	
 $('.settings-add').click(function(){
 var trigger = $(this).parent().prev().prev().find('#editbox').attr('trigger');
 if(trigger=='true'){
@@ -163,6 +163,64 @@ window.open(url, '_blank');
 
 });
 
+$('.print-customer').on('click',function(){
+
+var cust_name=$('#name').val();
+var cust_mobile=$('#mobile').val();
+var cust_type=$('#c_type').val();
+var cust_group=$('#c_group').val();
+//alert("hi");exit;
+var url=base_url+'/organization/front-desk/download_xl/customers?';
+
+if(cust_name!=''){
+url=url+'cust_name='+cust_name;
+
+}
+if(cust_mobile!=''){
+url=url+'&cust_mobile='+cust_mobile;
+
+}
+if(cust_type!='-1'){
+url=url+'&cust_type='+cust_type;
+
+}
+if(cust_group!='-1'){
+url=url+'&cust_group='+cust_group;
+
+}
+window.open(url, '_blank');
+//window.location.replace(url);
+
+
+});
+
+$('.print-tariff').on('click',function(){
+//alert "hi";
+var title=$('#title1').val();
+var trip_model=$('#model').val();
+var ac_type=$('#ac_type').val();
+//alert("hi");exit;
+var url=base_url+'/organization/front-desk/download_xl/tariffs?';
+
+if(title!=''){
+url=url+'&title='+title;
+
+}
+if(trip_model!='-1'){
+url=url+'&trip_model='+trip_model;
+
+}
+if(ac_type!='-1'){
+url=url+'&ac_type='+ac_type;
+
+}
+
+window.open(url, '_blank');
+//window.location.replace(url);
+
+
+});
+
 //masters
 	$('select').change(function(){ 
 	 var edit=$('.edit').attr('for_edit');
@@ -194,10 +252,10 @@ window.open(url, '_blank');
 			
 	});
 
-});
+
 
 //for tarrif trigger
-$(document).ready(function(){
+
 
 $('.tarrif-add').click(function(){
 $('#tarrif-add-id').trigger('click');
@@ -212,7 +270,7 @@ $('.tarrif-delete').click(function(){
 $(this).siblings().find(':submit').trigger('click');
 
 });
-});
+
 
 
 function Trim(strInput) {
@@ -232,8 +290,6 @@ function Trim(strInput) {
 }
 
 var API_KEY='AIzaSyBy-tN2uOTP10IsJtJn8v5WvKh5uMYigq8';
-$(document).ready(function(){
-
 
 
 //trip_bookig page-js start
@@ -381,17 +437,20 @@ if($('.beacon-light-chek-box').attr('checked')=='checked'){
 
 });
 
-$('#pickupdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
-$('#dropdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
-$('#pickuptimepicker').datetimepicker({datepicker:false,
-	format:'H:i',
-	step:30
-});
-$('#droptimepicker').datetimepicker({datepicker:false,
-	format:'H:i',
-	step:30
-});
 
+//date picker removed for pickupdat n time drop date n time
+
+//$('#pickupdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
+//$('#dropdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
+/*$('#pickuptimepicker').datetimepicker({datepicker:false,
+	format:'H:i',
+	step:30
+});
+/$('#droptimepicker').datetimepicker({datepicker:false,
+	format:'H:i',
+	step:30
+});
+*/
 
 $('#via').click(function(event){
 	event.preventDefault();
@@ -414,7 +473,7 @@ $('.guest-toggle').toggle();
 });
 
 
-
+ var base_url=window.location.origin;
 
 
 $('.recurrent-yes-container > .icheckbox_minimal > .iCheck-helper').on('click',function(){
@@ -971,7 +1030,7 @@ var droptime = $('#droptimepicker').val();
     var HH = Math.floor(diffSeconds/3600);
     var MM = Math.floor(diffSeconds%3600)/60;
 	var no_of_days=Math.floor(HH/24);
-    if(HH>=24 && MM>=1){
+    if((HH>=24 && MM>=1) || HH>24){
       no_of_days=no_of_days+1; 
 		var days="Days";
     }else{
@@ -988,7 +1047,7 @@ extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
 total=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 
 }else{
-total=Math.round(Number(estimated_distance)*Number(rate)).toFixed(2);
+total=Math.round((Number(minimum_kilometers)*Number(no_of_days))*Number(rate)).toFixed(2);
 
 }
 
@@ -1003,7 +1062,7 @@ extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
 total=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 
 }else{
-total=Math.round(Number(estimated_distance)*Number(rate)).toFixed(2);
+total=Math.round(Number(minimum_kilometers)*Number(rate)).toFixed(2);
 
 }
 
@@ -1160,8 +1219,80 @@ function generateTariffs(vehicle_type,vehicle_ac_type,vehicle_make,vehicle_model
 
 }	
 
+$('.format-date').blur(function(){
+
+var date=$(this).val();
+var date_array='';
+
+ if(date.indexOf('-') > -1)
+{	
+	if((date.match(new RegExp("-", "g")) || []).length>1){
+ 		 var date_array=date.split('-');
+	}
+
+}
+ if(date.indexOf('/') > -1)
+{	
+	if((date.match(new RegExp("/", "g")) || []).length>1){
+ 		 var date_array=date.split('/');
+	}
+}
+ if(date.indexOf('.') > -1)
+{	
+	if((date.match(new RegExp(".", "g")) || []).length>1){
+ 		 var date_array=date.split('.');
+	}
+}
+
+if(date_array.length>2 && date_array.length<4){//alert(date);
+var formatted_date=date_array[2]+'-'+date_array[1]+'-'+date_array[0];
+$(this).val(formatted_date);
+}
+});
+$('.format-time').blur(function(){
+
+var time=$(this).val();
+var time_array='';
+
+ if(time.indexOf('.') > -1)
+{	
+	if((time.match(new RegExp(".", "g")) || []).length>1){
+ 		 var time_array=time.split('.');
+	}
+}
+
+if(time_array.length>1 && time_array.length<3){//alert(date);
+
+var formatted_time=time_array[0]+':'+time_array[1];
+$(this).val(formatted_time);
+}
+});
 
 
+/*
+
+$('.format-date').keyup(function(){
+
+var date=$('.format-date').val();
+var date_array='';
+if((date.match(new RegExp("-", "g")) || []).length>1){
+ 		 var date_array=date.split('-');
+	
+}else if((date.match(new RegExp("/", "g")) || []).length>1){alert((date.match(new RegExp("/", "g")) || []).length);
+ 		 var date_array=date.split('/');
+	
+}else if((date.match(new RegExp(".", "g")) || []).length>1){
+ 		 var date_array=date.split('.');
+	
+}
+//alert(date);
+if(date_array.length>1 && date_array.length<3){alert(date);
+var formatted_date=date_array[0]+'-'+date_array[1]+'-'+date_array[2];
+$('.format-date').val(formatted_date);
+}
+});
+
+*/
 function diffDateTime(startDT, endDT){
  
   if(typeof startDT == 'string' && startDT.match(/^[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}[amp ]{0,3}$/i)){
@@ -1295,6 +1426,8 @@ var driver_id=$(this).attr('driver_id');
 var tarrif_id=$(this).attr('tarrif_id');
 var no_of_days=$(this).attr('no_of_days');
 $('.overlay-container').css('display','block');
+var top=-1*(Number($('.trips-table').height())+70);
+$('.modal-body').css('top',top);
 $('.trip-voucher-save').attr('trip_id',trip_id);
 $('.trip-voucher-save').attr('driver_id',driver_id);
 	$.post(base_url+"/trip-booking/getVouchers",
@@ -1401,7 +1534,7 @@ charge=(Number(minimum_kilometers)*Number(no_of_days))*Number(rate);
 extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
 totexpense=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 }else{
-totexpense=Math.round(Number(totkmtravelled)*Number(rate)).toFixed(2);
+totexpense=Math.round((Number(minimum_kilometers)*Number(no_of_days))*Number(rate)).toFixed(2);
 }
 }else{
 
@@ -1411,7 +1544,7 @@ charge=Number(minimum_kilometers)*Number(rate);
 extra_charge=Number(extra_distance)*Number(additional_kilometer_rate);
 totexpense=Math.round(Number(charge)+Number(extra_charge)).toFixed(2);
 }else{
-totexpense=Math.round(Number(totkmtravelled)*Number(rate)).toFixed(2);
+totexpense=Math.round(Number(minimum_kilometers)*Number(rate)).toFixed(2);
 }
 }
 
@@ -1509,20 +1642,20 @@ $(this).siblings().find(':submit').trigger('click');
 	$('.initialize-time-picker').datetimepicker({datepicker:false,format:'H:i',step:5});
 
 
+//for next previous button
+
+$('.prev1').click(function(){
+$('#tab_1').trigger('click');
+});
+
+//for marital status
+
+$('#marital_id').change(function(){
+//alert($(this).value());exit;
+});
+
 
 
  });
 
 
-//for next previous button
-$(document).ready(function(){
-$('.prev1').click(function(){
-$('#tab_1').trigger('click');
-});
-});
-//for marital status
-$(document).ready(function(){
-$('#marital_id').change(function(){
-alert($(this).value());exit;
-});
-});

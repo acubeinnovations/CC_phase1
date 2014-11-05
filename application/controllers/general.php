@@ -45,7 +45,17 @@ class General extends CI_Controller {
 			$this->notAuthorized();
 	}
 	}
-	
+	public function load_templates($page='',$data=''){
+	if($this->session_check()==true) {
+		$this->load->view('admin-templates/header',$data);
+		$this->load->view('admin-templates/nav');
+		$this->load->view($page,$data);
+		$this->load->view('admin-templates/footer');
+		}
+	else{
+			$this->notAuthorized();
+		}
+	}
 	public function add($tbl,$param1){
 	
 		if(isset($_REQUEST['select'])&& isset( $_REQUEST['description'])&& isset($_REQUEST['add'])){ 
@@ -58,7 +68,7 @@ class General extends CI_Controller {
 			$this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean');
 			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
 			if($this->form_validation->run()==False){
-				redirect(base_url().'user/settings');
+				 redirect(base_url().'organization/front-desk/settings');
 			}else {
 
 				$result=$this->settings_model->addValues_returnId($tbl[$param1],$data);
@@ -74,7 +84,7 @@ class General extends CI_Controller {
 
 					$this->session->set_userdata(array('dbSuccess'=>'Details Added Succesfully..!'));
 					$this->session->set_userdata(array('dbError'=>''));
-					redirect(base_url().'user/settings');
+					 redirect(base_url().'organization/front-desk/settings');
 				}
 			}
 		}
@@ -89,7 +99,8 @@ class General extends CI_Controller {
 	        $this->form_validation->set_rules('select_text','Values','trim|required|min_length[2]|xss_clean');
 			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
 		if($this->form_validation->run()==False){
-        redirect(base_url().'user/settings');
+        //redirect(base_url().'user/settings');
+	 redirect(base_url().'organization/front-desk/settings');
 		}
       else {
 		$result=$this->settings_model->updateValues($tbl[$param1],$data,$id);
@@ -103,7 +114,8 @@ class General extends CI_Controller {
 			//-----------fa code ends here---------------------------
 					$this->session->set_userdata(array('dbSuccess'=>'Details Updated Succesfully..!'));
 				    $this->session->set_userdata(array('dbError'=>''));
-				    redirect(base_url().'user/settings');
+				   // redirect(base_url().'user/settings');
+				   redirect(base_url().'organization/front-desk/settings');
 						}
 			}
 							}
@@ -118,7 +130,7 @@ class General extends CI_Controller {
 			//$this->form_validation->set_rules('select','Values','trim|required|min_length[2]|xss_clean|alpha_numeric');
 			$this->form_validation->set_rules('description','Description','trim|required|min_length[2]|xss_clean');
 			if($this->form_validation->run()==False){
-        			redirect(base_url().'user/settings');
+        			 redirect(base_url().'organization/front-desk/settings');
 			}
       		else {
 			$result=$this->settings_model->deleteValues($tbl[$param1],$id);
@@ -132,7 +144,7 @@ class General extends CI_Controller {
 				//-----------fa code ends here---------------------------
 				$this->session->set_userdata(array('dbSuccess'=>'Details Deleted Succesfully..!'));
 				$this->session->set_userdata(array('dbError'=>''));
-				redirect(base_url().'user/settings');
+				 redirect(base_url().'organization/front-desk/settings');
 						}
 			}
 		}

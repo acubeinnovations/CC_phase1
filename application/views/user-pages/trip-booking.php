@@ -418,13 +418,13 @@ $customer_type='';
 									</div>
 									<div class="form-group">
 									<?php 
-									echo form_input(array('name'=>'pickupdatepicker','class'=>'mandatory form-control width-60-percent-with-margin-10','id'=>'pickupdatepicker','placeholder'=>'Pick up Date','value'=>$pickupdatepicker)).form_input(array('name'=>'pickuptimepicker','class'=>'mandatory form-control width-30-percent-with-margin-left-20','id'=>'pickuptimepicker','placeholder'=>'Pick up time ','value'=>$pickuptimepicker));
+									echo form_input(array('name'=>'pickupdatepicker','class'=>'mandatory format-date form-control width-60-percent-with-margin-10','id'=>'pickupdatepicker','placeholder'=>'Pick up Date','value'=>$pickupdatepicker)).form_input(array('name'=>'pickuptimepicker','class'=>'mandatory format-time form-control width-30-percent-with-margin-left-20','id'=>'pickuptimepicker','placeholder'=>'Pick up time ','value'=>$pickuptimepicker));
 									echo $this->form_functions->form_error_session('pickupdatepicker', '<p class="text-red float-left right-15">', '</p>').$this->form_functions->form_error_session('pickuptimepicker', '<p class="text-red float-left left-65">', '</p>');
 									 ?>
 									</div>
 									<div class="form-group float-left">
 									<?php 
-									echo form_input(array('name'=>'dropdatepicker','class'=>'mandatory form-control width-60-percent-with-margin-10','id'=>'dropdatepicker','placeholder'=>'Drop Date','value'=>$dropdatepicker)).form_input(array('name'=>'droptimepicker','class'=>'mandatory form-control width-30-percent-with-margin-left-20','id'=>'droptimepicker','placeholder'=>'Drop time','value'=>$droptimepicker));
+									echo form_input(array('name'=>'dropdatepicker','class'=>'mandatory format-date form-control width-60-percent-with-margin-10','id'=>'dropdatepicker','placeholder'=>'Drop Date','value'=>$dropdatepicker)).form_input(array('name'=>'droptimepicker','class'=>'mandatory form-control format-time width-30-percent-with-margin-left-20','id'=>'droptimepicker','placeholder'=>'Drop time','value'=>$droptimepicker));
 									echo $this->form_functions->form_error_session('dropdatepicker', '<p class="text-red float-left right-15">', '</p>').$this->form_functions->form_error_session('droptimepicker', '<p class="text-red float-left left-65">', '</p>');
 									 ?>
 									</div>
