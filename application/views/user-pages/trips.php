@@ -117,7 +117,7 @@ echo form_close();?></td>
 						if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $customer_groups[$trips[$trip_index]['customer_group_id']];}?></td>-->
 					    <td><?php echo $pickdate; ?></td>
 					    <td><?php 
-					    if($trips[$trip_index]['vehicle_id']==gINVALID || $trips[$trip_index]['vehicle_id']==0){echo 'Vehicle Not Allocated';}else{ echo $trips[$trip_index]['registration_number'].br();
+					    if($trips[$trip_index]['vehicle_id']==gINVALID || $trips[$trip_index]['vehicle_id']==0){echo 'Vehicle Not Allocated'.br();}else{ echo $trips[$trip_index]['registration_number'].br();
 					    }
 					    if($trips[$trip_index]['vehicle_model_id']==gINVALID || $trips[$trip_index]['vehicle_model_id']==0){echo '';}else{ echo $trips[$trip_index]['model'].br();
 					    }
@@ -196,15 +196,25 @@ echo form_close();?></td>
 						?>
 						<span class="garage-time-error text-red"></span>
 					</div>
+					<div class="form-group">
+						<?php echo form_label('Trip Starting Time','tripstartingtime'); ?>
+						<?php echo form_input(array('name'=>'tripstartingtime','class'=>'form-control tripstartingtime','placeholder'=>'Enter Trip Starting Time')); 
+						?>
+					</div>
+					<div class="form-group">
+						<?php echo form_label('Trip Ending Time','tripendingtimelabel'); ?>
+						<?php echo form_input(array('name'=>'tripendingtime','class'=>'form-control tripendingtime','placeholder'=>'Enter Trip Ending Time')); 
+						?>
+					</div>
 			
-			
+					
+				</div>
+				<div class="div-with-50-percent-width-with-margin-10">
 					<div class="form-group">
 						<?php echo form_label('Releasing Place','releasingplace'); ?>
 						<?php echo form_input(array('name'=>'releasingplace','class'=>'form-control releasingplace','placeholder'=>'Enter Releasing Place')); 
 						?>
 					</div>
-				</div>
-				<div class="div-with-50-percent-width-with-margin-10">
 					<div class="form-group">
 						<?php echo form_label('Parking Fee','parking'); ?>
 						<?php echo form_input(array('name'=>'parkingfee','class'=>'form-control parkingfee','placeholder'=>'Enter Parking Fee')); ?>

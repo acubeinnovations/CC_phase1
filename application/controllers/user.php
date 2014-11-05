@@ -371,7 +371,7 @@ class User extends CI_Controller {
 	public function ShowBookTrip($trip_id =''){
 	if($this->session_check()==true) {
 	//echo $this->session->userdata('organisation_id');
-	$tbl_arry=array('booking_sources','trip_models','vehicle_types','vehicle_models','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
+	$tbl_arry=array('booking_sources','available_drivers','available_vehicles','trip_models','vehicle_types','vehicle_models','vehicle_makes','vehicle_ac_types','vehicle_fuel_types','vehicle_seating_capacity','vehicle_beacon_light_options','languages','payment_type','customer_types','customer_groups');
 	
 	for ($i=0;$i<count($tbl_arry);$i++){
 	$result=$this->user_model->getArray($tbl_arry[$i]);
@@ -386,7 +386,7 @@ class User extends CI_Controller {
 	$orderby = ' CONCAT(pick_up_date,pick_up_time) ASC';
 	$data['notification']=$this->trip_booking_model->getDetails($conditon,$orderby);
 	$data['customers_array']=$this->customers_model->getArray();
-
+	$data['tariffs']='';
 	if($trip_id!='' && $trip_id > 0) {
 	$conditon = array('id'=>$trip_id,'organisation_id'=>$this->session->userdata('organisation_id'));
 	$result=$this->trip_booking_model->getDetails($conditon);
@@ -497,6 +497,7 @@ class User extends CI_Controller {
 	$data1['language']				=	$result->driver_language_id;
 	$data1['tariff']				=	$result->tariff_id;
 	$data1['available_vehicle']		=	$result->vehicle_id;
+	$data1['available_driver']		=	$result->driver_id;
 	$this->session->set_userdata('driver_id',$result->driver_id);
 	$data1['customer_type']			=	$result->customer_type_id;
 	}else{
@@ -504,7 +505,7 @@ class User extends CI_Controller {
 	redirect(base_url().'organization/front-desk/trips');
 	}
 	}
-	if(isset($data1['vehicle_type']) && isset($data1['vehicle_ac_type']) && isset($data1['vehicle_make']) && isset($data1['vehicle_model']) && isset($pickupdatetime) && isset($dropdatetime)){
+	/*if(isset($data1['vehicle_type']) && isset($data1['vehicle_ac_type']) && isset($data1['vehicle_make']) && isset($data1['vehicle_model']) && isset($pickupdatetime) && isset($dropdatetime)){
 	$available=array('vehicle_type'=>$data1['vehicle_type'],'vehicle_ac_type'=>$data1['vehicle_ac_type'],'vehicle_make'=>$data1['vehicle_make'],'vehicle_model'=>$data1['vehicle_model'],'pickupdatetime'=>$pickupdatetime,'dropdatetime'=>$dropdatetime,'organisation_id'=>$this->session->userdata('organisation_id'));
 	$res_vehicles=$this->getAvailableVehicle($available);
 	
@@ -528,7 +529,8 @@ class User extends CI_Controller {
 	}else{
 	$data['tariffs']='';
 	$data['available_vehicles']='';
-	}
+	}*/
+
 	if(isset($data1) && count($data1)>0){
 	$data['information']=$data1;
 	}else{
