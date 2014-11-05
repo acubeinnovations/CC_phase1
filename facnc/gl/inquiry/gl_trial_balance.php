@@ -180,7 +180,7 @@ if (!isset($_POST['Dimension']))
 	$_POST['Dimension'] = 0;
 if (!isset($_POST['Dimension2']))
 	$_POST['Dimension2'] = 0;
-start_table(TABLESTYLE);
+start_table(TABLESTYLE,"width=100%");
 $tableheader =  "<tr>
 	<td rowspan=2 class='tableheader'>" . _("Account") . "</td>
 	<td rowspan=2 class='tableheader'>" . _("Account Name") . "</td>

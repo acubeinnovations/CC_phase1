@@ -190,11 +190,11 @@ if ($row = db_fetch($result)) {
 	} 
 }
 
-echo "<hr>";
+br();
 
 div_start('summary');
 
-start_table(TABLESTYLE);
+start_table(TABLESTYLE,"width=100%");
 $th = array(_("Reconcile Date"), _("Beginning<br>Balance"), 
 	_("Ending<br>Balance"), _("Account<br>Total"),_("Reconciled<br>Amount"), _("Difference"));
 table_header($th);
@@ -217,7 +217,7 @@ amount_cell($difference, false, '', "difference");
 end_row();
 end_table();
 div_end();
-echo "<hr>";
+br();
 //------------------------------------------------------------------------------------------------
 
 if (!isset($_POST['bank_account']))
@@ -242,7 +242,7 @@ display_heading($act['bank_account_name']." - ".$act['bank_curr_code']);
 	   );
 	$table =& new_db_pager('trans_tbl', $sql, $cols);
 
-	$table->width = "80%";
+	$table->width = "100%";
 	display_db_pager($table);
 
 br(1);

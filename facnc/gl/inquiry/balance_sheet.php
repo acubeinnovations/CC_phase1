@@ -156,7 +156,7 @@ function display_balance_sheet()
 
 	div_start('balance_tbl');
 	
-	start_table(TABLESTYLE, "width=30%");			
+	start_table(TABLESTYLE, "width=100%");			
 		
 	if (!$drilldown) //Root Level
 	{		

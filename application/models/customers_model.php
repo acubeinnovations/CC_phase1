@@ -81,6 +81,7 @@ class Customers_model extends CI_Model {
 			}
 	}
 	public function getAllIds(){
+
 	$qry=$this->db->select('id');
 	$this->db->from('customers');
 	$qry=$this->db->get();
@@ -91,6 +92,7 @@ class Customers_model extends CI_Model {
 			}
 	
 	return $values;
+
 	
 	
 	}

@@ -101,7 +101,7 @@ if ($Mode == 'RESET')
 $result = get_bank_accounts(check_value('show_inactive'));
 
 start_form();
-start_table(TABLESTYLE, "width='80%'");
+start_table(TABLESTYLE, "width='100%'");
 
 $th = array(_("Account Name"), _("Type"), _("Currency"), _("GL Account"), 
 	_("Bank"), _("Number"), _("Bank Address"), _("Dflt"), '','');

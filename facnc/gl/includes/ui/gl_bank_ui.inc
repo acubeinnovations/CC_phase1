@@ -19,13 +19,13 @@ function display_bank_header(&$order)
 
 	start_outer_table(TABLESTYLE2, "width=100%"); // outer table
 
-	table_section(1);
+	table_section(1, "30%");
 	
-    date_row(_("Date:"), 'date_', '', true, 0, 0, 0, null, true);
+    	date_row(_("Date:"), 'date_', '', true, 0, 0, 0, null, true);
 
 	ref_row(_("Reference:"), 'ref', '');
 
-	table_section(2, "33%");
+	table_section(2, "40%");
 
 	if (!isset($_POST['PayType']))
 	{
@@ -55,7 +55,7 @@ function display_bank_header(&$order)
     {
 		case PT_MISC :
     		text_row_ex($payment ?_("To the Order of:"):_("Name:"),
-				 'person_id', 40, 50);
+				 'person_id', 20, 50);
     		break;
 		//case PT_WORKORDER :
     	//	workorders_list_row(_("Work Order:"), 'person_id', null);
@@ -111,7 +111,7 @@ function display_bank_header(&$order)
     	//	break;
     }
 
-	table_section(3, "33%");
+	table_section(3, "30%");
 
 	if (!$order->order_id && !get_post('bank_account'))
 	{
