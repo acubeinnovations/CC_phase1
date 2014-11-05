@@ -206,7 +206,7 @@ if (db_has_gl_accounts())
 }
 	
 br(1);
-start_table(TABLESTYLE2);
+start_table(TABLESTYLE2,'width=100%');
 
 if ($selected_account != "") 
 {
@@ -243,11 +243,11 @@ else
 
 text_row_ex(_("Account Code 2:"), 'account_code2', 15);
 
-text_row_ex(_("Account Name:"), 'account_name', 60);
+text_row_ex(_("Account Name:"), 'account_name', 40);
 
 gl_account_types_list_row(_("Account Group:"), 'account_type', null);
 
-tag_list_row(_("Account Tags:"), 'account_tags', 5, TAG_ACCOUNT, true);
+tag_list_row(_("Account Tags:"), 'account_tags', 6, TAG_ACCOUNT, true);
 
 record_status_list_row(_("Account status:"), 'inactive');
 end_table(1);

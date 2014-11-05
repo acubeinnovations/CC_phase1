@@ -124,7 +124,7 @@ if ($Mode == 'RESET')
 $result = get_account_types(check_value('show_inactive'));
 
 start_form();
-start_table(TABLESTYLE);
+start_table(TABLESTYLE,"width=100%");
 $th = array(_("Group ID"), _("Group Name"), _("Subgroup Of"), _("Class"), "", "");
 inactive_control_column($th);
 table_header($th);
@@ -146,7 +146,7 @@ while ($myrow = db_fetch($result))
 		$parent_text = get_account_type_name($myrow["parent"]);
 	}
 
-	label_cell($myrow["id"]);
+	label_cell($myrow["id"],"width=5% align='center'");
 	label_cell($myrow["name"]);
 	label_cell($parent_text);
 	label_cell($bs_text);
@@ -185,7 +185,7 @@ if ($selected_id != "")
 	}	
 }
 text_row_ex(_("ID:"), 'id', 10);
-text_row_ex(_("Name:"), 'name', 50);
+text_row_ex(_("Name:"), 'name', 30);
 
 gl_account_types_list_row(_("Subgroup Of:"), 'parent', null, _("None"), true);
 

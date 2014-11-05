@@ -59,9 +59,9 @@ function gl_payment_controls()
 
 	start_form();
 
-	start_outer_table(TABLESTYLE2);
+	start_outer_table(TABLESTYLE2,'width=100%');
 
-	table_section(1);
+	table_section(1,'width=50%');
 
 	bank_accounts_list_row(_("From Account:"), 'FromBankAccount', null, true);
 
