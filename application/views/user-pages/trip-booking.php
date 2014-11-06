@@ -440,10 +440,10 @@ $customer_type='';
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8 ";
 							  $id='vehicle-type';
-						echo $this->form_functions->populate_dropdown('vehicle_type',$vehicle_types,$vehicle_type,$class,$id,$msg="Select Type");
+						echo $this->form_functions->populate_dropdown('vehicle_type',$vehicle_types,$vehicle_type,$class,$id,$msg="Vehicle Type");
 								$class="form-control row-source-50-percent-width-with-margin-8";	
 								$id='vehicle-ac-type';
-						echo $this->form_functions->populate_dropdown('vehicle_ac_type',$vehicle_ac_types,$vehicle_ac_type,$class,$id,$msg="Select AC/Non AC");
+						echo $this->form_functions->populate_dropdown('vehicle_ac_type',$vehicle_ac_types,$vehicle_ac_type,$class,$id,$msg="AC/Non AC");
 						echo $this->form_functions->form_error_session('vehicle_type', '<p class="text-red error-margin">', '</p>').$this->form_functions->form_error_session('vehicle_ac_types', '<p class="text-red error-margin">', '</p>');						
 						echo br(2);
 						 ?>
@@ -452,10 +452,10 @@ $customer_type='';
 						<?php 
 								$class="form-control row-source-50-percent-width-with-margin-8";	
 								$id='vehicle-make';
-						echo $this->form_functions->populate_dropdown('vehicle_make',$vehicle_makes,$vehicle_make_id,$class,$id,$msg="Select Vehicle Makes");
+						echo $this->form_functions->populate_dropdown('vehicle_make',$vehicle_makes,$vehicle_make_id,$class,$id,$msg="Vehicle Makes");
 						$class="form-control row-source-50-percent-width-with-margin-8 mandatory";
 							  $id='vehicle-model';
-						echo $this->form_functions->populate_dropdown('vehicle_model',$vehicle_models,$vehicle_model_id,$class,$id,$msg="Select Vehicle Models");
+						echo $this->form_functions->populate_dropdown('vehicle_model',$vehicle_models,$vehicle_model_id,$class,$id,$msg="Vehicle Models");
 						echo $this->form_functions->form_error_session('vehicle_make', '<p class="text-red error-margin">', '</p>').$this->form_functions->form_error_session('vehicle_model', '<p class="text-red error-margin">', '</p>');						
 						echo br(2);
 						 ?>
@@ -463,8 +463,8 @@ $customer_type='';
 						
 						<div class="form-group hide-me">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
-						echo $this->form_functions->populate_dropdown('seating_capacity',$vehicle_seating_capacity,$seating_capacity,$class,$id='',$msg="Select Seats");
-						echo $this->form_functions->populate_dropdown('language',$languages,$language,$class,$id='',$msg="Select Languages");
+						echo $this->form_functions->populate_dropdown('seating_capacity',$vehicle_seating_capacity,$seating_capacity,$class,$id='',$msg="Seats");
+						echo $this->form_functions->populate_dropdown('language',$languages,$language,$class,$id='',$msg="Languages");
 						echo $this->form_functions->form_error_session('vehicle_seating_capacity', '<p class="text-red error-margin">', '</p>').$this->form_functions->form_error_session('language', '<p class="text-red error-margin">', '</p>');
 						echo br(2);
 						 ?>
@@ -472,10 +472,10 @@ $customer_type='';
 						<div class="form-group">
 						<?php $class="form-control row-source-50-percent-width-with-margin-8";
 						$id="tarrif";
-						echo $this->form_functions->populate_dropdown('tariff',$tariffs,$tariff,$class,$id,$msg="Select tariffs");
+						echo $this->form_functions->populate_dropdown('tariff',$tariffs,$tariff,$class,$id,$msg="Tariffs");
 						$class="form-control row-source-50-percent-width-with-margin-8 mandatory";
 						$id="available_vehicle";
-						echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Select Available Vehicles");
+						echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Available Vehicles");
 						echo br(2);
 						 ?>
 						<div class="hide-me vehicle-tarif-checker" tariff_id="<?php echo $tariff;?>" available_vehicle_id="<?php echo $available_vehicle;?>"></div>
@@ -483,7 +483,7 @@ $customer_type='';
 						<div class="form-group">
 						<?php $class="form-control row-source-100-percent-width-with-margin-8 mandatory";
 						$id="available_driver";
-						echo $this->form_functions->populate_dropdown('available_driver',$available_drivers,$available_driver,$class,$id,$msg="Select driver");
+						echo $this->form_functions->populate_dropdown('available_driver',$available_drivers,$available_driver,$class,$id,$msg="Driver");
 						echo br(2);
 						 ?>
 						
