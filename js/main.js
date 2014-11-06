@@ -1416,11 +1416,31 @@ $.post(base_url+"/user/getNotifications",
 //trip_bookig page-js end
 
 //trips paje js start
+$('.complete-trip').click(function(){
+if($(this).find('span').attr('tarrif_id')>0){
+return true;
+}else{
+var trip_id=$(this).find('span').attr('trip_id');
+var url=base_url+"/organization/front-desk/trip-booking/"+trip_id;
+var r = confirm("Please Select Tarif To Complete The Trip..Click OK to Continue..!");
+    if (r == true) {
+       window.open(url, '_blank');
+		return false; 
+    } else {
+       return false; 
+    }
+   
+}
+});
+
+
 $('.voucher').on('click',function(){
 var trip_id=$(this).attr('trip_id');
 var driver_id=$(this).attr('driver_id');
 var tarrif_id=$(this).attr('tarrif_id');
 var no_of_days=$(this).attr('no_of_days');
+var pick_up_time=$(this).attr('pick_up_time');
+
 $('.overlay-container').css('display','block');
 var top=-1*(Number($('.trips-table').height())+70);
 $('.modal-body').css('top',top);
@@ -1433,7 +1453,7 @@ $('.trip-voucher-save').attr('driver_id',driver_id);
 			
 		},function(data){
 		  if(data=='false'){
-
+				$('.tripstartingtime').val(pick_up_time);
 			}else{
 			
 			$('.startkm').val(data[0].start_km_reading);
@@ -1448,6 +1468,7 @@ $('.trip-voucher-save').attr('driver_id',driver_id);
 			$('.tripendingtime').val(data[0].trip_ending_time);
 			$('.nighthalt').val(data[0].night_halt_charges);
 			$('.extrafuel').val(data[0].fuel_extra_charges);
+			$('.driverbata').val(data[0].driver_bata);
 			
 		}
 		});
@@ -1547,8 +1568,8 @@ totexpense=Math.round(Number(minimum_kilometers)*Number(rate)).toFixed(2);
 }
 
 var garageclosingkm=$('.garageclosingkm').val();
-var garageclosingtime=$('.garageclosingtime').val();
-var releasingplace=$('.releasingplace').val();
+//var garageclosingtime=$('.garageclosingtime').val();
+//var releasingplace=$('.releasingplace').val();
 
 var trip_starting_time=$('.tripstartingtime').val();
 var trip_ending_time=$('.tripendingtime').val();
@@ -1557,6 +1578,7 @@ var tollfee=$('.tollfee').val();
 var statetax=$('.statetax').val();
 var nighthalt=$('.nighthalt').val();
 var extrafuel=$('.extrafuel').val();
+var driverbata=$('.driverbata').val();
 
 totexpense=Number(totexpense)+Number(tollfee)+Number(parkingfee)+Number(nighthalt);
 
@@ -1572,10 +1594,6 @@ $('.end-km-error').html('End km Field is required');
 error=true;
 }
 
-if(garageclosingkm==''){
-$('.garage-km-error').html('Garage closing km Field is required');
-error=true;
-}
 
 if(error==false){
 	 $.post(base_url+"/trip-booking/tripVoucher",
@@ -1584,8 +1602,6 @@ if(error==false){
 			startkm:startkm,
 			endkm:endkm,
 			garageclosingkm:garageclosingkm,
-			garageclosingtime:garageclosingtime,
-			releasingplace:releasingplace,
 			parkingfee:parkingfee,
 			tollfee:tollfee,
 			statetax:statetax,
@@ -1595,7 +1611,8 @@ if(error==false){
 			totexpense:totexpense,
 			trip_starting_time:trip_starting_time,
 			trip_ending_time:trip_ending_time,
-			no_of_days:no_of_days
+			no_of_days:no_of_days,
+			driverbata:driverbata
 			
 		},function(data){
 		  if(data!='false'){

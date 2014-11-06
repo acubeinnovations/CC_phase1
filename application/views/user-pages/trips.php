@@ -152,7 +152,7 @@ echo form_close();?></td>
 						</td>	
 						
 						
-						<td><?php if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED || $trips[$trip_index]['trip_status_id']==TRIP_STATUS_PENDING ) { echo anchor(base_url().'organization/front-desk/trip-booking/'.$trips[$trip_index]['trip_id'],'E','class="btn btn-primary"').nbs(5);if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED) { echo "<a href=".base_url().'trip/complete/'.$trips[$trip_index]['trip_id']." class='btn btn-primary'>C</a>"; } }else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_COMPLETED){ echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['trip_id']." class='btn btn-primary' target='_blank'>P</a>".nbs(5)."<button class='btn btn-primary voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' >V</button>"; }else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_BILLED){ echo "<button class='btn btn-primary voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' >V</button>"; } ?></td>
+						<td><?php if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED || $trips[$trip_index]['trip_status_id']==TRIP_STATUS_PENDING ) { echo anchor_popup_default(base_url().'organization/front-desk/trip-booking/'.$trips[$trip_index]['trip_id'],'E',array('class'=>'btn btn-primary')).nbs(5);if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED) { echo "<a href=".base_url().'trip/complete/'.$trips[$trip_index]['trip_id']."/".$this->uri->segment(4)." class='btn btn-primary complete-trip'><span tarrif_id='".$trips[$trip_index]['tariff_id']."' trip_id='".$trips[$trip_index]['trip_id']."'>C</span></a>"; } }else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_COMPLETED){ echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['trip_id']." class='btn btn-primary' target='_blank'>P</a>".nbs(5)."<button class='btn btn-primary voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' >V</button>"; }else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_BILLED){ echo "<button class='btn btn-primary voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' >V</button>"; } ?></td>
 					</tr>
 					<?php 
 						$trip_sl_no++;
@@ -190,7 +190,7 @@ echo form_close();?></td>
 						<?php echo form_input(array('name'=>'garageclosingkm','class'=>'form-control garageclosingkm','placeholder'=>'Enter Gariage closing km')); ?>
 						<span class="garage-km-error text-red"></span>
 					</div>
-					<div class="form-group">
+					<div class="form-group hide-me">
 						<?php echo form_label('Gariage Closing Time','gariageclosingtime'); ?>
 						<?php echo form_input(array('name'=>'garageclosingtime','class'=>'form-control garageclosingtime initialize-time-picker','placeholder'=>'Enter Gariage Closing Time')); 
 						?>
@@ -198,19 +198,19 @@ echo form_close();?></td>
 					</div>
 					<div class="form-group">
 						<?php echo form_label('Trip Starting Time','tripstartingtime'); ?>
-						<?php echo form_input(array('name'=>'tripstartingtime','class'=>'form-control tripstartingtime','placeholder'=>'Enter Trip Starting Time')); 
+						<?php echo form_input(array('name'=>'tripstartingtime','class'=>'form-control tripstartingtime format-time','placeholder'=>'Enter Trip Starting Time')); 
 						?>
 					</div>
 					<div class="form-group">
 						<?php echo form_label('Trip Ending Time','tripendingtimelabel'); ?>
-						<?php echo form_input(array('name'=>'tripendingtime','class'=>'form-control tripendingtime','placeholder'=>'Enter Trip Ending Time')); 
+						<?php echo form_input(array('name'=>'tripendingtime','class'=>'form-control tripendingtime format-time','placeholder'=>'Enter Trip Ending Time')); 
 						?>
 					</div>
 			
 					
 				</div>
 				<div class="div-with-50-percent-width-with-margin-10">
-					<div class="form-group">
+					<div class="form-group hide-me">
 						<?php echo form_label('Releasing Place','releasingplace'); ?>
 						<?php echo form_input(array('name'=>'releasingplace','class'=>'form-control releasingplace','placeholder'=>'Enter Releasing Place')); 
 						?>
@@ -240,6 +240,11 @@ echo form_close();?></td>
 					<div class="form-group">
 						<?php echo form_label('Extra Fuel Charge','extrafuel'); ?>
 						<?php echo form_input(array('name'=>'extrafuel','class'=>'form-control extrafuel','placeholder'=>'Enter Extra Fuel Charge')); ?>
+					
+					</div>
+					<div class="form-group">
+						<?php echo form_label('Driver Bata','driverbatalabel'); ?>
+						<?php echo form_input(array('name'=>'driverbata','class'=>'form-control driverbata','placeholder'=>'Enter Driver Bata')); ?>
 					
 					</div>
 			   		<div class="box-footer">

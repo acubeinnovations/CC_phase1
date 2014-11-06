@@ -423,17 +423,25 @@ class User extends CI_Controller {
 	
 	$dbdata=array('id'=>$result->customer_id);	
 	$customer 	=	$this->customers_model->getCustomerDetails($dbdata);
+	if(count($customer)>0){
 	$customer=$customer[0];
 	$data1['customer']				=	$customer['name'];
 	$data1['new_customer']			=	'false';
 	$data1['email']					=	$customer['email'];
 	$data1['mobile']				=	$customer['mobile'];
-
+	
 	$this->session->set_userdata('customer_id',$result->customer_id);
 	$this->session->set_userdata('customer_name',$customer['name']);
 	$this->session->set_userdata('customer_email',$customer['email']);
 	$this->session->set_userdata('customer_mobile',$customer['mobile']);
+	}else{
 	
+	$data1['customer']				=	'';
+	$data1['new_customer']			=	'true';
+	$data1['email']					=	'';
+	$data1['mobile']				=	'';
+
+	}
 	$data1['booking_source']			=	$result->booking_source_id;	
 	$data1['source']					=	$result->source;
 	$data1['trip_model']				=	$result->trip_model_id;

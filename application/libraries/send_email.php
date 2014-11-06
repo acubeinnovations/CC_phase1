@@ -8,6 +8,7 @@ class Send_email{
 	$config['mailpath'] = '/usr/sbin/sendmail';
     $config['wordwrap'] = TRUE;
     $config['mailtype'] = 'html';
+	
 	$CI->email->initialize($config);
 	$CI->email->from(SYSTEM_EMAIL, PRODUCT_NAME);
 	$CI->email->to($email);
