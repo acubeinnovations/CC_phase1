@@ -222,6 +222,63 @@ if ( ! function_exists('anchor_popup'))
 // ------------------------------------------------------------------------
 
 /**
+ * Anchor Link - Pop-up version
+ *
+ * Creates an anchor based on the local URL. The link
+ * opens a new window based on the attributes specified.
+ *
+ * @access	public
+ * @param	string	the URL
+ * @param	string	the link title
+ * @param	mixed	any attributes
+ * @return	string
+ */
+
+if ( ! function_exists('anchor_popup_default'))
+{
+	function anchor_popup_default($uri = '', $title = '', $attributes = FALSE)
+	{
+		$title = (string) $title;
+
+		$site_url = ( ! preg_match('!^\w+://! i', $uri)) ? site_url($uri) : $uri;
+
+		if ($title == '')
+		{
+			$title = $site_url;
+		}
+
+		if ($attributes === FALSE)
+		{
+			return "<a href='javascript:void(0);' onclick=\"window.open('".$site_url."', '_blank');\">".$title."</a>";
+		}
+
+		if ( ! is_array($attributes))
+		{
+			$attributes = array();
+		}
+
+		foreach (array('scrollbars' => 'yes', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0', ) as $key => $val)
+		{
+			$atts[$key] = ( ! isset($attributes[$key])) ? $val : $attributes[$key];
+			unset($attributes[$key]);
+		}
+
+		if ($attributes != '')
+		{
+			$attributes = _parse_attributes($attributes);
+		}
+
+		return "<a href='javascript:void(0);' onclick=\"window.open('".$site_url."', '_blank', '"._parse_attributes($atts, TRUE)."');\"$attributes>".$title."</a>";
+	}
+}
+
+
+
+
+
+// ------------------------------------------------------------------------
+
+/**
  * Mailto Link
  *
  * @access	public

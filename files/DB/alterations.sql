@@ -12,7 +12,9 @@ CREATE TABLE IF NOT EXISTS `app_request_log` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+ALTER TABLE `trip_vouchers` ADD `trip_starting_time` TIME NOT NULL AFTER `no_of_days` ,
+ADD `trip_ending_time` TIME NOT NULL AFTER `trip_starting_time`;
+ALTER TABLE `trip_vouchers` ADD `driver_bata` DOUBLE NOT NULL AFTER `driver_id` ;
 
 /*need to b updated*/
 

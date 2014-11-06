@@ -296,11 +296,10 @@ class Tarrif extends CI_Controller {
 	}
 
 	public function tariffSelecter(){
-	if(isset($_REQUEST['vehicle_type']) && isset($_REQUEST['vehicle_ac_type']) && isset($_REQUEST['vehicle_make']) && isset($_REQUEST['vehicle_model'])){
+	if(isset($_REQUEST['vehicle_ac_type']) && isset($_REQUEST['vehicle_model'])){
 
-	$data['vehicle_type']=$_REQUEST['vehicle_type'];
+	
 	$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
-	$data['vehicle_make']=$_REQUEST['vehicle_make'];
 	$data['vehicle_model']=$_REQUEST['vehicle_model'];
 	$data['organisation_id']=$this->session->userdata('organisation_id');
 

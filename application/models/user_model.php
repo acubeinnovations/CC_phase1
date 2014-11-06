@@ -47,6 +47,13 @@ class user_model extends CI_Model {
 	$query='SELECT * FROM devices WHERE devices.id NOT IN(SELECT device_id FROM vehicle_devices WHERE organisation_id='.$org_id.' and to_date="9999-12-30")and organisation_id='.$org_id.' ';
 	$qry=$this->db->query($query);
 	$flag=1;
+	}elseif($tbl=='available_vehicles'){
+	$query='SELECT * FROM vehicles WHERE  organisation_id='.$org_id.' ';
+	$qry=$this->db->query($query);
+	$flag=2;
+	}elseif($tbl=='available_drivers'){
+	$query='SELECT * FROM drivers WHERE  organisation_id='.$org_id.' order by name ASC';
+	$qry=$this->db->query($query);
 	}
 	else{
 		$qry=$this->db->where('organisation_id',$org_id);
@@ -61,8 +68,10 @@ class user_model extends CI_Model {
 			if($flag==0){
 			$values[$l[$i]['id']]=$l[$i]['name'];
 			}
-			else{
+			else if($flag==1){
 			$values[$l[$i]['id']]=$l[$i]['imei'];
+			}else if($flag==2){
+			$values[$l[$i]['id']]=$l[$i]['registration_number'];
 			}
 			}
 			if(!empty($values)){

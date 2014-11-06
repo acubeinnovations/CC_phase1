@@ -25,7 +25,7 @@ class Trip extends CI_Controller {
 			
 			}else if($param1=='complete') {
 		
-			$this->tripComplete($param2);
+			$this->tripComplete($param2,$param3);
 			
 			}
 			if($param1) {
@@ -128,10 +128,10 @@ class Trip extends CI_Controller {
 	}
 	}
 	
-	public function tripComplete($trip_id){
+	public function tripComplete($trip_id,$pagination=''){
 	$data=array('trip_status_id'=>TRIP_STATUS_TRIP_COMPLETED);
 	$res=$this->trip_booking_model->updateTrip($data,$trip_id);
-	 redirect(base_url().'organization/front-desk/trips');
+	 redirect(base_url().'organization/front-desk/trips/'.$pagination);
 	
 	}	
 

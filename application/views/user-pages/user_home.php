@@ -15,7 +15,7 @@
 
 	<div id="body">
 	     <h1>Trip Statistics For The Day</h1>                       
-		 <div id="front-desk-dashboard" style="width: 100%; height: 400px;"></div>
+		 <div id="front-desk-dashboard" style="width: 100%; height: 600px;"></div>
 	</div>
 
 </div>

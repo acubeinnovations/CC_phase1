@@ -68,15 +68,15 @@ class Trip_booking extends CI_Controller {
 				}else{
 					$data['trip_id']='';
 				}
-				if(isset($_REQUEST['advanced'])){
-					$this->form_validation->set_rules('customer_group','Customer groups','trim|required|xss_clean');
+				if(isset($_REQUEST['customer_group']) && $_REQUEST['customer_group']!=gINVALID){
+					$this->form_validation->set_rules('customer_group','Customer groups','trim|xss_clean');
 					$data['advanced']=TRUE;
 					$data['customer_group']=$this->input->post('customer_group');
 				}else{
 					$data['advanced']='';
 					$data['customer_group']='';
 				}
-				if(isset($_REQUEST['guest'])){
+				if(isset($_REQUEST['guestname']) && $_REQUEST['guestname']!=''){
 					if($_REQUEST['guest_id']==gINVALID){
 					$this->form_validation->set_rules('guestname','Guest name','trim|required|xss_clean');
 					$this->form_validation->set_rules('guestemail','Guest email','trim|valid_email');
@@ -108,7 +108,7 @@ class Trip_booking extends CI_Controller {
 				$this->form_validation->set_rules('viacity','Via city','trim|xss_clean');
 				$this->form_validation->set_rules('viaarea','Via area','trim|xss_clean');
 				$this->form_validation->set_rules('vialandmark','Via landmark','trim|xss_clean');
-				$this->form_validation->set_rules('dropdownlocation','Drop location','trim|required|xss_clean');
+				$this->form_validation->set_rules('dropdownlocation','Drop location','trim|xss_clean');
 				$this->form_validation->set_rules('dropdownarea','Drop  area','trim|xss_clean');
 				$this->form_validation->set_rules('dropdownlandmark','Drop landmark','trim|xss_clean');
 				$this->form_validation->set_rules('pickupdatepicker','Date','trim|required|xss_clean');
@@ -184,6 +184,7 @@ class Trip_booking extends CI_Controller {
 				$data['language']				=	$this->input->post('language');
 				$data['tariff']					=	$this->input->post('tariff');
 				$data['available_vehicle']		=	$this->input->post('available_vehicle');
+				$data['available_driver']		=	$this->input->post('available_driver');
 				$data['customer_type']			=	$this->input->post('customer_type');
 				if($data['trip_id']==''){
 					if(isset($_REQUEST['recurrent_yes'])){
@@ -265,7 +266,7 @@ class Trip_booking extends CI_Controller {
 				$this->mysession->set('post',$data);
 				redirect(base_url().'organization/front-desk/trip-booking/'.$data['trip_id']);
 			}else{
-				if(isset($_REQUEST['guest'])){
+				if(isset($data['guestname']) && $_REQUEST['guestname']!='' ){
 				if(isset($_REQUEST['guest_id']) && $_REQUEST['guest_id']==gINVALID){
 				
 				$dbdata1=array('name'=>$data['guestname'],'email'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id']);
@@ -274,18 +275,20 @@ class Trip_booking extends CI_Controller {
 				$data['guest_id']=$_REQUEST['guest_id'];
 
 				}
+				}else{
+					$data['guest_id']=gINVALID;
 				}
-				if($data['available_vehicle']>0){
+				if($data['available_vehicle']>0 && $data['available_driver']>0){
 
-					$data['driver_id'] = $this->trip_booking_model->getDriver($data['available_vehicle']);
+					
 					$trip_status=TRIP_STATUS_CONFIRMED;
 
 				}else{
-					$data['driver_id'] = gINVALID;
+					
 					$trip_status=TRIP_STATUS_PENDING;
 				}
 				
-				
+			
 			$dbdata['customer_id']					=$this->session->userdata('customer_id');
 			$dbdata['guest_id']						=$data['guest_id'];
 			$dbdata['customer_type_id']				=$data['customer_type'];
@@ -326,8 +329,8 @@ class Trip_booking extends CI_Controller {
 			$dbdata['driver_language_id']			=$data['language'];
 			$dbdata['trip_model_id']				=$data['trip_model'];
 			$dbdata['tariff_id']					=$data['tariff'];
-			$dbdata['driver_id']					=$data['driver_id'];
 			$dbdata['vehicle_id']					=$data['available_vehicle'];
+			$dbdata['driver_id']					=$data['available_driver'];
 			$dbdata['remarks']						=$data['remarks'];
 			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
 			$dbdata['user_id']						=$this->session->userdata('id');
@@ -380,6 +383,7 @@ class Trip_booking extends CI_Controller {
 							$dbdata['drop_date']					=$dropdown_dates[$index];
 							$dbdata['drop_time']					=$reccurent_continues_droptimepicker;
 							$dbdata['vehicle_id']					=gINVALID;
+							$dbdata['driver_id']					=gINVALID;
 							$dbdata['trip_status_id']				=TRIP_STATUS_PENDING;
 							if($dbdata['pick_up_date']!='' && $dbdata['pick_up_time']!='' && $dbdata['drop_date']!='' &&  $dbdata['drop_time']!=''){
 							$res = $this->trip_booking_model->bookTrip($dbdata);
@@ -396,6 +400,7 @@ class Trip_booking extends CI_Controller {
 							$dbdata['drop_date']					=$reccurent_alternatives_dropdatepicker[$index];
 							$dbdata['drop_time']					=$reccurent_alternatives_droptimepicker[$index];
 							$dbdata['vehicle_id']					=gINVALID;
+							$dbdata['driver_id']					=gINVALID;
 							$dbdata['trip_status_id']				=TRIP_STATUS_PENDING;
 							if($dbdata['pick_up_date']!='' && $dbdata['pick_up_time']!='' && $dbdata['drop_date']!='' &&  $dbdata['drop_time']!=''){	 
 							$res = $this->trip_booking_model->bookTrip($dbdata);
@@ -443,13 +448,13 @@ class Trip_booking extends CI_Controller {
 		} 
 	}
 	public function tripVoucher(){
-	if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['garageclosingkm'] && $_REQUEST['garageclosingtime'] && $_REQUEST['trip_id']){
+	if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['garageclosingkm'] && $_REQUEST['trip_id']){
 	$data['start_km_reading']					=	$_REQUEST['startkm'];
 	$data['end_km_reading']						=	$_REQUEST['endkm'];
 	$data['driver_id']							=	$_REQUEST['driver_id'];
 	$data['garage_closing_kilometer_reading']	=	$_REQUEST['garageclosingkm'];
-	$data['garage_closing_time']				=	$_REQUEST['garageclosingtime'];
-	$data['releasing_place']					=	$_REQUEST['releasingplace'];
+	//$data['garage_closing_time']				=	$_REQUEST['garageclosingtime'];
+	//$data['releasing_place']					=	$_REQUEST['releasingplace'];
 	$data['parking_fees']						=	$_REQUEST['parkingfee'];
 	$data['toll_fees']							=	$_REQUEST['tollfee'];
 	$data['state_tax']							=	$_REQUEST['statetax'];
@@ -457,6 +462,9 @@ class Trip_booking extends CI_Controller {
 	$data['fuel_extra_charges']					=	$_REQUEST['extrafuel'];
 	$data['total_trip_amount']					=	$_REQUEST['totexpense'];
 	$data['no_of_days']							=	$_REQUEST['no_of_days'];
+	$data['driver_bata']						=	$_REQUEST['driverbata'];
+	$data['trip_starting_time']					=	$_REQUEST['trip_starting_time'];
+	$data['trip_ending_time']					=	$_REQUEST['trip_ending_time'];
 	$data['user_id']							=	$this->session->userdata('id');
 	$data['trip_id']							=	$_REQUEST['trip_id'];
 	$data['organisation_id']					=	$this->session->userdata('organisation_id');
@@ -564,7 +572,22 @@ class Trip_booking extends CI_Controller {
 	$vehicle=$this->trip_booking_model->getVehicle($data['vehicle_id']);
 	$this->sms->sendSms($customer['mob'],$message);
 	$booking_date=$this->trip_booking_model->getTripBokkingDate($id);
-	$email_content="<table style='border:1px solid #333;'><tbody><tr><td colspan='3' style='border-bottom: 1px solid;'>Passenger Information</td></tr><tr><td style='width:250px;'>Name</td><td>:</td><td style='width:250px;'>".$customer['name']."</td></tr><tr><td style='width:250px;'>Contact</td><td>:</td><td style='width:250px;'>".$customer['mob']."</td></tr><tr><td style='width:250px;'>No of Passengers</td><td>:</td><td style='width:250px;'>".$data['no_of_passengers']."</td></tr><tr><td colspan='3' style='border-bottom: 1px solid;border-top: 1px solid;'>Booking Information</td></tr><tr><td style='width:250px;'>Trip From</td><td>:</td><td style='width:250px;'>".$data['pick_up_city']."</td></tr><tr><td style='width:250px;'>Trip to</td><td>:</td><td style='width:250px;'>".$data['drop_city']."</td></tr><tr><td style='width:250px;'>Booking Date</td><td>:</td><td style='width:250px;'>".$booking_date."</td></tr><tr><td style='width:250px;'>Trip Date :</td><td>:</td><td style='width:250px;'>".$data['pick_up_date']."</td></tr><tr><td style='width:250px;'>Reporting Time</td><td>:</td><td style='width:250px;'>".$data['pick_up_time']."</td></tr><tr><td style='width:250px;''>Pick up</td><td>:</td><td style='width:250px;'>".$data['pick_up_landmark']."</td></tr><tr><td colspan='3' style='border-bottom: 1px solid;border-top: 1px solid;'>Vehicle Information</td></tr><tr><td style='width:250px;'>Type</td><td>:</td><td style='width:250px;'>".$data1['vehicle_makes'][$data['vehicle_make_id']]." ".$data1['vehicle_models'][$data['vehicle_model_id']]."-".$data1['vehicle_types'][$data['vehicle_type_id']]."</td></tr><tr><td style='width:250px;'>Reg No</td><td>:</td><td style='width:250px;'>".$vehicle[0]->registration_number."</td></tr><tr><td style='width:250px;'>Driver</td><td>:</td><td style='width:250px;'>".$driver[0]->name."</td></tr><tr><td colspan='3' style='border-bottom: 1px solid;border-top: 1px solid;'>Other Remarks</td></tr><tr><td>".br(3)."</td></tr><tr><td></td></tr></tbody></table>";
+if($data['vehicle_model_id']==gINVALID){
+$vehicle_model='';
+}else{
+$vehicle_model=$data1['vehicle_models'][$data['vehicle_model_id']];
+}
+if($data['vehicle_type_id']==gINVALID){
+$vehicle_type='';
+}else{
+$vehicle_type=$data1['vehicle_types'][$data['vehicle_type_id']];
+}
+if($data['vehicle_make_id']==gINVALID){
+$vehicle_make='';
+}else{
+$vehicle_make=$data1['vehicle_makes'][$data['vehicle_make_id']];
+}
+	$email_content="<table style='border:1px solid #333;'><tbody><tr><td colspan='3' style='border-bottom: 1px solid;'>Passenger Information</td></tr><tr><td style='width:250px;'>Name</td><td>:</td><td style='width:250px;'>".$customer['name']."</td></tr><tr><td style='width:250px;'>Contact</td><td>:</td><td style='width:250px;'>".$customer['mob']."</td></tr><tr><td style='width:250px;'>No of Passengers</td><td>:</td><td style='width:250px;'>".$data['no_of_passengers']."</td></tr><tr><td colspan='3' style='border-bottom: 1px solid;border-top: 1px solid;'>Booking Information</td></tr><tr><td style='width:250px;'>Trip From</td><td>:</td><td style='width:250px;'>".$data['pick_up_city']."</td></tr><tr><td style='width:250px;'>Trip to</td><td>:</td><td style='width:250px;'>".$data['drop_city']."</td></tr><tr><td style='width:250px;'>Booking Date</td><td>:</td><td style='width:250px;'>".$booking_date."</td></tr><tr><td style='width:250px;'>Trip Date :</td><td>:</td><td style='width:250px;'>".$data['pick_up_date']."</td></tr><tr><td style='width:250px;'>Reporting Time</td><td>:</td><td style='width:250px;'>".$data['pick_up_time']."</td></tr><tr><td style='width:250px;''>Pick up</td><td>:</td><td style='width:250px;'>".$data['pick_up_area']."</td></tr><tr><td colspan='3' style='border-bottom: 1px solid;border-top: 1px solid;'>Vehicle Information</td></tr><tr><td style='width:250px;'>Type</td><td>:</td><td style='width:250px;'>".$vehicle_make." ".$vehicle_model."-".$vehicle_type."</td></tr><tr><td style='width:250px;'>Reg No</td><td>:</td><td style='width:250px;'>".$vehicle[0]->registration_number."</td></tr><tr><td style='width:250px;'>Driver</td><td>:</td><td style='width:250px;'>".$driver[0]->name." , ".$driver[0]->mobile."</td></tr><tr><td colspan='3' style='border-bottom: 1px solid;border-top: 1px solid;'>Other Remarks</td></tr><tr><td>".br(3)."</td></tr><tr><td></td></tr></tbody></table>";
 	
 	if($customer['email']!=''){
 	$subject="Connect N Cabs";
