@@ -79,6 +79,7 @@ function get_cnc_voucher($id = 0)
 		trip.id AS trip_id,
 		trip.pick_up_city AS from_city,
 		trip.drop_city AS to_city,
+		trip.driver_batta,
 		voucher.id as voucher_no,
 		voucher.parking_fees,
 		voucher.toll_fees,
@@ -91,7 +92,6 @@ function get_cnc_voucher($id = 0)
 		tariffs.rate as min_rate,
 		tariffs.additional_kilometer_rate as ad_km_rate,
 		tariffs.additional_hour_rate as ad_hr_rate,
-		tariffs.driver_bata,
 		tariffs.night_halt
 		";
 	$sql .="  FROM trip_vouchers voucher ";

@@ -270,7 +270,7 @@ function display_trip_data($cnc_data, &$order)
 		$k = 0;  //row colour counter
 
 		//----------------------------------start trip data----------------------------------------
-		$line_total = $cnc_data['amount'];
+		$line_total = $cnc_data['amount']+$cnc_data['driver_batta'];
 		$total +=$line_total;
 		alt_table_row_color($rowcounter);
 
