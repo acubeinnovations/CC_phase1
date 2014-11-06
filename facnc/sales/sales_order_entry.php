@@ -756,8 +756,12 @@ if(isset($_GET['NewDelivery']) && $_GET['NewDelivery'] > 0){
 	
 
 	//------------trip item code -> 101---------------------------
+	$amt = 0;
+	
+	$amt = $cnc_voucher['amount']+$cnc_voucher['driver_batta'];
+
 	add_to_order($_SESSION['Items'],101, 1,
-		@$cnc_voucher['amount'], 0 / 100,'',0,$cnc_voucher['voucher_no']);
+		$amt, 0 / 100,'',0,$cnc_voucher['voucher_no']);
 
 	
 		

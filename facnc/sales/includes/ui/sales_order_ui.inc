@@ -270,7 +270,7 @@ function display_trip_data($cnc_data, &$order)
 		$k = 0;  //row colour counter
 
 		//----------------------------------start trip data----------------------------------------
-		$line_total = $cnc_data['amount'];
+		$line_total = $cnc_data['amount']+$cnc_data['driver_batta'];
 		$total +=$line_total;
 		alt_table_row_color($rowcounter);
 
@@ -339,6 +339,104 @@ function display_trip_data($cnc_data, &$order)
 
     div_end();
 }
+
+//trip dta editable
+/*
+function display_trip_data($cnc_data, &$order)
+{
+   global $SysPrefs;
+
+	
+    display_heading("Trip Details");
+    div_start('items_table');
+	start_table(TABLESTYLE, "colspan=6 width=100%");
+		$th = array(_("Vehicle No"),_("Trip"),_("Particulars"), _("Kms"),
+			 _("Amount"));
+
+		table_header($th);
+
+		$total = 0;
+		$k = 0;  //row colour counter
+
+		//----------------------------------start trip data----------------------------------------
+		$line_total = $cnc_data['amount'];
+
+		$_POST['line_total'] = price_format($line_total);
+		$total +=$line_total;
+		$particulars  = "";
+		alt_table_row_color($rowcounter);
+
+			label_cell(@$cnc_data['vehicle_no'],'width=10%');
+			label_cell(@$cnc_data['trip_model'],'width=20%');
+			//echo "<td>";
+				$particulars .= $cnc_data['from_city']." - ".$cnc_data['to_city'];
+				
+
+				$trip_min_km = $cnc_data['min_km'] * $cnc_data['no_of_days'];
+				$trip_min_charge = $trip_min_km * $cnc_data['min_rate'];
+				$trip_ad_km = $cnc_data['total_km_reading'] - $trip_min_km;
+				$trip_ad_charge = $trip_ad_km * $cnc_data['ad_km_rate'];
+
+				$particulars .= $trip_min_km."KM @ Rs.".$trip_min_charge." + ";			
+				$particulars .= "And Additional KM Is ".$trip_ad_km."KM @ Rs.".$trip_ad_charge." + ";
+				$particulars .= "Toll Rs. "	.$cnc_data['toll_fees']." + ";
+				$particulars .= "Parking fees Rs. "	.$cnc_data['parking_fees']." + ";
+				$particulars .= "Night halt charges Rs. "	.$cnc_data['bata'];
+
+				//echo $particulars;
+
+			//echo "</td>";
+
+			textarea_cells(null,'Comments', $particulars, 50, 4);
+			//label_cell($cnc_data['total_km_reading'],'width=10%');
+			text_cells(null,'qty',$cnc_data['total_km_reading'],5,10);
+			//label_cell(price_format($line_total),'width=10%');
+			amount_cells(null,'line_total');
+			
+			button_cell('UpdateItem', _("Update"),
+				_('Confirm changes'), ICON_UPDATE);	
+
+		end_row();
+
+		$qty = @$cnc_data['total_km_reading'];
+		
+		hidden('stock_id');
+		//hidden('qty',$qty);
+		hidden('price',price_format(0));
+		hidden('Disc',percent_format($order->default_discount * 100));
+		//hidden('line_total',$line_total);
+		hidden('LineNo', 1);
+		//hidden('Comments', $particulars, 31, 5);
+		hidden('trip_voucher',$cnc_data['voucher_no']);
+
+		//----------------------------------end trip data----------------------------------------
+
+
+		$colspan = 4;
+	
+		hidden('freight_cost',price_format(get_post('freight_cost',0)));
+
+	
+
+		$display_sub_total = price_format($total + input_num('freight_cost'));
+		label_row(_("Sub-total"), $display_sub_total, "colspan=$colspan align=right","align=right");
+		$taxes = $order->get_taxes(input_num('freight_cost'));
+
+	//print_r($taxes);exit;
+		
+		$tax_total = display_edit_tax_items($taxes, $colspan, $order->tax_included, 2);
+
+		$display_total = price_format(($total + input_num('freight_cost') + $tax_total));
+
+		start_row();
+		label_cells(_("Amount Total"), $display_total, "colspan=$colspan align=right","align=right");
+	
+		end_row();
+
+	end_table();
+
+    div_end();
+}*/
 
 // ------------------------------------------------------------------------------
 /*
