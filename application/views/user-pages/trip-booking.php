@@ -765,9 +765,28 @@ $customer_type='';
 		<?php
 		
 		if(count($notification)>0 && $notification!=''){
-		for($notification_index=0;$notification_index<count($notification);$notification_index++){?>
+		for($notification_index=0;$notification_index<count($notification);$notification_index++){
+		if($notification_index<2){
+		$date1 = date_create($notification[$notification_index]->pick_up_date.' '.$notification[$notification_index]->pick_up_time);
+		$date2 = date_create(date("Y-m-d H:i:s"));
+						
+						$diff= date_diff($date1, $date2);
+						 if($diff->d == 0){ 
+							if($diff->h < 1 && $diff->i<=59){
+								$callout_class="callout-success";
+						   }else{
+								$callout_class="callout-warning";
+							}
+						}else{
+							$callout_class="callout-warning";	
+						}
+		}else{
+
+			$callout_class="callout-warning";
+		}
+		?>
 		<a href="<?php echo base_url().'organization/front-desk/trip-booking/'.$notification[$notification_index]->id;?>" class="notify-link">
-		<div class="callout callout-warning no-right-padding">
+		<div class="callout  no-right-padding <?php echo $callout_class; ?>">
 		<div class="notification<?php echo $notification_index; ?>">
 			<table style="width:100%;" class="font-size-12-px">
 				<tr>
@@ -796,7 +815,7 @@ $customer_type='';
 				</tr>
 				<tr>
 					<td class='notification-pickup-city'>
-					Date :</td><td><?php echo $notification[$notification_index]->pick_up_date; ?>
+					Date :</td><td><?php echo $notification[$notification_index]->pick_up_date." ".$notification[$notification_index]->pick_up_time; ?>
 					</td>
 				</tr>
 			</table>

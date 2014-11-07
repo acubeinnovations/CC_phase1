@@ -1405,8 +1405,32 @@ $.post(base_url+"/user/getNotifications",
 			data=jQuery.parseJSON(data);
 			var notify_content='';
 			for(var i=0;i<data['notifications'].length;i++){
+			pickupdate=data["notifications"][i].pick_up_date.split('-');
+			current_time=$.now();
+			var start_actual_time  =  pickupdate[0]+'/'+pickupdate[1]+'/'+pickupdate[2]+' '+data["notifications"][i].pick_up_time;
+			var end_actual_time    = new Date($.now());
+
+
+			start_actual_time = new Date(start_actual_time);
 			
-			notify_content=notify_content+'<a href="'+base_url+'/organization/front-desk/trip-booking/'+data["notifications"][i].id+'" class="notify-link"><div class="callout callout-warning no-right-padding"><div class="notification'+i+'"><table style="width:100%;" class="font-size-12-px"><tr><td class="notification-trip-id">Trip ID :</td><td>'+data["notifications"][i].id+'</td></tr><tr><td class="notification-pickup-city">Cust :</td><td>'+data["customers"][data["notifications"][i].customer_id]+'</td></tr><tr><td class="notification-trip-id">Pick up :</td><td>'+data["notifications"][i].pick_up_city+'</td></tr><tr><td class="notification-pickup-city">Date :</td><td>'+data["notifications"][i].pick_up_date+'</td></tr></table></div></div></a>';
+
+			var diff =start_actual_time - end_actual_time;
+ 			var callout_class='';
+			var diffSeconds = diff/1000;
+			var HH = Math.floor(diffSeconds/3600);
+			var MM = Math.floor(diffSeconds%3600)/60;
+			var no_of_days=Math.floor(HH/24);
+			if(i<2){
+			if(HH<1 && MM <=59){
+			 callout_class="callout-success";
+			}else{
+		 	 callout_class="callout-warning";
+			}
+			}else{
+
+				callout_class="callout-warning";
+			}
+			notify_content=notify_content+'<a href="'+base_url+'/organization/front-desk/trip-booking/'+data["notifications"][i].id+'" class="notify-link"><div class="callout '+callout_class+' no-right-padding"><div class="notification'+i+'"><table style="width:100%;" class="font-size-12-px"><tr><td class="notification-trip-id">Trip ID :</td><td>'+data["notifications"][i].id+'</td></tr><tr><td class="notification-pickup-city">Cust :</td><td>'+data["customers"][data["notifications"][i].customer_id]+'</td></tr><tr><td class="notification-trip-id">Pick up :</td><td>'+data["notifications"][i].pick_up_city+'</td></tr><tr><td class="notification-pickup-city">Date :</td><td>'+data["notifications"][i].pick_up_date+' '+data["notifications"][i].pick_up_time+'</td></tr></table></div></div></a>';
 			}
 			$('.ajax-notifications').html(notify_content);
 		 });

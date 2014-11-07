@@ -448,7 +448,7 @@ class Trip_booking extends CI_Controller {
 		} 
 	}
 	public function tripVoucher(){
-	if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['garageclosingkm'] && $_REQUEST['trip_id']){
+	if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['trip_id']){
 	$data['start_km_reading']					=	$_REQUEST['startkm'];
 	$data['end_km_reading']						=	$_REQUEST['endkm'];
 	$data['driver_id']							=	$_REQUEST['driver_id'];

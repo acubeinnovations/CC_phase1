@@ -641,3 +641,8 @@ text-align:center;
 
 width:2% !important;
 }
+.callout.callout-success {
+   
+	background-color: #DFF0D8;
+    border-color: #B0EDCD;
+}
