@@ -993,11 +993,7 @@ alert("Add Customer Informations");
 }
 });
 //rate display
-$('#tarrif').on('change',function(){
 
-SetRoughEstimate();
-
-});
 	
 function SetRoughEstimate(){
 
@@ -1202,7 +1198,7 @@ function generateTariffs(vehicle_ac_type,vehicle_model,tarif_id=''){
 			$('.display-me').css('display','none');
 			if(tarif_id!=''){
 
-			SetRoughEstimate();
+			//SetRoughEstimate();
 			}
 			}else{
 			 $('#tarrif option').remove();
@@ -1440,13 +1436,14 @@ $.post(base_url+"/user/getNotifications",
 //trip_bookig page-js end
 
 //trips paje js start
+
 $('.complete-trip').click(function(){
-if($(this).find('span').attr('tarrif_id')>0){
+if($(this).find('span').attr('vehicle_model_id')>0){
 return true;
 }else{
 var trip_id=$(this).find('span').attr('trip_id');
 var url=base_url+"/organization/front-desk/trip-booking/"+trip_id;
-var r = confirm("Please Select Tarif To Complete The Trip..Click OK to Continue..!");
+var r = confirm("Please Select Vehicle Model To Complete The Trip..Click OK to Continue..!");
     if (r == true) {
        window.open(url, '_blank');
 		return false; 
@@ -1464,10 +1461,21 @@ var driver_id=$(this).attr('driver_id');
 var tarrif_id=$(this).attr('tarrif_id');
 var no_of_days=$(this).attr('no_of_days');
 var pick_up_time=$(this).attr('pick_up_time');
+var vehicle_model_id=$(this).attr('vehicle_model_id');
+var vehicle_ac_type=$(this).attr('vehicle_ac_type_id');
+if(vehicle_ac_type==-1){
+vehicle_ac_type=1;
+}
+$('.trip-voucher-save').attr('no_of_days',no_of_days);
 
 $('.overlay-container').css('display','block');
-var top=-1*(Number($('.trips-table').height())+70);
-$('.modal-body').css('top',top);
+
+var windowHeight = $(window).height();  
+var modaltop =  (windowHeight  - $('.modal-body').height())/2;
+
+//var top=-1*(Number($('.trips-table').height())+70);
+$('.modal-body').css('top',modaltop);
+$('.modal-body').css('position','fixed');
 $('.trip-voucher-save').attr('trip_id',trip_id);
 $('.trip-voucher-save').attr('driver_id',driver_id);
 	$.post(base_url+"/trip-booking/getVouchers",
@@ -1497,7 +1505,41 @@ $('.trip-voucher-save').attr('driver_id',driver_id);
 		}
 		});
 
-		if(tarrif_id!=-1){
+		generateTariffs(vehicle_ac_type,vehicle_model_id,tarrif_id);
+			
+});
+
+$('.modal-close').on('click',function(){
+
+	clearErrorLabels();
+
+});
+
+
+
+
+$(document).keydown(function(e) {
+  
+  if (e.keyCode == 27) { 
+	clearErrorLabels();
+ }   // esc
+
+});
+function clearErrorLabels(){
+$('.overlay-container').css('display','	none');
+$('.start-km-error').html('');
+$('.end-km-error').html('');
+$('.garage-km-error').html('');
+$('.garage-time-error').html('');
+$('.tariff-error').html('');
+}
+
+/*
+$('#tarrif').on('change',function(){
+var current_loc=window.location.href;
+if(current_loc.indexOf('trips')  === -1){
+tarrif_id=$('#tarrif').val();
+if(tarrif_id!=-1){
 			$.post(base_url+"/trip-booking/getTarrif",
 			  {
 				tarrif_id:tarrif_id,
@@ -1509,45 +1551,42 @@ $('.trip-voucher-save').attr('driver_id',driver_id);
 				$('.trip-voucher-save').attr('rate',data[0].rate);
 				$('.trip-voucher-save').attr('additional_kilometer_rate',data[0].additional_kilometer_rate);
 				$('.trip-voucher-save').attr('minimum_kilometers',data[0].minimum_kilometers);
-				$('.trip-voucher-save').attr('no_of_days',no_of_days);
 				//$('.trip-voucher-save').attr('driver_bata',data[0].driver_bata);
 				
 				}
 			});
+			}else{
+				$('.trip-voucher-save').attr('rate','');
+				$('.trip-voucher-save').attr('additional_kilometer_rate','');
+				$('.trip-voucher-save').attr('minimum_kilometers','');
+
 			}
 
+}
 });
 
-$('.modal-close').on('click',function(){
-$('.overlay-container').css('display','	none');
-$('.start-km-error').html('');
-$('.end-km-error').html('');
-$('.garage-km-error').html('');
-$('.garage-time-error').html('');
-});
-
-
-
-
-$(document).keydown(function(e) {
-  
-  if (e.keyCode == 27) { $('.overlay-container').css('display','	none');
-$('.start-km-error').html('');
-$('.end-km-error').html('');
-$('.garage-km-error').html('');
-$('.garage-time-error').html('');
- }   // esc
-
-});
-
-
+*/
 $('.trip-voucher-save').on('click',function(){
 
 var extrakmtravelled=0;
-var rate=$('.trip-voucher-save').attr('rate');
-var additional_kilometer_rate=$('.trip-voucher-save').attr('additional_kilometer_rate');
-var minimum_kilometers=$('.trip-voucher-save').attr('minimum_kilometers');
+var tarrif_id=$('#tarrif').val();
+var error=false;
+var rate='';
+var additional_kilometer_rate='';
+var minimum_kilometers='';
+if(tarrif_id==-1){
+	error=true;
+	$('.tariff-error').html('Tariff required');
+
+}else{
+$('.tariff-error').html('');
+var rate=$('#tarrif option:selected').attr('rate');
+var additional_kilometer_rate=$('#tarrif option:selected').attr('additional_kilometer_rate');
+var minimum_kilometers=$('#tarrif option:selected').attr('minimum_kilometers');
+}
+
 var no_of_days=$('.trip-voucher-save').attr('no_of_days');
+
 if(no_of_days==0){
 no_of_days=1;
 }
@@ -1608,14 +1647,18 @@ totexpense=Number(totexpense)+Number(tollfee)+Number(parkingfee)+Number(nighthal
 
 var trip_id=$(this).attr('trip_id');
 var driver_id=$(this).attr('driver_id');
-var error=false;
+
 if(startkm==''){
 $('.start-km-error').html('Start km Field is required');
 error=true;
+}else{
+$('.start-km-error').html('');
 }
 if(endkm==''){
 $('.end-km-error').html('End km Field is required');
 error=true;
+}else{
+$('.end-km-error').html('');
 }
 
 
@@ -1636,7 +1679,8 @@ if(error==false){
 			trip_starting_time:trip_starting_time,
 			trip_ending_time:trip_ending_time,
 			no_of_days:no_of_days,
-			driverbata:driverbata
+			driverbata:driverbata,
+			tarrif_id:tarrif_id
 			
 		},function(data){
 		  if(data!='false'){
@@ -1644,7 +1688,7 @@ if(error==false){
 			}
 		});
 }else{
-return false;
+	return false;
 }
 });
 //trips page js end
