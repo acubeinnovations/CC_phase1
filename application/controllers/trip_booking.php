@@ -271,6 +271,14 @@ class Trip_booking extends CI_Controller {
 				
 				$dbdata1=array('name'=>$data['guestname'],'email'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id']);
 				$data['guest_id']=$this->customers_model->addCustomer($dbdata1);
+				//------------fa module integration code starts here-----
+				//save customer in fa table
+
+				$this->load->model("account_model");
+				$fa_customer = $this->account_model->add_fa_customer($data['guest_id'],"C");
+
+				//-----------fa code ends here---------------------------
+
 				}else{
 				$data['guest_id']=$_REQUEST['guest_id'];
 

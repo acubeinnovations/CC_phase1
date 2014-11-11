@@ -1470,12 +1470,16 @@ $('.trip-voucher-save').attr('no_of_days',no_of_days);
 
 $('.overlay-container').css('display','block');
 
+var top=-1*(Number($('.trips-table').height())+70);
+$('.modal-body').css('top',top);
+
+/*
 var windowHeight = $(window).height();  
 var modaltop =  (windowHeight  - $('.modal-body').height())/2;
 
 //var top=-1*(Number($('.trips-table').height())+70);
-$('.modal-body').css('top',modaltop);
-$('.modal-body').css('position','fixed');
+$('.modal-body').css('top',modaltop);*/
+//$('.modal-body').css('position','fixed');
 $('.trip-voucher-save').attr('trip_id',trip_id);
 $('.trip-voucher-save').attr('driver_id',driver_id);
 	$.post(base_url+"/trip-booking/getVouchers",
@@ -1532,6 +1536,21 @@ $('.end-km-error').html('');
 $('.garage-km-error').html('');
 $('.garage-time-error').html('');
 $('.tariff-error').html('');
+
+$('.startkm').val('');
+$('.endkm').val('');
+$('.garageclosingkm').val('');
+$('.garageclosingtime').val('');
+$('.releasingplace').val('');
+$('.parkingfee').val('');
+$('.tollfee').val('');
+$('.statetax').val('');
+$('.tripstartingtime').val('');
+$('.tripendingtime').val('');
+$('#tarrif').val('');
+$('.nighthalt').val('');
+$('.extrafuel').val('');
+$('.driverbata').val('');
 }
 
 /*
