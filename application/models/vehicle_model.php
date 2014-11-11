@@ -33,6 +33,57 @@ public function getVehicles(){
 		return false;
 	}
 	}
+public function getListVehicles(){ 
+	$qry='select V.id,V.registration_number, VMA.id as make_id,VMO.id as model_id from vehicles V LEFT JOIN vehicle_models as VMO ON V.vehicle_model_id=VMO.id LEFT JOIN vehicle_makes as VMA ON V.vehicle_make_id=VMA.id where V.organisation_id='.$this->session->userdata('organisation_id');
+	$results=$this->db->query($qry);
+	$results=$results->result_array();print_r($results);exit;
+	if(count($results)>0){
+	for($i=0;$i<count($results);$i++){
+		$vehicles[$results[$i]['id']]=$results[$i]['id'];
+		$vehicles[$results[$i]['vehicle_model_id']]=$results[$i]['vehicle_model_id'];
+		$vehicles[$results[$i]['vehicle_make_id']]=$results[$i]['vehicle_make_id'];
+		$vehicles[$results[$i]['registration_number']]=$results[$i]['registration_number'];
+		}
+		return $vehicles;
+	}else{
+		return false;
+	}
+	}	
+public function getDriversInfo(){ 
+	
+	$qry='select id,name,phone,mobile,present_address,district from drivers where organisation_id = '.$this->session->userdata('organisation_id');
+	$qry=$this->db->query($qry);
+	$results=$qry->result_array();
+	if(count($results)>0){
+	for($i=0;$i<count($results);$i++){
+		$drivers[$results[$i]['id']]['name']=$results[$i]['name'];
+		$drivers[$results[$i]['id']]['phone']=$results[$i]['phone'];
+		$drivers[$results[$i]['id']]['mobile']=$results[$i]['mobile'];
+		$drivers[$results[$i]['id']]['district']=$results[$i]['district'];
+		$drivers[$results[$i]['id']]['present_address']=$results[$i]['present_address'];
+		} 
+		return $drivers;
+	}else{
+		return false;
+	}
+	}
+	
+public function getOwners(){ 
+	$qry='select id,name,mobile,address from vehicle_owners where organisation_id = '.$this->session->userdata('organisation_id');
+	$results=$this->db->query($qry);
+	$results=$results->result_array();
+	if(count($results)>0){
+	for($i=0;$i<count($results);$i++){
+		$owners[$results[$i]['id']]['name']=$results[$i]['name'];
+		$owners[$results[$i]['id']]['mobile']=$results[$i]['mobile'];
+		$owners[$results[$i]['id']]['address']=$results[$i]['address'];
+		
+		}
+		return $owners;
+	}else{
+		return false;
+	}
+	}
 public function getCurrentStatuses($id){ 
 	$qry='SELECT * FROM trips WHERE CONCAT(pick_up_date," ",pick_up_time) <= "'.date("Y-m-d H:i").'" AND CONCAT(drop_date," ",drop_time) >= "'.date("Y-m-d H:i").'" AND vehicle_id="'.$id.'" AND organisation_id = '.$this->session->userdata('organisation_id').' AND trip_status_id='.TRIP_STATUS_CONFIRMED;
 	$results=$this->db->query($qry);
