@@ -185,6 +185,13 @@ margin:3px 10px 10px 1%;
 width:15%;
 float:left;
 }
+
+.div-with-20-percent-width-with-margin-10{
+float:left;
+width:20%;
+margin:10px;
+}
+
 .div-with-50-percent-width-with-margin-10{
 float:left;
 width:43%;

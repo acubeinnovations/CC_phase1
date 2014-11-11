@@ -1491,9 +1491,10 @@ $('.trip-voucher-save').attr('driver_id',driver_id);
 		  if(data=='false'){
 				$('.tripstartingtime').val(pick_up_time);
 			}else{
-			
+			var total_km = data[0].end_km_reading-data[0].start_km_reading;
 			$('.startkm').val(data[0].start_km_reading);
 			$('.endkm').val(data[0].end_km_reading);
+			$('.totalkm').val(total_km);
 			$('.garageclosingkm').val(data[0].garage_closing_kilometer_reading);
 			$('.garageclosingtime').val(data[0].garage_closing_time);
 			$('.releasingplace').val(data[0].releasing_place);
@@ -1519,6 +1520,16 @@ $('.modal-close').on('click',function(){
 
 });
 
+//calculate total km readming
+$('.endkm').keyup(function(e) {
+	var start = $('.startkm').val();
+	var end = $(this).val();
+	var total = end - start;
+	$('.totalkm').val(total);
+});
+
+
+
 
 
 
@@ -1539,6 +1550,7 @@ $('.tariff-error').html('');
 
 $('.startkm').val('');
 $('.endkm').val('');
+$('.totalkm').val('');
 $('.garageclosingkm').val('');
 $('.garageclosingtime').val('');
 $('.releasingplace').val('');

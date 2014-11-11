@@ -174,7 +174,20 @@ echo form_close();?></td>
 			<div class="profile-body width-80-percent-and-margin-auto ">
 			<fieldset class="body-border">
    			 <legend class="body-head">Trip Voucher</legend>
-				<div class="div-with-50-percent-width-with-margin-10">
+
+				<!-- first column start -->
+				<div class="div-with-20-percent-width-with-margin-10">
+				
+					<div class="form-group">
+					   <?php echo form_label('Start Date','startdt'); ?>
+					   <?php echo form_input(array('name'=>'startdt','class'=>'form-control startkm','id'=>'startkm','placeholder'=>'Enter Start K M')); ?>			
+						<span class="start-dt-error text-red"></span>
+					</div>
+					<div class="form-group">
+						<?php echo form_label('End Date','enddt'); ?>
+						<?php echo form_input(array('name'=>'enddt','class'=>'form-control endkm','placeholder'=>'Enter End KM')); ?>
+						<span class="end-dt-error text-red"></span>
+					</div>
 					<div class="form-group">
 					   <?php echo form_label('Start KM Reading','startkm'); ?>
 					   <?php echo form_input(array('name'=>'startkm','class'=>'form-control startkm','id'=>'startkm','placeholder'=>'Enter Start K M')); ?>			
@@ -185,17 +198,12 @@ echo form_close();?></td>
 						<?php echo form_input(array('name'=>'endkm','class'=>'form-control endkm','placeholder'=>'Enter End KM')); ?>
 						<span class="end-km-error text-red"></span>
 					</div>
-					<div class="form-group">
-						<?php echo form_label('Gariage Clossing KM Reading','gariageclosingkm'); ?>
-						<?php echo form_input(array('name'=>'garageclosingkm','class'=>'form-control garageclosingkm','placeholder'=>'Enter Gariage closing km')); ?>
-						<span class="garage-km-error text-red"></span>
-					</div>
-					<div class="form-group hide-me">
-						<?php echo form_label('Gariage Closing Time','gariageclosingtime'); ?>
-						<?php echo form_input(array('name'=>'garageclosingtime','class'=>'form-control garageclosingtime initialize-time-picker','placeholder'=>'Enter Gariage Closing Time')); 
-						?>
-						<span class="garage-time-error text-red"></span>
-					</div>
+				</div>
+				<!-- first column ends -->
+
+				<!-- second column start -->
+				<div class="div-with-20-percent-width-with-margin-10">
+					
 					<div class="form-group">
 						<?php echo form_label('Trip Starting Time','tripstartingtime'); ?>
 						<?php echo form_input(array('name'=>'tripstartingtime','class'=>'form-control tripstartingtime format-time','placeholder'=>'Enter Trip Starting Time')); 
@@ -206,6 +214,7 @@ echo form_close();?></td>
 						<?php echo form_input(array('name'=>'tripendingtime','class'=>'form-control tripendingtime format-time','placeholder'=>'Enter Trip Ending Time')); 
 						?>
 					</div>
+			
 					<div class="form-group">
 						<?php $class="form-control";
 						$id="tarrif";
@@ -213,8 +222,24 @@ echo form_close();?></td>
 						echo $this->form_functions->populate_dropdown('tariff',$tariffs='',$tariff='',$class,$id,$msg="Tariffs");?>
 						<span class="tariff-error text-red"></span>
 					</div>
+
+					<div class="form-group">
+						<?php echo form_label('Gariage Clossing KM','gariageclosingkm'); ?>
+						<?php echo form_input(array('name'=>'garageclosingkm','class'=>'form-control garageclosingkm','placeholder'=>'Enter Gariage closing km')); ?>
+						<span class="garage-km-error text-red"></span>
+					</div>
+					<div class="form-group hide-me">
+						<?php echo form_label('Gariage Closing Time','gariageclosingtime'); ?>
+						<?php echo form_input(array('name'=>'garageclosingtime','class'=>'form-control garageclosingtime initialize-time-picker','placeholder'=>'Enter Gariage Closing Time')); 
+						?>
+						<span class="garage-time-error text-red"></span>
+					</div>
 				</div>
-				<div class="div-with-50-percent-width-with-margin-10">
+				<!-- second column ends -->
+				<!-- third column start -->
+				<div class="div-with-20-percent-width-with-margin-10">
+					
+				
 					<div class="form-group hide-me">
 						<?php echo form_label('Releasing Place','releasingplace'); ?>
 						<?php echo form_input(array('name'=>'releasingplace','class'=>'form-control releasingplace','placeholder'=>'Enter Releasing Place')); 
@@ -242,6 +267,11 @@ echo form_close();?></td>
 						<?php echo form_input(array('name'=>'nighthalt','class'=>'form-control nighthalt','placeholder'=>'Enter Night Halt')); 
 						?>
 					</div>
+				</div>
+				<!-- third column ends -->
+				<!-- fourth column start -->
+				<div class="div-with-20-percent-width-with-margin-10">
+					
 					<div class="form-group">
 						<?php echo form_label('Extra Fuel Charge','extrafuel'); ?>
 						<?php echo form_input(array('name'=>'extrafuel','class'=>'form-control extrafuel','placeholder'=>'Enter Extra Fuel Charge')); ?>
@@ -252,11 +282,18 @@ echo form_close();?></td>
 						<?php echo form_input(array('name'=>'driverbata','class'=>'form-control driverbata','placeholder'=>'Enter Driver Bata')); ?>
 					
 					</div>
+					<div class="form-group">
+						<?php echo form_label('Total Km Reading','totalkm'); ?>
+						<?php echo form_input(array('name'=>'totalkm','class'=>'form-control totalkm','placeholder'=>'Total KM')); ?>
+						<span class="total-km-error text-red"></span>
+					</div>
+				</div>
+				<!-- fourth column ends -->
 			   		<div class="box-footer">
 					<?php echo form_submit("trip-voucher-save","SAVE","class='btn btn-success trip-voucher-save'").nbs(5);  ?><button class='btn btn-danger modal-close' type='button'>CLOSE</button>  
 					</div>
 				</div>
-			</div>
+			
 			</fieldset>
 		</div><!-- body -->
 
