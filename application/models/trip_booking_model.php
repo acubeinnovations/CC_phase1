@@ -75,14 +75,14 @@ class Trip_booking_model extends CI_Model {
 	 
     }	
 
-	function  generateTripVoucher($data) {
+	function  generateTripVoucher($data,$tariff_id) {
 	
 	$this->db->set('created', 'NOW()', FALSE);
 	$this->db->insert('trip_vouchers',$data);
 	$trip_voucher_id = $this->db->insert_id();
 
 	$id=$data['trip_id'];
-	$updatedata=array('trip_status_id'=>TRIP_STATUS_TRIP_BILLED);
+	$updatedata=array('trip_status_id'=>TRIP_STATUS_TRIP_BILLED,'tariff_id'=>$tariff_id);
 	$res=$this->updateTrip($updatedata,$id);	
 	if($res=true){
 	return $trip_voucher_id;
@@ -92,10 +92,13 @@ class Trip_booking_model extends CI_Model {
     }
 
 	
-	function  updateTripVoucher($data,$id) {
+	function  updateTripVoucher($data,$id,$tariff_id) {
 	$this->db->where('id',$id );
 	$this->db->set('updated', 'NOW()', FALSE);
 	$this->db->update("trip_vouchers",$data);
+	$trip_id=$data['trip_id'];
+	$updatedata=array('trip_status_id'=>TRIP_STATUS_TRIP_BILLED,'tariff_id'=>$tariff_id);
+	$res=$this->updateTrip($updatedata,$trip_id);	
 	return $id;
 	}
 
