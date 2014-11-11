@@ -160,7 +160,7 @@ if ($selected_id != -1)
 	set_focus('bank_account_name');
 } 
 
-text_row(_("Bank Account Name:"), 'bank_account_name', null, 50, 100);
+text_row(_("Bank Account Name:"), 'bank_account_name', null, 30, 100);
 
 if ($is_used) 
 {
@@ -186,7 +186,7 @@ if($is_used)
 else 
 	gl_all_accounts_list_row(_("Bank Account GL Code:"), 'account_code', null);
 
-text_row(_("Bank Name:"), 'bank_name', null, 50, 60);
+text_row(_("Bank Name:"), 'bank_name', null, 30, 60);
 text_row(_("Bank Account Number:"), 'bank_account_number', null, 30, 60);
 textarea_row(_("Bank Address:"), 'bank_address', null, 40, 5);
 

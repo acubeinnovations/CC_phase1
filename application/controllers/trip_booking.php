@@ -271,6 +271,14 @@ class Trip_booking extends CI_Controller {
 				
 				$dbdata1=array('name'=>$data['guestname'],'email'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id']);
 				$data['guest_id']=$this->customers_model->addCustomer($dbdata1);
+				//------------fa module integration code starts here-----
+				//save customer in fa table
+
+				$this->load->model("account_model");
+				$fa_customer = $this->account_model->add_fa_customer($data['guest_id'],"C");
+
+				//-----------fa code ends here---------------------------
+
 				}else{
 				$data['guest_id']=$_REQUEST['guest_id'];
 
@@ -448,7 +456,7 @@ class Trip_booking extends CI_Controller {
 		} 
 	}
 	public function tripVoucher(){
-	if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['garageclosingkm'] && $_REQUEST['trip_id']){
+	if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['trip_id']){
 	$data['start_km_reading']					=	$_REQUEST['startkm'];
 	$data['end_km_reading']						=	$_REQUEST['endkm'];
 	$data['driver_id']							=	$_REQUEST['driver_id'];
@@ -468,12 +476,13 @@ class Trip_booking extends CI_Controller {
 	$data['user_id']							=	$this->session->userdata('id');
 	$data['trip_id']							=	$_REQUEST['trip_id'];
 	$data['organisation_id']					=	$this->session->userdata('organisation_id');
+	$tarrif_id									=	$_REQUEST['tarrif_id'];
 
 	$voucher=$this->getVouchers($data['trip_id'],$ajax='NO');
 	if($voucher==false){
-	$res=$this->trip_booking_model->generateTripVoucher($data);
+	$res=$this->trip_booking_model->generateTripVoucher($data,$tarrif_id);
 	}else{
-	$res=$this->trip_booking_model->updateTripVoucher($data,$voucher[0]->id);
+	$res=$this->trip_booking_model->updateTripVoucher($data,$voucher[0]->id,$tarrif_id);
 	}
 	if($res==false){
 	echo 'false';
@@ -559,8 +568,10 @@ class Trip_booking extends CI_Controller {
 	//$message='Hi Customer, Your Trip Id: '.$id.'has been confirmed on '.$data['pick_up_date'].' '.$data['pick_up_time'].' Location :'.$data['pick_up_city'].'-'.$data['drop_city'].' Enjoy your trip.';
 	$driver=$this->trip_booking_model->getDriverDetails($data['driver_id']);
 	$name=$driver[0]->name;
-	$contact=$driver[0]->mobile; echo $contact;exit;
-	$message='Hi Customer, Your Trip Id: '.$id.' has been confirmed on '.$data['pick_up_date'].'.Pickup time: '.$data['pick_up_time'].'.Location : '.$data['pick_up_city'].'-'.$data['drop_city'].'. Driver: xxxxxxxxxx, 98xxxxxxxx.';
+	$contact=$driver[0]->mobile; 
+	//print_r( $customer);exit;
+	$message='Hi Customer, Your Trip Id: '.$id.' has been confirmed on '.$data['pick_up_date'].'.Pickup time: '.$data['pick_up_time'].'.Location : '.$data['pick_up_city'].'-'.$data['drop_city'].'. Driver: '.$name.', '.$contact.'.';
+	$dr_message='Hi, You had a trip id: '.$id.' had been allocated on '.$data['pick_up_date'].'. Guest details: '.$customer['name'].', '.$customer['mob'].'.Pickup: '.$data['pick_up_city'].', '.$data['pick_up_time'].' Am/Pm';
 	$tbl_arry=array('vehicle_types','vehicle_ac_types','vehicle_makes','vehicle_models');
 	
 	for ($i=0;$i<4;$i++){
@@ -577,7 +588,9 @@ class Trip_booking extends CI_Controller {
 	$date = date('Y-m-d H:i:s');
 	if(($data['pick_up_date'].' '.$data['pick_up_time'])>=$date){
 	$this->sms->sendSms($customer['mob'],$message);
+	$this->sms->sendSms($contact,$dr_message);
 	}
+	
 	$booking_date=$this->trip_booking_model->getTripBokkingDate($id);
 if($data['vehicle_model_id']==gINVALID){
 $vehicle_model='';
