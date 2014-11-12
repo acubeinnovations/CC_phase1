@@ -498,6 +498,7 @@ $_POST['ChargeFreightCost'] =  get_post('ChargeFreightCost',
 	price_format($_SESSION['Items']->freight_cost));
 
 $colspan = 9;
+//echo "<pre>";print_r($_SESSION['Items']);echo "</pre>";exit;
 
 start_row();
 label_cell(_("Shipping Cost"), "colspan=$colspan align=right");
