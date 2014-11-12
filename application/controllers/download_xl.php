@@ -169,7 +169,8 @@ class Download_xl extends CI_Controller {
 					
 				}else if(isset($_REQUEST['pickupdate'])){
 				
-				$qry.=' AND T.pick_up_date ="'.$_REQUEST['pickupdate'].'"';
+				//$qry.=' AND T.pick_up_date ="'.$_REQUEST['pickupdate'].'"';
+				$qry.=' AND (T.pick_up_date="'.$_REQUEST['pickupdate'].'" OR T.drop_date="'.$_REQUEST['pickupdate'].'") OR ((T.pick_up_date <= "'.$_REQUEST['pickupdate'].'" AND T.drop_date >= "'.$_REQUEST['pickupdate'].'"))';
 				
 				}else if(isset($_REQUEST['dropdate'])){
 				
