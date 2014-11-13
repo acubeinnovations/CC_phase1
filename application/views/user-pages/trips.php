@@ -464,6 +464,12 @@ echo form_close();?></td>
 						?>
 					</div>
 
+					<div class="form-group hide-me">
+						<?php echo form_label('KM/HRs','kmhr'); ?>
+						<?php echo form_input(array('name'=>'kmhr','class'=>'form-control kmhr','placeholder'=>'KM/HRs')); 
+						?>
+					</div>
+
 				</div>
 				<!-- second section ends -->
 

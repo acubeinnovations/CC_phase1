@@ -1,6 +1,8 @@
 $(document).ready(function(){
 
 var total_tarif = 0;// global total tariff
+var km_flag = 1;
+var hr_flag = 2;
 
 $('.settings-add').click(function(){
 var trigger = $(this).parent().prev().prev().find('#editbox').attr('trigger');
@@ -1461,53 +1463,53 @@ var r = confirm("Please Select Vehicle Model To Complete The Trip..Click OK to C
 
 
 $('.voucher').on('click',function(){
-var trip_id=$(this).attr('trip_id');
-var driver_id=$(this).attr('driver_id');
-var tarrif_id=$(this).attr('tarrif_id');
-//var no_of_days=$(this).attr('no_of_days');
-var pick_up_time=$(this).attr('pick_up_time');
-var vehicle_model_id=$(this).attr('vehicle_model_id');
-var vehicle_ac_type=$(this).attr('vehicle_ac_type_id');
+	var trip_id=$(this).attr('trip_id');
+	var driver_id=$(this).attr('driver_id');
+	var tarrif_id=$(this).attr('tarrif_id');
+	//var no_of_days=$(this).attr('no_of_days');
+	var pick_up_time=$(this).attr('pick_up_time');
+	var vehicle_model_id=$(this).attr('vehicle_model_id');
+	var vehicle_ac_type=$(this).attr('vehicle_ac_type_id');
 
-var pick_up_date=$(this).attr('pick_up_date');
-var drop_date=$(this).attr('drop_date');
+	var pick_up_date=$(this).attr('pick_up_date');
+	var drop_date=$(this).attr('drop_date');
 
-var customer_name=$(this).attr('customer_name');
-var company_name=$(this).attr('company_name');
-var model=$(this).attr('model');
-var vehicle_no=$(this).attr('vehicle_no');
-var description=$(this).attr('description');
-
-
-if(vehicle_ac_type==-1){
-vehicle_ac_type=1;
-}
-//$('.trip-voucher-save').attr('no_of_days',no_of_days);
-
-$('.overlay-container').css('display','block');
-
-var top=-1*(Number($('.trips-table').height())+70);
-$('.modal-body').css('top',top);
-
-/*
-var windowHeight = $(window).height();  
-var modaltop =  (windowHeight  - $('.modal-body').height())/2;
-
-//var top=-1*(Number($('.trips-table').height())+70);
-$('.modal-body').css('top',modaltop);*/
-//$('.modal-body').css('position','fixed');
-$('.trip-voucher-save').attr('trip_id',trip_id);
-$('.trip-voucher-save').attr('driver_id',driver_id);
+	var customer_name=$(this).attr('customer_name');
+	var company_name=$(this).attr('company_name');
+	var model=$(this).attr('model');
+	var vehicle_no=$(this).attr('vehicle_no');
+	var description=$(this).attr('description');
 
 
+	if(vehicle_ac_type==-1){
+	vehicle_ac_type=1;
+	}
+	//$('.trip-voucher-save').attr('no_of_days',no_of_days);
 
-$('.customer').val(customer_name);
-$('.company').val(company_name);
-$('.startdt').val(pick_up_date);
-$('.enddt').val(drop_date);
-$('.model').val(model);
-$('.vehicleno').val(vehicle_no);
-$('.description').val(description);
+	$('.overlay-container').css('display','block');
+
+	var top=-1*(Number($('.trips-table').height())+70);
+	$('.modal-body').css('top',top);
+
+	/*
+	var windowHeight = $(window).height();  
+	var modaltop =  (windowHeight  - $('.modal-body').height())/2;
+
+	//var top=-1*(Number($('.trips-table').height())+70);
+	$('.modal-body').css('top',modaltop);*/
+	//$('.modal-body').css('position','fixed');
+	$('.trip-voucher-save').attr('trip_id',trip_id);
+	$('.trip-voucher-save').attr('driver_id',driver_id);
+
+
+
+	$('.customer').val(customer_name);
+	$('.company').val(company_name);
+	$('.startdt').val(pick_up_date);
+	$('.enddt').val(drop_date);
+	$('.model').val(model);
+	$('.vehicleno').val(vehicle_no);
+	$('.description').val(description);
 
 
 
@@ -1518,37 +1520,37 @@ $('.description').val(description);
 			ajax:'YES'
 			
 		},function(data){
-		  if(data=='false'){
-				$('.tripstartingtime').val(pick_up_time);
+			  if(data=='false'){
+					$('.tripstartingtime').val(pick_up_time);
 				
-			}else{
-			var total_km = data[0].end_km_reading-data[0].start_km_reading;
-			var time_diff = timeDifference(pick_up_date,data[0].trip_starting_time,drop_date,data[0].trip_ending_time , data[0].trip_starting_time);
-			time_diff.split('-');
-			$('.startkm').val(data[0].start_km_reading);
-			$('.endkm').val(data[0].end_km_reading);
-			$('.totalkm').val(total_km);
-			$('.garageclosingkm').val(data[0].garage_closing_kilometer_reading);
-			$('.garageclosingtime').val(data[0].garage_closing_time);
-			$('.releasingplace').val(data[0].releasing_place);
-			$('.parkingfee').val(data[0].parking_fees);
-			$('.tollfee').val(data[0].toll_fees);
-			$('.statetax').val(data[0].state_tax);
-			$('.tripstartingtime').val(data[0].trip_starting_time);
-			$('.tripendingtime').val(data[0].trip_ending_time);
-			$('.triptime').val(time_diff[1]+':'+time_diff[2]);
-			$('.daysno').val(time_diff[0]);
+				}else{
+				var total_km = data[0].end_km_reading-data[0].start_km_reading;
+				var time_diff = timeDifference(pick_up_date,data[0].trip_starting_time,drop_date,data[0].trip_ending_time , data[0].trip_starting_time);
+				time_diff.split('-');
+				$('.startkm').val(data[0].start_km_reading);
+				$('.endkm').val(data[0].end_km_reading);
+				$('.totalkm').val(total_km);
+				$('.garageclosingkm').val(data[0].garage_closing_kilometer_reading);
+				$('.garageclosingtime').val(data[0].garage_closing_time);
+				$('.releasingplace').val(data[0].releasing_place);
+				$('.parkingfee').val(data[0].parking_fees);
+				$('.tollfee').val(data[0].toll_fees);
+				$('.statetax').val(data[0].state_tax);
+				$('.tripstartingtime').val(data[0].trip_starting_time);
+				$('.tripendingtime').val(data[0].trip_ending_time);
+				$('.triptime').val(time_diff[1]+':'+time_diff[2]);
+				$('.daysno').val(time_diff[0]);
 			
-			$('.nighthalt').val(data[0].night_halt_charges);
-			$('.extrafuel').val(data[0].fuel_extra_charges);
-			$('.driverbata').val(data[0].driver_bata);
+				$('.nighthalt').val(data[0].night_halt_charges);
+				$('.extrafuel').val(data[0].fuel_extra_charges);
+				$('.driverbata').val(data[0].driver_bata);
 
 			
 			
-		}
+			}
 		});
 
-		generateTariffs(vehicle_ac_type,vehicle_model_id,tarrif_id);
+		
 		
 			
 });
@@ -2092,7 +2094,82 @@ function getTariff(minimum_kilometers,rate,additional_kilometer_rate)
 	$('.adtkmamount').val(adt_amount);
 }
 
+$('.trip-voucher-save').on('click',function(){
+	
+	var trip_id=$(this).attr('trip_id');
+	var driver_id=$(this).attr('driver_id');
 
+	var voucherno=$(this).attr('voucherno');
+	var remarks=$(this).attr('description');
+	
+	var enddt=$('.enddt').val();
+	var trip_starting_time=$('.tripstartingtime').val();
+	var trip_ending_time=$('.tripendingtime').val();
+
+	var startkm=$('.startkm').val();
+	var endkm=$('.endkm').val();
+
+	var releasingplace=$('.releasingplace').val();
+	var no_of_days=$('.no_of_days').val();
+
+	//tarif values
+	var basetarif='';
+	var baseamount='';
+	var adttarif='';
+	var adttarifrate='';
+	var kmhr='';
+	
+	//other charges
+	var parkingfee=$('.parkingfee').val();
+	var tollfee=$('.tollfee').val();
+	var statetax=$('.statetax').val();
+	var nighthalt=$('.nighthalt').val();
+	var driverbata=$('.driverbata').val();
+	var vehicletarif=$('.vehicletarif').val();
+
+	//total
+	var totalamount=$('.totalamount').val();
+
+
+	if(error==false){
+		 $.post(base_url+"/trip-booking/tripVoucher",
+			  {
+				trip_id:trip_id,
+				remarks:remarks,
+				voucherno:voucherno,
+				enddt:enddt,
+				trip_starting_time:trip_starting_time,
+				trip_ending_time:trip_ending_time,
+				startkm:startkm,
+				endkm:endkm,
+				releasingplace:releasingplace,
+				no_of_days:no_of_days,
+				basetarif:basetarif,
+				baseamount:baseamount,
+				adttarif:adttarif,
+				adttarifrate:adttarifrate,
+				kmhr:kmhr,
+				parkingfee:parkingfee,
+				tollfee:tollfee,
+				statetax:statetax,
+				nighthalt:nighthalt,
+				driverbata:driverbata,
+				vehicletarif:vehicletarif,
+				driver_id:driver_id,
+				totalamount:totalamount
+				
+			},function(data){
+			  if(data!='false'){
+					window.location.replace(base_url+'/account/front_desk/NewDelivery/'+data);
+				}
+			});
+	}else{
+		return false;
+	}
+});
+
+
+/*
 $('.trip-voucher-save').on('click',function(){
 
 var extrakmtravelled=0;
@@ -2124,16 +2201,16 @@ var endkm=$('.endkm').val();
 
 var totkmtravelled=Number(endkm)-Number(startkm);
 
-/*
-if(totkmtravelled>minimum_kilometers){
-extrakmtravelled=totkmtravelled-minimum_kilometers;
-expense=(Number(minimum_kilometers)*Number(rate))+(Number(extrakmtravelled)*Number(additional_kilometer_rate));
-}else{
 
-expense=Number(totkmtravelled)*Number(rate);
+//if(totkmtravelled>minimum_kilometers){
+//extrakmtravelled=totkmtravelled-minimum_kilometers;
+//expense=(Number(minimum_kilometers)*Number(rate))+(Number(extrakmtravelled)*Number(additional_kilometer_rate));
+//}else{
 
-}
-*/
+//expense=Number(totkmtravelled)*Number(rate);
+
+//}
+
 
 if(no_of_days>1){
 
@@ -2218,6 +2295,7 @@ if(error==false){
 	return false;
 }
 });
+*/
 //trips page js end
 
 

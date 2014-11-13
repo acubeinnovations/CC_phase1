@@ -18,3 +18,8 @@ ALTER TABLE `trip_vouchers` ADD `driver_bata` DOUBLE NOT NULL AFTER `driver_id` 
 
 /*need to b updated*/
 
+
+
+/*13-Nov-2014*/
+ALTER TABLE `trip_vouchers`  ADD `voucher_no` INT(11) NOT NULL,  ADD `km_hr` TINYINT(4) NOT NULL DEFAULT '1' COMMENT '1 -km tarif,2 hourly tarif',  ADD `base_tarif` VARCHAR(50) NOT NULL,  ADD `base_amount` DOUBLE NOT NULL,  ADD `adt_tarif` VARCHAR(50) NOT NULL,  ADD `adt_tarif_rate` DOUBLE NOT NULL,  ADD `vehicle_tarif` DOUBLE NOT NULL;
+
