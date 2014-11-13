@@ -23,18 +23,36 @@
 			<table class="table list-org-table">
 				<tbody>
 					<tr>
-					    <td><?php echo form_input(array('name'=>'reg_num','class'=>'form-control','id'=>'reg_num','placeholder'=>'By Registration Number','size'=>30));?> </td>
+					    <td><?php echo form_input(array('name'=>'reg_num','class'=>'form-control','id'=>'reg_num','placeholder'=>'By Registration Number','size'=>30,'value'=>$reg_num));?> </td>
 						 <td><?php $class="form-control";
 						 $id="vehicle-owner";
-						echo $this->form_functions->populate_dropdown('owner',$vehicle_owners,$selected='',$class,$id,$msg='Select Vehicle Owner')?> </td>
+						 if(isset($owner)){
+							  $owner=$owner;
+							  }
+							  else{
+							   $owner='';
+							  }
+						echo $this->form_functions->populate_dropdown('owner',$vehicle_owners,$owner,$class,$id,$msg='Select Vehicle Owner')?> </td>
 						<!--<td><?php// $class="form-control";
 						//echo $this->form_functions->populate_dropdown('v_type',$vehicle_types,$selected='',$class,$id='',$msg='Select Vehicle Type')?></td>-->
 						<td><?php $class="form-control";
 						 $id="vehicle-model";
-						echo $this->form_functions->populate_dropdown('v_model',$vehicle_models,$selected='',$class,$id,$msg='Select Vehicle Model')?></td>
+						 if(isset($v_model)){
+							  $v_model=$v_model;
+							  }
+							  else{
+							   $v_model='';
+							  }
+						echo $this->form_functions->populate_dropdown('v_model',$vehicle_models,$v_model,$class,$id,$msg='Select Vehicle Model')?></td>
 						 <td><?php $class="form-control";
 						  $id="vehicle-ownership";
-						echo $this->form_functions->populate_dropdown('ownership',$vehicle_ownership_types,$selected='',$class,$id,$msg='Select Vehicle Ownership')?> </td>
+						   if(isset($ownership)){
+							  $ownership=$ownership;
+							  }
+							  else{
+							   $ownership='';
+							  }
+						echo $this->form_functions->populate_dropdown('ownership',$vehicle_ownership_types,$ownership,$class,$id,$msg='Select Vehicle Ownership')?> </td>
 					    <td><?php $class="form-control";
 							  $id='status';
 							  $status[0]='Available';
