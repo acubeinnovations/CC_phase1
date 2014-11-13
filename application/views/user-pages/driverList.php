@@ -21,10 +21,21 @@
 		<div class="box-body table-responsive no-padding">
 			<?php echo form_open(base_url().'organization/front-desk/list-driver');?>
 			<table class="table list-org-table">
-				<tbody>
+				<tbody> 
 					<tr>
-					    <td><?php echo form_input(array('name'=>'driver_name','class'=>'form-control','id'=>'driver_name','placeholder'=>'By Name','size'=>30));?> </td>
-						<td><?php echo form_input(array('name'=>'driver_city','class'=>'form-control','id'=>'driver_city','placeholder'=>'By City','size'=>30));?> </td>
+					    <td><?php echo form_input(array('name'=>'driver_name','class'=>'form-control','id'=>'driver_name','placeholder'=>'By Name','size'=>30,'value'=>$driver_name));?> </td>
+						<td><?php echo form_input(array('name'=>'driver_city','class'=>'form-control','id'=>'driver_city','placeholder'=>'By City','size'=>30,'value'=>$driver_city));?> </td>
+						<td><?php $class="form-control";
+							  $id='status';
+							  $status[0]='Available';
+							  $status[1]='On-Trip';
+							  if(isset($status_id)){
+							  $status_id=$status_id;
+							  }
+							  else{
+							   $status_id='';
+							  }
+						echo $this->form_functions->populate_dropdown('status',$status,$status_id,$class,$id,$msg="Select Status");?> </td>
 						<!--<td><?php// $class="form-control";
 						//echo $this->form_functions->populate_dropdown('model',$v_models,$selected='',$class,$id='',$msg='Select Vehicle Model')?> </td>-->
 					    
@@ -58,13 +69,17 @@
 						<th> Account Statement</th>
 					</tr>
 					<?php 
+				
 					if(isset($values)){ 
 					foreach ($values as $det):
 					$phone_numbers='';
 					?>
-					<tr><?php if($det['phone']!='' && $det['mobile']!=''){ $phone_numbers=$det['phone']." , ".$det['mobile']; }else if($det['phone']!=''){ $phone_numbers=$det['phone']; }else if($det['mobile']!=''){ $phone_numbers=$det['mobile']; }?>
-					    <td><?php echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$det['name']).nbs(3);?></td>
-					    <td><?php echo $phone_numbers.br().$det['present_address'].br().$det['district'];?></td>	
+					<tr>
+					    <td><?php echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$drivers[$det['id']]['name']).nbs(3);?></td>
+					    <td><?php if( !isset($drivers[$det['id']]['phone']) || $drivers[$det['id']]['phone']==''){ echo '';}else{echo $drivers[$det['id']]['phone'].br();}
+								  if( !isset($drivers[$det['id']]['mobile']) || $drivers[$det['id']]['mobile']==''){ echo '';}else{echo $drivers[$det['id']]['mobile'].br();}
+								  if( !isset($drivers[$det['id']]['present_address']) || $drivers[$det['id']]['present_address']==''){ echo '';}else{echo $drivers[$det['id']]['present_address'].br();}
+								  if( !isset($drivers[$det['id']]['district']) || $drivers[$det['id']]['district']==''){ echo '';}else{echo $drivers[$det['id']]['district'].br();}?></td>	
 						<td><?php if( !isset($vehicles[$det['id']]['registration_number']) || $vehicles[$det['id']]['registration_number']==''){ echo '';}else{echo $vehicles[$det['id']]['registration_number'].br();}
 						if(!isset($vehicles[$det['id']]['vehicle_model_id']) || $vehicles[$det['id']]['vehicle_model_id']==gINVALID){ echo '';}else{echo $v_models[$vehicles[$det['id']]['vehicle_model_id']].br();}
 						if(!isset($vehicles[$det['id']]['vehicle_make_id']) || $vehicles[$det['id']]['vehicle_make_id']==gINVALID){ echo '';}else{echo $v_makes[$vehicles[$det['id']]['vehicle_make_id']];}?></td>

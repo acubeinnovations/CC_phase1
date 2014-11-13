@@ -17,25 +17,54 @@
 
 <div class="page-outer">    
 	<fieldset class="body-border">
-		<legend class="body-head">List Vehicles</legend>
+		<legend class="body-head">List Vehicles</legend><?php //print_r($vehicles);exit; ?>
 		<div class="box-body table-responsive no-padding">
 			<?php echo form_open(base_url().'organization/front-desk/list-vehicle');?>
 			<table class="table list-org-table">
 				<tbody>
 					<tr>
-					    <td><?php echo form_input(array('name'=>'reg_num','class'=>'form-control','id'=>'reg_num','placeholder'=>'By Registration Number','size'=>30));?> </td>
+					    <td><?php echo form_input(array('name'=>'reg_num','class'=>'form-control','id'=>'reg_num','placeholder'=>'By Registration Number','size'=>30,'value'=>$reg_num));?> </td>
 						 <td><?php $class="form-control";
 						 $id="vehicle-owner";
-						echo $this->form_functions->populate_dropdown('owner',$vehicle_owners,$selected='',$class,$id,$msg='Select Vehicle Owner')?> </td>
+						 if(isset($owner)){
+							  $owner=$owner;
+							  }
+							  else{
+							   $owner='';
+							  }
+						echo $this->form_functions->populate_dropdown('owner',$vehicle_owners,$owner,$class,$id,$msg='Select Vehicle Owner')?> </td>
 						<!--<td><?php// $class="form-control";
 						//echo $this->form_functions->populate_dropdown('v_type',$vehicle_types,$selected='',$class,$id='',$msg='Select Vehicle Type')?></td>-->
 						<td><?php $class="form-control";
 						 $id="vehicle-model";
-						echo $this->form_functions->populate_dropdown('v_model',$vehicle_models,$selected='',$class,$id,$msg='Select Vehicle Model')?></td>
+						 if(isset($v_model)){
+							  $v_model=$v_model;
+							  }
+							  else{
+							   $v_model='';
+							  }
+						echo $this->form_functions->populate_dropdown('v_model',$vehicle_models,$v_model,$class,$id,$msg='Select Vehicle Model')?></td>
 						 <td><?php $class="form-control";
 						  $id="vehicle-ownership";
-						echo $this->form_functions->populate_dropdown('ownership',$vehicle_ownership_types,$selected='',$class,$id,$msg='Select Vehicle Ownership')?> </td>
-					    <td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
+						   if(isset($ownership)){
+							  $ownership=$ownership;
+							  }
+							  else{
+							   $ownership='';
+							  }
+						echo $this->form_functions->populate_dropdown('ownership',$vehicle_ownership_types,$ownership,$class,$id,$msg='Select Vehicle Ownership')?> </td>
+					    <td><?php $class="form-control";
+							  $id='status';
+							  $status[0]='Available';
+							  $status[1]='On-Trip';
+							  if(isset($status_id)){
+							  $status_id=$status_id;
+							  }
+							  else{
+							   $status_id='';
+							  }
+						echo $this->form_functions->populate_dropdown('status',$status,$status_id,$class,$id,$msg="Select Status");?> </td>
+						<td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
 					    <?php echo form_close();?>
 						<td><?php echo nbs(55); ?></td>
 						<td><?php echo nbs(35); echo form_close(); ?></td>
@@ -65,15 +94,16 @@
 					<?php
 					if(isset($values)){  //print_r($values);exit;
 					foreach ($values as $det): 
+					
 				
 					?>
 					<tr> 
-					    <td><?php  echo anchor(base_url().'organization/front-desk/vehicle/'.$det['id'],$det['registration_number']).br();
-						if($det['vehicle_model_id']<=0){ echo '';}else{echo $vehicle_models[$det['vehicle_model_id']].br();}
-						if($det['vehicle_make_id']<=0){ echo '';}else{echo $vehicle_makes[$det['vehicle_make_id']];} ?></td>
-						<td><?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $vehicle_owners[$det['vehicle_owner_id']].br();}?>
-						<?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['mobile'].br();} ?>
-						<?php if($det['vehicle_owner_id']<=0){ echo '';}else{echo $owner_details[$det['vehicle_owner_id']]['address'];} ?></td>
+					    <td><?php  echo anchor(base_url().'organization/front-desk/vehicle/'.$det['id'],$vehicles[$det['id']]['registration_number']).br();
+						if( !isset($vehicle_models[$vehicles[$det['id']]['model_id']]) || $vehicle_models[$vehicles[$det['id']]['model_id']]==''){ echo '';}else{echo $vehicle_models[$vehicles[$det['id']]['model_id']].br();}
+						if( !isset($vehicle_makes[$vehicles[$det['id']]['make_id']]) || $vehicle_makes[$vehicles[$det['id']]['make_id']]==''){ echo '';}else{echo $vehicle_makes[$vehicles[$det['id']]['make_id']].br();}?>
+						<td><?php  if( !isset($owners[$det['id']]['name']) || $owners[$det['id']]['name']==''){ echo '';}else{echo $owners[$det['id']]['name'].br();}?>
+						<?php if( !isset($owners[$det['id']]['mobile']) || $owners[$det['id']]['mobile']==''){ echo '';}else{echo $owners[$det['id']]['mobile'].br();}?>
+						<?php if( !isset($owners[$det['id']]['address']) || $owners[$det['id']]['address']==''){ echo '';}else{echo $owners[$det['id']]['address'].br();}?></td>
 						<td><?php if(!isset($drivers[$det['id']]['driver_name']) || $drivers[$det['id']]['driver_name']==''){ echo '';}else{echo $drivers[$det['id']]['driver_name'].br();}
 						if(!isset($drivers[$det['id']]['mobile']) || $drivers[$det['id']]['mobile']==''){ echo '';}else{echo $drivers[$det['id']]['mobile'].br();}
 						if(!isset($drivers[$det['id']]['from_date']) || $drivers[$det['id']]['from_date']==''){ echo '';}else{echo $drivers[$det['id']]['from_date']; } ?></td>

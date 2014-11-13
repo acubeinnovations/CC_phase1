@@ -109,9 +109,10 @@ class user_model extends CI_Model {
 			}
 	}
 	
-	public function getDriverList($organisation_id){
-	$qry=$this->db->select('id,name,phone,mobile');
-	$qry=$this->db->where('organisation_id',$organisation_id);
+
+	public function getDriverInfo($driverid){
+	$qry=$this->db->select('id,name,phone,mobile,district,present_address');
+	$qry=$this->db->where(array('id'=>$driverid,'organisation_id'=>$this->session->userdata('organisation_id')));
 	$qry=$this->db->get('drivers');
 	$count=$qry->num_rows();
 	return $qry->result_array();
