@@ -1463,6 +1463,10 @@ var no_of_days=$(this).attr('no_of_days');
 var pick_up_time=$(this).attr('pick_up_time');
 var vehicle_model_id=$(this).attr('vehicle_model_id');
 var vehicle_ac_type=$(this).attr('vehicle_ac_type_id');
+
+var pick_up_date=$(this).attr('pick_up_date');
+var drop_date=$(this).attr('drop_date');
+
 if(vehicle_ac_type==-1){
 vehicle_ac_type=1;
 }
@@ -1482,6 +1486,14 @@ $('.modal-body').css('top',modaltop);*/
 //$('.modal-body').css('position','fixed');
 $('.trip-voucher-save').attr('trip_id',trip_id);
 $('.trip-voucher-save').attr('driver_id',driver_id);
+
+$('.startdt').val(pick_up_date);
+$('.enddt').val(drop_date);
+
+$('.startdt').prop("disabled",true);
+$('.enddt').prop("disabled",true);
+$('.totalkm').prop("disabled",true);
+
 	$.post(base_url+"/trip-booking/getVouchers",
 		  {
 			trip_id:trip_id,
@@ -1490,10 +1502,12 @@ $('.trip-voucher-save').attr('driver_id',driver_id);
 		},function(data){
 		  if(data=='false'){
 				$('.tripstartingtime').val(pick_up_time);
+				
 			}else{
-			
+			var total_km = data[0].end_km_reading-data[0].start_km_reading;
 			$('.startkm').val(data[0].start_km_reading);
 			$('.endkm').val(data[0].end_km_reading);
+			$('.totalkm').val(total_km);
 			$('.garageclosingkm').val(data[0].garage_closing_kilometer_reading);
 			$('.garageclosingtime').val(data[0].garage_closing_time);
 			$('.releasingplace').val(data[0].releasing_place);
@@ -1519,6 +1533,23 @@ $('.modal-close').on('click',function(){
 
 });
 
+//calculate total km readming
+$('.endkm').keyup(function(e) {
+	var start = $('.startkm').val();
+	var end = $(this).val();
+	var total = end - start;
+	$('.totalkm').val(total);
+});
+
+$('.startkm').keyup(function(e) {
+	var end = $('.endkm').val();
+	var start = $(this).val();
+	var total = end - start;
+	$('.totalkm').val(total);
+});
+
+
+
 
 
 
@@ -1537,8 +1568,12 @@ $('.garage-km-error').html('');
 $('.garage-time-error').html('');
 $('.tariff-error').html('');
 
+$('.startdt').val('');
+$('.enddt').val('');
+
 $('.startkm').val('');
 $('.endkm').val('');
+$('.totalkm').val('');
 $('.garageclosingkm').val('');
 $('.garageclosingtime').val('');
 $('.releasingplace').val('');

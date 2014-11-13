@@ -286,10 +286,12 @@ function display_trip_data($cnc_data, &$order)
 				$trip_ad_charge = $trip_ad_km * $cnc_data['ad_km_rate'];
 
 				$particulars = $trip_min_km."KM @ Rs.".$trip_min_charge." + ";			
-				$particulars .= "And Additional KM Is ".$trip_ad_km."KM @ Rs.".$trip_ad_charge." + ";
+				//$particulars .= "And Additional KM Is ".$trip_ad_km."KM @ Rs.".$trip_ad_charge." + ";
+				$particulars .= "And Additional KM Is ".$trip_ad_km."KM @ Rs.".$cnc_data['ad_km_rate']." + ";
 				$particulars .= "Toll Rs. "	.$cnc_data['toll_fees']." + ";
 				$particulars .= "Parking fees Rs. "	.$cnc_data['parking_fees']." + ";
-				$particulars .= "Night halt charges Rs. "	.$cnc_data['bata'];
+				$particulars .= "Night halt charges Rs. "	.$cnc_data['bata']." + ";
+				$particulars .= "Driver Batta ".$cnc_data['driver_batta'];
 
 				echo $particulars;
 

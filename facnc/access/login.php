@@ -69,25 +69,27 @@ function defaultCompany()
 
 	echo "<body id='loginscreen' $onload>\n";
 
-	echo "<table class='titletext'><tr><td>$title</td></tr></table>\n";
+	/**/
+
+	//echo "<table class='titletext'><tr><td>$title</td></tr></table>\n";
 	
 	div_start('_page_body');
 	br();br();
+	/*
 	start_form(false, false, $_SESSION['timeout']['uri'], "loginform");
 	start_table(false, "class='login'");
 	start_row();
 	echo "<td align='center' colspan=2>";
 	if (!$login_timeout) { // FA logo
-    	echo "<a target='_blank' href='$power_url'><img src='$path_to_root/themes/$def_theme/images/logo_frontaccounting.png' alt='FrontAccounting' height='50' onload='fixPNG(this)' border='0' /></a>";
+    	echo "<a target='_blank' href='$power_url'>Accounts</a>";
 	} else { 
 		echo "<font size=5>"._('Authorization timeout')."</font>";
 	} 
 	echo "</td>\n";
 	end_row();
-
+	
 	echo "<input type='hidden' id=ui_mode name='ui_mode' value='".$_SESSION["wa_current_user"]->ui_mode."' />\n";
-	if (!$login_timeout)
-		table_section_title(_("Version")." $version   Build $build_version - "._("Login"));
+	
 	$value = $login_timeout ? $_SESSION['wa_current_user']->loginname : ($allow_demo_mode ? "demouser":"");
 
 	text_row(_("User name"), "user_name_entry_field", $value, 20, 30);
@@ -128,6 +130,13 @@ function defaultCompany()
 			echo "<input type='hidden' name='$p' value='$val'>";
 	}
 	end_form(1);
+*/
+	start_table(false, "class='login'");
+		start_row();
+		label_cell("You are not authorized to access this module.", "colspan=2 align='center' id='log_msg'");
+		end_row();
+	end_table(1);
+
 	$Ajax->addScript(true, "document.forms[0].password.focus();");
 
     echo "<script language='JavaScript' type='text/javascript'>
@@ -139,6 +148,7 @@ function defaultCompany()
     //]]>
     </script>";
     div_end();
+/*
 	echo "<table class='bottomBar'>\n";
 	echo "<tr>";
 	if (isset($_SESSION['wa_current_user'])) 
@@ -155,6 +165,8 @@ function defaultCompany()
 	echo "<td><a target='_blank' href='$power_url' tabindex='-1'>$power_by</a></td>\n";
 	echo "</tr>\n";
 	echo "</table><br><br>\n";
+*/
+
 	echo "</body></html>\n";
 
 ?>

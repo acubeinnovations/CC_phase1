@@ -63,11 +63,12 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 	$cnc_url = "http://cc.local/";
 
 	// Build for development purposes
-	$build_version 	= date("d.m.Y", filemtime("$path_to_root/CHANGELOG.txt"));
+	//$build_version 	= date("d.m.Y", filemtime("$path_to_root/CHANGELOG.txt"));
+	$build_version = '';
 
 	// Powered by
-	$power_by 		= "FrontAccounting";
-	$power_url 		= "http://frontaccounting.com";
+	$power_by 		= "Accounts";
+	$power_url 		= $cnc_url;
 
 	/* No check on edit conflicts. Maybe needed to be set to 1 in certains Windows Servers */
 	$no_check_edit_conflicts = 0;
