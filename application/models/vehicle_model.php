@@ -33,22 +33,7 @@ public function getVehicles(){
 		return false;
 	}
 	}
-public function getListVehicles(){ 
-	$qry='select V.id,V.registration_number, VMA.id as make_id,VMO.id as model_id from vehicles V LEFT JOIN vehicle_models as VMO ON V.vehicle_model_id=VMO.id LEFT JOIN vehicle_makes as VMA ON V.vehicle_make_id=VMA.id where V.organisation_id='.$this->session->userdata('organisation_id');
-	$results=$this->db->query($qry);
-	$results=$results->result_array();print_r($results);exit;
-	if(count($results)>0){
-	for($i=0;$i<count($results);$i++){
-		$vehicles[$results[$i]['id']]=$results[$i]['id'];
-		$vehicles[$results[$i]['vehicle_model_id']]=$results[$i]['vehicle_model_id'];
-		$vehicles[$results[$i]['vehicle_make_id']]=$results[$i]['vehicle_make_id'];
-		$vehicles[$results[$i]['registration_number']]=$results[$i]['registration_number'];
-		}
-		return $vehicles;
-	}else{
-		return false;
-	}
-	}	
+	
 public function getDriversInfo(){ 
 	
 	$qry='select id,name,phone,mobile,present_address,district from drivers where organisation_id = '.$this->session->userdata('organisation_id');
@@ -69,17 +54,33 @@ public function getDriversInfo(){
 	}
 	
 public function getOwners(){ 
-	$qry='select id,name,mobile,address from vehicle_owners where organisation_id = '.$this->session->userdata('organisation_id');
+	$qry='select vehicle_id,name,mobile,address from vehicle_owners where organisation_id = '.$this->session->userdata('organisation_id') ;
 	$results=$this->db->query($qry);
 	$results=$results->result_array();
 	if(count($results)>0){
 	for($i=0;$i<count($results);$i++){
-		$owners[$results[$i]['id']]['name']=$results[$i]['name'];
-		$owners[$results[$i]['id']]['mobile']=$results[$i]['mobile'];
-		$owners[$results[$i]['id']]['address']=$results[$i]['address'];
+		$owners[$results[$i]['vehicle_id']]['name']=$results[$i]['name'];
+		$owners[$results[$i]['vehicle_id']]['mobile']=$results[$i]['mobile'];
+		$owners[$results[$i]['vehicle_id']]['address']=$results[$i]['address'];
 		
 		}
 		return $owners;
+	}else{
+		return false;
+	}
+	}
+	public function getListVehicles(){ 
+	$qry='select V.id,V.registration_number, VMA.id as make_id,VMO.id as model_id from vehicles V LEFT JOIN vehicle_models as VMO ON V.vehicle_model_id=VMO.id LEFT JOIN vehicle_makes as VMA ON V.vehicle_make_id=VMA.id where V.organisation_id='.$this->session->userdata('organisation_id');
+	$results=$this->db->query($qry);
+	$results=$results->result_array();
+	if(count($results)>0){
+	for($i=0;$i<count($results);$i++){
+		$vehicles[$results[$i]['id']]['id']=$results[$i]['make_id'];
+		$vehicles[$results[$i]['id']]['registration_number']=$results[$i]['registration_number'];
+		$vehicles[$results[$i]['id']]['make_id']=$results[$i]['make_id'];
+		$vehicles[$results[$i]['id']]['model_id']=$results[$i]['model_id'];
+		} 
+		return $vehicles;
 	}else{
 		return false;
 	}

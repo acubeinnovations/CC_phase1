@@ -1068,7 +1068,7 @@ if(isset($where_arry) || isset($like_arry)){
 				$data['driver_city']=$condition['like']['district'];
 				$qry.=' AND D.district LIKE "%'.$condition['like']['district'].'%" ';
 				}
-				if($condition['where']['status']!=null && $condition['where']['status']!=-1 ){
+				if(isset($condition['where']['status']) && $condition['where']['status']!=-1 ){
 				$data['status_id']=$condition['where']['status'];
 				$date_now=date('Y-m-d H:i:s');
 				//$where_arry['status']=$_REQUEST['status'];
@@ -1081,7 +1081,7 @@ if(isset($where_arry) || isset($like_arry)){
 			AND T.trip_status_id = '.TRIP_STATUS_CONFIRMED;
 				
 				}
-				if($condition['where']['status']!=null && $condition['where']['status']==0 ){
+				if(isset($condition['where']['status'])&& $condition['where']['status']==0 ){
 				$data['status_id']=$condition['where']['status'];
 				$date_now=date('Y-m-d H:i:s');
 				//$where_arry['status_id']=$_REQUEST['status'];
@@ -1103,6 +1103,7 @@ if(isset($where_arry) || isset($like_arry)){
 
 	}
 	$data['values']=$p_res['values'];
+	
 	//print_r($data['values']);exit;
 	$driver_trips='';
 	$driver_statuses='';
@@ -1432,11 +1433,11 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 	if($_REQUEST['status']!=null && $_REQUEST['status']!=-1 ){
 	$date_now=date('Y-m-d H:i:s');
 	$where_arry['status']=$_REQUEST['status'];
-	$qry=' SELECT V.id FROM vehicles AS V LEFT JOIN trips as T ON T.vehicle_id=V.id where V.organisation_id = "2" 
-	AND V.registration_number LIKE "%kl7%" AND CONCAT( T.pick_up_date, " ", T.pick_up_time ) <= "'.$date_now.'"
+	$qry=' SELECT V.id FROM vehicles AS V LEFT JOIN trips as T ON T.vehicle_id=V.id where V.organisation_id = '.$this->session->userdata('organisation_id').' 
+	AND CONCAT( T.pick_up_date, " ", T.pick_up_time ) <= "'.$date_now.'"
 	AND CONCAT( T.drop_date, " ", T.drop_time ) >= "'.$date_now.'"
 	AND T.organisation_id = '.$this->session->userdata('organisation_id').'
-	AND T.driver_id = V.id 
+	AND T.vehicle_id = V.id 
 	AND T.trip_status_id ='.TRIP_STATUS_CONFIRMED;
 	}
 	if($_REQUEST['status']!=null && $_REQUEST['status']==0 ){
@@ -1476,31 +1477,31 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 				$data['reg_num']=$condition['like']['registration_number'];
 				$qry.=' AND V.registration_number LIKE "%'.$condition['like']['registration_number'].'%" ';
 				}
-				if($condition['where']['vehicle_owner_id']!=null && $condition['where']['vehicle_owner_id']!=-1 ){
+				if(isset($condition['where']['vehicle_owner_id']) && $condition['where']['vehicle_owner_id']!=-1 ){
 				$data['owner']=$condition['where']['vehicle_owner_id'];
 				$qry.=' AND V.vehicle_owner_id ='.$condition['where']['vehicle_owner_id'];
 				}
-				if($condition['where']['vehicle_ownership_types_id']!=null && $condition['where']['vehicle_ownership_types_id']!=-1 ){
+				if(isset($condition['where']['vehicle_ownership_types_id']) && $condition['where']['vehicle_ownership_types_id']!=-1 ){
 				$data['owner']=$condition['where']['vehicle_ownership_types_id'];
 				$qry.=' AND V.vehicle_ownership_types_id ='.$condition['where']['vehicle_ownership_types_id'];
 				}
-				if($condition['where']['vehicle_model_id']!=null && $condition['where']['vehicle_model_id']!=-1 ){
+				if(isset($condition['where']['vehicle_model_id'])&& $condition['where']['vehicle_model_id']!=-1 ){
 				$data['owner']=$condition['where']['vehicle_model_id'];
 				$qry.=' AND V.vehicle_model_id ='.$condition['where']['vehicle_model_id'];
 				}
-				if($condition['where']['status']!=null && $condition['where']['status']!=-1 ){
+				if(isset($condition['where']['status'])&& $condition['where']['status']!=-1 ){
 				$data['status_id']=$condition['where']['status'];
 				$date_now=date('Y-m-d H:i:s');
 				//$where_arry['status']=$_REQUEST['status'];
-			$qry=' SELECT V.id FROM vehicles AS V LEFT JOIN trips as T ON T.vehicle_id=V.id where V.organisation_id = "2" 
-	AND V.registration_number LIKE "%kl7%" AND CONCAT( T.pick_up_date, " ", T.pick_up_time ) <= "'.$date_now.'"
+			$qry=' SELECT V.id FROM vehicles AS V LEFT JOIN trips as T ON T.vehicle_id=V.id where V.organisation_id = '.$this->session->userdata('organisation_id').'
+	AND CONCAT( T.pick_up_date, " ", T.pick_up_time ) <= "'.$date_now.'"
 	AND CONCAT( T.drop_date, " ", T.drop_time ) >= "'.$date_now.'"
 	AND T.organisation_id = '.$this->session->userdata('organisation_id').'
-	AND T.driver_id = V.id 
+	AND T.vehicle_id = V.id 
 	AND T.trip_status_id ='.TRIP_STATUS_CONFIRMED;
 				
 				}
-				if($condition['where']['status']!=null && $condition['where']['status']==0 ){
+				if(isset($condition['where']['status'])&& $condition['where']['status']==0 ){
 				$data['status_id']=$condition['where']['status'];
 				$date_now=date('Y-m-d H:i:s');
 				//$where_arry['status_id']=$_REQUEST['status'];
@@ -1509,13 +1510,11 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 				}
 			}
 			}
-	/*if(is_null($this->mysession->get('condition'))){
-	$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
-	}*/
-	//$tbl="vehicles";
+			
+	
 	$baseurl=base_url().'organization/front-desk/list-vehicle/';
 	$uriseg ='4';
-
+//echo $qry;exit;
 	 $p_res=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
 	   
 	if($param2==''){
@@ -1523,7 +1522,7 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 
 	}
 	
-	$data['values']=$p_res['values'];
+	$data['values']=$p_res['values'];  
 	$vehicle_trips='';
 	$vehicle_statuses='';
 	for($i=0;$i<count($data['values']);$i++){
@@ -1543,15 +1542,15 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 	$data['result']="No Results Found !";
 	}
 	for ($i=0;$i<count($data['values']);$i++){
-	$id=$data['values'][$i]['vehicle_owner_id'];
-	$details[$id]=$this->user_model->getOwnerDetails($id);
+	//$id=$data['values'][$i]['vehicle_owner_id'];
+	//$details[$id]=$this->user_model->getOwnerDetails($id);
 	$owners=$this->vehicle_model->getOwners();
 	if($owners!=false){
 	$data['owners']=$owners;
 	}else{
 	$data['owners']='';
 	}
-	$vehicles=$this->vehicle_model-> getListVehicles();
+	$vehicles=$this->vehicle_model->getListVehicles();
 	if($vehicles!=false){
 	$data['vehicles']=$vehicles;
 	}else{
