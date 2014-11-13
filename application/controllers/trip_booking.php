@@ -455,42 +455,56 @@ class Trip_booking extends CI_Controller {
 			}
 		} 
 	}
-	public function tripVoucher(){
-	if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['trip_id']){
-	$data['start_km_reading']					=	$_REQUEST['startkm'];
-	$data['end_km_reading']						=	$_REQUEST['endkm'];
-	$data['driver_id']							=	$_REQUEST['driver_id'];
-	$data['garage_closing_kilometer_reading']	=	$_REQUEST['garageclosingkm'];
-	//$data['garage_closing_time']				=	$_REQUEST['garageclosingtime'];
-	//$data['releasing_place']					=	$_REQUEST['releasingplace'];
-	$data['parking_fees']						=	$_REQUEST['parkingfee'];
-	$data['toll_fees']							=	$_REQUEST['tollfee'];
-	$data['state_tax']							=	$_REQUEST['statetax'];
-	$data['night_halt_charges']					=	$_REQUEST['nighthalt'];
-	$data['fuel_extra_charges']					=	$_REQUEST['extrafuel'];
-	$data['total_trip_amount']					=	$_REQUEST['totexpense'];
-	$data['no_of_days']							=	$_REQUEST['no_of_days'];
-	$data['driver_bata']						=	$_REQUEST['driverbata'];
-	$data['trip_starting_time']					=	$_REQUEST['trip_starting_time'];
-	$data['trip_ending_time']					=	$_REQUEST['trip_ending_time'];
-	$data['user_id']							=	$this->session->userdata('id');
-	$data['trip_id']							=	$_REQUEST['trip_id'];
-	$data['organisation_id']					=	$this->session->userdata('organisation_id');
-	$tarrif_id									=	$_REQUEST['tarrif_id'];
+	public function tripVoucher()
+	{
+		if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['trip_id']){
+			
+			//trip data
+			$data['trip_id']			= $_REQUEST['trip_id'];
+			$data['drop_date']			= $_REQUEST['enddt'];
+			$data['remarks']			= $_REQUEST['remarks'];
 
-	$voucher=$this->getVouchers($data['trip_id'],$ajax='NO');
-	if($voucher==false){
-	$res=$this->trip_booking_model->generateTripVoucher($data,$tarrif_id);
-	}else{
-	$res=$this->trip_booking_model->updateTripVoucher($data,$voucher[0]->id,$tarrif_id);
-	}
-	if($res==false){
-	echo 'false';
-	}else{
-	echo $res;
-	}
+			//trip voucher data
+			
+			$data['start_km_reading']		= $_REQUEST['startkm'];
+			$data['end_km_reading']			= $_REQUEST['endkm'];
+			$data['organisation_id']		= $this->session->userdata('organisation_id');
+			$data['driver_id']			= $_REQUEST['driver_id'];
+			$data['driver_bata']			= $_REQUEST['driverbata'];
+			$data['user_id']			= $this->session->userdata('id');
+			$data['releasing_place']		= $_REQUEST['releasingplace'];
+			$data['parking_fees']			= $_REQUEST['parkingfee'];
+			$data['toll_fees']			= $_REQUEST['tollfee'];
+			$data['state_tax']			= $_REQUEST['statetax'];
+			$data['night_halt_charges']		= $_REQUEST['nighthalt'];
+			$data['no_of_days']			= $_REQUEST['no_of_days'];
+			$data['trip_starting_time']		= $_REQUEST['trip_starting_time'];
+			$data['trip_ending_time']		= $_REQUEST['trip_ending_time'];
+			$data['total_trip_amount']		= $_REQUEST['totalamount'];
 
-	}
+			$data['voucher_no']			= $_REQUEST['voucherno'];
+			$data['km_hr']				= $_REQUEST['voucherno'];
+			$data['base_tarif']			= $_REQUEST['basetarif'];
+			$data['base_amount']			= $_REQUEST['baseamount'];
+			$data['adt_tarif']			= $_REQUEST['adttarif'];
+			$data['adt_tarif_rate']			= $_REQUEST['adttarifrate'];
+			$data['vehicle_tarif']			= $_REQUEST['vehicletarif'];
+		
+			
+			$voucher=$this->getVouchers($data['trip_id'],$ajax='NO');
+
+			if($voucher==false){
+				$res=$this->trip_booking_model->generateTripVoucher($data);
+			}else{
+				$res=$this->trip_booking_model->updateTripVoucher($data,$voucher[0]->id,$tarrif_id);
+			}
+			if($res==false){
+				echo 'false';
+			}else{
+				echo $res;
+			}
+
+		}
 
 	}	
 
