@@ -1030,7 +1030,7 @@ FROM drivers D where D.organisation_id = '.$this->session->userdata('organisatio
 	if($_REQUEST['status']!=null && $_REQUEST['status']!=-1 ){
 	$data['status_id']=$_REQUEST['status'];
 	$date_now=date('Y-m-d H:i:s');
-	$where_arry['status']=$_REQUEST['status'];
+	$where_arry['dstatus']=$_REQUEST['status'];
 	$qry=' SELECT D.id
 			FROM drivers AS D  LEFT JOIN trips as T ON D.id= T.driver_id where D.organisation_id = '.$this->session->userdata('organisation_id').'
 			AND CONCAT( T.pick_up_date, " ", T.pick_up_time ) <= "'.$date_now.'"
@@ -1042,7 +1042,7 @@ FROM drivers D where D.organisation_id = '.$this->session->userdata('organisatio
 	if($_REQUEST['status']!=null && $_REQUEST['status']==0 ){
 	$data['status_id']=$_REQUEST['status'];
 	$date_now=date('Y-m-d H:i:s');
-	$where_arry['status']=$_REQUEST['status'];
+	$where_arry['dstatus']=$_REQUEST['status'];
 	$qry='SELECT D.id FROM drivers D WHERE  D.organisation_id = "2" AND D.id NOT IN ('.$qry.')';
 	}
 	if($_REQUEST['driver_name']!=null){
@@ -1063,7 +1063,7 @@ if(isset($where_arry) || isset($like_arry)){
 	}
 	else if($this->mysession->get('condition')!=''){ 
 				$condition=$this->mysession->get('condition');
-				if(isset($condition['where']['status']) || isset($condition['like']['name']) || isset($condition['like']['district']) ){
+				if(isset($condition['where']['dstatus']) || isset($condition['like']['name']) || isset($condition['like']['district']) ){
 				if(isset($condition['like']['name'])){
 				
 				$data['driver_name']=$condition['like']['name'];
@@ -1073,8 +1073,8 @@ if(isset($where_arry) || isset($like_arry)){
 				$data['driver_city']=$condition['like']['district'];
 				$qry.=' AND D.district LIKE "%'.$condition['like']['district'].'%" ';
 				}
-				if(isset($condition['where']['status']) && $condition['where']['status']!=-1 ){
-				$data['status_id']=$condition['where']['status'];
+				if(isset($condition['where']['dstatus']) && $condition['where']['dstatus']!=-1 ){
+				$data['status_id']=$condition['where']['dstatus'];
 				$date_now=date('Y-m-d H:i:s');
 				//$where_arry['status']=$_REQUEST['status'];
 			$qry=' SELECT D.id
@@ -1086,8 +1086,8 @@ if(isset($where_arry) || isset($like_arry)){
 			AND T.trip_status_id = '.TRIP_STATUS_CONFIRMED;
 				
 				}
-				if(isset($condition['where']['status'])&& $condition['where']['status']==0 ){
-				$data['status_id']=$condition['where']['status'];
+				if(isset($condition['where']['dstatus'])&& $condition['where']['dstatus']==0 ){
+				$data['status_id']=$condition['where']['dstatus'];
 				$date_now=date('Y-m-d H:i:s');
 				//$where_arry['status_id']=$_REQUEST['status'];
 				$qry='SELECT D.id FROM drivers D WHERE  D.organisation_id = "2" AND D.id NOT IN ('.$qry.')';
@@ -1412,7 +1412,7 @@ if(isset($where_arry) || isset($like_arry)){
 	if($this->session_check()==true) {
 /*if($this->mysession->get('condition')!=null){
 						$condition=$this->mysession->get('condition');
-						if(isset($condition['like']['registration_number'])|| isset($condition['where']['vehicle_owner_id']) || isset($condition['where']['vehicle_ownership_types_id'])  || isset($condition['where']['vehicle_model_id'])){
+						if(isset($condition['like']['registration_number'])|| isset($condition['where']['vehicle_owner_id']) || isset($condition['where']['vehicle_ownership_types_id'])  || isset($condition['where']['vehicle_model_id']) || isset($condition['where']['status'])){
 						}
 						else{
 						$this->mysession->delete('condition');

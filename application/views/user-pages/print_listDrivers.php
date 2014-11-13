@@ -7,21 +7,28 @@ header("Pragma: public");
 ?>
 	<table class="table table-hover table-bordered">
 	<tbody>
-		<tr>
+		<tr><?php if(isset($msg)){
+					echo 'No Results Found';
+					}
+					else{?>
 		<th>Name</th>
 		<th>Landline Number</th>
 		<th>Mobile Number</th>
 		<th>Address</th>
 		<th>District</th>
 		</tr>
-		<?php foreach ($values as $val): ?>
+		<?php if(isset($values)){ 
+					foreach ($values as $det):
+					$phone_numbers=''; ?>
 		<tr>
-		<td><?php echo $val['name']; ?></td>
-		<td><?php echo $val['phone']; ?></td>
-		<td><?php echo $val['mobile']; ?></td>
-		<td><?php echo $val['present_address'];?></td>
-		<td><?php echo $val['district'];?></td>
+		<td><?php  echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$drivers[$det['id']]['name']).nbs(3); ?></td>
+		<td><?php if( !isset($drivers[$det['id']]['phone']) || $drivers[$det['id']]['phone']==''){ echo '';}else{echo $drivers[$det['id']]['phone'].br();} ?></td>
+		<td><?phpif( !isset($drivers[$det['id']]['mobile']) || $drivers[$det['id']]['mobile']==''){ echo '';}else{echo $drivers[$det['id']]['mobile'].br();} ?></td>
+		<td><?php if( !isset($drivers[$det['id']]['present_address']) || $drivers[$det['id']]['present_address']==''){ echo '';}else{echo $drivers[$det['id']]['present_address'].br();}?></td>
+		<td><?php if( !isset($drivers[$det['id']]['district']) || $drivers[$det['id']]['district']==''){ echo '';}else{echo $drivers[$det['id']]['district'].br();}?></td>
 		</tr>
-		<?php endforeach;?>
+		<?php endforeach;
+		}
+		}?>
 	</tbody>
 	</table>

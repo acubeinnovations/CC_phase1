@@ -64,19 +64,83 @@ class Download_xl extends CI_Controller {
 		//echo $this->input->get('age');
 	$name= $this->input->get('name');
 	$city= $this->input->get('city');
-	$qry='select * from drivers where organisation_id='.$this->session->userdata('organisation_id');
-		if(isset($name)&& $name!=null && isset($city)&& $city!=null){
+	$status= $this->input->get('status');
+	$qry='SELECT D.id,D.name
+FROM drivers D where D.organisation_id = '.$this->session->userdata('organisation_id');
+		/*if(isset($name)&& $name!=null && isset($city)&& $city!=null){
 		$qry.=' AND name LIKE "%'.$name.'%" AND district LIKE "%'.$city.'%" ';
-		}
-		if($name!=null && $city==null){
+		}*/
+		if(isset($_REQUEST['status']) && $_REQUEST['status']!=-1 ){
+	$date_now=date('Y-m-d H:i:s');
+	$qry=' SELECT D.id
+			FROM drivers AS D  LEFT JOIN trips as T ON D.id= T.driver_id where D.organisation_id = '.$this->session->userdata('organisation_id').'
+			AND CONCAT( T.pick_up_date, " ", T.pick_up_time ) <= "'.$date_now.'"
+			AND CONCAT( T.drop_date, " ", T.drop_time ) >= "'.$date_now.'"
+			AND T.organisation_id = '.$this->session->userdata('organisation_id').'
+			AND T.driver_id = D.id
+			AND T.trip_status_id = '.TRIP_STATUS_CONFIRMED;
+	}
+	if(isset($_REQUEST['status']) && $_REQUEST['status']==0 ){
+	$date_now=date('Y-m-d H:i:s');
+	$qry='SELECT D.id FROM drivers D WHERE  D.organisation_id = "2" AND D.id NOT IN ('.$qry.')';
+	}
+		if(isset($name) ){
 		$qry.=' AND name LIKE "%'.$name.'%" ';
 		}
-		if($name==null && $city!=null){
+		if(isset($city)){
 		$qry.=' AND district LIKE "%'.$city.'%" ';
 		}
 	
 	$data['values']=$this->print_model->all_details($qry);
-	$data['title']='Driver List| '.PRODUCT_NAME;
+	if(empty($data['values'])){
+	$data['msg']='No Results Found';
+	}
+	$driver_trips='';
+	$driver_statuses='';
+	for($i=0;$i<count($data['values']);$i++){
+		$id=$data['values'][$i]['id'];
+		$availability=$this->driver_model->getCurrentStatuses($id);
+		if($availability==false){
+		$driver_statuses[$id]='Available';
+		$driver_trips[$id]=gINVALID;
+		}else{
+		$driver_statuses[$id]='OnTrip';
+		$driver_trips[$id]=$availability[0]['id'];
+		}
+	}
+	$data['driver_statuses']=$driver_statuses;
+	$data['driver_trips']=$driver_trips;
+	if(empty($data['values'])){
+				$data['result']="No Results Found !";
+				}
+	
+	for ($i=0;$i<count($data['values']);$i++){
+	$driverid=$data['values'][$i]['id'];
+	$driver_details[$driverid]=$this->user_model->getVehicleDetails($driverid);
+	
+	$drivers=$this->vehicle_model->getDriversInfo();
+	if($drivers!=false){
+	$data['drivers']=$drivers;
+	}else{
+	$data['drivers']='';
+	}
+	}
+	if(!empty($driver_details)){
+		$data['v_details']=$driver_details;
+	}
+	
+	
+	
+	$data['v_models']=$this->user_model->getArray('vehicle_models');
+	$data['v_makes']=$this->user_model->getArray('vehicle_makes');
+	$vehicles=$this->vehicle_model->getVehicles();
+	if($vehicles!=false){
+	$data['vehicles']=$vehicles;
+	}else{
+	$data['vehicles']='';
+	}
+
+	$data['title']='List Driver| '.PRODUCT_NAME;
 	$page='user-pages/print_listDrivers';
 	$this->load_templates($page,$data);	
 
@@ -84,27 +148,43 @@ class Download_xl extends CI_Controller {
 
 
 	public function vehicleXL(){
-		//echo $this->input->get('name');
-		//echo $this->input->get('age');
-	$qry='select * from vehicles where organisation_id='.$this->session->userdata('organisation_id');
+		
+	$qry='SELECT V.id
+FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisation_id');
+	if(isset($_REQUEST['status'])&& $_REQUEST['status']!=-1 ){
+	$date_now=date('Y-m-d H:i:s');
+	$qry=' SELECT V.id FROM vehicles AS V LEFT JOIN trips as T ON T.vehicle_id=V.id where V.organisation_id = '.$this->session->userdata('organisation_id').' 
+	AND CONCAT( T.pick_up_date, " ", T.pick_up_time ) <= "'.$date_now.'"
+	AND CONCAT( T.drop_date, " ", T.drop_time ) >= "'.$date_now.'"
+	AND T.organisation_id = '.$this->session->userdata('organisation_id').'
+	AND T.vehicle_id = V.id 
+	AND T.trip_status_id ='.TRIP_STATUS_CONFIRMED;
+	}
+	if(isset($_REQUEST['status'])&& $_REQUEST['status']==0 ){
+	$date_now=date('Y-m-d H:i:s');
+	$qry='SELECT V.id FROM vehicles V WHERE V.organisation_id = '.$this->session->userdata('organisation_id').' AND V.id NOT IN ('.$qry.')';
+	}
 	
 	if(isset($_REQUEST['reg_num'])){
-	$qry.= ' AND registration_number LIKE "%'.$_REQUEST['reg_num'].'%"';
+	$qry.=' AND V.registration_number LIKE "%'.$_REQUEST['reg_num'].'%" ';
 	}
 	if(isset($_REQUEST['vehicle_owner']) &&$_REQUEST['vehicle_owner'] >0){
-	$qry.= ' AND vehicle_owner_id='.$_REQUEST['vehicle_owner'];
+	$qry.=' AND V.vehicle_owner_id ='.$_REQUEST['vehicle_owner'];
 	}
 	if(isset($_REQUEST['vehicle_ownership']) && $_REQUEST['vehicle_ownership']>0){
-	$qry.= ' AND vehicle_ownership_types_id='.$_REQUEST['vehicle_ownership'];
+	$qry.=' AND V.vehicle_ownership_types_id ='.$_REQUEST['vehicle_ownership'];;
 	
 	}
 	
 	if(isset($_REQUEST['vehicle_model']) && $_REQUEST['vehicle_model']>0){
-	$qry.= ' AND vehicle_model_id='.$_REQUEST['vehicle_model'];
+	$qry.=' AND V.vehicle_model_id ='.$_REQUEST['vehicle_model'];
 	
 	}
-
-	$data['values']=$this->print_model->all_details($qry);
+	
+	$data['values']=$this->print_model->all_details($qry); 
+	if(empty($data['values'])){
+	$data['msg']='No Results Found';
+	}
 	$vehicle_trips='';
 	$vehicle_statuses='';
 	for($i=0;$i<count($data['values']);$i++){
@@ -117,21 +197,32 @@ class Download_xl extends CI_Controller {
 		$vehicle_statuses[$id]='OnTrip';
 		$vehicle_trips[$id]=$availability[0]['id'];
 		}
-	}
+	}//print_r($vehicle_statuses);print_r($vehicle_trips);exit;
 	$data['vehicle_statuses']=$vehicle_statuses;
 	$data['vehicle_trips']=$vehicle_trips;
 	if(empty($data['values'])){
 	$data['result']="No Results Found !";
 	}
 	for ($i=0;$i<count($data['values']);$i++){
-	$id=$data['values'][$i]['vehicle_owner_id'];
-	$details[$id]=$this->user_model->getOwnerDetails($id);
-	
+	//$id=$data['values'][$i]['vehicle_owner_id'];
+	//$details[$id]=$this->user_model->getOwnerDetails($id);
+	$owners=$this->vehicle_model->getOwners();
+	if($owners!=false){
+	$data['owners']=$owners;
+	}else{
+	$data['owners']='';
+	}
+	$vehicles=$this->vehicle_model->getListVehicles();
+	if($vehicles!=false){
+	$data['vehicles']=$vehicles;
+	}else{
+	$data['vehicles']='';
+	}
 	}
 	if(!empty($details)){
 	$data['owner_details']=$details;
 	}
-	
+
 	$tbl_arry=array('vehicle_models','vehicle_types','vehicle_owners','vehicle_makes','vehicle_ownership_types');
 	$count=count($tbl_arry);
 	for ($i=0;$i<$count;$i++){
@@ -153,7 +244,6 @@ class Download_xl extends CI_Controller {
 	$page='user-pages/print_listVehicles';
 	
 	$this->load_templates($page,$data);	
-
 	}
 	public function tripsXL(){
 		//echo $this->input->get('name');
