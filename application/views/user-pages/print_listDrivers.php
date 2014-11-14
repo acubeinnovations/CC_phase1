@@ -21,7 +21,7 @@ header("Pragma: public");
 					foreach ($values as $det):
 					$phone_numbers=''; ?>
 		<tr>
-		<td><?php  echo anchor(base_url().'organization/front-desk/driver-profile/'.$det['id'],$drivers[$det['id']]['name']).nbs(3); ?></td>
+		<td><?php  echo $drivers[$det['id']]['name'].nbs(3); ?></td>
 		<td><?php if( !isset($drivers[$det['id']]['phone']) || $drivers[$det['id']]['phone']==''){ echo '';}else{echo $drivers[$det['id']]['phone'].br();} ?></td>
 		<td><?phpif( !isset($drivers[$det['id']]['mobile']) || $drivers[$det['id']]['mobile']==''){ echo '';}else{echo $drivers[$det['id']]['mobile'].br();} ?></td>
 		<td><?php if( !isset($drivers[$det['id']]['present_address']) || $drivers[$det['id']]['present_address']==''){ echo '';}else{echo $drivers[$det['id']]['present_address'].br();}?></td>

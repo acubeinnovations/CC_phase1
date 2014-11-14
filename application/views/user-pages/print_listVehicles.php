@@ -29,7 +29,7 @@ header("Pragma: public");
 				
 					?>
 					<tr> 
-					    <td><?php   echo anchor(base_url().'organization/front-desk/vehicle/'.$det['id'],$vehicles[$det['id']]['registration_number']).br();
+					    <td><?php   echo $vehicles[$det['id']]['registration_number'].br();
 						
 						?></td>
 						<td><?php if( !isset($vehicle_models[$vehicles[$det['id']]['model_id']]) || $vehicle_models[$vehicles[$det['id']]['model_id']]==''){ echo '';}else{echo $vehicle_models[$vehicles[$det['id']]['model_id']].br();}?></td>
