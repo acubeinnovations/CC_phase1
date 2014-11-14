@@ -1068,15 +1068,7 @@ if(isset($where_arry) || isset($like_arry)){
 	else if($this->mysession->get('condition')!=''){ 
 				$condition=$this->mysession->get('condition');
 				if(isset($condition['where']['dstatus']) || isset($condition['like']['name']) || isset($condition['like']['district']) ){
-				if(isset($condition['like']['name'])){
 				
-				$data['driver_name']=$condition['like']['name'];
-				$qry.=' AND D.name LIKE "%'.$condition['like']['name'].'%" ';
-				}
-				if(isset($condition['like']['district'])){
-				$data['driver_city']=$condition['like']['district'];
-				$qry.=' AND D.district LIKE "%'.$condition['like']['district'].'%" ';
-				}
 				if(isset($condition['where']['dstatus']) && $condition['where']['dstatus']!=-1 ){
 				$data['status_id']=$condition['where']['dstatus'];
 				$date_now=date('Y-m-d H:i:s');
@@ -1089,14 +1081,25 @@ if(isset($where_arry) || isset($like_arry)){
 			AND T.driver_id = D.id
 			AND T.trip_status_id = '.TRIP_STATUS_CONFIRMED;
 				
-				}
-				if(isset($condition['where']['dstatus'])&& $condition['where']['dstatus']==0 ){
+				}	
+				if(isset($condition['where']['dstatus'])&& $condition['where']['dstatus']==0){
 				$data['status_id']=$condition['where']['dstatus'];
 				$date_now=date('Y-m-d H:i:s');
 				//$where_arry['status_id']=$_REQUEST['status'];
 				$qry='SELECT D.id FROM drivers D WHERE  D.organisation_id = "2" AND D.id NOT IN ('.$qry.')';
 				
 				}
+				if(isset($condition['like']['name'])){
+				
+				$data['driver_name']=$condition['like']['name'];
+				$qry.=' AND D.name LIKE "%'.$condition['like']['name'].'%" ';
+				}
+				if(isset($condition['like']['district'])){
+				$data['driver_city']=$condition['like']['district'];
+				$qry.=' AND D.district LIKE "%'.$condition['like']['district'].'%" ';
+				}
+				
+				
 			}
 			}
 	/*if(is_null($this->mysession->get('condition'))){
@@ -1105,7 +1108,7 @@ if(isset($where_arry) || isset($like_arry)){
 	//$tbl="drivers";
 	$baseurl=base_url().'organization/front-desk/list-driver/';
 	$uriseg ='4';
-		//echo $qry;exit;
+		//echo $qry;//exit;
 	   $p_res=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
 
 	$data['values']=$p_res['values'];
@@ -1491,23 +1494,7 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 	else if($this->mysession->get('condition')!=''){ 
 				$condition=$this->mysession->get('condition');
 				if(isset($condition['where']['status']) || isset($condition['like']['registration_number']) || isset($condition['where']['vehicle_owner_id'])|| isset($condition['where']['vehicle_ownership_types_id'])|| isset($condition['where']['vehicle_model_id']) ){
-				if(isset($condition['like']['registration_number'])){
-				
-				$data['reg_num']=$condition['like']['registration_number']; 
-				$qry.=' AND V.registration_number LIKE "%'.$condition['like']['registration_number'].'%" ';
-				}
-				if(isset($condition['where']['vehicle_owner_id']) && $condition['where']['vehicle_owner_id']!=-1 ){
-				$data['owner']=$condition['where']['vehicle_owner_id'];
-				$qry.=' AND V.vehicle_owner_id ='.$condition['where']['vehicle_owner_id'];
-				}
-				if(isset($condition['where']['vehicle_ownership_types_id']) && $condition['where']['vehicle_ownership_types_id']!=-1 ){
-				$data['ownership']=$condition['where']['vehicle_ownership_types_id'];
-				$qry.=' AND V.vehicle_ownership_types_id ='.$condition['where']['vehicle_ownership_types_id'];
-				}
-				if(isset($condition['where']['vehicle_model_id'])&& $condition['where']['vehicle_model_id']!=-1 ){
-				$data['v_model']=$condition['where']['vehicle_model_id'];
-				$qry.=' AND V.vehicle_model_id ='.$condition['where']['vehicle_model_id'];
-				}
+			
 				if(isset($condition['where']['status'])&& $condition['where']['status']!=-1 ){
 				$data['status_id']=$condition['where']['status'];
 				$date_now=date('Y-m-d H:i:s');
@@ -1526,6 +1513,24 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 				//$where_arry['status_id']=$_REQUEST['status'];
 				$qry='SELECT V.id FROM vehicles V WHERE V.organisation_id = '.$this->session->userdata('organisation_id').' AND V.id NOT IN ('.$qry.')';
 				
+				}
+
+					if(isset($condition['like']['registration_number'])){
+				
+				$data['reg_num']=$condition['like']['registration_number']; 
+				$qry.=' AND V.registration_number LIKE "%'.$condition['like']['registration_number'].'%" ';
+				}
+				if(isset($condition['where']['vehicle_owner_id']) && $condition['where']['vehicle_owner_id']!=-1 ){
+				$data['owner']=$condition['where']['vehicle_owner_id'];
+				$qry.=' AND V.vehicle_owner_id ='.$condition['where']['vehicle_owner_id'];
+				}
+				if(isset($condition['where']['vehicle_ownership_types_id']) && $condition['where']['vehicle_ownership_types_id']!=-1 ){
+				$data['ownership']=$condition['where']['vehicle_ownership_types_id'];
+				$qry.=' AND V.vehicle_ownership_types_id ='.$condition['where']['vehicle_ownership_types_id'];
+				}
+				if(isset($condition['where']['vehicle_model_id'])&& $condition['where']['vehicle_model_id']!=-1 ){
+				$data['v_model']=$condition['where']['vehicle_model_id'];
+				$qry.=' AND V.vehicle_model_id ='.$condition['where']['vehicle_model_id'];
 				}
 			}
 			}
