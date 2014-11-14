@@ -1060,7 +1060,7 @@ if(isset($where_arry) || isset($like_arry)){
 				$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
 				}
 	//$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
-	}
+	} 
 	else if($this->mysession->get('condition')!=''){ 
 				$condition=$this->mysession->get('condition');
 				if(isset($condition['where']['dstatus']) || isset($condition['like']['name']) || isset($condition['like']['district']) ){
@@ -1101,9 +1101,9 @@ if(isset($where_arry) || isset($like_arry)){
 	//$tbl="drivers";
 	$baseurl=base_url().'organization/front-desk/list-driver/';
 	$uriseg ='4';
-
+		//echo $qry;exit;
 	   $p_res=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
-	if($param2==''){
+	if($param2==''){ 
 	$this->mysession->delete('condition');
 
 	}
@@ -1155,7 +1155,7 @@ if(isset($where_arry) || isset($like_arry)){
 	$data['vehicles']='';
 	}
 	
-	$data['page_links']=$p_res['page_links'];
+	$data['page_links']=$p_res['page_links']; 
 	$data['title']='List Driver| '.PRODUCT_NAME;
 	$page='user-pages/driverList';
 	$this->load_templates($page,$data);	
@@ -1525,14 +1525,14 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 	
 	$baseurl=base_url().'organization/front-desk/list-vehicle/';
 	$uriseg ='4';
-//echo $qry;exit;
+ 
 	 $p_res=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
-	   
+	 // print_r( $this->mysession->get('condition')) ;exit;
 	if($param2==''){
 	$this->mysession->delete('condition');
 
 	}
-	
+	 
 	$data['values']=$p_res['values'];  
 	$vehicle_trips='';
 	$vehicle_statuses='';
