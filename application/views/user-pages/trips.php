@@ -255,7 +255,7 @@ echo form_close();?></td>
 					<div class="div-with-20-percent-width-with-margin-10">
 						<div class="form-group">
 							<?php echo form_label('Trip Ending Time','tripendingtimelabel'); ?>
-							<?php echo form_input(array('name'=>'tripendingtime','class'=>'form-control tripendingtime format-time','placeholder'=>'HH:MM:SS')); 
+							<?php echo form_input(array('name'=>'tripendingtime','class'=>'form-control tripendingtime format-time','placeholder'=>'HH:MM')); 
 							?>
 						</div>
 						<div class="form-group">

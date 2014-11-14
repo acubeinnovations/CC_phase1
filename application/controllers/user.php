@@ -1022,6 +1022,10 @@ FROM drivers D where D.organisation_id = '.$this->session->userdata('organisatio
 			if($param2=='1' ){
 				$param2='0';
 				}
+	if($param2==''){
+	$this->mysession->delete('condition');
+
+	}
 	//for search
 	   if(isset($_REQUEST['search'])){
 	if($param2==''){
@@ -1103,10 +1107,7 @@ if(isset($where_arry) || isset($like_arry)){
 	$uriseg ='4';
 
 	   $p_res=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
-	if($param2==''){
-	$this->mysession->delete('condition');
-
-	}
+	
 	$data['values']=$p_res['values'];
 	
 	//print_r($data['values']);exit;
@@ -1430,6 +1431,10 @@ if(isset($where_arry) || isset($like_arry)){
 	$where_arry['organisation_id']=$org_id;
 	$qry='SELECT V.id
 FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisation_id');
+	if($param2==''){
+	$this->mysession->delete('condition');
+
+	}
 	//for search
 	   if( isset($_REQUEST['search'])){ 
 	if($param2==''){
@@ -1525,13 +1530,9 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 	
 	$baseurl=base_url().'organization/front-desk/list-vehicle/';
 	$uriseg ='4';
-//echo $qry;exit;
 	 $p_res=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
 	   
-	if($param2==''){
-	$this->mysession->delete('condition');
-
-	}
+	
 	
 	$data['values']=$p_res['values'];  
 	$vehicle_trips='';

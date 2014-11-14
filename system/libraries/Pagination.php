@@ -228,7 +228,7 @@ class CI_Pagination {
 		if  ($this->first_link !== FALSE AND $this->cur_page > ($this->num_links + 1))
 		{
 			$first_url = ($this->first_url == '') ? $this->base_url : $this->first_url;
-			$output .= $this->first_tag_open.'<li><a '.$this->anchor_class.'href="'.$first_url.'">'.$this->first_link.'</a></li>'.$this->first_tag_close;
+			$output .= $this->first_tag_open.'<li><a '.$this->anchor_class.'href="'.$first_url.'/0">'.$this->first_link.'</a></li>'.$this->first_tag_close;
 		}
 
 		// Render the "previous" link
