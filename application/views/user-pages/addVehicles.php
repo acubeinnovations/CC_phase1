@@ -908,26 +908,28 @@ if($this->mysession->get('owner_post_all')!=null ){
 	
 			<table class="table table-hover table-bordered">
 				<tbody>
-					<tr>
+					<tr style="background:#CCC">
 						<th>Trip Id</th>
 						<th>Date</th>
 						<th>Voucher No</th>
-						<th>Comp / Cust</th>
-						<th>Tot KM</th>
-						<th>Tot Hrs</th>
-						<th>Veh Tariff Amount</th>
+						<th>Username</th>
+						<th>Total KM</th>
+						<th>Total Hrs</th>
+						<th>Tariff Amount</th>
 						<th>Extra</th>
 					    
 					</tr>
 					<?php	
-						$full_tot_km=$total_trip_amount=0;
+						$full_tot_km=$total_trip_amount=$tot_hrs=$tariff_amt=$tot_extra=0;
 					if(isset($trips) && $trips!=false){ 
 						for($trip_index=0;$trip_index<count($trips);$trip_index++){
 						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
+						
 						$full_tot_km=$full_tot_km+$tot_km;
 						$total_trip_amount=$total_trip_amount+$trips[$trip_index]['total_trip_amount'];
-						
-						
+						$tariff_amt=$tariff_amt+$trips[$trip_index]['vehicle_tarif'];
+						$extra=$trips[$trip_index]['parking_fees']+$trips[$trip_index]['toll_fees']+$trips[$trip_index]['state_tax']+$trips[$trip_index]['night_halt_charges']+$trips[$trip_index]['fuel_extra_charges'];
+						$tot_extra=$tot_extra+$extra;
 						$date1 = date_create($trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time']);
 						$date2 = date_create($trips[$trip_index]['drop_date'].' '.$trips[$trip_index]['drop_time']);
 						
@@ -943,36 +945,77 @@ if($this->mysession->get('owner_post_all')!=null ){
 
 						?>
 						<tr>
-							<td><?php echo $trip_index+1; ?></td>
+							<td><?php echo $trips[$trip_index]['id'];  ?></td>
 							<td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
-							<td><?php echo $trips[$trip_index]['id']." : " . $trips[$trip_index]['pick_up_city'].' to '.$trips[$trip_index]['drop_city']; ?></td>
+							<td><?php echo $trips[$trip_index]['voucher_no']; ?></td>
+							<td><?php  
+							if(isset($trips[$trip_index]['company'])){ echo $trips[$trip_index]['company'].",".nbs();}else{}
+							if(isset($trips[$trip_index]['customer'])){ echo $trips[$trip_index]['customer'];}else{}
+									
+							 ?></td>
 							<td><?php echo $tot_km; ?></td>
-							<td><?php echo $no_of_days; ?></td>
 							<!--<td><?php //echo $trips[$trip_index]['releasing_place'];?></td>-->
-							<td><?php echo number_format($trips[$trip_index]['total_trip_amount'],2) ?></td>
 							<td><?php 
-							$amt=$trips[$trip_index]['total_trip_amount'];
-							$percent_amt=($amt*17)/100;
-							echo number_format($percent_amt,2);
+							if(($diff->d )==0){
+							$hrs=$diff->h.":".$diff->i;
+							echo $hrs;
+							}
+							else{
+							$h= $diff->d *24;
+							$hrs=($diff->h+$h).":".$diff->i;
+							echo $hrs;
+							}
+							//echo $trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time'].br().$trips[$trip_index]['drop_date'].' '.$trips[$trip_index]['drop_time'].br().$diff->d.",".$diff->h.":".$diff->i; ?></td>
+							<td><?php 
+							echo $trips[$trip_index]['vehicle_tarif'];
 							?></td>
+						<td> <?php 
 						
+						echo $extra;
+						?></td>
 						</tr>
 						<?php } 
 						}					
 					?>
-					<tr>
+					<tr style="background:#CCC">
 					<td>Total</td>
 					<td></td>
 					<td></td>
-					<td><?php echo $full_tot_km; ?></td>
 					<td></td>
-					<td><?php echo number_format($total_trip_amount,2); ?></td>
+					<td><?php echo $full_tot_km;?></td>
+					<td></td>
+					<td><?php echo $tariff_amt;?></td>
+					<td><?php echo $tot_extra;?></td>
 					</tr>
 					<?php //endforeach;
 					//}
 					?>
 				</tbody>
 			</table><?php //echo $page_links;?>
+			
+			<table class="table table-hover table-bordered">
+				<tbody>
+				
+					<tr style="background:#CCC">
+						<th>Particulars</th>
+						<th>Unit</th>
+						<th>Total</th>
+						
+					    
+					</tr>
+					<tr><td>Vehicle Tariff Total</td><td><?php echo $tariff_amt;?></td><td><?php echo $tariff_amt;?></td></tr>
+					<tr><td>Commision</td><td><?php  $commision=$tariff_amt*(8/100); echo $commision;?></td><td><?php   echo $commision;?></td></tr>
+					<tr><td>Less Cash Trip</td><td><?php $tot_cash=0;echo $tot_cash; ?></td><td><?php echo $tot_cash; ?></td></tr>
+					<tr><td>Less Parking</td><td>100</td><td>100</td></tr>
+					<tr><td>Less Accommodation</td><td>1500</td><td>1500</td></tr>
+					<tr><td>Add extras</td><td><?php echo $tot_extra;?></td><td><?php echo $tot_extra;?></td></tr>
+					<tr><td>Less Advance</td><td><?php $adv=0;echo $adv; ?></td><td><?php echo $adv; ?></td></tr>
+					<tr><td>Balance Due</td><td><?php $bal=$tariff_amt-($adv+$tot_extra+1500+100+$tot_cash+$commision); echo $bal;?></td><td><?php  echo $bal;?></td></tr>
+					<tr><td>TDS 1 %</td><td><?php $tds=$bal*(1/100); echo $tds;?></td><td><?php  echo $tds;?></td></tr>
+					<tr><td>NET Transfer</td><td><?php echo form_input(array('name'=>'transfer_date','class'=>'form-control','id'=>'transfer_date','size'=>'3')); ?></td><td></td></tr>
+				</tbody>
+			</table>
+			
 		</div>
 </div>
 </fieldset>
