@@ -909,14 +909,14 @@ if($this->mysession->get('owner_post_all')!=null ){
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr>
-						<th>SlNo</th>
+						<th>Trip Id</th>
 						<th>Date</th>
-						<th>Route</th>
-						<th>Kilometers</th>
-						<th>No Of Days</th>
-						<!--<th>Releasing Place</th>-->
-						<th>Trip Amount</th>
-						<th>17% of Amount</th>
+						<th>Voucher No</th>
+						<th>Comp / Cust</th>
+						<th>Tot KM</th>
+						<th>Tot Hrs</th>
+						<th>Veh Tariff Amount</th>
+						<th>Extra</th>
 					    
 					</tr>
 					<?php	
