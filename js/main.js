@@ -1586,7 +1586,7 @@ $('.voucher').on('click',function(){
 						$('.adtperdaykm').val(data[0].adt_tarif);
 						$('.adtperdaykmrate').val(data[0].adt_tarif_rate);
 						setPerDay_Tariff(data[0].base_tarif,data[0].base_amount,data[0].adt_tarif_rate);
-				} else{alert(data[0].adt_tarif_rate);
+				} else{
 					$('.basekm').val(data[0].base_tarif);
 					$('.baseamount').val(data[0].base_amount);
 					$('.adtkm').val(data[0].adt_tarif);
@@ -2319,7 +2319,7 @@ $('.trip-voucher-save').on('click',function(){
 				driver_id:driver_id,
 				totalamount:totalamount
 				
-			},function(data){alert(data);return false;
+			},function(data){
 			  if(data!='false'){
 					window.location.replace(base_url+'/account/front_desk/NewDelivery/'+data);
 				}
