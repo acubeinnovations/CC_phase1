@@ -261,8 +261,7 @@ function display_trip_data($cnc_data, &$order)
     display_heading("Trip Details");
     div_start('items_table');
 	start_table(TABLESTYLE, "colspan=6 width=100%");
-		$th = array(_("Vehicle No"),_("Trip"),_("Particulars"), _("Kms"),
-			 _("Amount"));
+		$th = array(_("Vehicle"),_("No Of Days"),_("Particulars"),_("Amount"));
 
 		table_header($th);
 
@@ -273,30 +272,50 @@ function display_trip_data($cnc_data, &$order)
 		$line_total = $cnc_data['amount']+$cnc_data['driver_batta'];
 		$total +=$line_total;
 		alt_table_row_color($rowcounter);
-
-			label_cell(@$cnc_data['vehicle_no'],'width=10%');
-			label_cell(@$cnc_data['trip_model'],'width=20%');
+			echo "<td width='15%'>";
+				echo $cnc_data['vehicle_model'];
+				br();
+				echo $cnc_data['vehicle_no'];
+				
+			echo "</td>";
+			label_cell($cnc_data['no_of_days'],'width=10%');
+			
 			echo "<td>";
-				echo $cnc_data['from_city']." - ".$cnc_data['to_city'];
-				echo "<br/>";
-
-				$trip_min_km = $cnc_data['min_km'] * $cnc_data['no_of_days'];
-				$trip_min_charge = $trip_min_km * $cnc_data['min_rate'];
-				$trip_ad_km = $cnc_data['total_km_reading'] - $trip_min_km;
-				$trip_ad_charge = $trip_ad_km * $cnc_data['ad_km_rate'];
-
-				$particulars = $trip_min_km."KM @ Rs.".$trip_min_charge." + ";			
-				//$particulars .= "And Additional KM Is ".$trip_ad_km."KM @ Rs.".$trip_ad_charge." + ";
-				$particulars .= "And Additional KM Is ".$trip_ad_km."KM @ Rs.".$cnc_data['ad_km_rate']." + ";
-				$particulars .= "Toll Rs. "	.$cnc_data['toll_fees']." + ";
-				$particulars .= "Parking fees Rs. "	.$cnc_data['parking_fees']." + ";
-				$particulars .= "Night halt charges Rs. "	.$cnc_data['bata']." + ";
-				$particulars .= "Driver Batta ".$cnc_data['driver_batta'];
+				//echo $cnc_data['from_city']." - ".$cnc_data['to_city'];
+				//echo "<br/>";
+				
+				if($cnc_data['km_hr'] == 2){//hrs tarif
+					$tarif .= "HR";
+				}else if($cnc_data['km_hr'] == 1 && $cnc_data['no_of_days'] > 2){
+					$tarif .= "Per Day";
+				}else{
+					$tarif .= "KM";
+				}
+				$particulars = "Minimum ".$cnc_data['base_tarif']." ".$tarif."@ Rs ".$cnc_data['base_amount'];
+				if($cnc_data['base_amount'] != ''){
+					$particulars .= " + Additional  ".$cnc_data['adt_tarif']." ".$tarif."@".$cnc_data['adt_tarif_rate']."/".$tarif;
+				}
+				if($cnc_data['parking_fees'] >0){
+					$particulars .= " + Parking fees Rs. "	.$cnc_data['parking_fees'];
+				}
+				if($cnc_data['toll_fees'] >0){
+					$particulars .= " + Toll Rs. "	.$cnc_data['toll_fees'];
+				}
+				if($cnc_data['night_halt_charges'] >0){
+					$particulars .= " + Night halt charges Rs.".$cnc_data['night_halt_charges'];
+				}
+				if($cnc_data['driver_bata'] >0){
+					$particulars .= " + Driver Batta ".$cnc_data['driver_bata'];
+				}
+				if($cnc_data['state_tax'] >0){
+					$particulars .= " + State Tax Rs. "	.$cnc_data['state_tax'];
+				}
+				
 
 				echo $particulars;
 
 			echo "</td>";
-			label_cell($cnc_data['total_km_reading'],'width=10%');
+			
 			label_cell(price_format($line_total),'width=10%');
 	
 
@@ -316,7 +335,7 @@ function display_trip_data($cnc_data, &$order)
 		//----------------------------------end trip data----------------------------------------
 
 
-		$colspan = 4;
+		$colspan = 3;
 	
 		hidden('freight_cost',price_format(get_post('freight_cost',0)));
 
@@ -671,9 +690,14 @@ function display_order_header(&$order, $editable, $date_text)
 
 	return $customer_error;
 }*/
-function display_order_header(&$order, $editable, $date_text,$ref='')
+function display_order_header(&$order, $editable, $date_text,$cnc_voucher=false)
 {
 	global $Ajax, $SysPrefs;
+
+	
+	$ref=@$cnc_voucher['trip_id'];
+
+	
 
 	start_outer_table(TABLESTYLE2, "width=100%");
 
@@ -682,7 +706,13 @@ function display_order_header(&$order, $editable, $date_text,$ref='')
 	$customer_error = "";
 	$change_prices = 0;
 
-	label_row("Customer:", $order->customer_name);
+	if($cnc_voucher['group_id'] > 0){
+		label_row("Group :", $order->customer_name);
+		label_row("Customer :", $cnc_voucher['customer_name']);
+	}else{
+		label_row("Customer:", $order->customer_name);
+	}
+	
 	hidden('customer_id', $order->customer_id);
 	hidden('branch_id', $order->Branch);
 	hidden('sales_type', $order->sales_type);
@@ -700,16 +730,16 @@ function display_order_header(&$order, $editable, $date_text,$ref='')
 	if($ref)
 		$_POST['ref'] = $ref;
 	hidden('ref');
-	label_row(_("Reference").':',$ref);
+	//label_row(_("Reference").':',$ref);
 	//ref_row(_("Reference").':', 'ref', _('Reference number unique for this document type'), null, '');
 
-	table_section(2);
+	//table_section(2);
 
 
-	customer_credit_row($_POST['customer_id'], $order->credit);
+	//customer_credit_row($_POST['customer_id'], $order->credit);
+	
 
-
-	table_section(3);
+	/*table_section(3);
 	if ($order->pos['cash_sale'] || $order->pos['credit_sale']) {
 		 // editable payment type 
 		if (get_post('payment') !== $order->payment) {
@@ -731,7 +761,9 @@ function display_order_header(&$order, $editable, $date_text,$ref='')
 			? PM_ANY : $paymcat), null);
 	} else {
 		label_cells(_('Payment:'), $order->payment_terms['terms']);
-	}
+	}*/
+
+	hidden('paument',0);
 
 	
 

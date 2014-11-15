@@ -773,7 +773,7 @@ if(isset($_GET['NewDelivery']) && $_GET['NewDelivery'] > 0){
 
 hidden('cart_id');
 $customer_error = display_order_header($_SESSION['Items'],
-	($_SESSION['Items']->any_already_delivered() == 0), $idate,@$cnc_voucher['trip_id']);
+	($_SESSION['Items']->any_already_delivered() == 0), $idate,$cnc_voucher);
 
 
 
