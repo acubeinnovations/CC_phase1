@@ -457,12 +457,14 @@ class Trip_booking extends CI_Controller {
 	}
 	public function tripVoucher()
 	{
+		
 		if($_REQUEST['startkm'] && $_REQUEST['endkm'] && $_REQUEST['trip_id']){
-			
+ 
+
 			//trip data
 			$data['trip_id']			= $_REQUEST['trip_id'];
-			$data['drop_date']			= $_REQUEST['enddt'];
-			$data['remarks']			= $_REQUEST['remarks'];
+			$trip_data['drop_date']			= date('Y-m-d',strtotime($_REQUEST['enddt']));
+			$trip_data['remarks']			= $_REQUEST['remarks'];
 
 			//trip voucher data
 			
@@ -483,7 +485,7 @@ class Trip_booking extends CI_Controller {
 			$data['total_trip_amount']		= $_REQUEST['totalamount'];
 
 			$data['voucher_no']			= $_REQUEST['voucherno'];
-			$data['km_hr']				= $_REQUEST['voucherno'];
+			$data['km_hr']				= $_REQUEST['kmhr'];
 			$data['base_tarif']			= $_REQUEST['basetarif'];
 			$data['base_amount']			= $_REQUEST['baseamount'];
 			$data['adt_tarif']			= $_REQUEST['adttarif'];
@@ -494,9 +496,9 @@ class Trip_booking extends CI_Controller {
 			$voucher=$this->getVouchers($data['trip_id'],$ajax='NO');
 
 			if($voucher==false){
-				$res=$this->trip_booking_model->generateTripVoucher($data);
+				$res=$this->trip_booking_model->generateTripVoucher($data,-1,$trip_data);
 			}else{
-				$res=$this->trip_booking_model->updateTripVoucher($data,$voucher[0]->id,$tarrif_id);
+				$res=$this->trip_booking_model->updateTripVoucher($data,$voucher[0]->id,-1,$trip_data);
 			}
 			if($res==false){
 				echo 'false';
@@ -504,6 +506,8 @@ class Trip_booking extends CI_Controller {
 				echo $res;
 			}
 
+		}else{
+			echo "no data";exit;
 		}
 
 	}	
