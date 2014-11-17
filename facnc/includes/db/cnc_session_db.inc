@@ -79,25 +79,27 @@ function get_cnc_voucher($id = 0)
 		trip.id AS trip_id,
 		trip.pick_up_city AS from_city,
 		trip.drop_city AS to_city,
-		voucher.driver_bata as driver_batta,
+		voucher.driver_bata,
 		voucher.id as voucher_no,
+		voucher.voucher_no as voucher_str,
 		voucher.parking_fees,
 		voucher.toll_fees,
-		voucher.night_halt_charges as bata,
+		voucher.night_halt_charges,
 		(voucher.end_km_reading-voucher.start_km_reading) AS total_km_reading,
 		voucher.total_trip_amount as amount,
 		voucher.no_of_days,
-		tariff_masters.minimum_kilometers as min_km,
-		tariff_masters.minimum_hours as min_hr,
-		tariffs.rate as min_rate,
-		tariffs.additional_kilometer_rate as ad_km_rate,
-		tariffs.additional_hour_rate as ad_hr_rate,
-		tariffs.night_halt
+		voucher.base_tarif,
+		voucher.base_amount,
+		voucher.adt_tarif,
+		voucher.adt_tarif_rate,
+		voucher.km_hr,
+		vmodels.name as vehicle_model
 		";
 	$sql .="  FROM trip_vouchers voucher ";
 	$sql .= " LEFT JOIN trips trip ON voucher.trip_id = trip.id";
 	$sql .= " LEFT JOIN trip_models tripmd ON tripmd.id = trip.trip_model_id";
 	$sql .= " LEFT JOIN vehicles vehicle ON vehicle.id = trip.vehicle_id";
+	$sql .= " LEFT JOIN vehicle_models vmodels ON vmodels.id = trip.vehicle_model_id";
 	$sql .= " LEFT JOIN tariffs ON tariffs.id = trip.tariff_id";
 	$sql .= " LEFT JOIN tariff_masters ON tariff_masters.id = tariffs.tariff_master_id";
 	$sql .= " LEFT JOIN customers cust ON cust.id = trip.customer_id";

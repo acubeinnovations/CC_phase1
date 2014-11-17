@@ -133,7 +133,8 @@ else
 //---------------------------------------------------------------------------------------------
 function trans_view($trans, $trans_no)
 {
-	return get_customer_trans_view_str(ST_CUSTDELIVERY, $trans['trans_no']);
+	//return get_customer_trans_view_str(ST_CUSTDELIVERY, $trans['trans_no']);
+	return $trans['trans_no'];
 }
 
 function batch_checkbox($row)
@@ -175,11 +176,11 @@ $sql = get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_ite
 
 $cols = array(
 		_("Delivery #") => array('fun'=>'trans_view'), 
-		_("Customer"), 
+		_("Company"), 
 		'branch_code' => 'skip',
-		_("Branch") => array('ord'=>''), 
+		_("Customer") => array('ord'=>''), 
 		_("Contact"),
-		_("Reference"), 
+		_("Voucher"), 
 		_("Cust Ref"), 
 		_("Delivery Date") => array('type'=>'date', 'ord'=>''),
 		_("Due By") => 'date', 
@@ -187,9 +188,9 @@ $cols = array(
 		_("Currency") => array('align'=>'center'),
 		submit('BatchInvoice',_("Batch"), false, _("Batch Invoicing")) 
 			=> array('insert'=>true, 'fun'=>'batch_checkbox', 'align'=>'center'),
-		array('insert'=>true, 'fun'=>'edit_link'),
+		//array('insert'=>true, 'fun'=>'edit_link'),
 		array('insert'=>true, 'fun'=>'invoice_link'),
-		array('insert'=>true, 'fun'=>'prt_link')
+		//array('insert'=>true, 'fun'=>'prt_link')
 );
 
 //-----------------------------------------------------------------------------------
