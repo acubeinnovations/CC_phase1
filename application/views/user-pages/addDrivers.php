@@ -412,7 +412,8 @@ $this->mysession->delete('post');
 						<th>Over Time</th>
 					    
 					</tr>
-					<?php	
+					<?php
+						$repeated_dates=array();					
 						$tot_nod=$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_over_time=$tot_night_halt=$tot_extra=$tot_fuel_extra=$tot_trip_amount= $tth=$ttp=$tto=$dbh=$dbp=$dbo=0;
 					if(isset($trips) && $trips!=false){
 					
@@ -442,6 +443,7 @@ $this->mysession->delete('post');
 							$no_of_days.=' Days';
 							$day=$diff->d;
 						}*/
+					 
 						$repeated_dates=array(); 
 						if(!in_array($trips[$trip_index]['pick_up_date'],$repeated_dates)){
 						$repeated_dates[]=$trips[$trip_index]['pick_up_date'];
@@ -450,7 +452,7 @@ $this->mysession->delete('post');
 						}
 						$tot_nod=$tot_nod+$no_of_days;
 						}
-						print_r($repeated_dates);
+						
 						
 						if($no_of_days==1){
 							$over_time=15-(10*$no_of_days);
@@ -517,14 +519,22 @@ $this->mysession->delete('post');
 					<tr><td>Total Trips Hatchback</td><td><?php echo $tth;?></td><td><?php echo $dbh;?></td><td><?php echo $tth+$dbh;?></td></tr>
 					<tr><td>Total Trips Others</td><td><?php echo $tto;?></td><td><?php echo $dbo;?></td><td><?php echo $tto+$dbo;?></td></tr>
 					<tr><td>Total Trips Benz</td><td><?php echo $ttp;?></td><td><?php echo $dbp;?></td><td><?php echo $ttp+$dbp;?></td></tr>
-					<tr><td>Salary</td><td><?php echo $tot_nod;?> </td><td></td><td></td></tr>
+					<tr><td>Salary</td><td><?php if($tot_nod>=20){
+					$sal=2500;
+					}else{
+					$sal=2000;
+					}
+					echo $sal;
+					?> </td><td></td><td><?php echo $sal;?></td></tr>
 					<tr><td>Accommodation (-)</td><td><?php $acc=1500; echo $acc; ?></td><td></td><td><?php  echo $acc; ?></td></tr>
 					<tr><td>Extra Amount</td><td><?php $ea=0; echo $ea; ?></td><td></td><td><?php  echo $ea; ?></td></tr>
-					<tr><td>Over Time</td><td><?php echo $tot_over_time*25;?></td><td></td><td><?php echo $tot_over_time*25;?></td></tr>
+					<tr><td>Over Time</td><td><?php echo $tot_over_time*25;?></td><td></td><td><?php echo $ot=$tot_over_time*25;?></td></tr>
 					<tr><td>Others</td><td><?php echo $tot_extra;?></td><td></td><td><?php echo $tot_extra;?></td></tr>
 					<tr><td>Advances (-)</td><td><?php $adv=0; echo $adv; ?></td><td></td><td><?php echo $adv; ?></td></tr>
 					<tr><td>Expenses (-)</td><td><?php $exp=0; echo $exp; ?></td><td></td><td><?php echo $exp; ?></td></tr>
-					
+					<tr style="background:#CCC"><td>Total</td><td></td><td></td><td><?php $total=$tth+$dbh+$tto+$dbo+$ttp+$dbp+$sal+$acc+$ea+$ot+$tot_extra+$adv+$exp;
+								echo $total;
+					?></td></tr>
 				</tbody>
 			</table>
 		</div>
