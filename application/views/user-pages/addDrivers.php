@@ -414,7 +414,7 @@ $this->mysession->delete('post');
 					</tr>
 					<?php
 						$repeated_dates=array();					
-						$tot_nod=$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_over_time=$tot_night_halt=$tot_extra=$tot_fuel_extra=$tot_trip_amount= $tth=$ttp=$tto=$dbh=$dbp=$dbo=0;
+						$tot_nod=$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_over_time=$tot_night_halt=$tot_extra=$tot_fuel_extra=$tot_trip_amount= $tth=$ttp=$tto=$dbh=$dbp=$dbo=$i=0;
 					if(isset($trips) && $trips!=false){
 					
 					
@@ -435,7 +435,8 @@ $this->mysession->delete('post');
 						$date2 = date_create($trips[$trip_index]['drop_date'].' '.$trips[$trip_index]['drop_time']);
 						
 						$diff= date_diff($date1, $date2);
-						$no_of_days=$diff->d;
+						 
+						$no_of_days=$diff->d+1;
 						/*if($no_of_days==0){
 							$no_of_days='1 Day';
 							$day=1;
@@ -444,13 +445,14 @@ $this->mysession->delete('post');
 							$day=$diff->d;
 						}*/
 					 
-						$repeated_dates=array(); 
+						
 						if(!in_array($trips[$trip_index]['pick_up_date'],$repeated_dates)){
-						$repeated_dates[]=$trips[$trip_index]['pick_up_date'];
-						if($no_of_days==0){
-						$no_of_days=1;
-						}
+						$repeated_dates[$i]=$trips[$trip_index]['pick_up_date'];
+						$i++;
 						$tot_nod=$tot_nod+$no_of_days;
+						}else if($trips[$trip_index]['pick_up_date']!=$trips[$trip_index]['drop_date']){
+							$tot_nod=$tot_nod+$no_of_days-1;
+							$repeated_dates[$i]=$trips[$trip_index]['drop_date'];
 						}
 						
 						
@@ -500,7 +502,7 @@ $this->mysession->delete('post');
 						<?php } 
 							}				
 					?>
-					
+				
 					<?php //endforeach;
 					
 					//}
