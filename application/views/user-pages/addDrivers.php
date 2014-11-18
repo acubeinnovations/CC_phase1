@@ -436,7 +436,7 @@ $this->mysession->delete('post');
 						
 						$diff= date_diff($date1, $date2);
 						 
-						$no_of_days=$diff->d+1;
+						$no_of_days=$diff->d+1; 
 						/*if($no_of_days==0){
 							$no_of_days='1 Day';
 							$day=1;
@@ -459,14 +459,7 @@ $this->mysession->delete('post');
 						}
 						
 						
-						if($no_of_days==1){
-							$over_time=15-(10*$no_of_days);
-							
-							}
-							else{
-							$over_time=0;
-							} 
-						$tot_over_time=$tot_over_time+$over_time;
+						
 						if( $trips[$trip_index]['v_type']=='Hatchback'){
 						 $tth=  $tth+$trips[$trip_index]['vehicle_tarif'];
 						 $dbh=	$dbh+$trips[$trip_index]['driver_bata'];
@@ -491,13 +484,26 @@ $this->mysession->delete('post');
 							<td><?php echo $trips[$trip_index]['start_km_reading']; ?></td>
 							<td><?php echo $trips[$trip_index]['end_km_reading']; ?></td>
 							<td><?php echo $tot_km; ?></td>
-							<td><?php echo $diff->h; ?></td>
+							<td><?php 
+							
+							$tot_hrs=(($no_of_days-1)*24)+$hrs=$diff->h; 
+							
+							echo $tot_hrs;
+							?></td>
 							<td><?php echo $trips[$trip_index]['vehicle_tarif'];?></td>
 							<td><?php echo $extra; ?></td>
 							<td><?php echo $trips[$trip_index]['registration_number']; ?></td>
 							<td><?php  echo $trips[$trip_index]['voucher_no']; ?></td>
 							<td><?php
-							echo $over_time;
+							if($no_of_days<=1){
+							$over_time=$tot_hrs-(10*$no_of_days);
+							
+							}
+							else{
+							$over_time=$tot_hrs-(10*$no_of_days);
+							} 
+						$tot_over_time=$tot_over_time+$over_time;
+						echo $over_time;
 							?></td>
 							
 						
@@ -507,7 +513,7 @@ $this->mysession->delete('post');
 					?>
 				
 					<?php //endforeach;
-					echo $tot_nod;
+					//echo $tot_nod;
 					//}
 					?>
 				</tbody>
@@ -524,7 +530,7 @@ $this->mysession->delete('post');
 					<tr><td>Total Trips Hatchback</td><td><?php echo $tth;?></td><td><?php echo $dbh;?></td><td><?php echo $tth+$dbh;?></td></tr>
 					<tr><td>Total Trips Others</td><td><?php echo $tto;?></td><td><?php echo $dbo;?></td><td><?php echo $tto+$dbo;?></td></tr>
 					<tr><td>Total Trips Benz</td><td><?php echo $ttp;?></td><td><?php echo $dbp;?></td><td><?php echo $ttp+$dbp;?></td></tr>
-					<tr><td>Salary</td><td><?php if($tot_nod>=20){
+					<tr><td>Salary</td><td><?php  if($tot_nod>=20){
 					$sal=2500;
 					}else{
 					$sal=2000;
@@ -536,8 +542,8 @@ $this->mysession->delete('post');
 					<tr><td>Over Time</td><td><?php echo $tot_over_time*25;?></td><td></td><td><?php echo $ot=$tot_over_time*25;?></td></tr>
 					<tr><td>Others</td><td><?php echo $tot_extra;?></td><td></td><td><?php echo $tot_extra;?></td></tr>
 					<tr><td>Advances (-)</td><td><?php $adv=0; echo $adv; ?></td><td></td><td><?php echo $adv; ?></td></tr>
-					<tr><td>Expenses (-)</td><td><?php $exp=0; echo $exp; ?></td><td></td><td><?php echo $exp; ?></td></tr>
-					<tr style="background:#CCC"><td>Total</td><td></td><td></td><td><?php $total=$tth+$dbh+$tto+$dbo+$ttp+$dbp+$sal+$acc+$ea+$ot+$tot_extra+$adv+$exp;
+					<tr><td>Expenses (+)</td><td><?php $exp=0; echo $exp; ?></td><td></td><td><?php echo $exp; ?></td></tr>
+					<tr style="background:#CCC"><td>Total</td><td></td><td></td><td><?php $total=($tth+$dbh+$tto+$dbo+$ttp+$dbp+$sal+$ea+$ot+$tot_extra+$exp)-($acc+$adv);
 								echo $total;
 					?></td></tr>
 				</tbody>
