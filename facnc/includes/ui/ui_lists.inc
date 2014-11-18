@@ -582,6 +582,62 @@ function owner_list_row($label, $name, $selected_id=null, $all_option = false,
 	echo "</td></tr>\n";
 }
 //----------------------------------------------------------------------------------------------
+//customer group list
+function customer_group_list($name, $selected_id=null, $spec_option=false, $submit_on_change=false, 
+	$show_inactive=false, $editkey = false)
+{
+	global $all_items;
+
+	$sql = "SELECT debtor_no, name, curr_code, inactive FROM ".TB_PREF."debtors_master ";
+	$sql .= " WHERE debtor_ref LIKE 'CG%'"	;
+
+	$mode = get_company_pref('no_customer_group_list');
+
+	if ($editkey)
+		set_editor('customer', $name, $editkey);
+
+	$ret = combo_input($name, $selected_id, $sql, 'debtor_no', 'debtor_ref',
+	array(
+	    'format' => '_format_add_curr',
+	    'order' => array('debtor_ref'),
+		'search_box' => $mode!=0,
+		'type' => 1,
+		'size' => 20,
+		'spec_option' => $spec_option === true ? _("All Customer Groups") : $spec_option,
+		'spec_id' => $all_items,
+		'select_submit'=> $submit_on_change,
+		'async' => false,
+		'sel_hint' => $mode ? _('Press Space tab to filter by name fragment; F2 - entry new customer') :
+		_('Select Customer Group'),
+		'show_inactive' => $show_inactive
+	) );
+	if ($editkey)
+		$ret .= add_edit_combo('customer');
+	return $ret;
+}
+
+function customer_group_list_cells($label, $name, $selected_id=null, $all_option=false, 
+	$submit_on_change=false, $show_inactive=false, $editkey = false)
+{
+	if ($label != null)
+		echo "<td>$label</td>\n";
+	echo "<td nowrap>";
+	echo customer_group_list($name, $selected_id, $all_option, $submit_on_change,
+		$show_inactive, $editkey);
+	echo "</td>\n";
+}
+
+function customer_group_list_row($label, $name, $selected_id=null, $all_option = false, 
+	$submit_on_change=false, $show_inactive=false, $editkey = false)
+{
+	global $path_to_root;
+
+	echo "<tr><td class='label'>$label</td><td nowrap>";
+	echo customer_group_list($name, $selected_id, $all_option, $submit_on_change,
+		$show_inactive, $editkey);
+	echo "</td>\n</tr>\n";
+}
+//-------------------------------------------------------------------------------------------
 
 function customer_list($name, $selected_id=null, $spec_option=false, $submit_on_change=false, 
 	$show_inactive=false, $editkey = false)
