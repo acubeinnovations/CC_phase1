@@ -1626,16 +1626,11 @@ function formatDate_d_m_Y(date) {
     }
 
 function formatDate_Y_m_d(date) {
-        var d = new Date(date);
-        var day = d.getDate();
-        var month = d.getMonth() + 1;
-        var year = d.getFullYear();
-        if (day < 10) {
-            day = "0" + day;
-        }
-        if (month < 10) {
-            month = "0" + month;
-        }
+        var d = date.split('-');
+        var day = d[0];
+        var month = d[1];
+        var year = d[2];
+        
         var date = year + "-" + month + "-" + day;
 
         return date;
@@ -1753,8 +1748,8 @@ function set_tarif_row_with_daysno(days=1)
 $('.tripendingtime').blur(function(e) {
 	var start = $('.tripstartingtime').val();
 	var end = $('.tripendingtime').val();
-	var fromdate=$('#startdt').val();
-	var todate=$('.enddt').val();
+	var fromdate=formatDate_Y_m_d($('#startdt').val());
+	var todate=formatDate_Y_m_d($('.enddt').val());
 	if(fromdate!='' && todate!='' && end!='' && start!=''){
 		var total = timeDifference(fromdate,start,todate,end);
 		total=total.split('-');
@@ -1774,8 +1769,8 @@ $('.tripendingtime').blur(function(e) {
 $('.tripstartingtime').blur(function(e) {
 	var end = $('.tripendingtime').val();
 	var start =$('.tripstartingtime').val();
-	var fromdate=$('#startdt').val();
-	var todate=$('.enddt').val();
+	var fromdate=formatDate_Y_m_d($('#startdt').val());
+	var todate=formatDate_Y_m_d($('.enddt').val());
 	if(fromdate!='' && todate!='' && end!='' && start!=''){
 	var total = timeDifference(fromdate,start,todate,end);
 	total=total.split('-');
@@ -1805,8 +1800,8 @@ $('.tripstartingtime').blur(function(e) {
 $('.enddt').blur(function(e) {
 	var end = $('.tripendingtime').val();
 	var start = $('.tripstartingtime').val();
-	var fromdate=$('#startdt').val();
-	var todate=$('.enddt').val();
+	var fromdate=formatDate_Y_m_d($('#startdt').val());
+	var todate=formatDate_Y_m_d($('.enddt').val());
 	if(fromdate!='' && todate!='' && end!='' && start!=''){
 	var total = timeDifference(fromdate,start,todate,end);
 	total=total.split('-');
