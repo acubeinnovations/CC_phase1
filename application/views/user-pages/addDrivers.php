@@ -451,7 +451,10 @@ $this->mysession->delete('post');
 						$i++;
 						$tot_nod=$tot_nod+$no_of_days;
 						}else if($trips[$trip_index]['pick_up_date']!=$trips[$trip_index]['drop_date']){
-							$tot_nod=$tot_nod+$no_of_days-1;
+							if($no_of_days!=1){
+							$no_of_days=$no_of_days-1;
+							}
+							$tot_nod=$tot_nod+$no_of_days;
 							$repeated_dates[$i]=$trips[$trip_index]['drop_date'];
 						}
 						
@@ -504,7 +507,7 @@ $this->mysession->delete('post');
 					?>
 				
 					<?php //endforeach;
-					
+					echo $tot_nod;
 					//}
 					?>
 				</tbody>
