@@ -695,6 +695,7 @@ var mobile=$('#guestmobile').val();
 		var name =$('#customer').val();
 		var email=$('#email').val();
 		var mobile=$('#mobile').val();
+		var c_group=$('#customer-group').val();
 		var error_email ="";
 		var error_mobile ="";
 		var error_name='';
@@ -731,7 +732,8 @@ var mobile=$('#guestmobile').val();
 	$.post(base_url+'/customers/add-customer',{
 	name:name,
 	email:email,
-	mobile:mobile
+	mobile:mobile,
+	c_group:c_group
 	},function(data){
 	if(data!=true){
 	

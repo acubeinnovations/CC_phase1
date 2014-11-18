@@ -71,7 +71,7 @@ class Trip_booking extends CI_Controller {
 				if(isset($_REQUEST['customer_group']) && $_REQUEST['customer_group']!=gINVALID){
 					$this->form_validation->set_rules('customer_group','Customer groups','trim|xss_clean');
 					$data['advanced']=TRUE;
-					$data['customer_group']=$this->input->post('customer_group');
+					$data['customer_group']=$this->input->post('customer_group'); echo $data['customer_group'];exit;
 				}else{
 					$data['advanced']='';
 					$data['customer_group']='';
