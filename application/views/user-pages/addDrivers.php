@@ -495,15 +495,18 @@ $this->mysession->delete('post');
 							<td><?php echo $trips[$trip_index]['registration_number']; ?></td>
 							<td><?php  echo $trips[$trip_index]['voucher_no']; ?></td>
 							<td><?php
-							if($no_of_days<=1){
+							if($no_of_days>1){
 							$over_time=$tot_hrs-(10*$no_of_days);
-							
+							echo $over_time;
 							}
-							else{
-							$over_time=$tot_hrs-(10*$no_of_days);
+							elseif($no_of_days==1){
+							$over_time1=$tot_hrs-10;
+							if($over_time1>=1){echo $over_time=$over_time1;}else{
+							echo $over_time=0;
+							}
 							} 
 						$tot_over_time=$tot_over_time+$over_time;
-						echo $over_time;
+						
 							?></td>
 							
 						
@@ -518,7 +521,7 @@ $this->mysession->delete('post');
 					?>
 				</tbody>
 			</table>
-			
+			<?php if(!empty($trips)){?>
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr style="background:#CCC">
@@ -548,6 +551,7 @@ $this->mysession->delete('post');
 					?></td></tr>
 				</tbody>
 			</table>
+			<?php }?>
 		</div>
 </div>
 </fieldset>
