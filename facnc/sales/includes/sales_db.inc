@@ -259,6 +259,7 @@ function read_sales_trans($doc_type, $trans_no, &$cart)
 	} else {
 		// read header data from first document
 		$myrow = get_customer_trans($trans_no[0],$doc_type);
+		
 		if (count($trans_no)>1)
 			$cart->trans_no = get_customer_trans_version($doc_type, $trans_no);
 		else
@@ -279,9 +280,13 @@ function read_sales_trans($doc_type, $trans_no, &$cart)
 		$cart->dimension_id = $myrow['dimension_id']; // added 2.1 Joe Hunt 2008-11-12
 		$cart->dimension2_id = $myrow['dimension2_id'];
 		$cart->Comments = '';
+		$particulars = array();
 		foreach ( $trans_no as $trans ) {
 			$cart->Comments .= get_comments_string($doc_type,$trans);
+			$particulars[$trans] = get_comments_string($doc_type,$trans);
 		}
+
+		
 
 		// FIX this should be calculated sum() for multiply parents
 
@@ -298,13 +303,14 @@ function read_sales_trans($doc_type, $trans_no, &$cart)
 		$result = get_customer_trans_details($doc_type,$trans_no);
 		if (db_num_rows($result) > 0) {
 			for($line_no=0; $myrow = db_fetch($result); $line_no++)	{
+				$trans_no = $myrow["debtor_trans_no"];
 				//echo "<pre>";print_r($myrow);echo "</pre>";exit;
 				$cart->line_items[$line_no] = new line_details(
 					$myrow["stock_id"],$myrow["quantity"],
 					$myrow["unit_price"], $myrow["discount_percent"],
 					$myrow["qty_done"], $myrow["standard_cost"],
 					$myrow["StockDescription"],$myrow["id"], $myrow["debtor_trans_no"],
-					@$myrow["src_id"],$myrow["trip_voucher"]);
+					@$myrow["src_id"],$myrow["trip_voucher"],@$particulars[$trans_no]);
 			}
 
 		
