@@ -394,24 +394,32 @@ $this->mysession->delete('post');
 	<div class="box-body table-responsive no-padding">
 			<table class="table table-hover table-bordered">
 				<tbody>
-					<tr>
-						<th>SlNo</th>
-					    <th>Date</th>
-					    <th>Route</th>
-						<th>Kilometers</th>
-						<th>No Of Days</th>
+					<tr style="background:#CCC">
+						<th>Trip ID</th>
+					    <th>Start Date</th>
+					    <th>End Date</th>
+						<th>Start Time</th>
+						<th>End Time</th>
 						<!--<th>Releasing Place</th>-->
-						<th>Parking</th>
-						<th>Toll</th>
-						<th>State Tax</th>
-						<th>Night Halt</th>
-						<th>Fuel extra</th>
-						<th>Trip Amount</th>
+						<th>Start Km</th>
+						<th>Close Km</th>
+						<th>Total Km</th>
+						<th>Total Hrs</th>
+						<th>Vehicle Tariff</th>
+						<th>Extra</th>
+						<th>Vehicle Number</th>
+						<th>Voucher Number</th>
+						<th>Over Time</th>
 					    
 					</tr>
-					<?php	
-						$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_night_halt=$tot_fuel_extra=$tot_trip_amount=0;
+					<?php
+						$repeated_dates=array();					
+						$tot_nod=$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_over_time=$tot_night_halt=$tot_extra=$tot_fuel_extra=$tot_trip_amount= $tth=$ttp=$tto=$dbh=$dbp=$dbo=$i=0;
 					if(isset($trips) && $trips!=false){
+					
+					
+						
+						//for trip data
 						for($trip_index=0;$trip_index<count($trips);$trip_index++){
 						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
 						$full_tot_km=$full_tot_km+$tot_km;
@@ -421,58 +429,129 @@ $this->mysession->delete('post');
 						$tot_night_halt=$tot_night_halt+$trips[$trip_index]['night_halt_charges'];
 						$tot_fuel_extra=$tot_fuel_extra+$trips[$trip_index]['fuel_extra_charges'];
 						$tot_trip_amount=$tot_trip_amount+$trips[$trip_index]['total_trip_amount'];
-						
-						
+						$extra=$trips[$trip_index]['parking_fees']+$trips[$trip_index]['toll_fees']+$trips[$trip_index]['state_tax']+$trips[$trip_index]['night_halt_charges']+$trips[$trip_index]['fuel_extra_charges'];
+						$tot_extra=$tot_extra+$extra;
 						$date1 = date_create($trips[$trip_index]['pick_up_date'].' '.$trips[$trip_index]['pick_up_time']);
 						$date2 = date_create($trips[$trip_index]['drop_date'].' '.$trips[$trip_index]['drop_time']);
 						
 						$diff= date_diff($date1, $date2);
-						$no_of_days=$diff->d;
-						if($no_of_days==0){
+						 
+						$no_of_days=$diff->d+1; 
+						/*if($no_of_days==0){
 							$no_of_days='1 Day';
 							$day=1;
 						}else{
 							$no_of_days.=' Days';
 							$day=$diff->d;
+						}*/
+					 
+						
+						if(!in_array($trips[$trip_index]['pick_up_date'],$repeated_dates)){
+						$repeated_dates[$i]=$trips[$trip_index]['pick_up_date'];
+						$i++;
+						$tot_nod=$tot_nod+$no_of_days;
+						}else if($trips[$trip_index]['pick_up_date']!=$trips[$trip_index]['drop_date']){
+							if($no_of_days!=1){
+							$no_of_days=$no_of_days-1;
+							}
+							$tot_nod=$tot_nod+$no_of_days;
+							$repeated_dates[$i]=$trips[$trip_index]['drop_date'];
 						}
-
+						
+						
+						
+						if( $trips[$trip_index]['v_type']=='Hatchback'){
+						 $tth=  $tth+$trips[$trip_index]['vehicle_tarif'];
+						 $dbh=	$dbh+$trips[$trip_index]['driver_bata'];
+						}
+						if( $trips[$trip_index]['v_type']=='Premium'){
+						 $ttp=  $ttp+$trips[$trip_index]['vehicle_tarif'];
+						 $dbp=	$dbp+$trips[$trip_index]['driver_bata'];
+						}
+						if( $trips[$trip_index]['v_type']!='Premium' && $trips[$trip_index]['v_type']!='Hatchback'){
+						 $tto=  $tto+$trips[$trip_index]['vehicle_tarif'];
+						 $dbo=	$dbo+$trips[$trip_index]['driver_bata'];
+						}
+						
+						
 						?>
 						<tr>
-							<td><?php echo $trip_index+1; ?></td>
+							<td><?php echo $trips[$trip_index]['trip_id']; ?></td>
 							<td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
-							<td><?php echo $trips[$trip_index]['pick_up_city'].' to '.$trips[$trip_index]['drop_city']; ?></td>
+							<td><?php echo $trips[$trip_index]['drop_date']; ?></td>
+							<td><?php echo $trips[$trip_index]['pick_up_time']; ?></td>
+							<td><?php echo $trips[$trip_index]['drop_time']; ?></td>
+							<td><?php echo $trips[$trip_index]['start_km_reading']; ?></td>
+							<td><?php echo $trips[$trip_index]['end_km_reading']; ?></td>
 							<td><?php echo $tot_km; ?></td>
-							<td><?php echo $no_of_days; ?></td>
-							<!--<td><?php //echo $trips[$trip_index]['releasing_place'];?></td>-->
-							<td><?php echo number_format($trips[$trip_index]['parking_fees'],2);?></td>
-							<td><?php echo number_format($trips[$trip_index]['toll_fees'],2); ?></td>
-							<td><?php echo number_format($trips[$trip_index]['state_tax'],2); ?></td>
-							<td><?php echo number_format($trips[$trip_index]['night_halt_charges'],2); ?></td>
-							<td><?php echo number_format($trips[$trip_index]['fuel_extra_charges'],2); ?></td>
-							<td><?php echo number_format($trips[$trip_index]['total_trip_amount'],2); ?></td>
+							<td><?php 
+							
+							$tot_hrs=(($no_of_days-1)*24)+$hrs=$diff->h; 
+							
+							echo $tot_hrs;
+							?></td>
+							<td><?php echo $trips[$trip_index]['vehicle_tarif'];?></td>
+							<td><?php echo $extra; ?></td>
+							<td><?php echo $trips[$trip_index]['registration_number']; ?></td>
+							<td><?php  echo $trips[$trip_index]['voucher_no']; ?></td>
+							<td><?php
+							if($no_of_days>1){
+							$over_time=$tot_hrs-(10*$no_of_days);
+							echo $over_time;
+							}
+							elseif($no_of_days==1){
+							$over_time1=$tot_hrs-10;
+							if($over_time1>=1){echo $over_time=$over_time1;}else{
+							echo $over_time=0;
+							}
+							} 
+						$tot_over_time=$tot_over_time+$over_time;
+						
+							?></td>
+							
 						
 						</tr>
 						<?php } 
-						}					
+							}				
 					?>
-					<tr>
-					<td>Total</td>
-					<td></td>
-					<td></td>
-					<td><?php echo $full_tot_km; ?></td>
-					<td></td>
-					<td><?php echo number_format($tot_parking,2); ?></td>
-					<td><?php echo number_format($tot_toll,2); ?></td>
-					<td><?php echo number_format($tot_state_tax,2); ?></td>
-					<td><?php echo number_format($tot_night_halt,2); ?></td>
-					<td><?php echo number_format($tot_fuel_extra,2); ?></td>
-					<td><?php echo number_format($tot_trip_amount,2); ?></td>
-					</tr>
+				
 					<?php //endforeach;
+					//echo $tot_nod;
 					//}
 					?>
 				</tbody>
-			</table><?php //echo $page_links;?>
+			</table>
+			<?php if(!empty($trips)){?>
+			<table class="table table-hover table-bordered">
+				<tbody>
+					<tr style="background:#CCC">
+						<th></th>
+					    <th>Tariff</th>
+					    <th>Bata</th>
+						<th>Total</th>
+					</tr>
+					<tr><td>Total Trips Hatchback</td><td><?php echo $tth;?></td><td><?php echo $dbh;?></td><td><?php echo $tth+$dbh;?></td></tr>
+					<tr><td>Total Trips Others</td><td><?php echo $tto;?></td><td><?php echo $dbo;?></td><td><?php echo $tto+$dbo;?></td></tr>
+					<tr><td>Total Trips Benz</td><td><?php echo $ttp;?></td><td><?php echo $dbp;?></td><td><?php echo $ttp+$dbp;?></td></tr>
+					<tr><td>Salary</td><td><?php  if($tot_nod>=20){
+					$sal=2500;
+					}else{
+					$sal=2000;
+					}
+					echo $sal;
+					?> </td><td></td><td><?php echo $sal;?></td></tr>
+					<tr><td>Accommodation (-)</td><td><?php $acc=1500; echo $acc; ?></td><td></td><td><?php  echo $acc; ?></td></tr>
+					<tr><td>Extra Amount</td><td><?php $ea=0; echo $ea; ?></td><td></td><td><?php  echo $ea; ?></td></tr>
+					<tr><td>Over Time</td><td><?php echo $tot_over_time*25;?></td><td></td><td><?php echo $ot=$tot_over_time*25;?></td></tr>
+					<tr><td>Others</td><td><?php echo $tot_extra;?></td><td></td><td><?php echo $tot_extra;?></td></tr>
+					<tr><td>Advances (-)</td><td><?php $adv=0; echo $adv; ?></td><td></td><td><?php echo $adv; ?></td></tr>
+					<tr><td>Expenses (+)</td><td><?php $exp=0; echo $exp; ?></td><td></td><td><?php echo $exp; ?></td></tr>
+					<tr style="background:#CCC"><td>Total</td><td></td><td></td><td><?php $total=($tth+$dbh+$tto+$dbo+$ttp+$dbp+$sal+$ea+$ot+$tot_extra+$exp)-($acc+$adv);
+								echo $total;
+					?></td></tr>
+				</tbody>
+			</table>
+			<?php }?>
 		</div>
 </div>
 </fieldset>
