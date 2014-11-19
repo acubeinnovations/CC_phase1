@@ -12,6 +12,7 @@
 $page_security = 'SA_SALESINVOICE';
 $path_to_root = "../..";
 include($path_to_root . "/includes/db_pager.inc");
+//include($path_to_root . "/includes/db_pager_with_array.inc");
 include($path_to_root . "/includes/session.inc");
 
 include($path_to_root . "/sales/includes/sales_ui.inc");
@@ -81,15 +82,30 @@ if (isset($_POST['BatchInvoice']))
 if (get_post('_DeliveryNumber_changed')) 
 {
 	$disable = get_post('DeliveryNumber') !== '';
-
+	$Ajax->addDisable(true, 'TripId', $disable);
+	$Ajax->addDisable(true, 'CustomerGroup', $disable);
 	$Ajax->addDisable(true, 'DeliveryAfterDate', $disable);
 	$Ajax->addDisable(true, 'DeliveryToDate', $disable);
-	$Ajax->addDisable(true, 'StockLocation', $disable);
-	$Ajax->addDisable(true, '_SelectStockFromList_edit', $disable);
-	$Ajax->addDisable(true, 'SelectStockFromList', $disable);
+		
 	// if search is not empty rewrite table
 	if ($disable) {
 		$Ajax->addFocus(true, 'DeliveryNumber');
+	} else
+		$Ajax->addFocus(true, 'TripId');
+	$Ajax->activate('deliveries_tbl');
+}
+
+if (get_post('_TripId_changed')) 
+{
+	$disable = get_post('TripId') !== '';
+	$Ajax->addDisable(true, 'CustomerGroup', $disable);
+	$Ajax->addDisable(true, 'DeliveryNumber', $disable);
+	$Ajax->addDisable(true, 'DeliveryAfterDate', $disable);
+	$Ajax->addDisable(true, 'DeliveryToDate', $disable);
+		
+	// if search is not empty rewrite table
+	if ($disable) {
+		$Ajax->addFocus(true, 'TripId');
 	} else
 		$Ajax->addFocus(true, 'DeliveryAfterDate');
 	$Ajax->activate('deliveries_tbl');
@@ -100,22 +116,39 @@ if (get_post('_DeliveryNumber_changed'))
 start_form(false, false, $_SERVER['PHP_SELF'] ."?OutstandingOnly=".$_POST['OutstandingOnly']);
 
 start_table_left(TABLESTYLE_NOBORDER);
-start_row();
-ref_cells(_("#:"), 'DeliveryNumber', '',null, '', true,5);
-date_cells(_("from:"), 'DeliveryAfterDate', '', null, -30);
-date_cells(_("to:"), 'DeliveryToDate', '', null, 1);
+
+	start_row();
+		ref_cells(_("#:"), 'DeliveryNumber', '',null, '', true,5);
+		date_cells(_("from:"), 'DeliveryAfterDate', '', null, -30);
+		customer_group_list_cells(_("Customer Group:"), 'CustomerGroup', null, true, true);
+		submit_cells('SearchOrders', _("Search"),'',_('Select documents'), 'default');
+	end_row();
+	start_row();
+		ref_cells(_("Trip Id:"), 'TripId', '',null, '', true,5);
+		date_cells(_("to:"), 'DeliveryToDate', '', null, 1);
+		
+	end_row();
+
+//start_row();
+
+
+
+
+
+
+
 
 //locations_list_cells(_("Location:"), 'StockLocation', null, true);
 hidden('StockLocation');
 
 
-stock_items_list_cells(_("Item:"), 'SelectStockFromList', null, true);
+//stock_items_list_cells(_("Item:"), 'SelectStockFromList', null, true);
 
-submit_cells('SearchOrders', _("Search"),'',_('Select documents'), 'default');
+
 
 hidden('OutstandingOnly', $_POST['OutstandingOnly']);
 
-end_row();
+//end_row();
 
 end_table_left(1);br();
 //---------------------------------------------------------------------------------------------
@@ -176,21 +209,18 @@ $sql = get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_ite
 
 $cols = array(
 		_("Delivery #") => array('fun'=>'trans_view'), 
-		_("Company"), 
 		'branch_code' => 'skip',
+		_("Company"), 
 		_("Customer") => array('ord'=>''), 
-		_("Contact"),
+		_("Trip Id"),
 		_("Voucher"), 
-		_("Cust Ref"), 
+		_("Trip Date"), 
 		_("Delivery Date") => array('type'=>'date', 'ord'=>''),
-		_("Due By") => 'date', 
-		_("Delivery Total") => array('type'=>'amount', 'ord'=>''),
-		_("Currency") => array('align'=>'center'),
+		_("Amount") => array('type'=>'amount', 'ord'=>''),
+		
 		submit('BatchInvoice',_("Batch"), false, _("Batch Invoicing")) 
 			=> array('insert'=>true, 'fun'=>'batch_checkbox', 'align'=>'center'),
-		//array('insert'=>true, 'fun'=>'edit_link'),
-		array('insert'=>true, 'fun'=>'invoice_link'),
-		//array('insert'=>true, 'fun'=>'prt_link')
+		array('insert'=>true, 'fun'=>'invoice_link')
 );
 
 //-----------------------------------------------------------------------------------
@@ -201,12 +231,16 @@ if (isset($_SESSION['Batch']))
     unset($_SESSION['Batch']);
 }
 
+
+
+
 $table =& new_db_pager('deliveries_tbl', $sql, $cols);
 $table->set_marker('check_overdue', _("Marked items are overdue."));
 
 $table->width = "100%";
 
 display_db_pager($table);
+
 
 end_form();
 end_page();
