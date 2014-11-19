@@ -119,9 +119,9 @@ echo form_close();?></td>
 					    <td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
 						<td><?php echo $trips[$trip_index]['pick_up_time']; ?></td>
 					    
-						 <td><?php if(isset($trips[$trip_index]['pick_up_city'])){echo $trips[$trip_index]['pick_up_city'].",".br();}else{};
-									if(isset($trips[$trip_index]['pick_up_area'])){ echo $trips[$trip_index]['pick_up_area']."-".br();}else{};
-									if(isset($trips[$trip_index]['drop_city'])){   echo $trips[$trip_index]['drop_city'];}else{};
+						 <td><?php if(isset($trips[$trip_index]['pick_up_city'])){echo $trips[$trip_index]['pick_up_city'];}else{};
+									if($trips[$trip_index]['pick_up_area']!=null){ echo ",".br().$trips[$trip_index]['pick_up_area'];}else{};
+									if($trips[$trip_index]['drop_city']!=null){   echo "-".br().$trips[$trip_index]['drop_city'];}else{};
 									/*if(isset($trips[$trip_index]['drop_area'])){ echo ",".$trips[$trip_index]['drop_area'].br();}else{};*/
 						 ?></td>
 					  <td>
