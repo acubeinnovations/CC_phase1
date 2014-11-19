@@ -4928,3 +4928,4 @@
 [19-Nov-2014 06:38:51 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
 [19-Nov-2014 06:51:03 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
 [19-Nov-2014 06:51:43 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
+[19-Nov-2014 08:03:43 Europe/Paris] 0::connect_db.inc:27: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
