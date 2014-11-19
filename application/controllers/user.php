@@ -1335,6 +1335,7 @@ if(isset($where_arry) || isset($like_arry)){
 				
 					$id=$this->mysession->get('vehicle_id');
 				if($id!=''){
+					//$data['c_groups']=$this->trip_booking_model->getCustomerGroups(); print_r($data['c_groups']);exit;
 					$data['trips']=$this->trip_booking_model->getVehicleVouchers($id);
 					}
 					}

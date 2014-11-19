@@ -15,6 +15,7 @@ class Customers_model extends CI_Model {
 	public function addCustomer($data){
 		$data['organisation_id']=$this->session->userdata('organisation_id');
 		$data['user_id']=$this->session->userdata('id');
+		
  		if($data['mobile']!=''){
 		$condition['mobile']=$data['mobile'];
 		$condition['organisation_id']=$this->session->userdata('organisation_id');

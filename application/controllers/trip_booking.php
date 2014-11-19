@@ -74,7 +74,7 @@ class Trip_booking extends CI_Controller {
 					$data['customer_group']=$this->input->post('customer_group');
 				}else{
 					$data['advanced']='';
-					$data['customer_group']='';
+					$data['customer_group']=$_REQUEST['customer_group'];
 				}
 				if(isset($_REQUEST['guestname']) && $_REQUEST['guestname']!=''){
 					if($_REQUEST['guest_id']==gINVALID){

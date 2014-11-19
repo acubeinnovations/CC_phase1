@@ -81,7 +81,7 @@ class Customers extends CI_Controller {
 }
 
 		public function addCustomer(){
-		if(isset($_REQUEST['mobile']) || $_REQUEST['mobile']!=''  && isset($_REQUEST['name']) && $_REQUEST['name']!=''){
+		if(isset($_REQUEST['mobile']) || $_REQUEST['mobile']!=''  && isset($_REQUEST['name']) && $_REQUEST['name']!='' && isset($_REQUEST['c_group']) && $_REQUEST['c_group']!=''){
 			$data['mobile']=$_REQUEST['mobile'];
 			$data['email']=$_REQUEST['email'];
 			$data['name']=$_REQUEST['name'];
@@ -89,7 +89,7 @@ class Customers extends CI_Controller {
 			$data['organisation_id']=$this->session->userdata('organisation_id');
 			$data['user_id']=$this->session->userdata('id');
 			$data['customer_type_id']=gINVALID;
-			$data['customer_group_id']=gINVALID;
+			$data['customer_group_id']=$_REQUEST['c_group'];
 		$res=$this->customers_model->addCustomer($data);
 		if(isset($res) && $res!=false){
 

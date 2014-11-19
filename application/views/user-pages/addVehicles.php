@@ -920,7 +920,7 @@ if($this->mysession->get('owner_post_all')!=null ){
 					    
 					</tr>
 					<?php	
-						$full_tot_km=$total_trip_amount=$tot_hrs=$tariff_amt=$tot_extra=0;
+						$full_tot_km=$total_trip_amount=$tot_hrs=$tariff_amt=$tot_extra=$tot_cash=0;
 					if(isset($trips) && $trips!=false){ 
 						for($trip_index=0;$trip_index<count($trips);$trip_index++){
 						$tot_km=$trips[$trip_index]['end_km_reading']-$trips[$trip_index]['start_km_reading'];
@@ -942,7 +942,9 @@ if($this->mysession->get('owner_post_all')!=null ){
 							$no_of_days.=' Days';
 							
 						}
-
+						if($trips[$trip_index]['company']==null){
+						$tot_cash=$tot_cash+$trips[$trip_index]['vehicle_tarif'];
+						}
 						?>
 						<tr>
 							<td><?php echo $trips[$trip_index]['id'];  ?></td>
@@ -1005,14 +1007,14 @@ if($this->mysession->get('owner_post_all')!=null ){
 					</tr>
 					<tr><td>Vehicle Tariff Total</td><td><?php echo $tariff_amt;?></td><td><?php echo $tariff_amt;?></td></tr>
 					<tr><td>Commision</td><td><?php  $commision=$tariff_amt*(8/100); echo $commision;?></td><td><?php   echo $commision;?></td></tr>
-					<tr><td>Less Cash Trip</td><td><?php $tot_cash=0;echo $tot_cash; ?></td><td><?php echo $tot_cash; ?></td></tr>
-					<tr><td>Less Parking</td><td>100</td><td>100</td></tr>
-					<tr><td>Less Accommodation</td><td>1500</td><td>1500</td></tr>
+					<tr><td>Less Cash Trip</td><td><?php echo $tot_cash; ?></td><td><?php echo $tot_cash; ?></td></tr>
+					<tr><td>Less Parking</td><td><?php echo $parking=100; ?></td><td><?php echo $parking=100; ?></td></tr>
+					<tr><td>Less Accommodation</td><td><?php echo $acc=1500; ?></td><td><?php echo $acc=1500; ?></td></tr>
 					<tr><td>Add extras</td><td><?php echo $tot_extra;?></td><td><?php echo $tot_extra;?></td></tr>
 					<tr><td>Less Advance</td><td><?php $adv=0;echo $adv; ?></td><td><?php echo $adv; ?></td></tr>
-					<tr><td>Balance Due</td><td><?php $bal=$tariff_amt-($adv+$tot_extra+1500+100+$tot_cash+$commision); echo $bal;?></td><td><?php  echo $bal;?></td></tr>
+					<tr><td>Balance Due</td><td><?php $bal=$tariff_amt+$tot_extra-($commision+$tot_cash+$acc+$parking+$adv); echo $bal;?></td><td><?php  echo $bal;?></td></tr>
 					<tr><td>TDS 1 %</td><td><?php $tds=$bal*(1/100); echo $tds;?></td><td><?php  echo $tds;?></td></tr>
-					<tr><td>NET Transfer</td><td><?php echo form_input(array('name'=>'transfer_date','class'=>'form-control','id'=>'transfer_date','size'=>'3')); ?></td><td></td></tr>
+					<tr><td>NET Transfer</td><td><?php echo form_input(array('name'=>'transfer_date','class'=>'form-control','id'=>'transfer_date','size'=>'3')); ?></td><td><?php echo $net=$bal-$tds;?></td></tr>
 				</tbody>
 			</table>
 			
