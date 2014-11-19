@@ -73,7 +73,11 @@ class cart
 	var $credit;
 	var $ex_rate;
 
+	//cnc
 	var $trip_ref;
+
+	
+	
 
 
 
@@ -617,11 +621,30 @@ class line_details
 	var $trip_voucher = 0;
 	var $unit_taxable_amount;
 
+	var $trip_id;
+	var $voucher_no;
+	var $vehicle_model;
+	var $vehicle_no;
+	var $username;
+	var $particulars;
+	var $pickup_date;
+
 
 	function line_details ($stock_id, $qty, $prc, $disc_percent,
-		$qty_done, $standard_cost, $description, $id=0, $src_no=0, $src_id=0,$trip_voucher=0)
+		$qty_done, $standard_cost, $description, $id=0, $src_no=0, $src_id=0,$trip_voucher=0,$comments='')
 	{
 	/* Constructor function to add a new LineDetail object with passed params */
+		$cnc_voucher = get_cnc_voucher($trip_voucher);
+		if($cnc_voucher){
+			$this->trip_id 		= $cnc_voucher['trip_id'];
+			$this->voucher_no	= $cnc_voucher['voucher_str'];
+			$this->vehicle_model	= $cnc_voucher['vehicle_model'];
+			$this->vehicle_no	= $cnc_voucher['vehicle_no'];
+			$this->username		= $cnc_voucher['customer_name'];
+			$this->particulars      = $comments;
+			$this->pickup_date	= $cnc_voucher['pick_up_date'];
+
+		}
 
 		$this->id = $id;
 		$this->src_no = $src_no;

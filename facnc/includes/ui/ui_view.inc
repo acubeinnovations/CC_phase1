@@ -488,7 +488,7 @@ function display_supp_trans_tax_details($tax_items, $columns)
 
 //--------------------------------------------------------------------------------------
 
-function display_edit_tax_items($taxes, $columns, $tax_included, $rightspan=0, $editable=false)
+function display_edit_tax_items($taxes, $columns, $tax_included, $rightspan=0, $editable=false,$param2 = "align=right")
 {
 	$total = 0;
 
@@ -525,7 +525,7 @@ function display_edit_tax_items($taxes, $columns, $tax_included, $rightspan=0, $
 				else
 				{
 					label_row($taxitem['tax_type_name'],
-						$value, "colspan=$columns align=right", "align=right", $rightspan);
+						$value, "colspan=$columns align=right", $param2, $rightspan);
 					$total +=  round2($taxitem['Value'], user_price_dec());
 				}
 			}
