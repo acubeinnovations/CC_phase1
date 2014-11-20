@@ -238,6 +238,7 @@ $customer_type='';
 						echo $this->form_functions->populate_dropdown('booking_source',$booking_sources,$booking_source,$class,$id='',$msg="Select Source");?><div class="row-source-50-percent-width-with-margin-8">
 										<?php echo $this->form_functions->populate_dropdown('customer_group',$customer_groups,$customer_group,$class ='groups form-control',$id='customer-group',$msg="Select Groups"); ?>
 										<?php echo $this->form_functions->form_error_session('customer_group', '<p class="text-red error-margin">', '</p>');?>
+										<?php echo $this->form_functions->populate_dropdown('customer_list',$customer_list='',$customer_list='',$class ='groups form-control',$id='customer-list',$msg=''); ?>
 								</div>
 						</div>
 						<table>
