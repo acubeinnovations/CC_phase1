@@ -2318,8 +2318,23 @@ $('.trip-voucher-save').on('click',function(){
 				
 			},function(data){
 			  if(data!='false'){
-					window.location.replace(base_url+'/account/front_desk/NewDelivery/'+data);
+				var fa_link = '';
+				var fa_val;
+				var arr = $.parseJSON(data);
+				$.each(arr,function(key,value){
+					fa_val = value;
+					if(key == 'NewDelivery'){
+						fa_link = 'NewDelivery';
+
+					}else if(key == 'ModifyDelivery'){
+						fa_link = 'ModifyDelivery';
+					}
+				});
+				
+				if(fa_link != ''){
+					window.location.replace(base_url+'/account/front_desk/'+fa_link+'/'+fa_val);
 				}
+			   }
 			});
 	}else{
 		return false;

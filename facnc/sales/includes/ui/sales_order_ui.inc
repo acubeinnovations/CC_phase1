@@ -269,7 +269,7 @@ function display_trip_data($cnc_data, &$order)
 		$k = 0;  //row colour counter
 
 		//----------------------------------start trip data----------------------------------------
-		$line_total = $cnc_data['amount']+$cnc_data['driver_batta'];
+		$line_total = $cnc_data['amount'];
 		$total +=$line_total;
 		alt_table_row_color($rowcounter);
 			echo "<td width='15%'>";
@@ -283,6 +283,7 @@ function display_trip_data($cnc_data, &$order)
 			echo "<td>";
 				//echo $cnc_data['from_city']." - ".$cnc_data['to_city'];
 				//echo "<br/>";
+//echo $cnc_data['state_tax'] ;exit;
 				
 				if($cnc_data['km_hr'] == 2){//hrs tarif
 					$tarif .= "HR";
