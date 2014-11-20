@@ -299,6 +299,88 @@ function post_void_customer_trans($type, $type_no)
 
 //----------------------------------------------------------------------------------------
 
+function get_sql_for_trip_invoices()
+{
+	$date_after = date2sql($_POST['TransAfterDate']);
+    $date_to = date2sql($_POST['TransToDate']);
+
+  	$sql = "SELECT 
+		trans.trans_no, 
+		IF(cg.name IS NULL,'CASH', cg.name) AS company,
+		trip.id,
+		voucher.id,
+		trip.pick_up_date,
+		trans.tran_date, 
+		(trans.ov_amount + trans.ov_gst + trans.ov_freight 
+			+ trans.ov_freight_tax + trans.ov_discount)	AS TotalAmount, "; 
+   	if ($_POST['filterType'] != ALL_TEXT)
+		$sql .= "@bal := @bal+(trans.ov_amount + trans.ov_gst + trans.ov_freight + trans.ov_freight_tax + trans.ov_discount), ";
+
+//	else
+//		$sql .= "IF(trans.type=".ST_CUSTDELIVERY.",'', IF(trans.type=".ST_SALESINVOICE." OR trans.type=".ST_BANKPAYMENT.",@bal := @bal+
+//			(trans.ov_amount + trans.ov_gst + trans.ov_freight + trans.ov_freight_tax + trans.ov_discount), @bal := @bal-
+//			(trans.ov_amount + trans.ov_gst + trans.ov_freight + trans.ov_freight_tax + trans.ov_discount))) , ";
+		$sql .= "trans.alloc AS Allocated,
+		((trans.type = ".ST_SALESINVOICE.")
+			AND trans.due_date < '" . date2sql(Today()) . "') AS OverDue ,
+		Sum(line.quantity-line.qty_done) AS Outstanding
+		FROM "
+			.TB_PREF."debtor_trans as trans
+	LEFT JOIN trips trip ON trip.id = trans.reference
+	LEFT JOIN trip_vouchers voucher ON voucher.trip_id = trip.id
+	LEFT JOIN customer_groups cg  ON  cg.id = trip.customer_group_id
+			LEFT JOIN ".TB_PREF."debtor_trans_details as line
+				ON trans.trans_no=line.debtor_trans_no AND trans.type=line.debtor_trans_type,"
+			.TB_PREF."debtors_master as debtor, "
+			.TB_PREF."cust_branch as branch
+		WHERE debtor.debtor_no = trans.debtor_no
+			AND trans.tran_date >= '$date_after'
+			AND trans.tran_date <= '$date_to'
+			AND trans.branch_code = branch.branch_code";
+
+   	if ($_POST['customer_id'] != ALL_TEXT)
+   		$sql .= " AND trans.debtor_no = ".db_escape($_POST['customer_id']);
+
+   	if ($_POST['filterType'] != ALL_TEXT)
+   	{
+   		if ($_POST['filterType'] == '1')
+   		{
+   			$sql .= " AND (trans.type = ".ST_SALESINVOICE.") ";
+   		}
+   		elseif ($_POST['filterType'] == '2')
+   		{
+   			$sql .= " AND (trans.type = ".ST_SALESINVOICE.") ";
+   		}
+   		elseif ($_POST['filterType'] == '3')
+   		{
+			$sql .= " AND (trans.type = " . ST_CUSTPAYMENT 
+					." OR trans.type = ".ST_BANKDEPOSIT." OR trans.type = ".ST_BANKPAYMENT.") ";
+   		}
+   		elseif ($_POST['filterType'] == '4')
+   		{
+			$sql .= " AND trans.type = ".ST_CUSTCREDIT." ";
+   		}
+   		elseif ($_POST['filterType'] == '5')
+   		{
+			$sql .= " AND trans.type = ".ST_CUSTDELIVERY." ";
+   		}
+
+    	if ($_POST['filterType'] == '2')
+    	{
+    		$today =  date2sql(Today());
+    		$sql .= " AND trans.due_date < '$today'
+				AND (trans.ov_amount + trans.ov_gst + trans.ov_freight_tax + 
+				trans.ov_freight + trans.ov_discount - trans.alloc > 0) ";
+    	}
+   	}
+	$sql .= " GROUP BY trans.trans_no, trans.type";
+//echo $sql;exit;
+   	return $sql;
+
+	
+	
+}
+
 function get_sql_for_customer_inquiry()
 {
     $date_after = date2sql($_POST['TransAfterDate']);
@@ -515,4 +597,9 @@ function get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_i
 	$sql .= " ORDER BY voucher.id DESC ";
 	return $sql;
 }
+
+
+
+
+
 ?>
