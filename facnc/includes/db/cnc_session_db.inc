@@ -85,6 +85,7 @@ function get_cnc_voucher($id = 0)
 		voucher.voucher_no as voucher_str,
 		voucher.parking_fees,
 		voucher.toll_fees,
+		voucher.state_tax,
 		voucher.night_halt_charges,
 		(voucher.end_km_reading-voucher.start_km_reading) AS total_km_reading,
 		voucher.total_trip_amount as amount,

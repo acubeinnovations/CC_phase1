@@ -9,6 +9,68 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
     See the License here <http://www.gnu.org/licenses/gpl-3.0.html>.
 ***********************************************************************/
+
+
+function update_delivery_with_cnc_voucher($delivery)
+{
+	$trans_no = key($delivery->trans_no);
+	$type =  $delivery->trans_type;
+	
+	$total = 0;
+	$tax = 0;
+	$total_taxable_amount =0;
+	foreach($delivery->line_items as $line_items){
+		
+
+		$line_tax = get_full_price_for_item($line_items->stock_id, $line_items->price,
+			0, $delivery->tax_included, $delivery->tax_group_array) - $line_items->unit_taxable_amount;
+
+		$sql= "UPDATE ".TB_PREF. "debtor_trans_details SET 
+			unit_price = ".db_escape($line_items->price).",
+			unit_taxable_amount = ".db_escape($line_items->unit_taxable_amount).",
+			unit_tax = ".db_escape($line_tax)."
+			"
+			."WHERE id =".db_escape($line_items->id);
+
+		$total += $line_items->price;
+		$tax += $line_tax;
+		$total_taxable_amount +=$line_items->unit_taxable_amount;
+
+		db_query($sql, 'failed to update line details');
+
+
+		$sql= "UPDATE ".TB_PREF. "sales_order_details SET 
+			unit_price = ".db_escape($line_items->price)." WHERE order_no =".db_escape($delivery->order_no);
+
+		
+
+		db_query($sql, 'failed to update line details');
+
+	}
+	
+	$sql= "UPDATE ".TB_PREF. "debtor_trans SET ov_amount = ".db_escape($total).",ov_gst = ".db_escape($tax).
+			" WHERE trans_no=".db_escape($trans_no)." AND type=".db_escape($type);
+	db_query($sql, 'failed to update debtor trans');
+
+
+	$sql= "UPDATE ".TB_PREF. "sales_orders SET total = ".db_escape($total).
+			" WHERE order_no=".db_escape($delivery->order_no);
+	db_query($sql, 'failed to update sale order');
+
+	
+
+	$sql= "UPDATE ".TB_PREF. "trans_tax_details SET net_amount = ".db_escape($total_taxable_amount).",amount = ".db_escape($tax)." WHERE trans_no=".db_escape($trans_no)." AND trans_type=".db_escape($type);
+
+	db_query($sql, 'failed to update tax trans');
+
+	$sql= "UPDATE ".TB_PREF. "stock_moves SET price = ".db_escape($total).
+			" WHERE trans_no=".db_escape($trans_no)." AND type=".db_escape($type);
+	db_query($sql, 'failed to update stock movement');
+
+	return true;
+
+	//return  db_query($sql, 'Concurrent editing conflict');
+}
 //-----------------------------------------------------------------------------
 // insert/update sales delivery
 //
@@ -16,6 +78,7 @@ function write_sales_delivery(&$delivery,$bo_policy)
 {
 	global $Refs;
 	
+
 
 	$trans_no = $delivery->trans_no;
 	if (is_array($trans_no)) $trans_no = key($trans_no);

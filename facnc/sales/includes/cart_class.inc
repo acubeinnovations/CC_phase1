@@ -621,6 +621,7 @@ class line_details
 	var $trip_voucher = 0;
 	var $unit_taxable_amount;
 
+
 	var $trip_id;
 	var $voucher_no;
 	var $vehicle_model;
@@ -628,6 +629,8 @@ class line_details
 	var $username;
 	var $particulars;
 	var $pickup_date;
+	var $cnc_line_amount;
+	
 
 
 	function line_details ($stock_id, $qty, $prc, $disc_percent,
@@ -643,6 +646,8 @@ class line_details
 			$this->username		= $cnc_voucher['customer_name'];
 			$this->particulars      = $comments;
 			$this->pickup_date	= $cnc_voucher['pick_up_date'];
+			$this->cnc_line_amount 	= $cnc_voucher['amount'];
+			$this->price 		= $cnc_voucher['amount'];
 
 		}
 
@@ -667,13 +672,13 @@ class line_details
 		$this->stock_id = $stock_id;
 		$this->quantity = $qty;
 		$this->qty_dispatched = $qty;
-		$this->price = $prc;
+		//$this->price = $prc;
 		$this->discount_percent = $disc_percent;
 		$this->qty_done = $qty_done;
 		$this->standard_cost = $standard_cost;
 		$this->valid = true;
 		$this->trip_voucher = $trip_voucher;
-		$this->unit_taxable_amount = $prc * 0.4;
+		$this->unit_taxable_amount = $this->price * 0.4;
 	}
 
 	// get unit price as stated on document

@@ -30,6 +30,9 @@ include_once($path_to_root . "/sales/includes/db/sales_types_db.inc");
 include_once($path_to_root . "/reporting/includes/reporting.inc");
 include_once($path_to_root . "/includes/db/cnc_session_db.inc");
 
+
+
+
 set_page_security( @$_SESSION['Items']->trans_type,
 	array(	ST_SALESORDER=>'SA_SALESORDER',
 			ST_SALESQUOTE => 'SA_SALESQUOTE',

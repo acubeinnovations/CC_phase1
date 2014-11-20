@@ -213,6 +213,23 @@ function exists_customer_trans($type, $type_no)
 	return (db_num_rows($result) > 0);
 }
 
+
+function check_cnc_delivered($cnc_voucherno)
+{
+	$sql = "SELECT trans_no FROM ".TB_PREF."debtor_trans";
+	$sql .= " WHERE type=".ST_CUSTDELIVERY; 
+	$sql .= " AND reference = (SELECT trip_id FROM trip_vouchers WHERE id = ". db_escape($cnc_voucherno).")";
+
+	$result = db_query($sql, "Cannot retreive a debtor transaction");
+	$row = db_fetch($result);
+
+	if(db_num_rows($result) > 0)
+		return  $row[0];
+	else
+		return false;
+}
+
+
 //----------------------------------------------------------------------------------------
 
 // retreives the related sales order for a given trans
