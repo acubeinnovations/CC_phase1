@@ -80,7 +80,6 @@ function get_cnc_voucher($id = 0)
 		trip.pick_up_city AS from_city,
 		trip.drop_city AS to_city,
 		trip.pick_up_date,
-		voucher.delivery_no,
 		voucher.driver_bata,
 		voucher.id as voucher_no,
 		voucher.voucher_no as voucher_str,
