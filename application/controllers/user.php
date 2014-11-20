@@ -1187,12 +1187,20 @@ if(isset($where_arry) || isset($like_arry)){
 			//trip details
 		
 			if($param2!=''){
-			
-			$data['trips']=$this->trip_booking_model->getDriverVouchers($param2);
+			$data['id']=$param2;
+			$fdate='';
+			$tdate=''; 
+			if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['date_search'])){
+			echo "hi";exit;
+			$fdate=$_REQUEST['from_pick_date'];
+			$tdate=$_REQUEST['to_pick_date'];
+			}
+			$data['trips']=$this->trip_booking_model->getDriverVouchers($param2,$fdate,$tdate);
 			}
 			//print_r($data['trips']);exit;
 			$data['title']='Driver Profile| '.PRODUCT_NAME;
 			$page='user-pages/addDrivers';
+			
 			$data['select']=$this->select_Box_Values();
 			$this->load_templates($page,$data);
 		

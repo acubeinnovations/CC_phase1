@@ -392,6 +392,15 @@ $this->mysession->delete('post');
 	   <fieldset class="body-border">
 		<legend class="body-head">Trip</legend><div class="form-group">
 	<div class="box-body table-responsive no-padding">
+				<?php echo form_open(base_url()."organization/front-desk/driver-profile/".$id); ?>
+	<table>
+	<td><?php echo form_input(array('name'=>'from_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'From Date','value'=>'')); ?></td>
+	<td><?php echo form_input(array('name'=>'to_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'To Date','value'=>'')); ?></td>
+	<td><?php echo form_submit("date_search","Search","class='btn btn-primary'");
+				echo form_close();?></td>
+	</table>
+			
+			
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr style="background:#CCC">
