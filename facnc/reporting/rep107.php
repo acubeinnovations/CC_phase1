@@ -30,7 +30,7 @@ print_invoices();
 
 function get_trip($voucher = 0)
 {
-	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount";
+	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str";
 	$sql .= " FROM trip_vouchers voucher";
 	$sql .= " LEFT JOIN trips trip ON trip.id = voucher.trip_id";
 	$sql .= " LEFT JOIN vehicles vehicle ON trip.vehicle_id = vehicle.id";
@@ -130,7 +130,7 @@ function print_invoices()
 				$trip = get_trip($myrow2['trip_voucher']);
 				
 				$rep->TextCol(0, 1,  $slno);
-				$rep->TextCol(1, 2,  @$trip['voucher_no']);
+				$rep->TextCol(1, 2,  @$trip['voucher_str']);
 				$rep->TextCol(2, 3,  @$trip['trip_date']);
 				$rep->TextCol(3, 4,  @$trip['vehicle_no']);
 				$rep->TextCol(4, 5,  "OFFICER");
