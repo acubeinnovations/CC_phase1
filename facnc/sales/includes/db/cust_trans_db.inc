@@ -312,7 +312,7 @@ function get_sql_for_trip_invoices()
 		trip.pick_up_date,
 		trans.tran_date, 
 		(trans.ov_amount + trans.ov_gst + trans.ov_freight 
-			+ trans.ov_freight_tax + trans.ov_discount)	AS TotalAmount, "; 
+			+ trans.ov_freight_tax + trans.ov_discount)	AS TotalAmount,trans.type,"; 
    	if ($_POST['filterType'] != ALL_TEXT)
 		$sql .= "@bal := @bal+(trans.ov_amount + trans.ov_gst + trans.ov_freight + trans.ov_freight_tax + trans.ov_discount), ";
 

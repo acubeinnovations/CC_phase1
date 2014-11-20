@@ -244,8 +244,7 @@ if($_POST['filterType'] == 1){
 	_("Trip Date") => array('type'=>'date', 'ord'=>''),
 	_("Invoice Date") => array('type'=>'date', 'ord'=>''),
 	_("Amount") => array('type'=>'amount', 'ord'=>''),
-
-		array('insert'=>true, 'fun'=>'credit_link'),
+		array('insert'=>true, 'fun'=>'credit_link'),	
 		array('insert'=>true, 'fun'=>'prt_link')
 	);
 }else{
