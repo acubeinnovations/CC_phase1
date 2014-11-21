@@ -70,7 +70,7 @@ $trip_sl_no=$page;
 					     <td><?php $class="form-control";
 							  $id='cgroups';
 						echo $this->form_functions->populate_dropdown('cgroups',$customer_groups,$customer_group_id,$class,$id,$msg="Select Customer Group");?></td>
-						<td><?php echo form_input(array('name'=>'customer','class'=>'customer form-control' ,'placeholder'=>'Customer name','value'=>$customer_name)); ?></td>
+						<td><?php echo form_input(array('name'=>'customer','class'=>'customer form-control' ,'placeholder'=>'Customer name','value'=>$customer_name,'id'=>'c_name')); ?></td>
 						<td><?php echo form_submit("trip_search","Search","class='btn btn-primary'");
 echo form_close();?></td>
 					<td><?php echo form_button('print-trip','Print',"class='btn btn-primary print-trip'"); ?></td>
