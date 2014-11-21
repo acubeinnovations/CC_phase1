@@ -735,6 +735,7 @@ var mobile=$('#guestmobile').val();
 	mobile:mobile,
 	c_group:c_group
 	},function(data){
+	
 	if(data!=true){
 	
 	}else{
@@ -1750,6 +1751,44 @@ function set_tarif_row_with_daysno(days=1)
 	}
 }
 
+//get customer_group value
+$('#customer-group').on('change',function(){
+	var c_group_val=$('#customer-group').val(); 
+	if(c_group_val!=-1){
+	$.post(base_url+'/customers/CustomersById',{
+	c_group_val:c_group_val 
+	},function(data){
+	//alert(data);
+	if(data!='false'){ 
+			data=jQuery.parseJSON(data);
+			 $('#customer-list').html("<option value='-1'>Select Customers </option>");
+			i=0;
+			for(var i=0;i<data.length;i++){ 
+			  $('#customer-list').append($("<option mobile="+data[i].mobile+"></option>").attr("value",data[i].id).text(data[i].name));
+			  
+			  $('#customer-list').css('display','block');
+			  
+			}
+			
+		}
+			
+	});
+
+}else{
+$('#customer-list').css('display','none');	
+}
+			$('#mobile').val('');
+			$('#email').val('');
+			$('#customer').val('');	
+});
+$('#customer-list').on('change',function(){
+$('#mobile').val('');
+$('#email').val('');
+$('#customer').val('');
+$('#mobile').val($('#customer-list option:selected').attr('mobile'));
+$('#mobile').trigger('click');
+$('#customer-list').css('display','none');
+});
 //calculate total hrs readming
 $('.tripendingtime').blur(function(e) {
 	var start = $('.tripstartingtime').val();

@@ -1,4 +1,5 @@
  <?php
+
  $driver_id=gINVALID;
 	$name='';
 	$place_of_birth='';
@@ -122,16 +123,84 @@ $this->mysession->delete('post');
 		<legend class="body-head">Manage Drivers</legend>
 	<div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
+		<?php 
+	if(isset($insurance_tab)){
+	$ins_class=$insurance_tab;
+	$i_tab="tab-pane active";
+	}
+	else{
+	$ins_class='';
+	$i_tab="tab-pane ";
+	}
+	if(isset($trip_tab)){
+	$trip_class=$trip_tab;
+	$t_tab="tab-pane active";
+	}
+	else{
+	$trip_class='';
+	$t_tab="tab-pane ";
+	}
+	if(isset($driver_tab)){
+	$driver_class=$driver_tab;
+	$d_tab="tab-pane active";
+	}
+	else{
+	$driver_class='';
+	$d_tab="tab-pane";
+	}
+	if(isset($loan_tab)){
+	$loan_class=$loan_tab;
+	$l_tab="tab-pane active";
+	}
+	else{
+	$loan_class='';
+	$l_tab="tab-pane ";
+	}
+	if(isset($owner_tab)){
+	$owner_class=$owner_tab;
+	$o_tab="tab-pane active";
+	}
+	else{
+	$owner_class='';
+	$o_tab="tab-pane ";
+	}
+	if(isset($trip_tab)){
+	$trip_class=$trip_tab;
+	$t_tab="tab-pane active";
+	$d_tab="tab-pane";
+	$driver_class='';
+	}
+	else{
+	$trip_class='';
+	$t_tab="tab-pane ";
+	}
+	if(isset($pay_tab)){
+	$pay_class=$pay_tab;
+	$p_tab="tab-pane active";
+	}
+	else{
+	$pay_class='';
+	$p_tab="tab-pane ";
+	}
+	if(isset($acc_tab)){
+	$acc_class=$acc_tab;
+	$a_tab="tab-pane active";
+	}
+	else{
+	$acc_class='';
+	$a_tab="tab-pane ";
+	}
+	?>
+        <li class="<?php echo $driver_class;?>"><a href="#tab_1" data-toggle="tab">Profile</a></li>
 	 <?php if(isset($mode)&& $mode!='' ){?>
-        <li class=""><a href="#tab_2" data-toggle="tab">Trip</a></li>
+        <li class="<?php echo $trip_class;?>"><a href="#tab_2" data-toggle="tab">Trip</a></li>
          <li class=""><a href="#tab_3" data-toggle="tab">Payments</a></li>
        <li class=""><a href="#tab_4" data-toggle="tab">Accounts</a></li>
 	   <?php }?>
     </ul>
     <div class="tab-content">
         
-        <div class="tab-pane active" id="tab_1">
+        <div class="<?php echo $d_tab;?>" id="tab_1">
 
        
 			 <div class="width-30-percent-with-margin-left-20-Driver-View">
@@ -387,11 +456,23 @@ $this->mysession->delete('post');
 
 </div>	
         </div>
-		<div class="tab-pane" id="tab_2">
+		
+		
+		<div class="<?php echo $t_tab;?>" id="tab_2">
            <div class="page-outer">
 	   <fieldset class="body-border">
 		<legend class="body-head">Trip</legend><div class="form-group">
 	<div class="box-body table-responsive no-padding">
+	
+				<?php  echo form_open(base_url()."organization/front-desk/driver-profile/".$d_id); ?>
+	<table>
+	<td><?php echo form_input(array('name'=>'from_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'From Date','value'=>'')); ?></td>
+	<td><?php echo form_input(array('name'=>'to_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'To Date','value'=>'')); ?></td>
+	<td><?php echo form_submit("date_search","Search","class='btn btn-primary'");
+				echo form_close();?></td>
+	</table>
+			
+			
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr style="background:#CCC">
@@ -416,6 +497,7 @@ $this->mysession->delete('post');
 						$repeated_dates=array();					
 						$tot_nod=$full_tot_km=$tot_parking=$tot_toll=$tot_state_tax=$tot_over_time=$tot_night_halt=$tot_extra=$tot_fuel_extra=$tot_trip_amount= $tth=$ttp=$tto=$dbh=$dbp=$dbo=$i=0;
 					if(isset($trips) && $trips!=false){
+					
 					
 					
 						

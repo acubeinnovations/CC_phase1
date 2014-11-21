@@ -24,6 +24,8 @@ class Customers extends CI_Controller {
 				
 		}else if($param1=='importToFa'){
 		 $this->importToFa();
+		}else if($param1=='CustomersById'){
+		 $this->CustomersById();
 		}
 		else{
 
@@ -220,5 +222,16 @@ class Customers extends CI_Controller {
 	$this->session->set_userdata($session_data);
 	
 	}
+	public function CustomersById(){
+
+	$cg_id=$_REQUEST['c_group_val'];
+	$cust_id=$this->customers_model->getCustomersbyId($cg_id); 
+	if(count($cust_id)>0){
+	echo json_encode($cust_id);
+	}else{
+	echo 'false';
+	}
 	
+	
+	}
 }

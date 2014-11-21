@@ -665,3 +665,6 @@ width:2% !important;
 	background-color: #DFF0D8;
     border-color: #B0EDCD;
 }
+#customer-list{
+display:none;
+}

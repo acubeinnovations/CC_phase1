@@ -97,5 +97,12 @@ class Customers_model extends CI_Model {
 	
 	
 	}
+	public function getCustomersById($c_id){
+	$qry='select id,name,mobile,email from customers where customer_group_id='.$c_id.' and organisation_id='.$this->session->userdata('organisation_id');
+	$result=$this->db->query($qry);
+	$result=$result->result_array();
+	return $result;
+	
+	}
 }
 ?>
