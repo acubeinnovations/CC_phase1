@@ -139,7 +139,7 @@ function trip_ids($row){
 		}
 		return implode(",",$trip_ids);
 	}else{
-		return "n";
+		return "";
 	}
 }
 function vouchers($row){
@@ -151,7 +151,24 @@ function vouchers($row){
 		}
 		return implode(",",$voucher_ids);
 	}else{
-		return "n";
+		return "";
+	}
+}
+function trip_date($row){
+	$result = get_cnc_trans_details($row['trans_no'],$row['type']);
+
+	if(db_num_rows($result) > 0){
+		while($voucher = db_fetch_assoc($result)){
+			$trip_date[] = sql2date($voucher['trip_date']);
+		}
+		$num = count($trip_date);
+		if($num == 1){
+			return implode(",",$trip_date);
+		}else{
+			return $trip_date[0]." - ".$trip_date[$num-1];
+		}
+	}else{
+		return "";
 	}
 }
 
@@ -266,7 +283,7 @@ if($_POST['filterType'] == 1){
 	_("Company"),
 	_("Trip(s)") => array('fun'=>'trip_ids', 'ord'=>''),
 	_("Voucher(s)") => array('fun'=>'vouchers', 'ord'=>''), 
-	_("Trip Date") => array('type'=>'date', 'ord'=>''),
+	_("Trip Date") => array('fun'=>'trip_date','ord'=>''),
 	_("Invoice Date") => array('type'=>'date', 'ord'=>''),
 	_("Amount") => array('type'=>'amount', 'ord'=>''),
 		array('insert'=>true, 'fun'=>'credit_link'),	
