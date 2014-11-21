@@ -250,7 +250,7 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 		//echo $this->input->get('age');
 		
 			
-			if((isset($_REQUEST['pickupdate']) || isset($_REQUEST['dropdate']) || isset($_REQUEST['vehicles'])|| isset($_REQUEST['drivers'])|| isset($_REQUEST['trip_status']))){
+			if((isset($_REQUEST['pickupdate']) || isset($_REQUEST['dropdate']) || isset($_REQUEST['vehicles'])|| isset($_REQUEST['drivers'])|| isset($_REQUEST['trip_status']) || isset($_REQUEST['cgroups']) || isset($_REQUEST['c_name']))){
 				$qry='SELECT VO.name as ownership,T.customer_id,T.customer_group_id,T.vehicle_model_id,T.driver_id,T.vehicle_id,T.guest_id,V.vehicle_ownership_types_id,T.tariff_id,T.trip_status_id,T.id as trip_id,T.booking_date,T.drop_date,T.drop_time,T.pick_up_date,T.pick_up_time,VM.name as model,V.registration_number,T.pick_up_city,T.pick_up_area,G.name as guest_name,G.mobile as guest_info,T.drop_city,T.drop_area,C.name as customer_name,C.mobile as customer_mobile,CG.name as customer_group,D.name as driver,D.mobile as driver_info FROM trips T LEFT JOIN vehicle_models VM ON VM.id=T.vehicle_model_id LEFT JOIN vehicles V ON V.id=T.vehicle_id LEFT JOIN customers G ON G.id=T.guest_id LEFT JOIN customers C ON C.id=T.customer_id LEFT JOIN customer_groups CG ON CG.id=T.customer_group_id LEFT JOIN drivers D ON D.id=T.driver_id LEFT JOIN vehicle_ownership_types VO ON V.vehicle_ownership_types_id=VO.id where T.organisation_id='.$this->session->userdata('organisation_id');
 				
 				if(isset($_REQUEST['pickupdate']) && isset($_REQUEST['dropdate'])){
@@ -260,7 +260,7 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 				}else if(isset($_REQUEST['pickupdate'])){
 				
 				//$qry.=' AND T.pick_up_date ="'.$_REQUEST['pickupdate'].'"';
-				$qry.=' AND (T.pick_up_date="'.$_REQUEST['pickupdate'].'" OR T.drop_date="'.$_REQUEST['pickupdate'].'") OR ((T.pick_up_date <= "'.$_REQUEST['pickupdate'].'" AND T.drop_date >= "'.$_REQUEST['pickupdate'].'"))';
+				$qry.=' AND (T.pick_up_date="'.$_REQUEST['pickupdate'].'" OR T.drop_date="'.$_REQUEST['pickupdate'].'")';
 				
 				}else if(isset($_REQUEST['dropdate'])){
 				
@@ -281,6 +281,17 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 					
 					$qry.=' AND T.trip_status_id ="'.$_REQUEST['trip_status'].'"';
 				
+					
+				}
+				if(isset($_REQUEST['cgroups']) && $_REQUEST['cgroups']!=gINVALID){
+					
+					$qry.=' AND T.customer_group_id ="'.$_REQUEST['cgroups'].'"';
+				
+					
+				}
+				if(isset($_REQUEST['c_name']) && $_REQUEST['c_name']!=gINVALID){
+					
+					$qry.=' And C.name Like "%'.$_REQUEST['c_name'].'%"';
 					
 				}
 		

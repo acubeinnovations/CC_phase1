@@ -93,10 +93,12 @@ var pickupdatepicker=$('.pickupdatepicker').val();
 var dropdatepicker=$('.dropdatepicker').val();
 var vehicles=$('#vehicles').val();
 var drivers=$('#drivers').val();
-var trip_status=$('#trip-status').val();
+var trip_status=$('#trip-status').val(); 
+var cgroups=$('#cgroups').val();
+var c_name=$('#c_name').val();
 var url=base_url+'/organization/front-desk/download_xl/trips?';
 
-if(pickupdatepicker!='' || dropdatepicker!='' || vehicles!='-1' || drivers!='-1' || trip_status!='-1' ){
+if(pickupdatepicker!='' || dropdatepicker!='' || vehicles!='-1' || drivers!='-1' || trip_status!='-1' || cgroups!='-1' || c_name!='' ){
 if(pickupdatepicker!=''){
 url=url+'pickupdate='+pickupdatepicker;
 
@@ -115,6 +117,14 @@ url=url+'&drivers='+drivers;
 }
 if(trip_status!='-1'){
 url=url+'&trip_status='+trip_status;
+
+}
+if(cgroups!='-1'){
+url=url+'&cgroups='+cgroups;
+
+}
+if(c_name!='-1'){
+url=url+'&c_name='+c_name;
 
 }
 
