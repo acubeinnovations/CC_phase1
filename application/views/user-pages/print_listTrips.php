@@ -7,7 +7,10 @@ header("Pragma: public");
 ?>
 			<table class="table table-hover table-bordered">
 				<tbody>
-					<tr>	
+					<tr><?php if(isset($msg)){
+					echo 'No Results Found';
+					}
+					else {?>	
 						
 					    <th style="width:2%">Trip ID </th>
 					    <th style="width:4%">Booking Date</th>
@@ -32,6 +35,7 @@ header("Pragma: public");
 					    <th style="width:11%">Status</th>
 					    
 					</tr>
+				
 					<?php
 					
 					
@@ -105,6 +109,7 @@ header("Pragma: public");
 					
 					</tr>
 					<?php 
+						}
 						
 						}
 					?>
