@@ -228,12 +228,29 @@ function check_overdue($row)
 		&& floatcmp($row["TotalAmount"], $row["Allocated"]) != 0;
 }
 //------------------------------------------------------------------------------------------------
-$sql = get_sql_for_customer_inquiry();
+
 
 //------------------------------------------------------------------------------------------------
 db_query("set @bal:=0");
 
-$cols = array(
+
+if($_POST['filterType'] == 1){
+	$sql = get_sql_for_trip_invoices();
+	$cols = array(
+	_("Invoice ID"),
+	_("Company"),
+	_("Trip(s)"), 
+	_("Voucher(s)"), 
+	_("Trip Date") => array('type'=>'date', 'ord'=>''),
+	_("Invoice Date") => array('type'=>'date', 'ord'=>''),
+	_("Amount") => array('type'=>'amount', 'ord'=>''),
+		array('insert'=>true, 'fun'=>'credit_link'),	
+		array('insert'=>true, 'fun'=>'prt_link')
+	);
+}else{
+	$sql = get_sql_for_customer_inquiry();
+
+	$cols = array(
 	_("Type") => array('fun'=>'systype_name', 'ord'=>''),
 	_("#") => array('fun'=>'trans_view', 'ord'=>''),
 	_("Order") => array('fun'=>'order_view'), 
@@ -253,12 +270,15 @@ $cols = array(
 	);
 
 
-if ($_POST['customer_id'] != ALL_TEXT) {
-	$cols[_("Customer")] = 'skip';
-	$cols[_("Currency")] = 'skip';
+	if ($_POST['customer_id'] != ALL_TEXT) {
+		$cols[_("Customer")] = 'skip';
+		$cols[_("Currency")] = 'skip';
+	}
+	if ($_POST['filterType'] == ALL_TEXT)
+		$cols[_("RB")] = 'skip';
 }
-if ($_POST['filterType'] == ALL_TEXT)
-	$cols[_("RB")] = 'skip';
+
+
 
 $table =& new_db_pager('trans_tbl', $sql, $cols);
 $table->set_marker('check_overdue', _("Marked items are overdue."));

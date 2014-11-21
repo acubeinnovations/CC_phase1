@@ -75,6 +75,7 @@ class cart
 
 	//cnc
 	var $trip_ref;
+	var $trip_voucher;
 
 	
 	
@@ -91,7 +92,9 @@ class cart
 	//  $trans_no!=0 && $prep_child==false => update with parent constarints for reedition
 	//  $trans_no!=0 && $prep_child==true => prepare for child doc entry
 	//
-	function Cart($type, $trans_no=0, $prep_child=false) {
+	function Cart($type, $trans_no=0, $prep_child=false, $trip_voucher = 0) {
+
+		$this->trip_voucher = $trip_voucher;
 		/*Constructor function initialises a new shopping cart */
 		$this->line_items = array();
 		$this->sales_type = "";

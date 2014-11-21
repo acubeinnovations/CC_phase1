@@ -110,6 +110,8 @@ if (isset($_GET['OrderNumber']) && $_GET['OrderNumber'] > 0) {
 	//$_SESSION['Items'] = new Cart(ST_CUSTDELIVERY, $_GET['ModifyDelivery']);
 	$_SESSION['Items'] = new Cart(ST_CUSTDELIVERY, $dn);
 
+	$_SESSION['Items']->trip_voucher = $_GET['ModifyDelivery'];
+
 	//echo "<pre>";
 	//print_r($_SESSION['Items']);
 	//echo "</pre>";

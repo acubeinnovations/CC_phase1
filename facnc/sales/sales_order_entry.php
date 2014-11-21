@@ -28,7 +28,7 @@ include_once($path_to_root . "/sales/includes/ui/sales_order_ui.inc");
 include_once($path_to_root . "/sales/includes/sales_db.inc");
 include_once($path_to_root . "/sales/includes/db/sales_types_db.inc");
 include_once($path_to_root . "/reporting/includes/reporting.inc");
-include_once($path_to_root . "/includes/db/cnc_session_db.inc");
+
 
 
 
@@ -67,7 +67,7 @@ if ($use_date_picker) {
 if (isset($_GET['NewDelivery']) && is_numeric($_GET['NewDelivery'])) {
 
 	$_SESSION['page_title'] = _($help_context = "Delivery Note");
-	create_cart(ST_CUSTDELIVERY, 0);
+	create_cart(ST_CUSTDELIVERY, 0,$_GET['NewDelivery']);
 
 } elseif (isset($_GET['NewInvoice']) && is_numeric($_GET['NewInvoice'])) {
 
@@ -437,6 +437,9 @@ function can_process() {
 }
 
 //-----------------------------------------------------------------------------
+	//echo "<pre>";
+	//print_r($_SESSION['Items']);
+	//echo "</pre>";exit;
 
 if (isset($_POST['update'])) {
 	copy_to_cart();
@@ -641,7 +644,7 @@ function  handle_cancel_order()
 
 //--------------------------------------------------------------------------------
 
-function create_cart($type, $trans_no)
+function create_cart($type, $trans_no,$trip_voucher=0)
 { 
 	global $Refs;
 
@@ -679,8 +682,10 @@ function create_cart($type, $trans_no)
 			$doc->line_items[$line_no]->qty_done = 0;
 		}
 		$_SESSION['Items'] = $doc;
-	} else
-		$_SESSION['Items'] = new Cart($type, array($trans_no));
+	} else{
+		$_SESSION['Items'] = new Cart($type, array($trans_no),false,$trip_voucher);
+		
+	}
 	copy_from_cart();
 }
 
@@ -740,6 +745,7 @@ start_form();
 //cnc code----------------------
 $cnc_voucher = false;
 if(isset($_GET['NewDelivery']) && $_GET['NewDelivery'] > 0){
+
 	$cnc_voucher = get_cnc_voucher($_GET['NewDelivery']);
 	
 	if($cnc_voucher['group_id'] > 0){
@@ -759,6 +765,7 @@ if(isset($_GET['NewDelivery']) && $_GET['NewDelivery'] > 0){
 	
 
 	//------------trip item code -> 101---------------------------
+	$_SESSION['Items']->trip_voucher = $cnc_voucher['voucher_no'];
 	$amt = 0;
 	
 	$amt = $cnc_voucher['amount']+$cnc_voucher['driver_batta'];

@@ -115,15 +115,20 @@ if ( (isset($_GET['DeliveryNumber']) && ($_GET['DeliveryNumber'] > 0) )
 
 	processing_start();
 
+
 	if (isset($_GET['BatchInvoice'])) {
 		$src = $_SESSION['DeliveryBatch'];
+		$trip_voucher = $_SESSION['TripVoucherBatch'];
 		unset($_SESSION['DeliveryBatch']);
+		unset($_SESSION['TripVoucherBatch']);
 	} else {
 		$src = array($_GET['DeliveryNumber']);
+		$trip_voucher = get_trip_voucher_id_with_delivery_no($_GET['DeliveryNumber']);
+		
 	}
 
 	/*read in all the selected deliveries into the Items cart  */
-	$dn = new Cart(ST_CUSTDELIVERY, $src, true);
+	$dn = new Cart(ST_CUSTDELIVERY, $src, true,$trip_voucher);
 
 	if ($dn->count_items() == 0) {
 		hyperlink_params($path_to_root . "/sales/inquiry/sales_deliveries_view.php",
@@ -372,6 +377,10 @@ for ($line_no = 0; $line_no < count($_SESSION['Items']->line_items); $line_no++)
 $dspans[] = $spanlen;
 
 //-----------------------------------------------------------------------------
+//echo "<pre>";
+//print_r($_SESSION['Items']);
+//echo "</pre>";
+//exit;
 
 $is_batch_invoice = count($_SESSION['Items']->src_docs) > 1;
 

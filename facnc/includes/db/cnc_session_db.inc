@@ -146,4 +146,19 @@ function get_cnc_supplier_id($ref = '')
 	return $row['supplier_id'];
 }
 
+function get_trip_voucher_id_with_delivery_no($delivery_no){
+	$sql = "SELECT v.id FROM trip_vouchers v,".TB_PREF."debtor_trans dt 
+		WHERE dt.trans_no = ".db_escape($delivery_no)."
+		AND dt.type=".ST_CUSTDELIVERY." AND v.trip_id = dt.reference";
+	
+	$result = db_query($sql, "could not get voucher");
+	$row = db_fetch_row($result);
+
+	return $row[0];
+}
+
+
+
+
+
 ?>
