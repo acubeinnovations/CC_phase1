@@ -1546,8 +1546,14 @@ $('.voucher').on('click',function(){
 				
 				
 				}
-
-				
+	
+				//---------check invoiced voucher or not-----------------
+				if(data[0].invoice_no > 0){
+					$(".trip-voucher-save").hide();
+				}else{
+					$(".trip-voucher-save").show();
+				}
+				//-------------------------------------------------------
 				
 				$('.daysno').val(data[0].no_of_days);
 				set_tarif_row_with_daysno(data[0].no_of_days);

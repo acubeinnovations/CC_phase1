@@ -28,5 +28,7 @@ ALTER TABLE `trip_vouchers`  ADD `voucher_no` INT(11) NOT NULL,  ADD `km_hr` TIN
 /*20-Nov-2014*/
 ALTER TABLE `trip_vouchers` ADD `delivery_no` INT( 11 ) NOT NULL COMMENT 'fa delivery number',
 ADD `invoice_no` INT( 11 ) NOT NULL COMMENT 'fa invoice no',
-ADD INDEX ( `delivery_no` , `invoice_no` ) 
+ADD INDEX ( `delivery_no` , `invoice_no` ) ;
+
+
 
