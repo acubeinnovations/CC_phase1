@@ -13,6 +13,14 @@
 	$ins_class='';
 	$i_tab="tab-pane ";
 	}
+	if(isset($trip_tab)){
+	$trip_class=$trip_tab;
+	$t_tab="tab-pane active";
+	}
+	else{
+	$trip_class='';
+	$t_tab="tab-pane ";
+	}
 	if(isset($vehicle_tab)){
 	$vehicle_class=$vehicle_tab;
 	$v_tab="tab-pane active";
@@ -37,7 +45,32 @@
 	$owner_class='';
 	$o_tab="tab-pane ";
 	}
-	
+	if(isset($trip_tab)){
+	$trip_class=$trip_tab;
+	$t_tab="tab-pane active";
+	$v_tab="tab-pane";
+	$vehicle_class='';
+	}
+	else{
+	$trip_class='';
+	$t_tab="tab-pane ";
+	}
+	if(isset($pay_tab)){
+	$pay_class=$pay_tab;
+	$p_tab="tab-pane active";
+	}
+	else{
+	$pay_class='';
+	$p_tab="tab-pane ";
+	}
+	if(isset($acc_tab)){
+	$acc_class=$acc_tab;
+	$a_tab="tab-pane active";
+	}
+	else{
+	$acc_class='';
+	$a_tab="tab-pane ";
+	}
 	?>
 	
         <li class="<?php echo $vehicle_class;?>"><a href="#tab_1" data-toggle="tab">Vehicle </a></li>
@@ -45,9 +78,9 @@
          <li class="<?php echo $loan_class;?>"><a href="#tab_3" data-toggle="tab">Loan </a></li>
 		  <li class="<?php echo $owner_class;?>"><a href="#tab_4" data-toggle="tab">Owner </a></li>
 		  <?php if(isset($mode)&& $mode!='' ){?>
-        <li class="<?php echo $owner_class;?>"><a href="#tab_5" data-toggle="tab">Trip </a></li>
-		 <li class="<?php echo $owner_class;?>"><a href="#tab_6" data-toggle="tab">Payments </a></li>
-		  <li class="<?php echo $owner_class;?>"><a href="#tab_7" data-toggle="tab">Accounts</a></li>
+        <li class="<?php echo $trip_class;?>"><a href="#tab_5" data-toggle="tab">Trip </a></li>
+		 <li class="<?php echo $pay_class='';?>"><a href="#tab_6" data-toggle="tab">Payments </a></li>
+		  <li class="<?php echo $acc_class='';?>"><a href="#tab_7" data-toggle="tab">Accounts</a></li>
 		  <?php }?>
     </ul>
     <div class="tab-content">
@@ -898,15 +931,20 @@ if($this->mysession->get('owner_post_all')!=null ){
 			
 			</div>
 		</div>
-				
-				<div class="tab-pane" id="tab_5">
+			<?php echo form_close();?>	
+				<div class="<?php echo $t_tab;?>" id="tab_5">
 					<?php //trip in vehicles ?>
 						            <div class="page-outer">
 	   <fieldset class="body-border">
 		<legend class="body-head">Trip</legend><div class="form-group">
-	<div class="box-body table-responsive no-padding">
-	
-			<table class="table table-hover table-bordered">
+	<div class="box-body table-responsive no-padding"> 
+	<?php  echo form_open(base_url()."organization/front-desk/vehicle/".$ve_id); ?>
+	<table>
+	<td><?php echo form_input(array('name'=>'from_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'From Date','value'=>'')); ?></td>
+	<td><?php echo form_input(array('name'=>'to_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'To Date','value'=>'')); ?></td>
+	<td><?php echo form_submit("vdate_search","Search","class='btn btn-primary'");
+				echo form_close();?></td>
+	</table>			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr style="background:#CCC">
 						<th>Trip Id</th>
@@ -994,7 +1032,7 @@ if($this->mysession->get('owner_post_all')!=null ){
 					?>
 				</tbody>
 			</table><?php //echo $page_links;?>
-			
+			<?php if(!empty($trips)){?>
 			<table class="table table-hover table-bordered">
 				<tbody>
 				
@@ -1017,6 +1055,7 @@ if($this->mysession->get('owner_post_all')!=null ){
 					<tr><td>NET Transfer</td><td><?php echo form_input(array('name'=>'transfer_date','class'=>'form-control','id'=>'transfer_date','size'=>'3')); ?></td><td><?php echo $net=$bal-$tds;?></td></tr>
 				</tbody>
 			</table>
+			<?php  }?>
 			
 		</div>
 </div>
@@ -1047,6 +1086,6 @@ if($this->mysession->get('owner_post_all')!=null ){
 </div>
 		
 
-<?php echo form_close();?>
+
 </fieldset>
 </div>

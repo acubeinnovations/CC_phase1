@@ -28,6 +28,12 @@ $vehicle_id='';
 if(!isset($trip_status_id)){
 $trip_status_id='';
 }
+if(!isset($customer_group_id)){
+$customer_group_id='';
+}
+if(!isset($customer_name)){
+$customer_name='';
+}
 $page=$this->uri->segment(4);
 if($page==''){
 $trip_sl_no=1;
@@ -49,7 +55,7 @@ $trip_sl_no=$page;
 			<table class="table list-trip-table no-border">
 				<tbody>
 					<tr>
-						<!--<td><?php echo form_input(array('name'=>'customer','class'=>'customer form-control' ,'placeholder'=>'Customer name','value'=>$customer)); ?></td>-->
+						<!---->
 					    <td><?php echo form_input(array('name'=>'trip_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'Pick up Date','value'=>$trip_pick_date)); ?></td>
 					    <td><?php  echo form_input(array('name'=>'trip_drop_date','class'=>'dropdatepicker initialize-date-picker form-control' ,'placeholder'=>'Drop Date','value'=>$trip_drop_date)); ?></td>
 						 <td><?php $class="form-control";
@@ -61,7 +67,11 @@ $trip_sl_no=$page;
 						<td><?php $class="form-control";
 							  $id='trip-status';
 						echo $this->form_functions->populate_dropdown('trip_status_id',$trip_statuses,$trip_status_id,$class,$id,$msg="Select Trip Status");?></td>
-					    <td><?php echo form_submit("trip_search","Search","class='btn btn-primary'");
+					     <td><?php $class="form-control";
+							  $id='cgroups';
+						echo $this->form_functions->populate_dropdown('cgroups',$customer_groups,$customer_group_id,$class,$id,$msg="Select Customer Group");?></td>
+						<td><?php echo form_input(array('name'=>'customer','class'=>'customer form-control' ,'placeholder'=>'Customer name','value'=>$customer_name)); ?></td>
+						<td><?php echo form_submit("trip_search","Search","class='btn btn-primary'");
 echo form_close();?></td>
 					<td><?php echo form_button('print-trip','Print',"class='btn btn-primary print-trip'"); ?></td>
 						

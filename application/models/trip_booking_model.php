@@ -152,24 +152,19 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 
 	}
 
-	function getDriverVouchers($driver_id,$fpdate,$tpdate){
-			$tdate=date('Y-m-d');
-			$date=explode("-",$tdate);
-			$fdate='2014-'.$date[1].'-01';
-			$todate='2014-'.$date[1].'-31';
+	function getDriverVouchers($driver_id,$fpdate='',$tpdate=''){ 
 			
-			if($fpdate!=null && $tpdate!=null){
-				$fdate=$fpdate;
-				$todate=$tpdate;
-				
-			}
-			
-		$qry='SELECT TV.trip_id,TV.driver_bata,TV.vehicle_tarif,TV.voucher_no,V.registration_number,VT.name as v_type,TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id LEFT JOIN vehicles As V on T.vehicle_id=V.id LEFT JOIN vehicle_types As VT on T.vehicle_type_id=VT.id WHERE TV.organisation_id = '.$this->session->userdata('organisation_id').' AND T.driver_id='.$driver_id.' AND T.pick_up_date BETWEEN '.$fdate.' AND '.$todate ;
-			
+		$qry='SELECT TV.trip_id,TV.driver_bata,TV.vehicle_tarif,TV.voucher_no,V.registration_number,VT.name as v_type,TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON  TV.trip_id =T.id LEFT JOIN vehicles As V on T.vehicle_id=V.id LEFT JOIN vehicle_types As VT on T.vehicle_type_id=VT.id WHERE TV.organisation_id = '.$this->session->userdata('organisation_id').' AND T.driver_id='.$driver_id;
+		if($fpdate!=null && $tpdate!=null){ 
+		$qry.=' AND T.pick_up_date BETWEEN "'.$fpdate.'" AND "'.$tpdate .'"';
+				}
+		if($fpdate!=null && $tpdate==null){
+		$qry.=' AND T.pick_up_date= "'.$fpdate.'"';
+				}
 	$result=$this->db->query($qry);
 	$result=$result->result_array();
 	if(count($result)>0){
-	return $result;
+	return $result; 
 	}else{
 	return false;
 	}
@@ -177,10 +172,16 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 	}
 
 	
-	function getVehicleVouchers($vehicle_id){
-$qry='SELECT C.name as customer,CG.name as company, TV.trip_starting_time,TV.trip_ending_time,TV.vehicle_tarif,TV.voucher_no,TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON TV.trip_id =T.id LEFT JOIN customers AS C ON T.customer_id=C.id LEFT JOIN customer_groups AS CG ON T.customer_group_id=CG.id WHERE TV.organisation_id = '.$this->session->userdata('organisation_id').' AND T.vehicle_id='.$vehicle_id;
+	function getVehicleVouchers($vehicle_id,$fpdate='',$tpdate=''){
+	$qry='SELECT C.name as customer,CG.name as company, TV.trip_starting_time,TV.trip_ending_time,TV.vehicle_tarif,TV.voucher_no,TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_km_reading,TV.releasing_place,TV.parking_fees,TV.toll_fees,TV.state_tax,TV.night_halt_charges,TV.fuel_extra_charges, T.id,T.pick_up_city,T.drop_city,T.pick_up_date,T.pick_up_time,T.drop_date,T.drop_time,T.tariff_id FROM trip_vouchers AS TV LEFT JOIN trips AS T ON TV.trip_id =T.id LEFT JOIN customers AS C ON T.customer_id=C.id LEFT JOIN customer_groups AS CG ON T.customer_group_id=CG.id WHERE TV.organisation_id = '.$this->session->userdata('organisation_id').' AND T.vehicle_id='.$vehicle_id;
+		if($fpdate!=null && $tpdate!=null){ 
+		$qry.=' AND T.pick_up_date BETWEEN "'.$fpdate.'" AND "'.$tpdate .'"';
+				}
+		if($fpdate!=null && $tpdate==null){
+		$qry.=' AND T.pick_up_date= "'.$fpdate.'"';
+				}
 	$result=$this->db->query($qry);
-	$result=$result->result_array();
+	$result=$result->result_array();  //print_r($result);exit;
 	if(count($result)>0){
 	return $result;
 	}else{
