@@ -129,6 +129,31 @@ if(get_post('RefreshInquiry'))
 	$Ajax->activate('totals_tbl');
 }
 //------------------------------------------------------------------------------------------------
+function trip_ids($row){
+	$result = get_cnc_trans_details($row['trans_no'],$row['type']);
+
+	if(db_num_rows($result) > 0){
+		
+		while($voucher = db_fetch_assoc($result)){
+			$trip_ids[] = $voucher['trip_id'];
+		}
+		return implode(",",$trip_ids);
+	}else{
+		return "n";
+	}
+}
+function vouchers($row){
+	$result = get_cnc_trans_details($row['trans_no'],$row['type']);
+
+	if(db_num_rows($result) > 0){
+		while($voucher = db_fetch_assoc($result)){
+			$voucher_ids[] = $voucher['trip_voucher'];
+		}
+		return implode(",",$voucher_ids);
+	}else{
+		return "n";
+	}
+}
 
 function systype_name($dummy, $type)
 {
@@ -239,8 +264,8 @@ if($_POST['filterType'] == 1){
 	$cols = array(
 	_("Invoice ID"),
 	_("Company"),
-	_("Trip(s)"), 
-	_("Voucher(s)"), 
+	_("Trip(s)") => array('fun'=>'trip_ids', 'ord'=>''),
+	_("Voucher(s)") => array('fun'=>'vouchers', 'ord'=>''), 
 	_("Trip Date") => array('type'=>'date', 'ord'=>''),
 	_("Invoice Date") => array('type'=>'date', 'ord'=>''),
 	_("Amount") => array('type'=>'amount', 'ord'=>''),
