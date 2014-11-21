@@ -13,12 +13,17 @@
 
 function update_delivery_with_cnc_voucher($delivery)
 {
+
+	//echo "<pre>";
+	//print_r($delivery);
+	//echo "<pre>";exit;
 	$trans_no = key($delivery->trans_no);
 	$type =  $delivery->trans_type;
 	
 	$total = 0;
 	$tax = 0;
 	$total_taxable_amount =0;
+	$comments = '';
 	foreach($delivery->line_items as $line_items){
 		
 
@@ -43,10 +48,19 @@ function update_delivery_with_cnc_voucher($delivery)
 			unit_price = ".db_escape($line_items->price)." WHERE order_no =".db_escape($delivery->order_no);
 
 		
-
 		db_query($sql, 'failed to update line details');
 
+		
+		$comments .= $line_items->particulars;
+
 	}
+
+	$sql = "UPDATE ".TB_PREF. "comments SET  `memo_` = ".db_escape($comments)." 
+		WHERE type = ".db_escape($type)." AND id = ".db_escape($trans_no);
+
+	
+	db_query($sql, 'failed to update comments');
+
 	
 	$sql= "UPDATE ".TB_PREF. "debtor_trans SET ov_amount = ".db_escape($total).",ov_gst = ".db_escape($tax).
 			" WHERE trans_no=".db_escape($trans_no)." AND type=".db_escape($type);

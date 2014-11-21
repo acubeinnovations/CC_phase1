@@ -641,13 +641,15 @@ class line_details
 	{
 	/* Constructor function to add a new LineDetail object with passed params */
 		$cnc_voucher = get_cnc_voucher($trip_voucher);
+		
+
 		if($cnc_voucher){
 			$this->trip_id 		= $cnc_voucher['trip_id'];
 			$this->voucher_no	= $cnc_voucher['voucher_str'];
 			$this->vehicle_model	= $cnc_voucher['vehicle_model'];
 			$this->vehicle_no	= $cnc_voucher['vehicle_no'];
 			$this->username		= $cnc_voucher['customer_name'];
-			$this->particulars      = $comments;
+			$this->particulars      = $this->generate_particulars($cnc_voucher);
 			$this->pickup_date	= $cnc_voucher['pick_up_date'];
 			$this->cnc_line_amount 	= $cnc_voucher['amount'];
 			$this->price 		= $cnc_voucher['amount'];
@@ -688,6 +690,39 @@ class line_details
 	function line_price()
 	{
 		return $this->price;
+	}
+
+	function generate_particulars($cnc_data){
+
+		if($cnc_data['km_hr'] == 2){//hrs tarif
+			$tarif .= "HR";
+		}else if($cnc_data['km_hr'] == 1 && $cnc_data['no_of_days'] > 2){
+			$tarif .= "Per Day";
+		}else{
+			$tarif .= "KM";
+		}
+
+		$particulars = "Minimum ".$cnc_data['base_tarif']." ".$tarif."@ Rs ".$cnc_data['base_amount'];
+		if($cnc_data['base_amount'] != ''){
+			$particulars .= " + Additional  ".$cnc_data['adt_tarif']." ".$tarif."@".$cnc_data['adt_tarif_rate']."/".$tarif;
+		}
+		if($cnc_data['parking_fees'] >0){
+			$particulars .= " + Parking fees Rs. "	.$cnc_data['parking_fees'];
+		}
+		if($cnc_data['toll_fees'] >0){
+			$particulars .= " + Toll Rs. "	.$cnc_data['toll_fees'];
+		}
+		if($cnc_data['night_halt_charges'] >0){
+			$particulars .= " + Night halt charges Rs.".$cnc_data['night_halt_charges'];
+		}
+		if($cnc_data['driver_bata'] >0){
+			$particulars .= " + Driver Batta ".$cnc_data['driver_bata'];
+		}
+		if($cnc_data['state_tax'] >0){
+			$particulars .= " + State Tax Rs. "	.$cnc_data['state_tax'];
+		}
+		
+		return $particulars;
 	}
 }
 
