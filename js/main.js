@@ -1787,9 +1787,9 @@ $('#customer-group').on('change',function(){
 }else{
 $('#customer-list').css('display','none');	
 }
-			$('#mobile').val('');
-			$('#email').val('');
-			$('#customer').val('');	
+			//$('#mobile').val('');
+			//$('#email').val('');
+			//$('#customer').val('');	
 });
 $('#customer-list').on('change',function(){
 $('#mobile').val('');
