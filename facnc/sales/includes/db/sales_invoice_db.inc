@@ -73,6 +73,13 @@ function write_sales_invoice(&$invoice)
 	$invoice->sales_type, $sales_order, $invoice->ship_via, 
 	$invoice->due_date, 0, 0, $invoice->dimension_id, 
 	$invoice->dimension2_id, $invoice->payment); 
+
+	//update trip voucher with delivery no
+	if($invoice_no){
+		update_cnc_voucher_with_transno($invoice->trip_voucher, ST_SALESINVOICE, $invoice_no);
+	}
+
+
 	// 2008-06-14 extra $alloc, 2008-11-12 added dimension_id Joe Hunt
 
 	if ($trans_no == 0) {
