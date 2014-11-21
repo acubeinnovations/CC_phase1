@@ -374,6 +374,7 @@ function get_sql_for_trip_invoices()
     	}
    	}
 	$sql .= " GROUP BY trans.trans_no, trans.type";
+	$sql .= " ORDER BY voucher.id DESC ";
 //echo $sql;exit;
    	return $sql;
 
