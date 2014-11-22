@@ -578,7 +578,7 @@ class User extends CI_Controller {
 			$where_arry='';
 			$tbl="trips";
 			$baseurl=base_url().'organization/front-desk/trips/';
-			$per_page=10;
+			$per_page=30;
 			$data['slno_per_page']=10;
 			$uriseg ='4';
 			$data['urlseg']=4;

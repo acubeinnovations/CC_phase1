@@ -161,6 +161,7 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 		if($fpdate!=null && $tpdate==null){
 		$qry.=' AND T.pick_up_date= "'.$fpdate.'"';
 				}
+				//echo $qry;exit;
 	$result=$this->db->query($qry);
 	$result=$result->result_array();
 	if(count($result)>0){
