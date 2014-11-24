@@ -30,7 +30,7 @@ class User extends CI_Controller {
 		$param3=$this->uri->segment(5);
         if($this->session_check()==true) {
 		if($param1==''){
-		$data['title']="Home | CC Phase1";    
+		$data['title']="Home | CNC Phase1";    
         $page='user-pages/user_home';
 		$this->load_templates($page,$data);
 		}elseif($param1=='profile'){
