@@ -30,7 +30,7 @@ class User extends CI_Controller {
 		$param3=$this->uri->segment(5);
         if($this->session_check()==true) {
 		if($param1==''){
-			$data['title']="Home | CNC Phase1";    
+			$data['title']="Home | ".PRODUCT_NAME;    
        			 $page='user-pages/user_home';
 			$this->load_templates($page,$data);
 		}elseif($param1=='profile'){
@@ -604,18 +604,18 @@ class User extends CI_Controller {
 				if($_REQUEST['trip_pick_date']!=null && $_REQUEST['trip_drop_date']!=null){
 					$data['trip_pick_date']=$_REQUEST['trip_pick_date'];
 					$data['trip_drop_date']=$_REQUEST['trip_drop_date'];
-					//$qry.=' AND T.pick_up_date >='.$_REQUEST['trip_pick_date'].' AND T.drop_date <='.$_REQUEST['trip_drop_date'];
-					$qry.=' AND T.pick_up_date BETWEEN "'.$_REQUEST['trip_pick_date'].'" AND "'.$_REQUEST['trip_drop_date'].'" AND T.drop_date BETWEEN "'.$_REQUEST['trip_pick_date'].'" AND "'.$_REQUEST['trip_drop_date'].'"';		
+					$qry.=' AND (T.drop_date BETWEEN "'.$_REQUEST['trip_pick_date'].'" AND "'.$_REQUEST['trip_drop_date'].'")';
+					//$qry.=' AND T.pick_up_date BETWEEN "'.$_REQUEST['trip_pick_date'].'" AND "'.$_REQUEST['trip_drop_date'].'" AND T.drop_date BETWEEN "'.$_REQUEST['trip_pick_date'].'" AND "'.$_REQUEST['trip_drop_date'].'"';		
 					$where_arry['trip_pick_date']=$_REQUEST['trip_pick_date'];
 					$where_arry['trip_drop_date']=$_REQUEST['trip_drop_date'];
 				}else if($_REQUEST['trip_pick_date']!=null){
 				$data['trip_pick_date']=$_REQUEST['trip_pick_date'];
-				//$qry.=' AND T.pick_up_date ="'.$_REQUEST['trip_pick_date'].'"';
-				$qry.=' AND (T.pick_up_date="'.$_REQUEST['trip_pick_date'].'" OR T.drop_date="'.$_REQUEST['trip_pick_date'].'") ';
+				$qry.=' AND  (T.pick_up_date="'.$_REQUEST['trip_pick_date'].'" or "'.$_REQUEST['trip_pick_date'].'" BETWEEN T.pick_up_date and T.drop_date)';
+				//$qry.=' AND (T.pick_up_date="'.$_REQUEST['trip_pick_date'].'" OR T.drop_date="'.$_REQUEST['trip_pick_date'].'") ';
 				$where_arry['trip_pick_date']=$_REQUEST['trip_pick_date'];
 				}else if($_REQUEST['trip_drop_date']!=null){
 				$data['trip_drop_date']=$_REQUEST['trip_drop_date'];
-				$qry.=' AND T.drop_date ="'.$_REQUEST['trip_drop_date'].'"';
+				$qry.=' AND (T.drop_date ="'.$_REQUEST['trip_drop_date'].'")';
 				$where_arry['trip_drop_date']=$_REQUEST['trip_drop_date'];
 				}
 				if($_REQUEST['vehicles']!=null && $_REQUEST['vehicles']!=gINVALID){
