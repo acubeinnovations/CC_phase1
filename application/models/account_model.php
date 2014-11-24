@@ -358,6 +358,42 @@ class account_model extends CI_Model {
 		}
 	}
 
+	function getTaxArray($condion = '')
+	{
+
+		$fa_tax_table = $this->session->userdata('organisation_id')."_tax_types";
+		
+		if($this->check_fa_table_exists($fa_tax_table)){
+			$this->db->select("rate, CONCAT(name, ' (',rate,'%)') as name");
+			$this->db->from($fa_tax_table);
+			if($condion!=''){
+			    $this->db->where($condion);
+			}
+			$results = $this->db->get()->result();
+
+			for($i=0;$i<count($results);$i++){
+				$values[$results[$i]->rate]=$results[$i]->name;
+			}
+
+			if(!empty($values)){
+				return $values;
+			}
+			else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+		
+		
+	    
+	
+
+			
+			
+
+	}
+
 
 }
 ?>
