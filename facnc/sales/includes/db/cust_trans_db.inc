@@ -545,9 +545,10 @@ function get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_i
 		 .TB_PREF."debtor_trans as trans, "
 		 .TB_PREF."debtor_trans_details as line, "
 		 .TB_PREF."debtors_master as debtor,
-		 customers cnc_customer,"
+		 "
 		 .TB_PREF."cust_branch as branch,trip_vouchers voucher,trips trip
 		LEFT JOIN customer_groups cg  ON  cg.id = trip.customer_group_id
+		LEFT JOIN customers cnc_customer  ON  trip.customer_id = cnc_customer.id
 			WHERE
 			sorder.order_no = trans.order_ AND
 			trans.debtor_no = debtor.debtor_no
@@ -557,7 +558,7 @@ function get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_i
 				AND trans.branch_code = branch.branch_code
 				AND trans.reference = trip.id
 				AND trip.id = voucher.trip_id
-				AND trip.customer_id = cnc_customer.id
+				
 				AND trans.debtor_no = branch.debtor_no ";
 
 	if ($_POST['OutstandingOnly'] == true) {
