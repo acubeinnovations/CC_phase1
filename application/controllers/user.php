@@ -30,7 +30,7 @@ class User extends CI_Controller {
 		$param3=$this->uri->segment(5);
         if($this->session_check()==true) {
 		if($param1==''){
-		$data['title']="Home | CC Phase1";    
+		$data['title']="Home | CNC Phase1";    
         $page='user-pages/user_home';
 		$this->load_templates($page,$data);
 		}elseif($param1=='profile'){
@@ -578,7 +578,7 @@ class User extends CI_Controller {
 			$where_arry='';
 			$tbl="trips";
 			$baseurl=base_url().'organization/front-desk/trips/';
-			$per_page=10;
+			$per_page=30;
 			$data['slno_per_page']=10;
 			$uriseg ='4';
 			$data['urlseg']=4;
@@ -1214,10 +1214,14 @@ if(isset($where_arry) || isset($like_arry)){
 			$todate='2014-'.$date[1].'-31';
 			
 			if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['date_search'])){
-			
+			if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
+			$fdate='2014-'.$date[1].'-01';
+			$todate='2014-'.$date[1].'-31';
+			} else{
 			$fdate=$_REQUEST['from_pick_date'];
-			$todate=$_REQUEST['to_pick_date']; 
+			$todate=$_REQUEST['to_pick_date']; }
 			$data['trip_tab']='active';
+			
 			}
 			$data['trips']=$this->trip_booking_model->getDriverVouchers($param2,$fdate,$todate);
 			//$this->mysession->set('trips',$data['trips']);
@@ -1380,9 +1384,12 @@ if(isset($where_arry) || isset($like_arry)){
 						$todate='2014-'.$date[1].'-31';
 						
 						if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['vdate_search'])){
-						
+						if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
+						$fdate='2014-'.$date[1].'-01';
+						$todate='2014-'.$date[1].'-31';
+						}else{
 						$fdate=$_REQUEST['from_pick_date'];
-						$todate=$_REQUEST['to_pick_date'];
+						$todate=$_REQUEST['to_pick_date'];}
 						$data['trip_tab']='active';
 						}
 						

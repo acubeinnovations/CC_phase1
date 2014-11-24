@@ -1786,6 +1786,9 @@ $('#customer-group').on('change',function(){
 			}
 			
 		}
+		else{
+		$('#customer-list').css('display','none');
+		}
 			
 	});
 
