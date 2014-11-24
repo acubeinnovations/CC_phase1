@@ -41,15 +41,83 @@
 		<legend class="body-head">Customers</legend>
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
+	<?php 
+	if(isset($insurance_tab)){
+	$ins_class=$insurance_tab;
+	$i_tab="tab-pane active";
+	}
+	else{
+	$ins_class='';
+	$i_tab="tab-pane ";
+	}
+	if(isset($trip_tab)){
+	$trip_class=$trip_tab;
+	$t_tab="tab-pane active";
+	}
+	else{
+	$trip_class='';
+	$t_tab="tab-pane ";
+	}
+	if(isset($cust_tab)){
+	$cust_class=$cust_tab;
+	$c_tab="tab-pane active";
+	}
+	else{
+	$driver_class='';
+	$d_tab="tab-pane";
+	}
+	if(isset($loan_tab)){
+	$loan_class=$loan_tab;
+	$l_tab="tab-pane active";
+	}
+	else{
+	$loan_class='';
+	$l_tab="tab-pane ";
+	}
+	if(isset($owner_tab)){
+	$owner_class=$owner_tab;
+	$o_tab="tab-pane active";
+	}
+	else{
+	$owner_class='';
+	$o_tab="tab-pane ";
+	}
+	if(isset($trip_tab)){
+	$trip_class=$trip_tab;
+	$t_tab="tab-pane active";
+	$c_tab="tab-pane";
+	$cust_class='';
+	}
+	else{
+	$cust_class='';
+	$c_tab="tab-pane ";
+	}
+	if(isset($pay_tab)){
+	$pay_class=$pay_tab;
+	$p_tab="tab-pane active";
+	}
+	else{
+	$pay_class='';
+	$p_tab="tab-pane ";
+	}
+	if(isset($acc_tab)){
+	$acc_class=$acc_tab;
+	$a_tab="tab-pane active";
+	}
+	else{
+	$acc_class='';
+	$a_tab="tab-pane ";
+	}
+	?>
+        <li class="<?php echo $cust_class;?>"><a href="#tab_1" data-toggle="tab">Profile</a></li>
 		<?php if(isset($mode)&& $mode!='' ){?>
-		<li class=""><a href="#tab_2" data-toggle="tab">Trip</a></li>
+		<li class="<?php echo $trip_class;?>"><a href="#tab_2" data-toggle="tab">Trip</a></li>
         <li class=""><a href="#tab_3" data-toggle="tab">Payments</a></li>
          <li class=""><a href="#tab_4" data-toggle="tab">Accounts</a></li>
        <?php } ?>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane active" id="tab_1">
+        <div class="<?php echo $c_tab;?>" id="tab_1">
             		 <div class="profile-body width-80-percent-and-margin-auto">
 			<fieldset class="body-border">
    			 <legend class="body-head">Personal Details</legend>
@@ -114,11 +182,20 @@
 			</fieldset>
 		</div>
         </div>
-		 <div class="tab-pane" id="tab_2">
+		 <div class="<?php echo $t_tab;?>" id="tab_2">
             <div class="page-outer">
 	   <fieldset class="body-border">
 		<legend class="body-head">Trip</legend><div class="form-group">
 	<div class="box-body table-responsive no-padding">
+	
+	<?php  echo form_open(base_url()."organization/front-desk/driver-profile/".$d_id); ?>
+	<table>
+	<td><?php echo form_input(array('name'=>'from_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'From Date','value'=>'')); ?></td>
+	<td><?php echo form_input(array('name'=>'to_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'To Date','value'=>'')); ?></td>
+	<td><?php echo form_submit("date_search","Search","class='btn btn-primary'");
+				echo form_close();?></td>
+	</table>
+	
 			<table class="table table-hover table-bordered">
 				<tbody>
 					<tr>
