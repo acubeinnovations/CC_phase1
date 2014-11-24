@@ -711,6 +711,10 @@ class User extends CI_Controller {
 				$param2=0;
 			}*/
 			//echo $qry;exit;
+			$this->load->model('account_model');
+			$data['taxes']=$this->account_model->getTaxArray($condition='');
+			//print_r($data['taxes']);exit;
+
 			$data['vehicles']=$this->trip_booking_model->getVehiclesArray($condition='');
 			$data['drivers']=$this->driver_model->getDriversArray($condition=''); 
 			$paginations=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);

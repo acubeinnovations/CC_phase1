@@ -245,6 +245,9 @@ window.open(url, '_blank');
 
 });
 
+
+
+
 //masters
 	$('select').change(function(){ 
 	 var edit=$('.edit').attr('for_edit');
@@ -2231,10 +2234,32 @@ function setTotalAmount()
 function setTax(amount = 0)
 {
 	var taxable_amount = amount*0.4;
-	var tax = taxable_amount*0.12;
-	$('.totaltax').val(tax);
+	var rate = $('.tax').val();
+	var tax = taxable_amount*rate/100;
+	//$('.totaltax').val(tax);
+	//$('.totaltax').val(tax);
+	
+	$("#totaltax").val(tax);
+		
+	return tax;
+	
+	
 	
 }
+
+
+
+
+$(".tax").change(function(){
+	var amt = $('.totalamount').val();
+	$obj=$(this);
+	var tax = setTax(amt);
+	$obj.parent().find('#totaltax').val(tax);
+	$obj.hide();
+	$obj.parent().find('#totaltax').show();
+
+	
+});
 
 
 //km keyup event
