@@ -63,6 +63,15 @@ class Trip_booking extends CI_Controller {
 			
 			if(isset($_REQUEST['book_trip'])){
 
+				$my_customer = $this->session->userdata('customer_id');
+				if(empty($my_customer) && $_REQUEST['customer_group']==gINVALID){
+					$trip_whom = false;
+					$this->form_validation->set_message('customer_group', 'Customer group or customer required');
+				
+				}else{
+					$trip_whom = true;
+				}
+
 				if(isset($_REQUEST['trip_id'])){
 					$data['trip_id']=$this->input->post('trip_id');
 				}else{
@@ -262,7 +271,7 @@ class Trip_booking extends CI_Controller {
 					}
 
 				
-			if($this->form_validation->run()==False){
+			if($this->form_validation->run()==False || $trip_whom == false){	
 				$this->mysession->set('post',$data);
 				redirect(base_url().'organization/front-desk/trip-booking/'.$data['trip_id']);
 			}else{
