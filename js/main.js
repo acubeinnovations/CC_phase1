@@ -999,14 +999,19 @@ window.onbeforeunload = function(){
 
 $('.book-trip-validate').on('click',function(){
 
-if($('.new-customer').val()=='false'){//alert('clciked');
-$('.book-trip-validate').attr('enable_redirect','true');
-$('.book-trip').trigger('click');
-}else{
+	$('.book-trip-validate').attr('enable_redirect','true');
+	$('.book-trip').trigger('click');
 
-alert("Add Customer Informations");
+/*
+	if($('.new-customer').val()=='false'){//alert('clciked');
+	$('.book-trip-validate').attr('enable_redirect','true');
+	$('.book-trip').trigger('click');
+	}else{
 
-}
+	alert("Add Customer Informations");
+
+	}
+*/
 });
 
 $('.cancel-trip-validate').on('click',function(){
