@@ -28,6 +28,13 @@ include_once($path_to_root . "/sales/includes/sales_db.inc");
 
 print_invoices();
 
+function get_delivery_no($src_id){
+	$sql = "SELECT dtd.debtor_trans_no FROM ".TB_PREF."debtor_trans_details dtd WHERE id = ".db_escape($src_id);
+	$result = db_query($sql, "Error getting order details");
+	$row = db_fetch_row($result);
+	return $row[0];
+}
+
 function get_trip($voucher = 0)
 {
 	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str";
@@ -124,8 +131,10 @@ function print_invoices()
 			while ($myrow2=db_fetch($result))
 			{
 				//$memo = get_comments_string(ST_SALESINVOICE, $myrow2['id']);
-			
-				$memo = get_comment_value(ST_CUSTDELIVERY, $myrow2['src_id']);
+	
+				
+				$memo = get_comment_value(ST_CUSTDELIVERY,get_delivery_no($myrow2['src_id']));
+	
 			
 				$trip = get_trip($myrow2['trip_voucher']);
 				
