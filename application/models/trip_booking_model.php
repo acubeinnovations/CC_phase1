@@ -161,7 +161,9 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 		if($fpdate!=null && $tpdate==null){
 		$qry.=' AND T.pick_up_date= "'.$fpdate.'"';
 				}
-				//echo $qry;exit;
+		if($fpdate==null && $tpdate!=null){
+		$qry.=' AND T.drop_date= "'.$tpdate.'"';
+				}
 	$result=$this->db->query($qry);
 	$result=$result->result_array();
 	if(count($result)>0){
@@ -180,6 +182,9 @@ $qry='SELECT TV.total_trip_amount,TV.start_km_reading,TV.end_km_reading,TV.end_k
 				}
 		if($fpdate!=null && $tpdate==null){
 		$qry.=' AND T.pick_up_date= "'.$fpdate.'"';
+				}
+		if($fpdate==null && $tpdate!=null){
+		$qry.=' AND T.drop_date= "'.$tpdate.'"';
 				}
 	$result=$this->db->query($qry);
 	$result=$result->result_array();  //print_r($result);exit;
