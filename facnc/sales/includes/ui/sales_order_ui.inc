@@ -709,6 +709,7 @@ function display_order_header(&$order, $editable, $date_text,$cnc_voucher=false)
 
 	if($cnc_voucher['group_id'] > 0){
 		label_row("Group :", $order->customer_name);
+		if($cnc_voucher['customer_name'] != "")
 		label_row("Customer :", $cnc_voucher['customer_name']);
 	}else{
 		label_row("Customer:", $order->customer_name);
