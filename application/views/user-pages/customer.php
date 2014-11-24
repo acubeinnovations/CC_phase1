@@ -58,13 +58,13 @@
 	$trip_class='';
 	$t_tab="tab-pane ";
 	}
-	if(isset($cust_tab)){
+	if(isset($cust_tab)){ 
 	$cust_class=$cust_tab;
 	$c_tab="tab-pane active";
 	}
 	else{
-	$driver_class='';
-	$d_tab="tab-pane";
+	$cust_class='';
+	$c_tab="tab-pane";
 	}
 	if(isset($loan_tab)){
 	$loan_class=$loan_tab;
@@ -188,7 +188,7 @@
 		<legend class="body-head">Trip</legend><div class="form-group">
 	<div class="box-body table-responsive no-padding">
 	
-	<?php  echo form_open(base_url()."organization/front-desk/driver-profile/".$d_id); ?>
+	<?php  echo form_open(base_url()."organization/front-desk/customer/".$c_id); ?>
 	<table>
 	<td><?php echo form_input(array('name'=>'from_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'From Date','value'=>'')); ?></td>
 	<td><?php echo form_input(array('name'=>'to_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'To Date','value'=>'')); ?></td>
