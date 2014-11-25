@@ -121,6 +121,15 @@ class Customers extends CI_Controller {
 				}
 			}
 
+			$GIds = $this->customers_model->getAllGrpIds();
+			foreach($GIds as $id){
+				if($id > 0){
+					$fa_customer = $this->account_model->add_fa_customer($id,"CG");
+					if($fa_customer)
+						$count++;
+				}
+			}
+
 			if($count > 0)
 				$this->session->set_userdata(array('dbSuccess'=>$count.' Customers updated in accounts'));
 			redirect(base_url().'organization/front-desk/customers');

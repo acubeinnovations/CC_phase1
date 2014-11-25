@@ -81,22 +81,39 @@ class Customers_model extends CI_Model {
 			return false;
 			}
 	}
+
+	//get all customer ids
 	public function getAllIds(){
 
-	$qry=$this->db->select('id');
-	$this->db->from('customers');
-	$qry=$this->db->get();
-	$count=$qry->num_rows();
-	$result= $qry->result_array();
-	for($i=0;$i<$count;$i++){
-			$values[$result[$i]['id']]=$result[$i]['id'];
-			}
+		$qry=$this->db->select('id');
+		$this->db->from('customers');
+		$qry=$this->db->get();
+		$count=$qry->num_rows();
+		$result= $qry->result_array();
+		for($i=0;$i<$count;$i++){
+				$values[$result[$i]['id']]=$result[$i]['id'];
+				}
 	
-	return $values;
-
-	
+		return $values;
 	
 	}
+	//get all customer group ids
+	public function getAllGrpIds(){
+
+		$qry=$this->db->select('id');
+		$this->db->from('customer_groups');
+		$qry=$this->db->get();
+		$count=$qry->num_rows();
+		$result= $qry->result_array();
+		for($i=0;$i<$count;$i++){
+				$values[$result[$i]['id']]=$result[$i]['id'];
+				}
+	
+		return $values;
+	
+	}
+
+
 	public function getCustomersById($c_id){
 	$qry='select id,name,mobile,email from customers where customer_group_id='.$c_id.' and organisation_id='.$this->session->userdata('organisation_id');
 	$result=$this->db->query($qry);
