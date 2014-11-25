@@ -798,23 +798,32 @@ $customer_type='';
 						<?php echo $notification[$notification_index]->id; ?>
 					</td>
 				</tr>
-				
-				<?php if($notification[$notification_index]->customer_id > 0){?>
-				<tr>
-					<td class='notification-pickup-city'>
-						Cust :
-					</td>
-					<td>
-						<?php echo $customers_array[$notification[$notification_index]->customer_id]; ?>
-					</td>
-				</tr>
-				<?php }else if($notification[$notification_index]->customer_group_id > 0){?>
+				 <?php if($notification[$notification_index]->customer_group_id > 0){?>
 				<tr>
 					<td class='notification-pickup-city'>
 						Group :
 					</td>
 					<td>
 						<?php echo $customer_groups[$notification[$notification_index]->customer_group_id]; ?>
+					</td>
+				</tr>
+				<?php }
+				 else if($notification[$notification_index]->guest_id > 0){?>
+				<tr>
+					<td class='notification-pickup-city'>
+						Guest :
+					</td>
+					<td>
+						<?php echo $customers_array[$notification[$notification_index]->guest_id]; ?>
+					</td>
+				</tr>
+				<?php }else if($notification[$notification_index]->customer_id > 0){?>
+				<tr>
+					<td class='notification-pickup-city'>
+						Cust :
+					</td>
+					<td>
+						<?php echo $customers_array[$notification[$notification_index]->customer_id]; ?>
 					</td>
 				</tr>
 				<?php }?>
