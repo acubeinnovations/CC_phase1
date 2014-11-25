@@ -775,10 +775,24 @@ class User extends CI_Controller {
 				$data['values']=false;
 			}
 			if($param2!=''){
+			$tdate=date('Y-m-d');
+			$date=explode("-",$tdate);
+			$fdate='2014-'.$date[1].'-01';
+			$todate='2014-'.$date[1].'-31';
+			if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['cdate_search'])){ 
+			if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
+			$fdate='2014-'.$date[1].'-01';
+			$todate='2014-'.$date[1].'-31';
+			} else{
+			$fdate=$_REQUEST['from_pick_date'];
+			$todate=$_REQUEST['to_pick_date']; }
+			$data['trip_tab']='active';
 			
-			$data['trips']=$this->trip_booking_model->getCustomerVouchers($param2);
 			}
-			
+			$data['trips']=$this->trip_booking_model->getCustomerVouchers($param2,$fdate,$todate);
+			}
+			$data['cust_tab']='active';
+			$data['c_id']=$param2;
 			$page='user-pages/customer';
 		    $this->load_templates($page,$data);
 		}else{

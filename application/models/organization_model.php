@@ -35,7 +35,7 @@ class Organization_model extends CI_Model {
 		if($query->num_rows()>0){
 		$org_res=$query->row_array(); 
 		$qry=$this->db->get_where('users',array('organisation_id'=>$this->session->userdata('organisation_id')));
-		$user_res=$qry->row_array(); print_r($user_res);
+		$user_res=$qry->row_array(); //print_r($user_res);
 		$data=array('org_res'=>$org_res,'user_res'=>$user_res);
 		return $data;
 		}else {
