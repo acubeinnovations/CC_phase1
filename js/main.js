@@ -459,7 +459,7 @@ if($('.beacon-light-chek-box').attr('checked')=='checked'){
 
 //date picker removed for pickupdat n time drop date n time
 
-//$('#pickupdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
+$('#pickupdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
 //$('#dropdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
 /*$('#pickuptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
@@ -2227,38 +2227,40 @@ function setTotalAmount()
 	
 	var total = Number(total_tarif)+Number(statetax)+Number(driverbata)+Number(tollfee)+Number(nighthalt)+Number(parkingfee);
 	$('.totalamount').val(total);
-	setTax(total);
+	//setTax(total);
 }
 
 //calculate tax amount
-function setTax(amount = 0)
+function setTax(amount = 0,rate=0)
 {
 	var taxable_amount = amount*0.4;
-	var rate = $('.tax').val();
+	
 	var tax = taxable_amount*rate/100;
 	//$('.totaltax').val(tax);
 	//$('.totaltax').val(tax);
 	
 	$("#totaltax").val(tax);
-		
+	
 	return tax;
-	
-	
 	
 }
 
 
-
-
-$(".tax").change(function(){
-	var amt = $('.totalamount').val();
+$(".taxgroup").change(function(){
+	var amount = $('.totalamount').val();
 	$obj=$(this);
-	var tax = setTax(amt);
-	$obj.parent().find('#totaltax').val(tax);
-	$obj.hide();
-	$obj.parent().find('#totaltax').show();
+	$id = $obj.val();
+	var amt = $('.totalamount').val();
+	$.post(base_url+"/account/getTotalTax",{id:$id, amt:amount},
+		function(data){
+			
+			$obj.parent().find('#totaltax').val(data);
+			$obj.hide();
+			$obj.parent().find('#totaltax').show();
+	});
 
-	
+
+
 });
 
 
@@ -2318,7 +2320,9 @@ function getTariff(minimum_kilometers,rate,additional_kilometer_rate)
 }
 
 $('.trip-voucher-save').on('click',function(){
-	
+
+	var tax_group = $('.taxgroup').val();//tax calculating factor
+
 	var error = false;
 	
 	var trip_id=$(this).attr('trip_id');
@@ -2402,7 +2406,8 @@ $('.trip-voucher-save').on('click',function(){
 				driverbata:driverbata,
 				vehicletarif:vehicletarif,
 				driver_id:driver_id,
-				totalamount:totalamount
+				totalamount:totalamount,
+				tax_group:tax_group
 				
 			},function(data){
 			  if(data!='false'){
@@ -2583,9 +2588,11 @@ $(this).siblings().find(':submit').trigger('click');
 	
 	//add tarrif page js start
 	//$('#fromdatepicker').datetimepicker({timepicker:false,format:'Y-m-d'});
+
 	$('.fromdatepicker').each(function(){
 	$(this).datetimepicker({timepicker:false,format:'Y-m-d'});
 	});
+
 	$('.fromyearpicker').each(function(){
 	$(this).datetimepicker({timepicker:false,format:'Y'});
 	});

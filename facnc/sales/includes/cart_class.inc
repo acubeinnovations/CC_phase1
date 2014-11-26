@@ -77,7 +77,7 @@ class cart
 	var $trip_ref;
 	var $trip_voucher;
 
-	
+	var $tax_group_from_cnc;
 	
 
 

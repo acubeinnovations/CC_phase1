@@ -127,7 +127,7 @@ function write_sales_delivery(&$delivery,$bo_policy)
 		$delivery->tax_included ? 0 : $freight_tax,
 		$delivery->sales_type, $delivery->order_no,
 		$delivery->ship_via, $delivery->due_date, 0, 0, $delivery->dimension_id, 
-		$delivery->dimension2_id, $delivery->payment);
+		$delivery->dimension2_id, $delivery->payment, $delivery->tax_group_from_cnc);
 
 	//update trip voucher with delivery no
 	if($delivery_no){

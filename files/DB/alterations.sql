@@ -31,4 +31,8 @@ ADD `invoice_no` INT( 11 ) NOT NULL COMMENT 'fa invoice no',
 ADD INDEX ( `delivery_no` , `invoice_no` ) ;
 
 
+/*26-nov-2014*/
+ALTER TABLE `2_debtor_trans`  ADD `tax_group_id` INT(11) NOT NULL
+
+
 
