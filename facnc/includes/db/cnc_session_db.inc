@@ -85,6 +85,7 @@ function get_cnc_voucher($id = 0)
 		voucher.voucher_no as voucher_str,
 		voucher.parking_fees,
 		voucher.toll_fees,
+		voucher.state_tax,
 		voucher.night_halt_charges,
 		(voucher.end_km_reading-voucher.start_km_reading) AS total_km_reading,
 		voucher.total_trip_amount as amount,
@@ -144,5 +145,20 @@ function get_cnc_supplier_id($ref = '')
 
 	return $row['supplier_id'];
 }
+
+function get_trip_voucher_id_with_delivery_no($delivery_no){
+	$sql = "SELECT v.id FROM trip_vouchers v,".TB_PREF."debtor_trans dt 
+		WHERE dt.trans_no = ".db_escape($delivery_no)."
+		AND dt.type=".ST_CUSTDELIVERY." AND v.trip_id = dt.reference";
+	
+	$result = db_query($sql, "could not get voucher");
+	$row = db_fetch_row($result);
+
+	return $row[0];
+}
+
+
+
+
 
 ?>
