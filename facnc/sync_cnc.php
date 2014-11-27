@@ -40,8 +40,16 @@
 		meta_forward('admin/forms_setup.php');
 		
 	}
-	elseif(isset($_GET['Taxes'])){
+	elseif(isset($_GET['GlAccount'])){
+		meta_forward('gl/manage/gl_accounts.php');
+		
+	}
+	elseif(isset($_GET['TaxType'])){
 		meta_forward('taxes/tax_types.php');
+		
+	}
+	elseif(isset($_GET['TaxGroup'])){
+		meta_forward('taxes/tax_groups.php');
 		
 	}
 	elseif(isset($_GET['PaymentTerms'])){
