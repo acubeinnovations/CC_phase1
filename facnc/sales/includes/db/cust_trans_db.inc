@@ -540,7 +540,8 @@ function get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_i
 			(ov_amount+ov_gst+ov_freight+ov_freight_tax) AS DeliveryValue,
 			debtor.curr_code,
 			Sum(line.quantity-line.qty_done) AS Outstanding,
-			Sum(line.qty_done) AS Done			
+			Sum(line.qty_done) AS Done,
+			trans.tax_group_id			
 		FROM "
 		 .TB_PREF."sales_orders as sorder, "
 		 .TB_PREF."debtor_trans as trans, "
