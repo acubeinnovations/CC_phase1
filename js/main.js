@@ -2601,12 +2601,59 @@ $('.prev1').click(function(){
 $('#tab_1').trigger('click');
 });
 
-//for marital status
+	// ----to display current date while selecting driver
+$('#addDriver').on('change',function(){
+var driver_id=$('#addDriver').val();
+if(driver_id>0){
+//var d=new Date('Y-m-d');
+Date.prototype.yyyymmdd = function() {         
+                                
+        var yyyy = this.getFullYear().toString();                                    
+        var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based         
+        var dd  = this.getDate().toString();             
+                            
+        return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
+   };  
 
-$('#marital_id').change(function(){
-//alert($(this).value());exit;
+d = new Date();
+//$('#today').html(d.yyyymmdd());
+//alert(d.yyyymmdd());return false;
+$('#driverDate').val(d.yyyymmdd());
+$('#driverDate').attr('readonly', 'true');
+$('#hdriverDate').val(d.yyyymmdd());
+
+}
+
 });
 
+			//----ends function
+						
+						// ----to display current date while selecting device
+$('#addDevice').on('change',function(){
+var device_id=$('#addDevice').val();
+if(device_id>0){
+//var d=new Date('Y-m-d');
+Date.prototype.yyyymmdd = function() {         
+                                
+        var yyyy = this.getFullYear().toString();                                    
+        var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based         
+        var dd  = this.getDate().toString();             
+                            
+        return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
+   };  
+
+d = new Date();
+//$('#today').html(d.yyyymmdd());
+//alert(d.yyyymmdd());return false;
+$('#deviceDate').val(d.yyyymmdd());
+$('#deviceDate').attr('readonly', 'true');
+$//('#hdriverDate').val(d.yyyymmdd());
+
+}
+
+});
+
+			//----ends function
 
 
  });

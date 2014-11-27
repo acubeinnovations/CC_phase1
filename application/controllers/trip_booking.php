@@ -620,11 +620,11 @@ class Trip_booking extends CI_Controller {
 		if(($data['pick_up_date'].' '.$data['pick_up_time'])>=$date){
 	
 			if($customer['mob'] != ""){
-				$this->sms->sendSms($customer['mob'],$message);
+				//$this->sms->sendSms($customer['mob'],$message);
 			}
 			
 			if($contact != ""){
-				$this->sms->sendSms($contact,$dr_message);
+				//$this->sms->sendSms($contact,$dr_message);
 			}
 			
 		
@@ -651,7 +651,7 @@ class Trip_booking extends CI_Controller {
 
 			if($customer['email']!=''){
 				$subject="Connect N Cabs";
-				$this->send_email->emailMe($customer['email'],$subject,$email_content);
+				//$this->send_email->emailMe($customer['email'],$subject,$email_content);
 			}
 		}
 
@@ -660,10 +660,10 @@ class Trip_booking extends CI_Controller {
 	public function SendTripCancellation($id,$customer){
 		$message='Hi Customer,Trip ID:'.$id.' had been cancelled.Thank You for choosing Connect N cabs.Good Day..!!';
 
-	$this->sms->sendSms($customer['mob'],$message);
+	//$this->sms->sendSms($customer['mob'],$message);
 	if($customer['email']!=''){
 	$subject="Connect N Cabs";
-	$this->send_email->emailMe($customer['email'],$subject,$message);
+	//$this->send_email->emailMe($customer['email'],$subject,$message);
 	}
 	}
 

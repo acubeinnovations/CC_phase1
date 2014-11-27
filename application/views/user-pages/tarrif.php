@@ -39,7 +39,7 @@ $this->session->set_userdata('post','');
        <?php    } ?>
 <div class="tarrif_master_body">
 <fieldset class="body-border " >
-<legend class="body-head">Search</legend>
+<!--<legend class="body-head">Search</legend>
 <table>
 <tr>
 <td><?php echo form_open(base_url()."organization/front-desk/tarrif"); 
@@ -49,7 +49,7 @@ $this->session->set_userdata('post','');
 <td><?php echo form_submit("search","Search","class='btn btn-primary'");
 echo form_close();?></td>
 </tr>
-</table>
+</table>-->
 	<p class="text-red"><?php
  if($this->session->userdata('Date') != ''){
 	echo $this->session->userdata('Date');

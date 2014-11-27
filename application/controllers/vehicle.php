@@ -241,7 +241,7 @@ class Vehicle extends CI_Controller {
 					 //for insurance
 $err=True;
 
-	if($hid_driver!=$driver_data['driver_id']){
+	/*if($hid_driver!=$driver_data['driver_id']){
 		if(!$this->date_check($driver_data['driver_id'])){
 		
 	$err=False;
@@ -267,7 +267,7 @@ $err=True;
 	$this->mysession->set('Err_device_fdate','Invalid From Date for Device!');
 	}
 	}
-	
+	*/
 	
 	/*if(preg_match('#[^0-9\.]#', $data['vehicle_permit_renewal_amount'])){
 			$this->mysession->set('Err_permit_amt','Invalid Characters on Permit Amount field!');

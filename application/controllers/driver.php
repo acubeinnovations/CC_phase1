@@ -20,7 +20,7 @@ class Driver extends CI_Controller {
 
 	public function driver_manage(){
 	if($this->session_check()==true) {
-	if(isset($_REQUEST['driver-submit'])){
+	if(isset($_REQUEST['driver-submit'])){ 
 	$data['name']=$this->input->post('driver_name');
 	$data['place_of_birth']=$this->input->post('place_of_birth');
 	$data['dob']=$this->input->post('dob');
@@ -58,7 +58,7 @@ class Driver extends CI_Controller {
 	$data['name_on_id_proof']=$this->input->post('name_on_id_proof');
 	$dr_id=$this->input->post('hidden_id');
 	$data['organisation_id']=$this->session->userdata('organisation_id'); 
-	$data['user_id']=$this->session->userdata('id');
+	$data['user_id']=$this->session->userdata('id'); 
 		$err=True;
 	/*if($data['blood_group'] ==-1){
 	$data['blood_group'] ='';
@@ -122,23 +122,23 @@ class Driver extends CI_Controller {
 	
 	
 		
-	 if($this->form_validation->run()==False|| $err==False){
+	 if($this->form_validation->run()==False|| $err==False){ 
 		$this->mysession->set('driver_id',$dr_id);
 		$this->mysession->set('post',$data); 
-		redirect(base_url().'organization/front-desk/driver',$data);	
-	 }
+		redirect(base_url().'organization/front-desk/driver-profile',$data);	
+	 } 
 	 else{
-	
+	//echo "val success";exit;
 		if($dr_id==gINVALID ){
 			$res=$this->driver_model->addDriverdetails($data); 
 			//$ins_id=$this->mysession->get('vehicle_id');
 			if($res){
 				//add driver as supplier in fa
 				$this->account_model->add_fa_supplier($res,"DR");
-
+				//$data['driver_tab']='active';
 				$this->session->set_userdata(array('dbSuccess'=>' Added Succesfully..!'));
 				$this->session->set_userdata(array('dbError'=>''));
-				redirect(base_url().'organization/front-desk/driver');
+				redirect(base_url().'organization/front-desk/driver-profile');
 			}
 		}
 		else{

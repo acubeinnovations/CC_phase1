@@ -386,9 +386,9 @@ echo $this->form_functions->populate_dropdown($name,$select['vehicle_seating_cap
 		$msg="Select Driver";
 		$name="driver";
 		if($driver_id!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id,$class,$id='',$msg); 
+	echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id,$class,$id='addDriver',$msg); 
 }else{
-echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id='',$class,$id='',$msg); 
+echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_id='',$class,$id='addDriver',$msg); 
 }	?>
 	     <p class="text-red"><?php
 	if($this->mysession->get('Driver') != ''){
@@ -400,7 +400,8 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 		echo form_input(array('name'=>'hid_driver','value'=>$driver_id));?></div>
 		<div class="form-group">
 		<?php echo form_label('From Date for Driver','usernamelabel');?>
-           <?php echo form_input(array('name'=>'from_date','class'=>'fromdatepicker form-control' ,'value'=>$from_date));?>
+           <?php //echo form_input(array('name'=>'from_date','class'=>'fromdatepicker form-control' ,'value'=>$from_date));
+		   echo form_input(array('name'=>'from_date','class'=>'form-control','id'=>'driverDate','value'=>$from_date,'readonly'=>'readonly'));?>
 	   <?php echo $this->form_functions->form_error_session('from_date', '<p class="text-red">', '</p>');
 
 	?>
@@ -421,9 +422,9 @@ echo $this->form_functions->populate_dropdown($name,$select['drivers'],$driver_i
 		$msg="Select Device";
 		$name="device";
 		if($device_id!=null){
-	echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_id,$class,$id='',$msg); 
+	echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_id,$class,$id='addDevice',$msg); 
 }else{
-echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_id='',$class,$id='',$msg); 
+echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_id='',$class,$id='addDevice',$msg); 
 }	?>
 	   <p class="text-red"><?php
 	if($this->mysession->get('Device') != ''){
@@ -436,7 +437,8 @@ echo $this->form_functions->populate_dropdown($name,$select['devices'],$device_i
 		echo form_input(array('name'=>'hid_device','value'=>$device_id));?></div>
 		<div class="form-group">
 		<?php echo form_label('From Date for Device','usernamelabel');?>
-           <?php echo form_input(array('name'=>'from_date_device','class'=>'fromdatepicker form-control' ,'value'=>$from_date_device));?>
+           <?php echo form_input(array('name'=>'from_date_device','class'=>'form-control','id'=>'deviceDate','value'=>$from_date_device,'readonly'=>'readonly'));
+		   //echo form_input(array('name'=>'from_date_device','class'=>'fromdatepicker form-control' ,'value'=>$from_date_device));?>
 	   <?php echo $this->form_functions->form_error_session('from_date_device', '<p class="text-red">', '</p>'); ?>
        <p class="text-red"><?php
 	if($this->mysession->get('Err_device_fdate') != ''){

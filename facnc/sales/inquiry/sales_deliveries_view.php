@@ -54,22 +54,18 @@ if (isset($_POST['BatchInvoice']))
     foreach($_POST['Sel_'] as $delivery => $branch) {
 	  	$checkbox = 'Sel_'.$delivery;
 	  	if (check_value($checkbox))	{
-	    		if (!$del_count) {
+	    	if (!$del_count) {
 				$del_branch = $branch;
-	    		}
-	    		else {
+	    	}
+	    	else {
 				if ($del_branch != $branch)	{
 		    		$del_count=0;
 		    		break;
 				}
-	    		}
-	    		$selected[] = $delivery;
-			$trip_voucher[] = get_trip_voucher_id_with_delivery_no($delivery);
-	    		$del_count++;
+	    	}
+	    	$selected[] = $delivery;
+	    	$del_count++;
 	  	}
-
-		//get voucher numbers for selected deliveries
-		
     }
 
     if (!$del_count) {
@@ -78,7 +74,6 @@ if (isset($_POST['BatchInvoice']))
 		    the same customer branch.'));
     } else {
 		$_SESSION['DeliveryBatch'] = $selected;
-		$_SESSION['TripVoucherBatch'] = $trip_voucher;
 		meta_forward($path_to_root . '/sales/customer_invoice.php','BatchInvoice=Yes');
     }
 }

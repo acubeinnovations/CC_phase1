@@ -112,8 +112,8 @@
         <li class="<?php echo $cust_class;?>"><a href="#tab_1" data-toggle="tab">Profile</a></li>
 		<?php if(isset($mode)&& $mode!='' ){?>
 		<li class="<?php echo $trip_class;?>"><a href="#tab_2" data-toggle="tab">Trip</a></li>
-        <li class=""><a href="#tab_3" data-toggle="tab">Payments</a></li>
-         <li class=""><a href="#tab_4" data-toggle="tab">Accounts</a></li>
+        <li class="<?php echo $pay_class;?>"><a href="#tab_3" data-toggle="tab">Payments</a></li>
+         <li class="<?php echo $acc_class;?>"><a href="#tab_4" data-toggle="tab">Accounts</a></li>
        <?php } ?>
     </ul>
     <div class="tab-content">
@@ -182,7 +182,7 @@
 			</fieldset>
 		</div>
         </div>
-		 <div class=""<?php echo $t_tab;?>"" id="tab_2">
+		 <div class="<?php echo $t_tab;?>" id="tab_2">
             <div class="page-outer">
 	   <fieldset class="body-border">
 		<legend class="body-head">Trip</legend><div class="form-group">
@@ -262,12 +262,12 @@
 </fieldset>
 </div>
         </div>
-        <div class="tab-pane" id="tab_3">
+        <div class="<?php echo $p_tab;?>" id="tab_3">
             <iframe src="<?php echo base_url().'account/front_desk/CustomerPayment/C'.$customer_id.'/true';?>" height="600px" width="100%">
 		<p>Browser not Support</p>
 		</iframe>
         </div>
-        <div class="tab-pane" id="tab_4">
+        <div class="<?php echo $a_tab;?>" id="tab_4">
           <iframe src="<?php echo base_url().'account/front_desk/CustomerPaymentInquiry/C'.$customer_id.'/true';?>" height="600px" width="100%">
 		<p>Browser not Support</p>
 		</iframe>

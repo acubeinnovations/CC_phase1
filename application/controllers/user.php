@@ -138,7 +138,7 @@ class User extends CI_Controller {
 		$condition='';
 	    $per_page=10;
 	    $like_arry='';
-	    $org_id=$this->session->userdata('organisation_id');
+	    $org_id=$this->session->userdata('organisation_id'); 
 		$where_arry['organisation_id']=$org_id;
 	if(isset($_REQUEST['search'])){
 		$title = $this->input->post('search_title');
@@ -150,7 +150,9 @@ class User extends CI_Controller {
 		}
 		else {
 		//show search results
-		
+		if($param2=='1' ){
+				$param2='0';
+			}
 	if((isset($_REQUEST['search_title'])|| isset($_REQUEST['search_trip_model'])||isset($_REQUEST['search_ac_type']))&& isset($_REQUEST['search'])){
 	if($param2==''){
 	$param2='0';
@@ -173,17 +175,17 @@ class User extends CI_Controller {
 	}
 	    
 		$tbl="tariff_masters";
-		if(is_null($this->mysession->get('condition'))){
+		if(is_null($this->mysession->get('condition'))){//print_r($where_arry);exit;
 		$this->mysession->set('condition',array("like"=>$like_arry,"where"=>$where_arry));
 		}
 		$baseurl=base_url().'organization/front-desk/tarrif-masters/';
 		$uriseg ='4';
+		
+		
+		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
 		if($param2==''){
 		$this->mysession->delete('condition');
 		}
-		
-		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
-		
 		
 	$data['values']=$p_res['values'];
 	if(empty($data['values'])){
@@ -271,17 +273,17 @@ class User extends CI_Controller {
 	}
 	    
 		$tbl="tariffs";
-		if(is_null($this->mysession->get('condition'))){
+		if(is_null($this->mysession->get('condition'))){ 
 		$this->mysession->set('condition',array("where"=>$where_arry));
 		}
 		$baseurl=base_url().'organization/front-desk/tarrif/';
 		$uriseg ='4';
+		
+		
+		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
 		if($param2==''){
 		$this->mysession->delete('condition');
 		}
-		
-		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
-		
 		
 	$data['values']=$p_res['values'];
 	if(empty($data['values'])){
@@ -326,19 +328,22 @@ class User extends CI_Controller {
 	
 	$this->mysession->set('condition',array("like"=>$like_arry));
 	}
-	if($this->mysession->get('condition')){
+	/*if($this->mysession->get('condition')){
 		$this->mysession->set('condition',array("like"=>$like_arry));
-	}
+	}*/
 	
 	    
 		$tbl="devices";
+		if(is_null($this->mysession->get('condition'))){ 
+		$this->mysession->set('condition',array("where"=>$where_arry));
+		}
 		$baseurl=base_url().'organization/front-desk/device/';
 		$uriseg ='4';
 		
 		
 		$p_res=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
 		if($param2==''){
-		$this->session->set_userdata('condition','');
+		$this->mysession->delete('condition');
 		}
 		
 	$data['values']=$p_res['values'];

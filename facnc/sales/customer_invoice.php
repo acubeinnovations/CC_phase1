@@ -56,7 +56,7 @@ if (isset($_GET['AddedID'])) {
 
 	//display_note(get_customer_trans_view_str($trans_type, $invoice_no, _("&View This Invoice")), 0, 1);
 
-	display_note(print_document_link($invoice_no."-".$trans_type, _("&Print This Invoice"), true, ST_SALESINVOICE));
+	//display_note(print_document_link($invoice_no."-".$trans_type, _("&Print This Invoice"), true, ST_SALESINVOICE));
 	//display_note(print_document_link($invoice_no."-".$trans_type, _("&Email This Invoice"), true, ST_SALESINVOICE, false, "printlink", "", 1),1);
 
 	//display_note(get_gl_view_str($trans_type, $invoice_no, _("View the GL &Journal Entries for this Invoice")),1);
@@ -115,20 +115,15 @@ if ( (isset($_GET['DeliveryNumber']) && ($_GET['DeliveryNumber'] > 0) )
 
 	processing_start();
 
-
 	if (isset($_GET['BatchInvoice'])) {
 		$src = $_SESSION['DeliveryBatch'];
-		$trip_voucher = $_SESSION['TripVoucherBatch'];
 		unset($_SESSION['DeliveryBatch']);
-		unset($_SESSION['TripVoucherBatch']);
 	} else {
 		$src = array($_GET['DeliveryNumber']);
-		$trip_voucher = get_trip_voucher_id_with_delivery_no($_GET['DeliveryNumber']);
-		
 	}
 
 	/*read in all the selected deliveries into the Items cart  */
-	$dn = new Cart(ST_CUSTDELIVERY, $src, true,$trip_voucher);
+	$dn = new Cart(ST_CUSTDELIVERY, $src, true);
 
 	if ($dn->count_items() == 0) {
 		hyperlink_params($path_to_root . "/sales/inquiry/sales_deliveries_view.php",
@@ -377,10 +372,6 @@ for ($line_no = 0; $line_no < count($_SESSION['Items']->line_items); $line_no++)
 $dspans[] = $spanlen;
 
 //-----------------------------------------------------------------------------
-//echo "<pre>";
-//print_r($_SESSION['Items']);
-//echo "</pre>";
-//exit;
 
 $is_batch_invoice = count($_SESSION['Items']->src_docs) > 1;
 

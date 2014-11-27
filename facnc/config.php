@@ -59,15 +59,15 @@ if (!isset($path_to_root) || isset($_GET['path_to_root']) || isset($_POST['path_
 		ini_set("log_errors", "On");
 	}		
 	// Main Title
-	$app_title = "Accounts";
-	$cnc_url = "http://cc.local/";
+	$app_title = "ACCOUNTS";
+
+	$cnc_url = "http://cnc.acubedemo.com/";
 
 	// Build for development purposes
-	//$build_version 	= date("d.m.Y", filemtime("$path_to_root/CHANGELOG.txt"));
-	$build_version = '';
+	$build_version 	= date("d.m.Y", filemtime("$path_to_root/CHANGELOG.txt"));
 
 	// Powered by
-	$power_by 		= "Accounts";
+	$power_by 		= "ACCOUNTS";
 	$power_url 		= $cnc_url;
 
 	/* No check on edit conflicts. Maybe needed to be set to 1 in certains Windows Servers */
