@@ -26,6 +26,8 @@ include_once($path_to_root . "/sales/includes/db/payment_db.inc");
 include_once($path_to_root . "/sales/includes/db/branches_db.inc");
 include_once($path_to_root . "/sales/includes/db/customers_db.inc");
 
+include_once($path_to_root . "/includes/db/cnc_session_db.inc");
+
 //----------------------------------------------------------------------------------------
 // $price in customer's currency
 // $quantity is used as is (if it's neg it's neg, if it's pos it's pos)
@@ -417,6 +419,31 @@ function get_sales_child_documents($trans_type, $trans_no)
 
 	return db_query($sql,"The related credit notes could not be retreived");
 }
+
+//----------------------------------------------------------------------------------------
+function update_cnc_voucher_with_transno($voucher, $trans_type, $trans_no){
+	
+	$sql = '';
+	if (!is_array($voucher)) $voucher = array($voucher);
+
+	foreach($voucher as $voucher_no){
+
+		switch($trans_type){
+			case ST_CUSTDELIVERY :$sql = "UPDATE trip_vouchers SET delivery_no = ".db_escape($trans_no)." WHERE id = ".db_escape($voucher_no);break;
+			case ST_SALESINVOICE :$sql = "UPDATE trip_vouchers SET invoice_no = ".db_escape($trans_no)." WHERE id = ".db_escape($voucher_no);break;
+		}
+
+		db_query($sql,"Trip voucher updation failed");
+	}
+	return true;
+
+}
+
+
+//----------------------------------------------------------------------------------------
+
+
+
 
 
 ?>

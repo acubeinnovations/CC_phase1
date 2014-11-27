@@ -11,7 +11,6 @@
 ***********************************************************************/
 
 
-
 function update_delivery_with_cnc_voucher($delivery)
 {
 
@@ -109,7 +108,6 @@ function update_delivery_with_cnc_voucher($delivery)
 
 	//return  db_query($sql, 'Concurrent editing conflict');
 }
-
 //-----------------------------------------------------------------------------
 // insert/update sales delivery
 //
@@ -117,6 +115,7 @@ function write_sales_delivery(&$delivery,$bo_policy)
 {
 	global $Refs;
 	
+
 
 	$trans_no = $delivery->trans_no;
 	if (is_array($trans_no)) $trans_no = key($trans_no);
@@ -152,6 +151,11 @@ function write_sales_delivery(&$delivery,$bo_policy)
 		$delivery->sales_type, $delivery->order_no,
 		$delivery->ship_via, $delivery->due_date, 0, 0, $delivery->dimension_id, 
 		$delivery->dimension2_id, $delivery->payment, $delivery->tax_group_from_cnc);
+
+	//update trip voucher with delivery no
+	if($delivery_no){
+		update_cnc_voucher_with_transno($delivery->trip_voucher, ST_CUSTDELIVERY, $delivery_no);
+	}
 
 	if ($trans_no == 0) {
 		$delivery->trans_no = array($delivery_no=>0);
