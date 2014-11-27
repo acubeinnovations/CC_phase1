@@ -48,7 +48,7 @@
 		meta_forward('taxes/tax_types.php');
 		
 	}
-	elseif(isset($_GET['TaxGroup'])){
+	elseif(isset($_GET['TaxGroups'])){
 		meta_forward('taxes/tax_groups.php');
 		
 	}
@@ -79,7 +79,6 @@
 		}
 		meta_forward('sales/sales_order_entry.php',$param);
 		
-
 	}elseif(isset($_GET['ModifyDelivery'])){
 
 		$param = 'ModifyDelivery='.$_GET['ModifyDelivery'];
@@ -88,7 +87,6 @@
 		}
 		meta_forward('sales/customer_delivery.php',$param);
 		
-
 	}
 	elseif(isset($_GET['SalesDeliveries'])){
 		meta_forward('sales/inquiry/sales_deliveries_view.php','OutstandingOnly=1');

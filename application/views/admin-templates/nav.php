@@ -50,7 +50,7 @@
 				<li><a href="<?php echo base_url().'account/organization/PaymentTerms';?>"><i class="fa fa-angle-double-right"></i> Payment Terms</a></li>
 				<li><a href="<?php echo base_url().'account/organization/GlAccount';?>"><i class="fa fa-angle-double-right"></i> GL Accounts</a></li>
 				<li><a href="<?php echo base_url().'account/organization/TaxType';?>"><i class="fa fa-angle-double-right"></i> Tax Types</a></li>
-				<li><a href="<?php echo base_url().'account/organization/TaxGroup';?>"><i class="fa fa-angle-double-right"></i> Tax Group</a></li>
+				<li><a href="<?php echo base_url().'account/organization/TaxGroups';?>"><i class="fa fa-angle-double-right"></i> Tax Group</a></li>
 				<li><a href="<?php echo base_url().'account/organization/FiscalYear';?>"><i class="fa fa-angle-double-right"></i> Fiscal Year</a></li>
 				<li><a href="<?php echo base_url().'account/organization/SystemGl';?>"><i class="fa fa-angle-double-right"></i> System and GL Setup</a></li>
 				<li><a href="<?php echo base_url().'account/organization/VoidTransaction';?>"><i class="fa fa-angle-double-right"></i> Void Transaction</a></li>
