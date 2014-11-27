@@ -103,7 +103,32 @@ if (isset($_GET['OrderNumber']) && $_GET['OrderNumber'] > 0) {
 
 } elseif (isset($_GET['ModifyDelivery']) && $_GET['ModifyDelivery'] > 0) {
 
+<<<<<<< HEAD
 	$_SESSION['Items'] = new Cart(ST_CUSTDELIVERY, $_GET['ModifyDelivery']);
+=======
+	$cnc_voucher = get_cnc_voucher($_GET['ModifyDelivery']);
+	$dn = check_cnc_delivered($_GET['ModifyDelivery']);
+
+	
+	
+	//$_SESSION['Items'] = new Cart(ST_CUSTDELIVERY, $_GET['ModifyDelivery']);
+	$_SESSION['Items'] = new Cart(ST_CUSTDELIVERY, $dn);
+	if(isset($_GET['TaxGroup'])){
+		$_SESSION['Items']->tax_group_from_cnc = $_GET['TaxGroup'];
+		$_SESSION['Items']->set_tax_group($_GET['TaxGroup']);
+	}
+
+	$_SESSION['Items']->trip_voucher = $_GET['ModifyDelivery'];
+	
+	
+	
+	
+
+	//echo "<pre>";
+	//print_r($_SESSION['Items']);
+	//echo "</pre>";
+	//exit;
+>>>>>>> fa76443612e238c9f8c19125cf58c292bd9f4a7d
 
 	if ($_SESSION['Items']->count_items() == 0) {
 		hyperlink_params($path_to_root . "/sales/inquiry/customer_inquiry.php",

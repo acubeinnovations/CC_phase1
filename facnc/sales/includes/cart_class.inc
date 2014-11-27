@@ -357,6 +357,13 @@ class cart
 		$this->tax_group_array = get_tax_group_items_as_array($tax_group_id);
 	}
 
+	function set_tax_group($tax_group_id)
+	{
+		$this->tax_group_id = $tax_group_id;
+		$this->tax_group_array = get_tax_group_items_as_array($tax_group_id);
+		
+	}
+
 	function set_sales_type($sales_type, $sales_name, $tax_included=0, $factor=0)
 	{
 	    $this->sales_type = $sales_type;

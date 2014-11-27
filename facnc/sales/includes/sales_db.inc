@@ -272,8 +272,10 @@ function read_sales_trans($doc_type, $trans_no, &$cart)
 		$cart->set_customer($myrow["debtor_no"], $myrow["DebtorName"],
 			$myrow["curr_code"], $myrow["discount"], $myrow["payment_terms"]);
 
+
 		$cart->set_branch($myrow["branch_code"], $myrow["tax_group_id"],
 			$myrow["tax_group_name"]);
+
 
 		$cart->reference = $myrow["reference"];
 		$cart->order_no = $myrow["order_"];
