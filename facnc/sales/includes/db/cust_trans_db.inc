@@ -177,7 +177,8 @@ function get_customer_trans($trans_id, $trans_type)
 		// it's an invoice so also get the shipper
 		$sql .= " AND ".TB_PREF."sales_types.id = trans.tpe
 			AND branch.branch_code = trans.branch_code
-			AND branch.tax_group_id = ".TB_PREF."tax_groups.id ";
+			AND trans.tax_group_id = ".TB_PREF."tax_groups.id ";
+			//AND branch.tax_group_id = ".TB_PREF."tax_groups.id ";
 	}
 
 	$result = db_query($sql, "Cannot retreive a debtor transaction");
