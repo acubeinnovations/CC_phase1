@@ -107,10 +107,20 @@ if (isset($_GET['OrderNumber']) && $_GET['OrderNumber'] > 0) {
 	$cnc_voucher = get_cnc_voucher($_GET['ModifyDelivery']);
 	$dn = check_cnc_delivered($_GET['ModifyDelivery']);
 
+	
+	
 	//$_SESSION['Items'] = new Cart(ST_CUSTDELIVERY, $_GET['ModifyDelivery']);
 	$_SESSION['Items'] = new Cart(ST_CUSTDELIVERY, $dn);
+	if(isset($_GET['TaxGroup'])){
+		$_SESSION['Items']->tax_group_from_cnc = $_GET['TaxGroup'];
+		$_SESSION['Items']->set_tax_group($_GET['TaxGroup']);
+	}
 
 	$_SESSION['Items']->trip_voucher = $_GET['ModifyDelivery'];
+	
+	
+	
+	
 
 	//echo "<pre>";
 	//print_r($_SESSION['Items']);

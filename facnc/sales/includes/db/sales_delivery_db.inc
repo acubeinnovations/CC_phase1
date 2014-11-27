@@ -24,6 +24,19 @@ function update_delivery_with_cnc_voucher($delivery)
 	$tax = 0;
 	$total_taxable_amount =0;
 	$comments = '';
+
+
+	
+	$taxes = $delivery->get_taxes(); // all taxes with freight_tax
+
+	foreach ($taxes as $taxitem) {
+		$taxitem['Value'] =  round2($taxitem['Value'], user_price_dec());
+		$tax +=  $taxitem['Value'];
+	}
+
+	//echo "<pre>";print_r($taxes);echo "</pre>";exit;
+
+
 	foreach($delivery->line_items as $line_items){
 		
 
@@ -71,11 +84,21 @@ function update_delivery_with_cnc_voucher($delivery)
 			" WHERE order_no=".db_escape($delivery->order_no);
 	db_query($sql, 'failed to update sale order');
 
+	//clear tax transactions and reinsert if required
+	clear_trans_tax_details($type, $trans_no);
+	foreach ($taxes as $taxitem) {
+		if ($taxitem['Net'] != 0) {
+				$ex_rate = get_exchange_rate_from_home_currency(get_customer_currency($delivery->customer_id), $delivery->document_date);
+    		    add_trans_tax_details($type, $trans_no, $taxitem['tax_type_id'],
+				$taxitem['rate'], $delivery->tax_included, $taxitem['Value'],
+				$taxitem['Net'], $ex_rate, $delivery->document_date, $delivery->reference );
+		}
+	}
 	
 
-	$sql= "UPDATE ".TB_PREF. "trans_tax_details SET net_amount = ".db_escape($total_taxable_amount).",amount = ".db_escape($tax)." WHERE trans_no=".db_escape($trans_no)." AND trans_type=".db_escape($type);
+	//$sql= "UPDATE ".TB_PREF. "trans_tax_details SET net_amount = ".db_escape($total_taxable_amount).",amount = ".db_escape($tax)." WHERE trans_no=".db_escape($trans_no)." AND trans_type=".db_escape($type);
 
-	db_query($sql, 'failed to update tax trans');
+	//db_query($sql, 'failed to update tax trans');
 
 	$sql= "UPDATE ".TB_PREF. "stock_moves SET price = ".db_escape($total).
 			" WHERE trans_no=".db_escape($trans_no)." AND type=".db_escape($type);
