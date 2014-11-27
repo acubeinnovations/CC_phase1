@@ -259,6 +259,8 @@ function read_sales_trans($doc_type, $trans_no, &$cart)
 	} else {
 		// read header data from first document
 		$myrow = get_customer_trans($trans_no[0],$doc_type);
+
+		$cart->tax_group_from_cnc = $myrow['tax_group_id'];
 		
 		if (count($trans_no)>1)
 			$cart->trans_no = get_customer_trans_version($doc_type, $trans_no);

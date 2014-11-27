@@ -76,7 +76,7 @@ class cart
 	//cnc
 	var $trip_ref;
 
-	
+	var $tax_group_from_cnc;
 	
 
 

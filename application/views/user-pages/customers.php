@@ -53,7 +53,7 @@ echo form_close();?></td>
 						?></td>
 						<!--<td>
 						<?php echo form_open(  base_url().'customers/importToFa');
-								  echo form_submit("Import","Import","class='btn btn-primary'");
+								  echo form_submit("Import","Import C&CG","class='btn btn-primary'");
 								  echo form_close(); 
 						?>
 						</td>-->

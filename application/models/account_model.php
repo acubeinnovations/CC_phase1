@@ -358,13 +358,14 @@ class account_model extends CI_Model {
 		}
 	}
 
+	//get tax groups
 	function getTaxArray($condion = '')
 	{
 
-		$fa_tax_table = $this->session->userdata('organisation_id')."_tax_types";
+		$fa_tax_table = $this->session->userdata('organisation_id')."_tax_groups";
 		
 		if($this->check_fa_table_exists($fa_tax_table)){
-			$this->db->select("rate, CONCAT(name, ' (',rate,'%)') as name");
+			$this->db->select("id,name");
 			$this->db->from($fa_tax_table);
 			if($condion!=''){
 			    $this->db->where($condion);
@@ -372,7 +373,7 @@ class account_model extends CI_Model {
 			$results = $this->db->get()->result();
 
 			for($i=0;$i<count($results);$i++){
-				$values[$results[$i]->rate]=$results[$i]->name;
+				$values[$results[$i]->id]=$results[$i]->name;
 			}
 
 			if(!empty($values)){
@@ -385,14 +386,51 @@ class account_model extends CI_Model {
 			return false;
 		}
 		
-		
-	    
-	
-
-			
 			
 
 	}
+
+	//get taxes array with rate
+	function getTaxTypes($tax_group_id)
+	{
+		$tax_group_array = $this->get_tax_group_items_as_array($tax_group_id);
+		if($tax_group_array){
+
+			$sales_type = $myrow[0]['id'];
+		    	$sales_type_name = $myrow[0]['sales_type'];
+		    	$tax_included = $myrow[0]['tax_included'];
+		    	$price_factor = $myrow[0]['factor'];
+			$tax_group_id = $this->get_company_prefs('');
+			
+
+		}
+
+	}
+
+	
+
+	function get_tax_group_rates($group_id=null)
+	{
+		$tbl_pref = $this->session->userdata('organisation_id')."_";
+
+		$sql = "SELECT tg.* FROM ".$tbl_pref."tax_group_items tg,".$tbl_pref."tax_groups g,".$tbl_pref."tax_types t
+			WHERE tg.tax_group_id=".$group_id."
+			AND tg.tax_group_id = g.id
+			AND tg.tax_type_id = t.id
+			AND  !t.inactive
+			AND tax_shipping=1";
+		
+		/*$sql = "SELECT t.id ,t.rate FROM ".$tbl_pref."tax_types t 
+			  LEFT JOIN ".$tbl_pref."tax_group_items g ON t.id=g.tax_type_id
+				AND g.tax_group_id=". ($group_id ? $group_id : "(SELECT id FROM ".TB_PREF."tax_groups WHERE tax_shipping=1)")
+			." WHERE !t.inactive";*/
+		//echo $sql;exit;
+
+		return $this->db->query($sql)->result_array();
+
+		
+	}
+
 
 
 }
