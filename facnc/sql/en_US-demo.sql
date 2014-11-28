@@ -692,6 +692,7 @@ CREATE TABLE IF NOT EXISTS `0_debtor_trans` (
   `dimension_id` int(11) NOT NULL default '0',
   `dimension2_id` int(11) NOT NULL default '0',
   `payment_terms` int(11) default NULL,
+  `tax_group_id` int(11) DEFAULT NULL,
   PRIMARY KEY  (`type`,`trans_no`),
   KEY `debtor_no` (`debtor_no`,`branch_code`),
   KEY `tran_date` (`tran_date`),
