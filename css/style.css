@@ -9,6 +9,11 @@ iframe{
 border:none;
 overflow:auto;
 }
+
+.sp-btn{
+cursor:pointer;
+color: rgb(114, 175, 210);
+}
 a{
 
 text-decoration: none;
