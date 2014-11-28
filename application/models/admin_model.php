@@ -172,19 +172,16 @@ class admin_model extends CI_Model {
 	//newly added
 	//change status of organisation and organisation admin by userid and organisation id respectevely
 	function orgEnableDisable($data) {
-		$dbdata = array('user_status_id'=>$data['status_id']);
-		$this->db->where('id',$data['user_id'] );
-		$succesuser=$this->db->update('users',$dbdata);
-		if($succesuser>0){
-		$dbdata = array('status_id'=>$data['status_id']);
-		$this->db->where('id',$data['org_id'] );
-		$succes=$this->db->update('organisations',$dbdata);
-		if($succes > 0) {
-		return true;
-		}
-		}
-
-	}
+               $dbdata = array('status_id'=>$data['status_id']);
+               $this->db->where('id',$data['org_id'] );
+               $succes=$this->db->update('organisations',$dbdata);
+               if($succes>0){
+		       $dbdata = array('user_status_id'=>$data['user_status_id']);
+		       $this->db->where('organisation_id',$data['org_id'] );
+		       $succesuser=$this->db->update('users',$dbdata);
+		       return true;
+               }
+        }
 
 	function updateOrganization($data){
 		$orgdbdata = array('name'=>$data['name'],'address'=>$data['addr']);
