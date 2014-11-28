@@ -2267,7 +2267,7 @@ $(".taxgroup").change(function(){
 function resetTax()
 {
 	$('#totaltax').val('');
-	$('.taxgroup').val('');
+	$(".taxgroup").val('');
 	$('#totaltax').hide();
 	$(".taxgroup").show();
 }
