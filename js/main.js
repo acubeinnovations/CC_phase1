@@ -1711,6 +1711,7 @@ function timeDifference(fromdate,fromtime,todate,totime){
 $('.modal-close').on('click',function(){
 
 	clearErrorLabels();
+	resetTax();
 
 });
 
@@ -2262,6 +2263,14 @@ $(".taxgroup").change(function(){
 
 
 });
+
+function resetTax()
+{
+	$('#totaltax').val('');
+	$('.taxgroup').val('');
+	$('#totaltax').hide();
+	$(".taxgroup").show();
+}
 
 
 //km keyup event
