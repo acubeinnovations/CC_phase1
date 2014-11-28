@@ -401,22 +401,7 @@ class account_model extends CI_Model {
 
 	}
 
-	//get taxes array with rate
-	function getTaxTypes($tax_group_id)
-	{
-		$tax_group_array = $this->get_tax_group_items_as_array($tax_group_id);
-		if($tax_group_array){
-
-			$sales_type = $myrow[0]['id'];
-		    	$sales_type_name = $myrow[0]['sales_type'];
-		    	$tax_included = $myrow[0]['tax_included'];
-		    	$price_factor = $myrow[0]['factor'];
-			$tax_group_id = $this->get_company_prefs('');
-			
-
-		}
-
-	}
+	
 
 	
 	//get tax types array for a tax group
