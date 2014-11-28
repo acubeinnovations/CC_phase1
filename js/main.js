@@ -1711,6 +1711,7 @@ function timeDifference(fromdate,fromtime,todate,totime){
 $('.modal-close').on('click',function(){
 
 	clearErrorLabels();
+	resetTax();
 
 });
 
@@ -2227,21 +2228,6 @@ function setTotalAmount()
 	
 	var total = Number(total_tarif)+Number(statetax)+Number(driverbata)+Number(tollfee)+Number(nighthalt)+Number(parkingfee);
 	$('.totalamount').val(total);
-	//setTax(total);
-}
-
-//calculate tax amount
-function setTax(amount = 0,rate=0)
-{
-	var taxable_amount = amount*0.4;
-	
-	var tax = taxable_amount*rate/100;
-	//$('.totaltax').val(tax);
-	//$('.totaltax').val(tax);
-	
-	$("#totaltax").val(tax);
-	
-	return tax;
 	
 }
 
@@ -2262,6 +2248,14 @@ $(".taxgroup").change(function(){
 
 
 });
+
+function resetTax()
+{
+	$('#totaltax').val('');
+	$(".taxgroup").val('');
+	$('#totaltax').hide();
+	$(".taxgroup").show();
+}
 
 
 //km keyup event
