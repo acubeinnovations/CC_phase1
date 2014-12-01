@@ -460,7 +460,7 @@ if($('.beacon-light-chek-box').attr('checked')=='checked'){
 //date picker removed for pickupdat n time drop date n time
 
 $('#pickupdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
-//$('#dropdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
+$('#dropdatepicker').datetimepicker({timepicker:false,format:'Y-m-d',formatDate:'Y-m-d'});
 /*$('#pickuptimepicker').datetimepicker({datepicker:false,
 	format:'H:i',
 	step:30
