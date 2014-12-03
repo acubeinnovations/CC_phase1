@@ -1494,6 +1494,7 @@ var r = confirm("Please Select Vehicle Model To Complete The Trip..Click OK to C
 
 
 $('.voucher').on('click',function(){
+	var new_voucher = $(this).attr('new_voucher');
 	var trip_id=$(this).attr('trip_id');
 	var driver_id=$(this).attr('driver_id');
 	var tarrif_id=$(this).attr('tarrif_id');
@@ -1531,6 +1532,8 @@ $('.voucher').on('click',function(){
 	//$('.modal-body').css('position','fixed');
 	$('.trip-voucher-save').attr('trip_id',trip_id);
 	$('.trip-voucher-save').attr('driver_id',driver_id);
+	$('.trip-voucher-save').attr('new_voucher',new_voucher);
+	
 
 
 
@@ -2316,8 +2319,14 @@ function getTariff(minimum_kilometers,rate,additional_kilometer_rate)
 $('.trip-voucher-save').on('click',function(){
 
 	var tax_group = $('.taxgroup').val();//tax calculating factor
-
+	var new_voucher=$(this).attr('new_voucher');
 	var error = false;
+
+	
+
+	if(new_voucher == 1 && tax_group == ''){
+		error = true;
+	}
 	
 	var trip_id=$(this).attr('trip_id');
 	var driver_id=$(this).attr('driver_id');
