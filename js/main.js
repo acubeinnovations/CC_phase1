@@ -1616,7 +1616,7 @@ $('.voucher').on('click',function(){
 						$('.perdaykmamount').val(data[0].base_amount);
 						$('.adtperdaykm').val(data[0].adt_tarif);
 						$('.adtperdaykmrate').val(data[0].adt_tarif_rate);
-						setPerDay_Tariff(data[0].base_tarif,data[0].base_amount,data[0].adt_tarif_rate);
+						setPerDay_Tariff(data[0].base_tarif,data[0].base_amount,data[0].adt_tarif_rate,data[0].no_of_days);
 				} else{
 					$('.basekm').val(data[0].base_tarif);
 					$('.baseamount').val(data[0].base_amount);
@@ -1728,7 +1728,7 @@ $('.endkm').keyup(function(e) {
 	
 	if($('.daysno').val() > 1){
 		$('.adtperdaykm').val(total-$('.perdaykm').val());
-		setPerDay_Tariff($('.perdaykm').val(),$('.perdaykmamount').val(),$('.adtperdaykmrate').val());
+		setPerDay_Tariff($('.perdaykm').val(),$('.perdaykmamount').val(),$('.adtperdaykmrate').val(),$('.daysno').val());
 	}	
 	else{
 		$('.adtkm').val(total-$('.basekm').val());
@@ -1746,7 +1746,7 @@ $('.startkm').keyup(function(e) {
 
 	if($('.daysno').val() > 1){
 		$('.adtperdaykm').val(total-$('.perdaykm').val());
-		setPerDay_Tariff($('.perdaykm').val(),$('.perdaykmamount').val(),$('.adtperdaykmrate').val());
+		setPerDay_Tariff($('.perdaykm').val(),$('.perdaykmamount').val(),$('.adtperdaykmrate').val(),$('.daysno').val());
 	}	
 	else{
 		$('.adtkm').val(total-$('.basekm').val());
@@ -2152,7 +2152,7 @@ function setHR_Tariff(basehrs,basehrsamount,adlhrrate)
 }
 
 //Per Day tariff calculation
-function setPerDay_Tariff(basekm,baseamount,adlkmrate)
+function setPerDay_Tariff(basekm,baseamount,adlkmrate,daysno)
 {
 	var totalkm=$('.totalkm').val();
 	
@@ -2164,7 +2164,7 @@ function setPerDay_Tariff(basekm,baseamount,adlkmrate)
 		}else
 		{
 			if(Number(totalkm) <= Number(basekm)){
-				total_tarif = baseamount;
+				total_tarif = baseamount*daysno;
 
 				$('.adtperdaykm').val('');
 				$('.adtperdaykmrate').val('');
@@ -2181,7 +2181,7 @@ function setPerDay_Tariff(basekm,baseamount,adlkmrate)
 
 				if(baseamount!='' && adlkmrate!=''){
 					var adtamt = adtkm*adlkmrate;
-					total_tarif = Number(baseamount)+Number(adtamt);
+					total_tarif = Number(baseamount)*daysno+Number(adtamt);
 				}
 			}
 		}
@@ -2285,9 +2285,10 @@ $('.basehrs,.basehrsamount,.adlhrrate').keyup(function(){
 $('.perdaykm,.perdaykmamount,.adtperdaykmrate').keyup(function(){
 
 	var perdaykm=$('.perdaykm').val();
+	var daysno=$('.daysno').val();
 	var perdaykmamount=$('.perdaykmamount').val();
 	var adtperdaykmrate=$('.adtperdaykmrate').val();
-	setPerDay_Tariff(perdaykm,perdaykmamount,adtperdaykmrate);
+	setPerDay_Tariff(perdaykm,perdaykmamount,adtperdaykmrate,daysno);
 
 });
 
