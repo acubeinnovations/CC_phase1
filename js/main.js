@@ -1541,7 +1541,8 @@ $('.voucher').on('click',function(){
 	$('.company').val(company_name);
 	$('.startdt').val(formatDate_d_m_Y(pick_up_date));
 	$('.enddt').val(formatDate_d_m_Y(drop_date));
-	$('.model').val(model);
+	$('#model').val(vehicle_model_id);
+	
 	$('.vehicleno').val(vehicle_no);
 	$('.description').val(description);
 
@@ -2333,6 +2334,8 @@ $('.trip-voucher-save').on('click',function(){
 
 	var voucherno = $('.voucherno').val();
 	var remarks = $('.description').val();
+	var model = $('#model').val();
+
 	
 	var enddt=$('.enddt').val();
 	var trip_starting_time=$('.tripstartingtime').val();
@@ -2410,7 +2413,8 @@ $('.trip-voucher-save').on('click',function(){
 				vehicletarif:vehicletarif,
 				driver_id:driver_id,
 				totalamount:totalamount,
-				tax_group:tax_group
+				tax_group:tax_group,
+				model:model
 				
 			},function(data){
 			  if(data!='false'){

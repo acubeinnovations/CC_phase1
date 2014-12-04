@@ -474,6 +474,7 @@ class Trip_booking extends CI_Controller {
 			$data['trip_id']			= $_REQUEST['trip_id'];
 			$trip_data['drop_date']			= date('Y-m-d',strtotime($_REQUEST['enddt']));
 			$trip_data['remarks']			= $_REQUEST['remarks'];
+			$trip_data['vehicle_model_id']		= $_REQUEST['model'];
 
 			//trip voucher data
 			

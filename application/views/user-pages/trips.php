@@ -326,7 +326,10 @@ echo form_close();?></td>
 					<div class="div-with-20-percent-width-with-margin-10">
 						<div class="form-group">
 							<?php echo form_label('Vehicle','model'); ?>
-							<?php echo form_input(array('name'=>'model','tabindex'=>"13",'class'=>'form-control model','placeholder'=>'Vehicle Model','readonly'=>'true')); 
+							<?php //echo form_input(array('name'=>'model','tabindex'=>"13",'class'=>'form-control model','placeholder'=>'Vehicle Model','readonly'=>'true')); 
+						$class="form-control";						  
+						$id='model';							
+							echo $this->form_functions->populate_dropdown('model',$vehicle_models,'',$class,$id,$msg="Vehicle Model",array('tab_index'=>"13"));
 							?>
 						</div>
 						<div class="form-group">
