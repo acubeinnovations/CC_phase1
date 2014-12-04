@@ -699,7 +699,8 @@ class User extends CI_Controller {
 				}
 			}
 			}
-			$qry.=' order by T.id desc';
+			//$qry.=' order by T.id desc';
+			$qry.=' order by CONCAT( T.pick_up_date, " ", T.pick_up_time ) ASC';
 			
 			$tbl_arry=array('trip_statuses','customer_groups');
 	
