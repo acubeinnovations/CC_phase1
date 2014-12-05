@@ -288,7 +288,7 @@ function display_trip_data($cnc_data, &$order)
 			echo "</td>";
 			label_cell($cnc_data['no_of_days'],'width=10%');
 			
-			echo "<td>";
+			//echo "<td>";
 				//echo $cnc_data['from_city']." - ".$cnc_data['to_city'];
 				//echo "<br/>";
 //echo $cnc_data['state_tax'] ;exit;
@@ -321,9 +321,11 @@ function display_trip_data($cnc_data, &$order)
 				}
 				
 
-				echo $particulars;
+				//echo $particulars;
 
-			echo "</td>";
+			//echo "</td>";
+
+			textarea_cells(null,'Comments', $particulars, 50, 4);
 			
 			label_cell(price_format($line_total),'width=10%');
 	
@@ -338,7 +340,7 @@ function display_trip_data($cnc_data, &$order)
 		hidden('Disc',percent_format($order->default_discount * 100));
 		hidden('line_total',$line_total);
 		hidden('LineNo', 1);
-		hidden('Comments', $particulars, 31, 5);
+		//hidden('Comments', $particulars, 31, 5);
 		hidden('trip_voucher',$cnc_data['voucher_no']);
 
 		//----------------------------------end trip data----------------------------------------

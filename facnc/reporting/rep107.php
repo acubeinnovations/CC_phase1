@@ -37,10 +37,11 @@ function get_delivery_no($src_id){
 
 function get_trip($voucher = 0)
 {
-	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str";
+	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str,model.name as Model";
 	$sql .= " FROM trip_vouchers voucher";
 	$sql .= " LEFT JOIN trips trip ON trip.id = voucher.trip_id";
 	$sql .= " LEFT JOIN vehicles vehicle ON trip.vehicle_id = vehicle.id";
+	$sql .= " LEFT JOIN vehicle_models model ON trip.vehicle_model_id = model.id";
 	$sql .= " WHERE voucher.id = ".db_escape($voucher);
 
 	$result = db_query($sql, "Error getting order details");
@@ -137,12 +138,18 @@ function print_invoices()
 	
 			
 				$trip = get_trip($myrow2['trip_voucher']);
-				
+				//print_r($trip);exit;
 				$rep->TextCol(0, 1,  $slno);
 				$rep->TextCol(1, 2,  @$trip['voucher_str']);
 				$rep->TextCol(2, 3,  @$trip['trip_date']);
+
 				$rep->TextCol(3, 4,  @$trip['vehicle_no']);
-				$rep->TextCol(4, 5,  "OFFICER");
+				$temp = $rep->row;
+				$rep->NewLine();
+				$rep->TextCol(3, 4,  @$trip['Model']);
+				$rep->row = $temp;
+				
+				$rep->TextCol(4, 5,  @$myrow['DebtorName']);
 				$rep->TextColLines(5, 6,  $memo);
 
 				$Net = round2($sign * ((1 - $myrow2["discount_percent"]) * $myrow2["unit_price"] * $myrow2["quantity"]), user_price_dec());
@@ -160,6 +167,8 @@ function print_invoices()
 				$slno++;
 			}
 
+			
+
 
    			$DisplaySubTot = number_format2($SubTotal,$dec);
    			$DisplayFreight = number_format2($sign*$myrow["ov_freight"],$dec);
@@ -167,9 +176,20 @@ function print_invoices()
     			$rep->row = $rep->bottomMargin + (15 * $rep->lineHeight);
 			$doctype = ST_SALESINVOICE;
 
+
+
+			
+
+			$DisplayTotal = number_format2($sign*($myrow["ov_freight"] + $myrow["ov_gst"] +
+				$myrow["ov_amount"]+$myrow["ov_freight_tax"]),$dec);
+
+
+
 			$tax_items = get_trans_tax_details(ST_SALESINVOICE, $i);
+		
 			$first = true;
 			$Tax = 0;
+			$tax_str=array();
 	    		while ($tax_item = db_fetch($tax_items))
 	    		{
 	    			if ($tax_item['amount'] == 0)
@@ -182,11 +202,24 @@ function print_invoices()
 	    			else
 	    				$tax_type_name = $tax_item['tax_type_name']." (".$tax_item['rate']."%) ";
 
+				
+				if($tax_item['tax_type_name'] == 'Service Tax'){
+					$tax_str[$tax_item['id']]['left'] = "40 % of ".$DisplaySubTot." ".$tax_item['rate']."% is Rs";
+					$tax_str[$tax_item['id']]['right'] = number_format2($tax_item['amount'],$dec);
+				}
+					
+				else{
+					$tax_str[$tax_item['id']]['left'] = $tax_item['tax_type_name']."@ ".$tax_item['rate']."% + ".$tax_item['net_amount']." is Rs ";
+					$tax_str[$tax_item['id']]['right'] = number_format2($tax_item['amount'],$dec);
+				}
+					
+
 	    		}
+			
+
 			$DisplayTax = number_format2($Tax, $dec);
 
-			$DisplayTotal = number_format2($sign*($myrow["ov_freight"] + $myrow["ov_gst"] +
-				$myrow["ov_amount"]+$myrow["ov_freight_tax"]),$dec);
+
 			$advance = 0;
 			$DisplayAdvance = number_format2($advance,$dec);
 			$DisplayBalance = number_format2($myrow['Total']-$advance,$dec);
@@ -203,22 +236,41 @@ function print_invoices()
 
 			$rep->NewLine(3);
 			$rep->Text($rep->words_column+100,"Net Payable ".$DisplayBalance);
+//'Service Tax' => $DisplayTax,
+			
+			
+
+			$rep->row = $rep->totals_row+20;
+			$rep->Text($rep->totals_column + 5, "Total Amount is Rs.");
+				
+			$rep->Text($rep->totals_column + 220, $DisplaySubTot);
+
+			$rep->row = $rep->totals_row;
+
+			$rep->Text($rep->totals_column + 5, "Service Tax");
+				$rep->Text($rep->totals_column + 90, ":");
+			$rep->NewLine();	
+			$rep->font();
+			foreach($tax_str as $str){
+				$rep->Text($rep->totals_column + 5, $str['left']);
+				
+				$rep->Text($rep->totals_column + 220, $str['right']);
+				$rep->NewLine();
+			}
 
 			$totals = array(
-					'Service Tax' => $DisplayTax,
 					'GRAND TOTAL' => $DisplayTotal,
 					'Cash Advance' => $DisplayAdvance,
 					'BALANCE' => $DisplayBalance			
 					);
-
-			$rep->row = $rep->totals_row;	
 			
-			$rep->NewLine();
 			foreach($totals as $key=>$value){
+				$rep->font('bold');
 				$rep->Text($rep->totals_column + 5, $key);
 				$rep->Text($rep->totals_column + 90, ":");
-				$rep->Text($rep->totals_column + 95, $value);
-				$rep->NewLine(2);
+				$rep->font();
+				$rep->Text($rep->totals_column + 220, $value);
+				$rep->NewLine();
 			}
 			
 			$rep->Font();
