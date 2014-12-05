@@ -204,17 +204,15 @@ function print_invoices()
 
 				
 				if($tax_item['tax_type_name'] == 'Service Tax'){
-					$tax_str[$tax_item['id']]['left'] = "40 % of ".$DisplayTotal." ".$tax_item['rate']."% is Rs";
-					$tax_str[$tax_item['id']]['right'] = $tax_item['amount'];
+					$tax_str[$tax_item['id']]['left'] = "40 % of ".$DisplaySubTot." ".$tax_item['rate']."% is Rs";
+					$tax_str[$tax_item['id']]['right'] = number_format2($tax_item['amount'],$dec);
 				}
 					
 				else{
 					$tax_str[$tax_item['id']]['left'] = $tax_item['tax_type_name']."@ ".$tax_item['rate']."% + ".$tax_item['net_amount']." is Rs ";
-					$tax_str[$tax_item['id']]['right'] = $tax_item['amount'];
+					$tax_str[$tax_item['id']]['right'] = number_format2($tax_item['amount'],$dec);
 				}
 					
-
-
 
 	    		}
 			
