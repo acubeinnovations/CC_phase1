@@ -300,7 +300,11 @@ function display_trip_data($cnc_data, &$order)
 				}else{
 					$tarif .= "KM";
 				}
-				$particulars = "Minimum ".$cnc_data['base_tarif']." ".$tarif."@ Rs ".$cnc_data['base_amount'];
+
+				if($cnc_data['no_of_days'] > 2)
+					$particulars = $cnc_data['no_of_days']."@ Rs. ".$cnc_data['base_amount']."/Day"
+				else
+					$particulars = "Minimum ".$cnc_data['base_tarif']." ".$tarif."@ Rs ".$cnc_data['base_amount'];
 				if($cnc_data['base_amount'] != ''){
 					$particulars .= " + Additional  ".$cnc_data['adt_tarif']." ".$tarif."@".$cnc_data['adt_tarif_rate']."/".$tarif;
 				}
