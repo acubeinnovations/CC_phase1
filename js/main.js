@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-var total_tarif = 0;// global total tariff
+var total_tarif = 0; // global total tariff
 var km_flag = 1;
 var hr_flag = 2;
 
@@ -2637,7 +2637,21 @@ $('#hdriverDate').val(d.yyyymmdd());
 });
 
 			//----ends function
-						
+	//--to expand and collapse table rows for trips	
+
+	$('#trip_tbl tr').click(function(){
+		$(this).hide();
+	if($(this).attr('limited')=='true'){
+		
+		$(this).next().show();
+	}else if($(this).attr('limited')=='false'){
+		$(this).prev().show();
+	}
+
+	
+	});
+	
+			//ends function			
 						// ----to display current date while selecting device
 $('#addDevice').on('change',function(){
 var device_id=$('#addDevice').val();
