@@ -95,6 +95,8 @@ function get_cnc_voucher($id = 0)
 		voucher.adt_tarif,
 		voucher.adt_tarif_rate,
 		voucher.km_hr,
+		voucher.delivery_no,
+		voucher.invoice_no,
 		vmodels.name as vehicle_model
 		";
 	$sql .="  FROM trip_vouchers voucher ";
