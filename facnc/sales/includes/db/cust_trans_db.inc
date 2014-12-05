@@ -308,8 +308,8 @@ function get_sql_for_trip_invoices()
   	$sql = "SELECT 
 		trans.trans_no, 
 		IF(cg.name IS NULL,'CASH', debtor.name) AS company,
-		trip.id,
-		voucher.id,
+		trip.id AS trip_id,
+		voucher.id AS voucher_id,
 		trip.pick_up_date,
 		trans.tran_date, 
 		(trans.ov_amount + trans.ov_gst + trans.ov_freight 

@@ -37,10 +37,11 @@ function get_delivery_no($src_id){
 
 function get_trip($voucher = 0)
 {
-	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str,model.name as Model";
+	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str,model.name as Model,cust.name as Customer";
 	$sql .= " FROM trip_vouchers voucher";
 	$sql .= " LEFT JOIN trips trip ON trip.id = voucher.trip_id";
 	$sql .= " LEFT JOIN vehicles vehicle ON trip.vehicle_id = vehicle.id";
+	$sql .= " LEFT JOIN customers cust ON trip.customer_id = cust.id";
 	$sql .= " LEFT JOIN vehicle_models model ON trip.vehicle_model_id = model.id";
 	$sql .= " WHERE voucher.id = ".db_escape($voucher);
 
@@ -77,7 +78,8 @@ function print_invoices()
 	$to = max($fno[0], $tno[0]);
 
 	//$cols = array(4, 60, 225, 300, 325, 385, 450, 515);
-	$cols = array(4, 30, 80, 140, 210, 270, 500, 535);
+	//$cols = array(4, 30, 80, 140, 210, 270, 500, 535);
+	$cols = array(4, 30, 80, 140, 210, 270, 480, 535);
 
 	// $headers in doctext.inc
 	$aligns = array('center','center','center', 'center', 'center', 'center', 'center');
@@ -149,7 +151,7 @@ function print_invoices()
 				$rep->TextCol(3, 4,  @$trip['Model']);
 				$rep->row = $temp;
 				
-				$rep->TextCol(4, 5,  @$myrow['DebtorName']);
+				$rep->TextCol(4, 5,  @$trip['Customer']);
 				$rep->TextColLines(5, 6,  $memo);
 
 				$Net = round2($sign * ((1 - $myrow2["discount_percent"]) * $myrow2["unit_price"] * $myrow2["quantity"]), user_price_dec());
@@ -209,7 +211,7 @@ function print_invoices()
 				}
 					
 				else{
-					$tax_str[$tax_item['id']]['left'] = $tax_item['tax_type_name']."@ ".$tax_item['rate']."% + ".$tax_item['net_amount']." is ";
+					$tax_str[$tax_item['id']]['left'] = $tax_item['tax_type_name']." @ ".$tax_item['rate']."% + ".$tax_item['net_amount']." is ";
 					$tax_str[$tax_item['id']]['right'] = "Rs. ".number_format2($tax_item['amount'],$dec);
 				}
 					
@@ -235,7 +237,7 @@ function print_invoices()
 			
 
 			$rep->NewLine(3);
-			$rep->Text($rep->words_column+100,"Net Payable ".$DisplayBalance);
+			$rep->Text($rep->words_column,"Net Payable : Rs. ".$DisplayBalance);
 //'Service Tax' => $DisplayTax,
 			
 			
