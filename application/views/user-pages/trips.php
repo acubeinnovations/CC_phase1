@@ -84,7 +84,7 @@ echo form_close();?></td>
 			if (isset($result)){ echo $result;} else {?></div>
 		
 		<div class="box-body table-responsive no-padding trips-table">
-			<table class="table table-hover table-bordered">
+			<table class="table table-hover table-bordered" id="trip_tbl">
 				<tbody>
 					<tr>	
 						
@@ -120,7 +120,78 @@ echo form_close();?></td>
 							$no_of_days=$diff->d;
 						}
 					?>
-					<tr>
+					<tr class="row_click common" style="cursor:pointer;" limited="true">
+						
+						<td><?php echo $trips[$trip_index]['trip_id'];?></td>
+						<td><?php echo $trips[$trip_index]['booking_date'];?></td>
+					   <!-- <td><?php echo $customers[$trips[$trip_index]['customer_id']].br();
+						if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $customer_groups[$trips[$trip_index]['customer_group_id']];}?></td>-->
+					    <td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
+						<td><?php echo $trips[$trip_index]['pick_up_time']; ?></td>
+					    
+						 <td><?php if(isset($trips[$trip_index]['pick_up_city'])){echo substr($trips[$trip_index]['pick_up_city'],0,10)."..";}else{};
+									
+						 ?></td>
+					  <td>
+					  <?php if($trips[$trip_index]['guest_id']==gINVALID || $trips[$trip_index]['guest_id']==0){echo '';}else{ echo substr($trips[$trip_index]['guest_name'],0,10)."..";
+					    } ?>
+					  </td>
+						<!-- <td><?php echo $trips[$trip_index]['drop_city'].br();
+									echo $trips[$trip_index]['drop_area'];
+						 ?></td>-->
+					 <td><?php if($trips[$trip_index]['customer_id']==gINVALID || $trips[$trip_index]['customer_id']==0){echo '';}else{ echo $trips[$trip_index]['customer_name'].br();
+					    }
+					    //if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $trips[$trip_index]['customer_group'].br();
+					    //}
+					    //if($trips[$trip_index]['customer_id']==gINVALID || $trips[$trip_index]['customer_id']==0){echo '';}else{ echo $trips[$trip_index]['customer_mobile'];
+					    //}
+					    ?></td>
+					    <td><?php 
+					    if($trips[$trip_index]['vehicle_id']==gINVALID || $trips[$trip_index]['vehicle_id']==0){echo 'Nil'.br();}else{ echo $trips[$trip_index]['registration_number'].br();
+					    }
+					    //if($trips[$trip_index]['vehicle_model_id']==gINVALID || $trips[$trip_index]['vehicle_model_id']==0){echo '';}else{ echo $trips[$trip_index]['model'].br();
+					    //}
+					    /*if($trips[$trip_index]['vehicle_ownership_types_id']==gINVALID || $trips[$trip_index]['vehicle_ownership_types_id']==0){echo '';}else{ echo $trips[$trip_index]['ownership'].br();
+					    }*/
+					    ?></td>
+					  <td><?php
+						if($trips[$trip_index]['driver_id']==gINVALID || $trips[$trip_index]['driver_id']==0){echo 'Nil';}else{ echo $trips[$trip_index]['driver'];
+					    }
+						?></td>
+					    <td>
+							<span class="label <?php echo $status_class[$trips[$trip_index]['trip_status_id']]; ?>"><?php echo $trip_statuses[$trips[$trip_index]['trip_status_id']];?></span> 
+						
+						</td>	
+						
+						
+						<td>
+
+	<?php 
+
+	if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED || $trips[$trip_index]['trip_status_id']==TRIP_STATUS_PENDING ) { 
+
+		echo anchor_popup_default(base_url().'organization/front-desk/trip-booking/'.$trips[$trip_index]['trip_id'],'<span></span>',array('class'=>'fa fa-edit ','title'=>'Edit')).nbs(5);
+
+		if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_CONFIRMED) { 
+
+			echo "<a href=".base_url().'trip/complete/'.$trips[$trip_index]['trip_id']."/".$this->uri->segment(4)." title='Complete' class='fa fa-caret-square-o-right complete-trip'><span vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' trip_id='".$trips[$trip_index]['trip_id']."'></span></a>"; 
+		
+		} 
+		
+	}else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_COMPLETED){ 
+		echo "<a href=".base_url().'trip/view/'.$trips[$trip_index]['trip_id']." class='fa fa-print for print' target='_blank' title='Print'></a>".nbs(5)."<span title='Voucher' class='sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' new_voucher = 1 ></span>"; 
+		
+	}else if($trips[$trip_index]['trip_status_id']==TRIP_STATUS_TRIP_BILLED){ 
+		echo "<span title='Voucher' class='sp-btn fa fa-mail-forward voucher' trip_id='".$trips[$trip_index]['trip_id']."' driver_id='".$trips[$trip_index]['driver_id']."' tarrif_id='".$trips[$trip_index]['tariff_id']."' type='button' no_of_days='".$no_of_days."' pick_up_time='".$trips[$trip_index]['pick_up_time']."' vehicle_ac_type_id='".$trips[$trip_index]['vehicle_ac_type_id']."' vehicle_model_id='".$trips[$trip_index]['vehicle_model_id']."' pick_up_date='".$trips[$trip_index]['pick_up_date']."' drop_date='".$trips[$trip_index]['drop_date']."' company_name='".$trips[$trip_index]['company_name']."' customer_name='".$trips[$trip_index]['customer_name']."' model='".$trips[$trip_index]['model']."' vehicle_no='".$trips[$trip_index]['registration_number']."' description='".$trips[$trip_index]['remarks']."' new_voucher = 0 ></span>"; 
+		
+	} 
+	?>
+	</td>
+					</tr>
+					
+					<?php // hidden values?>
+
+								<tr style="display:none;" class="hide-row " style="cursor:pointer; " limited="false" >
 						
 						<td><?php echo $trips[$trip_index]['trip_id'];?></td>
 						<td><?php echo $trips[$trip_index]['booking_date'];?></td>
@@ -190,6 +261,18 @@ echo form_close();?></td>
 	?>
 	</td>
 					</tr>
+					
+					
+			
+					
+					
+					
+					
+					
+					
+					
+				<?php //ends hidden tr	?>
+					
 					<?php 
 						$trip_sl_no++;
 						}
