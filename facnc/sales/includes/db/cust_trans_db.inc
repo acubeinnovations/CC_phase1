@@ -323,8 +323,9 @@ function get_sql_for_trip_invoices()
 		Sum(line.quantity-line.qty_done) AS Outstanding,trans.trans_no
 		FROM "
 			.TB_PREF."debtor_trans as trans
-	LEFT JOIN trips trip ON trip.id = trans.reference
-	LEFT JOIN trip_vouchers voucher ON voucher.trip_id = trip.id
+	LEFT JOIN trip_vouchers voucher ON voucher.invoice_no = trans.trans_no
+	LEFT JOIN trips trip ON trip.id = voucher.trip_id
+	
 	LEFT JOIN customer_groups cg  ON  cg.id = trip.customer_group_id
 			LEFT JOIN ".TB_PREF."debtor_trans_details as line
 				ON trans.trans_no=line.debtor_trans_no AND trans.type=line.debtor_trans_type,"
@@ -554,7 +555,7 @@ function get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_i
 				AND line.debtor_trans_no = trans.trans_no
 				AND line.debtor_trans_type = trans.type
 				AND trans.branch_code = branch.branch_code
-				AND trans.reference = trip.id
+				AND trans.trans_no = voucher.delivery_no
 				AND trip.id = voucher.trip_id
 				
 				AND trans.debtor_no = branch.debtor_no ";
