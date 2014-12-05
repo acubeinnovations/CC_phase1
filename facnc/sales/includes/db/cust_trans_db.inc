@@ -306,7 +306,7 @@ function get_sql_for_trip_invoices()
     $date_to = date2sql($_POST['TransToDate']);
 
   	$sql = "SELECT 
-		trans.trans_no, 
+		trans.reference, 
 		IF(cg.name IS NULL,'CASH', debtor.name) AS company,
 		trip.id AS trip_id,
 		voucher.id AS voucher_id,
@@ -317,14 +317,10 @@ function get_sql_for_trip_invoices()
    	if ($_POST['filterType'] != ALL_TEXT)
 		$sql .= "@bal := @bal+(trans.ov_amount + trans.ov_gst + trans.ov_freight + trans.ov_freight_tax + trans.ov_discount), ";
 
-//	else
-//		$sql .= "IF(trans.type=".ST_CUSTDELIVERY.",'', IF(trans.type=".ST_SALESINVOICE." OR trans.type=".ST_BANKPAYMENT.",@bal := @bal+
-//			(trans.ov_amount + trans.ov_gst + trans.ov_freight + trans.ov_freight_tax + trans.ov_discount), @bal := @bal-
-//			(trans.ov_amount + trans.ov_gst + trans.ov_freight + trans.ov_freight_tax + trans.ov_discount))) , ";
 		$sql .= "trans.alloc AS Allocated,
 		((trans.type = ".ST_SALESINVOICE.")
 			AND trans.due_date < '" . date2sql(Today()) . "') AS OverDue ,
-		Sum(line.quantity-line.qty_done) AS Outstanding
+		Sum(line.quantity-line.qty_done) AS Outstanding,trans.trans_no
 		FROM "
 			.TB_PREF."debtor_trans as trans
 	LEFT JOIN trips trip ON trip.id = trans.reference
