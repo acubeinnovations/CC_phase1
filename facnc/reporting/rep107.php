@@ -204,13 +204,13 @@ function print_invoices()
 
 				
 				if($tax_item['tax_type_name'] == 'Service Tax'){
-					$tax_str[$tax_item['id']]['left'] = "40 % of ".$DisplaySubTot." ".$tax_item['rate']."% is Rs";
-					$tax_str[$tax_item['id']]['right'] = number_format2($tax_item['amount'],$dec);
+					$tax_str[$tax_item['id']]['left'] = "40 % of ".$DisplaySubTot." @ ".$tax_item['rate']."% is ";
+					$tax_str[$tax_item['id']]['right'] = "Rs. ".number_format2($tax_item['amount'],$dec);
 				}
 					
 				else{
-					$tax_str[$tax_item['id']]['left'] = $tax_item['tax_type_name']."@ ".$tax_item['rate']."% + ".$tax_item['net_amount']." is Rs ";
-					$tax_str[$tax_item['id']]['right'] = number_format2($tax_item['amount'],$dec);
+					$tax_str[$tax_item['id']]['left'] = $tax_item['tax_type_name']."@ ".$tax_item['rate']."% + ".$tax_item['net_amount']." is ";
+					$tax_str[$tax_item['id']]['right'] = "Rs. ".number_format2($tax_item['amount'],$dec);
 				}
 					
 
@@ -241,9 +241,11 @@ function print_invoices()
 			
 
 			$rep->row = $rep->totals_row+20;
-			$rep->Text($rep->totals_column + 5, "Total Amount is Rs.");
+			//$rep->Text($rep->totals_column + 5, "Total Amount is Rs.");
+			$rep->TextCol(5, 6,  "Total Amount is Rs.");
 				
-			$rep->Text($rep->totals_column + 220, $DisplaySubTot);
+			//$rep->Text($rep->totals_column + 190, $DisplaySubTot);
+			$rep->TextCol(6, 7,  $DisplaySubTot);
 
 			$rep->row = $rep->totals_row;
 
@@ -254,7 +256,7 @@ function print_invoices()
 			foreach($tax_str as $str){
 				$rep->Text($rep->totals_column + 5, $str['left']);
 				
-				$rep->Text($rep->totals_column + 220, $str['right']);
+				$rep->Text($rep->totals_column + 190, $str['right']);
 				$rep->NewLine();
 			}
 
@@ -268,8 +270,8 @@ function print_invoices()
 				$rep->font('bold');
 				$rep->Text($rep->totals_column + 5, $key);
 				$rep->Text($rep->totals_column + 90, ":");
-				$rep->font();
-				$rep->Text($rep->totals_column + 220, $value);
+				//$rep->font();
+				$rep->Text($rep->totals_column + 190, "Rs. ".$value);
 				$rep->NewLine();
 			}
 			
