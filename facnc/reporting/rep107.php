@@ -143,7 +143,7 @@ function print_invoices()
 				//print_r($trip);exit;
 				$rep->TextCol(0, 1,  $slno);
 				$rep->TextCol(1, 2,  @$trip['voucher_str']);
-				$rep->TextCol(2, 3,  @$trip['trip_date']);
+				$rep->TextCol(2, 3, sql2date($trip['trip_date']));
 
 				$rep->TextCol(3, 4,  @$trip['vehicle_no']);
 				$temp = $rep->row;
