@@ -318,7 +318,7 @@ function display_trip_data($cnc_data, &$order)
 					$particulars .= " + Night halt charges Rs.".$cnc_data['night_halt_charges'];
 				}
 				if($cnc_data['driver_bata'] >0){
-					$particulars .= " + Driver Batta ".$cnc_data['driver_bata'];
+					$particulars .= " + Driver Bata ".$cnc_data['driver_bata'];
 				}
 				if($cnc_data['state_tax'] >0){
 					$particulars .= " + State Tax Rs. "	.$cnc_data['state_tax'];
