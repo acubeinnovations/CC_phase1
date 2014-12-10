@@ -32,6 +32,17 @@
         		</div>
 			<?php echo form_close(); ?>
 
+
+			<?php echo form_open_multipart(base_url()."browse_xl/TripVoucher");?>
+			<div class="form-group">
+				<?php echo form_label('Select Trip Voucher File'); ?>
+				<input type="file" name="csv" size="20" />
+
+				<?php echo form_submit("submit","submit","class='btn btn-primary'"); ?>  
+        		</div>
+			<?php echo form_close(); ?>
+
+
 		</fieldset>
 	</div>
 
