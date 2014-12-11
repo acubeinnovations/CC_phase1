@@ -1272,7 +1272,7 @@ if(isset($where_arry) || isset($like_arry)){
 			//$data['trips']=$this->trip_booking_model->getTripVouchers();
 			//print_r($data['trips']);exit;
 			$baseurl=base_url().'organization/front-desk/tripvouchers/';
-			$per_page=10;
+			$per_page=30;
 			$uriseg ='4';
 			$data['from_date']='';
 			$data['to_date']='';
