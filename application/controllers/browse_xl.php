@@ -90,7 +90,20 @@ class Browse_xl extends CI_Controller {
 					$row++;
 				}
 
-				echo "<pre>";print_r($db_data);echo "</pre>";exit;
+				
+
+				foreach($db_data as $row){
+
+					if(isset($row['trip_id'])){
+						$tripBooked = $this->checkTripBooked($row['trip_id']);
+						if($tripBooked == true){
+						
+						}
+					}
+					echo "<pre>";print_r($row);echo "</pre>";exit;
+				}
+
+
 				//$this->db->insert_batch('trip_vouchers',$db_data);
 				echo $this->db->affected_rows()."inserted";
 	
