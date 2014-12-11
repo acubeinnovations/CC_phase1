@@ -351,10 +351,14 @@ if (isset($_POST['Update']) || isset($_POST['_Location_update']) || isset($_POST
 */
 if (isset($_POST['Update'])) {
 	$update = update_delivery_with_cnc_voucher($_SESSION['Items']);
-	if($update)
+	if($update){
 		display_notification_centered(sprintf(_('Delivery Note has been updated.')));
-	else
+		
+	}else{
 		display_error(_("Failed to update Delivery Note"));
+	}
+	submenu_cnc_option(_("Back To Trip Vouchers"),$cnc_url.'organization/front-desk/trips');
+	display_footer_exit();
 }
 
 //------------------------------------------------------------------------------

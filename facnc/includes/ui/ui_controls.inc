@@ -213,7 +213,7 @@ function hyperlink_back($center=true, $no_menu=true, $type_no=0, $trans_no=0, $f
 	{
 		echo "<td align=center><a href='javascript:window.print();'>"._("Print")."</a></td>\n";
 	}
-	echo "<td align=center><a href='javascript:goBack(".($final ? '-2' : '').");'>".($no_menu ? _("Close") : _("Back"))."</a></td>\n";
+	//echo "<td align=center><a href='javascript:goBack(".($final ? '-2' : '').");'>".($no_menu ? _("Close") : _("Back"))."</a></td>\n";
 	end_row();
 	end_table();
 	if ($center)
@@ -263,6 +263,14 @@ function viewer_link($label, $url='', $class='', $id='',  $icon=null)
  return $preview_str;
 }
 
+function menu_link_parent($url, $label, $id=null)
+{
+
+	$id = default_focus($id);
+	$pars = access_string($label);
+	return "<a target='_parent' href='$url' class='menu_option' id='$id' $pars[1]>$pars[0]</a>";
+}
+
 function menu_link($url, $label, $id=null)
 {
 
@@ -275,6 +283,12 @@ function submenu_option($title, $url, $id=null)
 {
 	global $path_to_root;
 	display_note(menu_link($path_to_root . $url, $title, $id), 0, 1);
+}
+
+function submenu_cnc_option($title, $url, $id=null)
+{
+	global $path_to_root;
+	display_note(menu_link_parent($url, $title, $id), 0, 1);
 }
 
 function submenu_view($title, $type, $number, $id=null)

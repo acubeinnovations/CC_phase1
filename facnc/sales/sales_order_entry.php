@@ -201,6 +201,7 @@ if (isset($_GET['AddedID'])) {
 	submenu_option(_("Make &Invoice Against This Delivery"),
 		"/sales/customer_invoice.php?DeliveryNumber=$delivery");
 
+	submenu_cnc_option(_("Back To Trip Vouchers"),$cnc_url.'organization/front-desk/trips');
 	/*if ((isset($_GET['Type']) && $_GET['Type'] == 1))
 		submenu_option(_("Enter a New Template &Delivery"),
 			"/sales/inquiry/sales_orders_view.php?DeliveryTemplates=Yes");
