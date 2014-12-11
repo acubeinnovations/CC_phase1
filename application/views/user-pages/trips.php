@@ -55,7 +55,7 @@ $trip_sl_no=$page;
 			<table class="table list-trip-table no-border">
 				<tbody>
 					<tr>
-						<!---->
+					   <td><?php echo form_input(array('name'=>'trip_id','class'=>'form-control' ,'placeholder'=>'ID','value'=>$trip_id,'size'=>10,'title'=>'Trip Id')); ?></td>
 					    <td><?php echo form_input(array('name'=>'trip_pick_date','class'=>'pickupdatepicker initialize-date-picker form-control' ,'placeholder'=>'Pick up Date','value'=>$trip_pick_date)); ?></td>
 					    <td><?php  echo form_input(array('name'=>'trip_drop_date','class'=>'dropdatepicker initialize-date-picker form-control' ,'placeholder'=>'Drop Date','value'=>$trip_drop_date)); ?></td>
 						 <td><?php $class="form-control";
