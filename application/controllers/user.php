@@ -609,6 +609,10 @@ class User extends CI_Controller {
 				$qry.=' AND T.id ="'.$_REQUEST['trip_id'].'"';
 				$where_arry['trip_id']=$_REQUEST['trip_id'];
 
+				if(isset($where_arry)|| isset($like_arry)){
+				$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
+				}
+
 			}else if((isset($_REQUEST['trip_pick_date'])|| isset($_REQUEST['trip_drop_date'])|| isset($_REQUEST['vehicles'])|| isset($_REQUEST['drivers'])|| isset($_REQUEST['trip_status_id'])|| isset($_REQUEST['cgroup'])||isset($_REQUEST['customer']))&& isset($_REQUEST['trip_search'])){
 				if($param2==''){
 				$param2='0';
@@ -663,8 +667,12 @@ class User extends CI_Controller {
 			}else if($this->mysession->get('condition')!=''){ 
 
 				$condition=$this->mysession->get('condition');
+				if(isset($condition['where']['trip_id'])){
 
-				if(isset($condition['where']['trip_pick_date']) || isset($condition['where']['trip_drop_date'])|| isset($condition['where']['vehicle_id']) || isset($condition['where']['driver_id'])|| isset($condition['where']['trip_status_id'])){
+					$data['trip_id']=$condition['where']['trip_id'];
+					$qry.=' AND T.id ="'.$condition['where']['trip_id'].'"';
+
+				}else if(isset($condition['where']['trip_pick_date']) || isset($condition['where']['trip_drop_date'])|| isset($condition['where']['vehicle_id']) || isset($condition['where']['driver_id'])|| isset($condition['where']['trip_status_id'])){
 				
 					if($condition['where']['trip_pick_date']!=null || $condition['where']['trip_drop_date']!=null || $condition['where']['vehicle_id']!=null || $condition['where']['driver_id']!=null || $condition['where']['trip_status_id']!=null){
 						if(isset($condition['where']['trip_pick_date'])  && isset($condition['where']['trip_drop_date']) ){
@@ -737,7 +745,7 @@ class User extends CI_Controller {
 			$data['drivers']=$this->driver_model->getDriversArray($condition=''); 
 			$paginations=$this->mypage->paging($tbl='',$per_page,$param2,$baseurl,$uriseg,$custom='yes',$qry);
 			if($param2==''){
-				$this->mysession->delete('condition');
+				//$this->mysession->delete('condition');
 			}
 			$data['page_links']=$paginations['page_links'];
 			$data['trips']=$paginations['values'];

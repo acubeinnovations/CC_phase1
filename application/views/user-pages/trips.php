@@ -9,36 +9,49 @@
                 ?>
            </div>
        </div>
-       <?php    } 
+<?php } 
+
+if(!isset($trip_id)){
+	$trip_id='';
+}
+
 if(!isset($trip_pick_date)){
-$trip_pick_date='';
+	$trip_pick_date='';
 }
+
 if(!isset($trip_drop_date)){
-$trip_drop_date='';
+	$trip_drop_date='';
 }
+
 if(!isset($customer)){
-$customer='';
+	$customer='';
 }
+
 if(!isset($driver_id)){
-$driver_id='';
+	$driver_id='';
 }
+
 if(!isset($vehicle_id)){
-$vehicle_id='';
+	$vehicle_id='';
 }
+
 if(!isset($trip_status_id)){
-$trip_status_id='';
+	$trip_status_id='';
 }
 if(!isset($customer_group_id)){
-$customer_group_id='';
+	$customer_group_id='';
 }
+
 if(!isset($customer_name)){
-$customer_name='';
+	$customer_name='';
 }
+
 $page=$this->uri->segment(4);
+
 if($page==''){
-$trip_sl_no=1;
+	$trip_sl_no=1;
 }else{
-$trip_sl_no=$page;
+	$trip_sl_no=$page;
 }
 ?>
 
