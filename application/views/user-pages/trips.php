@@ -89,6 +89,7 @@ echo form_close();?></td>
 					<tr>	
 						
 					    <th style="width:2%">Trip ID </th>
+					    <th style="width:2%">Voucher No </th>
 					    <th style="width:4%">Booking Date</th>
 						<!--<th style="width:15%">Customer</th>-->
 					    <th style="width:4%">Pickup Date</th>
@@ -123,6 +124,7 @@ echo form_close();?></td>
 					<tr class="row_click common" style="cursor:pointer;" limited="true">
 						
 						<td><?php echo $trips[$trip_index]['trip_id'];?></td>
+						<td><?php echo $trips[$trip_index]['voucher_no'];?></td>
 						<td><?php echo $trips[$trip_index]['booking_date'];?></td>
 					   <!-- <td><?php echo $customers[$trips[$trip_index]['customer_id']].br();
 						if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $customer_groups[$trips[$trip_index]['customer_group_id']];}?></td>-->
@@ -194,6 +196,7 @@ echo form_close();?></td>
 								<tr style="display:none;" class="hide-row " style="cursor:pointer; " limited="false" >
 						
 						<td><?php echo $trips[$trip_index]['trip_id'];?></td>
+						<td><?php echo $trips[$trip_index]['voucher_no'];?></td>
 						<td><?php echo $trips[$trip_index]['booking_date'];?></td>
 					   <!-- <td><?php echo $customers[$trips[$trip_index]['customer_id']].br();
 						if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $customer_groups[$trips[$trip_index]['customer_group_id']];}?></td>-->
