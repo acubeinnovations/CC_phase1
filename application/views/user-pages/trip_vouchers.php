@@ -96,6 +96,7 @@ echo form_close();?></td>
 					<tr>
 					<td>Total</td>
 					<td></td>
+					<td></td>
 					<td></td>	
 					<td></td>
 					<td></td>
