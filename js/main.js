@@ -1507,6 +1507,7 @@ $('.voucher').on('click',function(){
 	var drop_date=$(this).attr('drop_date');
 
 	var customer_name=$(this).attr('customer_name');
+	var guest_name=$(this).attr('guest_name');
 	var company_name=$(this).attr('company_name');
 	var model=$(this).attr('model');
 	var vehicle_no=$(this).attr('vehicle_no');
@@ -1539,6 +1540,7 @@ $('.voucher').on('click',function(){
 
 	$('.customer').val(customer_name);
 	$('.company').val(company_name);
+	$('.guest').val(guest_name);
 	$('.startdt').val(formatDate_d_m_Y(pick_up_date));
 	$('.enddt').val(formatDate_d_m_Y(drop_date));
 	$('#model').val(vehicle_model_id);
