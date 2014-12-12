@@ -1,66 +1,71 @@
 <?php 
 class Trip_booking extends CI_Controller {
 	public function __construct()
-		{
+	{
 		parent::__construct();
 		$this->load->model("trip_booking_model");
 		$this->load->model("tarrif_model");
 		$this->load->model("user_model");
 		$this->load->model("driver_model");
+		$this->load->model("vehicle_model");
 		$this->load->model("customers_model");
 		$this->load->helper('my_helper');
 		no_cache();
 
-		}
+	}
+
 	public function index($param1 ='',$param2='',$param3=''){
-	if($this->session_check()==true) {
-		if($param1=='trip-booking') {
+		if($this->session_check()==true) {
+			if($param1=='trip-booking') {
 		
-		if($param2=='book-trip') {
+			if($param2=='book-trip') {
 		
-			$this->bookTrip();
+				$this->bookTrip();
 			
-		}else if($param2=='getAvailableVehicles') {
+			}else if($param2=='getAvailableVehicles') {
 		
-			$this->getAvailableVehicles();
+				$this->getAvailableVehicles();
 			
-		}else if($param2=='getVehicle') {
+			}else if($param2=='getVehicle') {
 		
-			$this->getVehicle();
+				$this->getVehicle();
 			
-		}else if($param2=='tripVoucher') {
+			}else if($param2=='tripVoucher') {
 		
-			$this->tripVoucher();
+				$this->tripVoucher();
 			
-		}else if($param2=='getTarrif') {
+			}else if($param2=='getTarrif') {
 		
-			$this->getTarrif();
+				$this->getTarrif();
 			
-		}else if($param2=='getVouchers') {
+			}else if($param2=='getVouchers') {
 		
-			$this->getVouchers();
+				$this->getVouchers();
+			}else{
+				$this->notFound();
+			}	
+			}else{
+				$this->notFound();
+			}
 		}else{
-			$this->notFound();
-		}	
-		}else{
-			$this->notFound();
+				$this->notAuthorized();
 		}
-	}else{
-			$this->notAuthorized();
 	}
-	}
+
 	public function notFound(){
 		if($this->session_check()==true) {
-		 $this->output->set_status_header('404'); 
-		 $data['title']="Not Found";
-      	 $page='not_found';
-         $this->load_templates($page,$data);
+		 	$this->output->set_status_header('404'); 
+		 	$data['title']="Not Found";
+      	 		$page='not_found';
+         		$this->load_templates($page,$data);
 		}else{
 			$this->notAuthorized();
+		}
 	}
-	}	
+
+	
 	public function bookTrip() {
-			
+		
 			if(isset($_REQUEST['book_trip'])){
 
 				$my_customer = $this->session->userdata('customer_id');
@@ -192,8 +197,7 @@ class Trip_booking extends CI_Controller {
 				$data['seating_capacity']		=	$this->input->post('seating_capacity');
 				$data['language']				=	$this->input->post('language');
 				$data['tariff']					=	$this->input->post('tariff');
-				$data['available_vehicle']		=	$this->input->post('available_vehicle');
-				$data['available_driver']		=	$this->input->post('available_driver');
+				
 				$data['customer_type']			=	$this->input->post('customer_type');
 				if($data['trip_id']==''){
 					if(isset($_REQUEST['recurrent_yes'])){
@@ -270,90 +274,125 @@ class Trip_booking extends CI_Controller {
 
 					}
 
+			//-------------------get vehicle -----------------------------
+			$data['available_vehicle'] = $this->input->post('available_vehicle');
+			$data['available_driver'] = $this->input->post('available_driver');
+			if($this->input->post('available_vehicle') > 0 || $this->input->post('available_vehicle') == gINVALID){
+				$new_vehicle = '';
+			}else{
+				$new_vehicle = $this->input->post('available_vehicle');
+			}
 				
+			//------------------get driver---------------------------------
+			if($this->input->post('available_driver') > 0 || $this->input->post('available_driver') == gINVALID){
+				$new_driver = '';
+			}else{
+				$new_driver = $this->input->post('available_driver');
+				
+			}
+	
 			if($this->form_validation->run()==False || $trip_whom == false){	
 				$this->mysession->set('post',$data);
 				redirect(base_url().'organization/front-desk/trip-booking/'.$data['trip_id']);
 			}else{
+
 				if(isset($data['guestname']) && $_REQUEST['guestname']!='' ){
-				if(isset($_REQUEST['guest_id']) && $_REQUEST['guest_id']==gINVALID){
+					if(isset($_REQUEST['guest_id']) && $_REQUEST['guest_id']==gINVALID){
 				
-				$dbdata1=array('name'=>$data['guestname'],'email'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id']);
-				$data['guest_id']=$this->customers_model->addCustomer($dbdata1);
-				//------------fa module integration code starts here-----
-				//save customer in fa table
+					$dbdata1=array('name'=>$data['guestname'],'email'=>$data['guestemail'],'mobile'=>$data['guestmobile'],'registration_type_id'=>$data['registration_type_id']);
+					$data['guest_id']=$this->customers_model->addCustomer($dbdata1);
+					//------------fa module integration code starts here-----
+					//save customer in fa table
 
-				$this->load->model("account_model");
-				$fa_customer = $this->account_model->add_fa_customer($data['guest_id'],"C");
+					$this->load->model("account_model");
+					$fa_customer = $this->account_model->add_fa_customer($data['guest_id'],"C");
 
-				//-----------fa code ends here---------------------------
+					//-----------fa code ends here---------------------------
 
-				}else{
-				$data['guest_id']=$_REQUEST['guest_id'];
+					}else{
+					$data['guest_id']=$_REQUEST['guest_id'];
 
-				}
+					}
 				}else{
 					$data['guest_id']=gINVALID;
 				}
-				if($data['available_vehicle']>0 && $data['available_driver']>0){
 
-					
-					$trip_status=TRIP_STATUS_CONFIRMED;
 
+				
+
+				if($new_vehicle != ''){
+					$vehicle = $this->vehicle_model->addVehicleFromTripBooking($new_vehicle);
+				}elseif($data['available_vehicle'] > 0){
+					$vehicle = $data['available_vehicle'];
 				}else{
-					
+					$vehicle =-1;
+				}
+
+				if($new_driver != ''){
+					$driverdata['organisation_id']=$this->session->userdata('organisation_id'); 
+					$driverdata['user_id']=$this->session->userdata('id'); 
+					$driverdata['name']=$new_driver; 
+					$driver = $this->driver_model->addDriverdetails($driverdata);
+				}else if($data['available_driver'] > 0){
+					$driver = $data['available_driver'];
+				}else{
+					$driver = -1;
+				}
+
+
+				if($vehicle > 0 && $driver > 0){
+					$trip_status=TRIP_STATUS_CONFIRMED;
+				}else{
 					$trip_status=TRIP_STATUS_PENDING;
 				}
 				
 			
-			$dbdata['customer_id']					=$this->session->userdata('customer_id');
-			$dbdata['guest_id']						=$data['guest_id'];
-			$dbdata['customer_type_id']				=$data['customer_type'];
-			$dbdata['customer_group_id']			=$data['customer_group'];
-			$dbdata['trip_status_id']				=$trip_status;
-			$dbdata['booking_date']					= date('Y-m-d');
-			$dbdata['booking_time']					= date('H:i');
-			$dbdata['booking_source_id']			=$data['booking_source'];
-			$dbdata['source']						=$data['source'];
-			$dbdata['pick_up_date']					=date("Y-m-d", strtotime($data['pickupdatepicker']));
-			$dbdata['pick_up_time']					=$data['pickuptimepicker'];
-			$dbdata['drop_date']					=date("Y-m-d", strtotime($data['dropdatepicker']));
-			$dbdata['drop_time']					=$data['droptimepicker'];
-			$dbdata['pick_up_city']					=$data['pickupcity'];
-			$dbdata['pick_up_lat']					=$data['pickupcitylat'];
-			$dbdata['pick_up_lng']					=$data['pickupcitylng'];
-			$dbdata['pick_up_area']					=$data['pickuparea'];
-			$dbdata['pick_up_landmark']				=$data['pickuplandmark'];
-			$dbdata['via_city']						=$data['viacity'];
-			$dbdata['via_lat']						=$data['viacitylat'];
-			$dbdata['via_lng']						=$data['viacitylng'];
-			$dbdata['via_area']						=$data['viaarea'];
-			$dbdata['via_landmark']					=$data['vialandmark'];
-			$dbdata['drop_city']					=$data['dropdownlocation'];
-			$dbdata['drop_lat']						=$data['dropdownlocationlat'];
-			$dbdata['drop_lng']						=$data['dropdownlocationlng'];
-			$dbdata['drop_area']					=$data['dropdownarea'];	
-			$dbdata['drop_landmark']				=$data['dropdownlandmark'];
-			$dbdata['no_of_passengers']				=$data['no_of_passengers'];
-			$dbdata['vehicle_type_id']				=$data['vehicle_type'];
-			$dbdata['vehicle_ac_type_id']			=$data['vehicle_ac_type'];
-			$dbdata['vehicle_make_id']				=$data['vehicle_make'];
-			$dbdata['vehicle_model_id']				=$data['vehicle_model'];
+			$dbdata['customer_id']			=$this->session->userdata('customer_id');
+			$dbdata['guest_id']			=$data['guest_id'];
+			$dbdata['customer_type_id']		=$data['customer_type'];
+			$dbdata['customer_group_id']		=$data['customer_group'];
+			$dbdata['trip_status_id']		=$trip_status;
+			$dbdata['booking_date']			= date('Y-m-d');
+			$dbdata['booking_time']			= date('H:i');
+			$dbdata['booking_source_id']		=$data['booking_source'];
+			$dbdata['source']			=$data['source'];
+			$dbdata['pick_up_date']			=date("Y-m-d", strtotime($data['pickupdatepicker']));
+			$dbdata['pick_up_time']			=$data['pickuptimepicker'];
+			$dbdata['drop_date']			=date("Y-m-d", strtotime($data['dropdatepicker']));
+			$dbdata['drop_time']			=$data['droptimepicker'];
+			$dbdata['pick_up_city']			=$data['pickupcity'];
+			$dbdata['pick_up_lat']			=$data['pickupcitylat'];
+			$dbdata['pick_up_lng']			=$data['pickupcitylng'];
+			$dbdata['pick_up_area']			=$data['pickuparea'];
+			$dbdata['pick_up_landmark']		=$data['pickuplandmark'];
+			$dbdata['via_city']			=$data['viacity'];
+			$dbdata['via_lat']			=$data['viacitylat'];
+			$dbdata['via_lng']			=$data['viacitylng'];
+			$dbdata['via_area']			=$data['viaarea'];
+			$dbdata['via_landmark']			=$data['vialandmark'];
+			$dbdata['drop_city']			=$data['dropdownlocation'];
+			$dbdata['drop_lat']			=$data['dropdownlocationlat'];
+			$dbdata['drop_lng']			=$data['dropdownlocationlng'];
+			$dbdata['drop_area']			=$data['dropdownarea'];	
+			$dbdata['drop_landmark']		=$data['dropdownlandmark'];
+			$dbdata['no_of_passengers']		=$data['no_of_passengers'];
+			$dbdata['vehicle_type_id']		=$data['vehicle_type'];
+			$dbdata['vehicle_ac_type_id']		=$data['vehicle_ac_type'];
+			$dbdata['vehicle_make_id']		=$data['vehicle_make'];
+			$dbdata['vehicle_model_id']		=$data['vehicle_model'];
 			$dbdata['vehicle_seating_capacity_id']	=$data['seating_capacity'];
 			$dbdata['vehicle_beacon_light_option_id']=$data['beacon_light_id'];
-			$dbdata['pluckcard']					=$data['pluck_card'];
-			$dbdata['uniform']						=$data['uniform'];
-			$dbdata['driver_language_id']			=$data['language'];
-			$dbdata['trip_model_id']				=$data['trip_model'];
-			$dbdata['tariff_id']					=$data['tariff'];
-			$dbdata['vehicle_id']					=$data['available_vehicle'];
-			$dbdata['driver_id']					=$data['available_driver'];
-			$dbdata['remarks']						=$data['remarks'];
-			$dbdata['organisation_id']				=$this->session->userdata('organisation_id');
-			$dbdata['user_id']						=$this->session->userdata('id');
+			$dbdata['pluckcard']			=$data['pluck_card'];
+			$dbdata['uniform']			=$data['uniform'];
+			$dbdata['driver_language_id']		=$data['language'];
+			$dbdata['trip_model_id']		=$data['trip_model'];
+			$dbdata['tariff_id']			=$data['tariff'];
+			$dbdata['vehicle_id']			=$vehicle;
+			$dbdata['driver_id']			=$driver;
+			$dbdata['remarks']			=$data['remarks'];
+			$dbdata['organisation_id']		=$this->session->userdata('organisation_id');
+			$dbdata['user_id']			=$this->session->userdata('id');
 			
-
-
 			$customer['mob']=$this->session->userdata('customer_mobile');
 			$customer['email']=$this->session->userdata('customer_email');	
 			$customer['name']=$this->session->userdata('customer_name');
@@ -364,7 +403,7 @@ class Trip_booking extends CI_Controller {
 			$this->session->set_userdata('customer_email','');
 			$this->session->set_userdata('customer_mobile','');
 			
-				if(isset($data['trip_id']) && $data['trip_id']>0){
+			if(isset($data['trip_id']) && $data['trip_id']>0){
 				$res = $this->trip_booking_model->updateTrip($dbdata,$data['trip_id']);
 				if($res==true){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Updated Succesfully..!!'));
@@ -379,7 +418,7 @@ class Trip_booking extends CI_Controller {
 				
 				redirect(base_url().'organization/front-desk/trip-booking');
 
-				}else{
+			}else{
 				$res = $this->trip_booking_model->bookTrip($dbdata);
 				if($res!=false && $res>0){
 					$this->session->set_userdata(array('dbSuccess'=>'Trip Booked Succesfully..!!'));
@@ -392,6 +431,7 @@ class Trip_booking extends CI_Controller {
 					$this->session->set_userdata(array('dbError'=>'Trip Booked unsuccesfully..!!'));
 					$this->session->set_userdata(array('dbSuccess'=>''));
 				}
+
 				if(isset($_REQUEST['recurrent_yes'])){
 					if($this->input->post('recurrent')=='continues'){
 						for($index=0;$index<count($pickup_dates);$index++){
@@ -412,19 +452,19 @@ class Trip_booking extends CI_Controller {
 						}
 					}else if($this->input->post('recurrent')=='alternatives'){
 						for($index=0;$index<count($reccurent_alternatives_pickupdatepicker);$index++){
-							$dbdata['pick_up_date']					=$reccurent_alternatives_pickupdatepicker[$index];
-							$dbdata['pick_up_time']					=$reccurent_alternatives_pickuptimepicker[$index];
-							$dbdata['drop_date']					=$reccurent_alternatives_dropdatepicker[$index];
-							$dbdata['drop_time']					=$reccurent_alternatives_droptimepicker[$index];
-							$dbdata['vehicle_id']					=gINVALID;
-							$dbdata['driver_id']					=gINVALID;
-							$dbdata['trip_status_id']				=TRIP_STATUS_PENDING;
+							$dbdata['pick_up_date']	=$reccurent_alternatives_pickupdatepicker[$index];
+							$dbdata['pick_up_time']	=$reccurent_alternatives_pickuptimepicker[$index];
+							$dbdata['drop_date']	=$reccurent_alternatives_dropdatepicker[$index];
+							$dbdata['drop_time']	=$reccurent_alternatives_droptimepicker[$index];
+							$dbdata['vehicle_id']	= gINVALID;
+							$dbdata['driver_id']	= gINVALID;
+							$dbdata['trip_status_id']	= TRIP_STATUS_PENDING;
 							if($dbdata['pick_up_date']!='' && $dbdata['pick_up_time']!='' && $dbdata['drop_date']!='' &&  $dbdata['drop_time']!=''){	 
 							$res = $this->trip_booking_model->bookTrip($dbdata);
-									if($res==true){
-										$this->session->set_userdata(array('dbSuccess'=>'Trips Booked Succesfully..!!'));
-										$this->session->set_userdata(array('dbError'=>''));
-									}
+								if($res==true){
+									$this->session->set_userdata(array('dbSuccess'=>'Trips Booked Succesfully..!!'));
+									$this->session->set_userdata(array('dbError'=>''));
+								}
 							}
 						}
 					}

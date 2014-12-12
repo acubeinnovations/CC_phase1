@@ -227,56 +227,56 @@ class Vehicle extends CI_Controller {
 			$all_data=array('data'=>$data,'driver_data'=>$driver_data,'device_data'=>$device_data);
 			
 					
-					$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
-					 $this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean');
-					 $this->form_validation->set_rules('from_date','From Date ','trim|xss_clean');
-					 $this->form_validation->set_rules('from_date_device','From Date ','trim|xss_clean');
-					 $this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
-					 $this->form_validation->set_rules('eng_num','Engine Number','trim|xss_clean');
-					 $this->form_validation->set_rules('chases_num','Chases Number','trim|xss_clean');
-					 $this->form_validation->set_rules('permit_date','Permit Renewal Date','trim|xss_clean');
-					 $this->form_validation->set_rules('permit_amount','Permit Renewal  Amount','trim|xss_clean');
-					 $this->form_validation->set_rules('tax_amount','Tax Amount','trim|xss_clean');
-					 $this->form_validation->set_rules('tax_date','Tax Date','trim|xss_clean');
-					 //for insurance
-$err=True;
+			$this->form_validation->set_rules('year','Year','trim|required|xss_clean');
+			$this->form_validation->set_rules('reg_number','Registeration Number','trim|required|xss_clean');
+			$this->form_validation->set_rules('from_date','From Date ','trim|xss_clean');
+			$this->form_validation->set_rules('from_date_device','From Date ','trim|xss_clean');
+			$this->form_validation->set_rules('reg_date','Registration Date','trim|required|xss_clean');
+			$this->form_validation->set_rules('eng_num','Engine Number','trim|xss_clean');
+			$this->form_validation->set_rules('chases_num','Chases Number','trim|xss_clean');
+			$this->form_validation->set_rules('permit_date','Permit Renewal Date','trim|xss_clean');
+			$this->form_validation->set_rules('permit_amount','Permit Renewal  Amount','trim|xss_clean');
+			$this->form_validation->set_rules('tax_amount','Tax Amount','trim|xss_clean');
+			$this->form_validation->set_rules('tax_date','Tax Date','trim|xss_clean');
+			//for insurance
+			$err=True;
 
-	/*if($hid_driver!=$driver_data['driver_id']){
-		if(!$this->date_check($driver_data['driver_id'])){
+			/*if($hid_driver!=$driver_data['driver_id']){
+				if(!$this->date_check($driver_data['driver_id'])){
 		
-	$err=False;
-	$this->mysession->set('Err_driver_name','Invalid From Date for Driver!');
-	}
-	}
-	
-		if($h_fdate_driver!=$driver_data['from_date']){
-		if(!$this->date_check($driver_data['from_date'])){
-	$err=False;
-	$this->mysession->set('Err_driver_fdate','Invalid From Date for Driver!');
-	}
-	}
-	if($hid_device!=$device_data['device_id']){
-	if(!$this->date_check($device_data['device_id'])){
-	$err=False;
-	$this->mysession->set('Err_device_name','Invalid From Date for Device!');
-	}
-	}
-	if($h_fdate_device!=$device_data['from_date_device']){
-	if(!$this->date_check($device_data['from_date_device'])){
-	$err=False;
-	$this->mysession->set('Err_device_fdate','Invalid From Date for Device!');
-	}
-	}
-	*/
-	
-	/*if(preg_match('#[^0-9\.]#', $data['vehicle_permit_renewal_amount'])){
-			$this->mysession->set('Err_permit_amt','Invalid Characters on Permit Amount field!');
 			$err=False;
+			$this->mysession->set('Err_driver_name','Invalid From Date for Driver!');
 			}
-	if(preg_match('#[^0-9\.]#', $data['tax_renewal_amount'])){
-			$this->mysession->set('Err_tax_amt','Invalid Characters on Tax Amount field!');
+			}
+	
+				if($h_fdate_driver!=$driver_data['from_date']){
+				if(!$this->date_check($driver_data['from_date'])){
 			$err=False;
-			}*/
+			$this->mysession->set('Err_driver_fdate','Invalid From Date for Driver!');
+			}
+			}
+			if($hid_device!=$device_data['device_id']){
+			if(!$this->date_check($device_data['device_id'])){
+			$err=False;
+			$this->mysession->set('Err_device_name','Invalid From Date for Device!');
+			}
+			}
+			if($h_fdate_device!=$device_data['from_date_device']){
+			if(!$this->date_check($device_data['from_date_device'])){
+			$err=False;
+			$this->mysession->set('Err_device_fdate','Invalid From Date for Device!');
+			}
+			}
+			*/
+	
+			/*if(preg_match('#[^0-9\.]#', $data['vehicle_permit_renewal_amount'])){
+					$this->mysession->set('Err_permit_amt','Invalid Characters on Permit Amount field!');
+					$err=False;
+					}
+			if(preg_match('#[^0-9\.]#', $data['tax_renewal_amount'])){
+					$this->mysession->set('Err_tax_amt','Invalid Characters on Tax Amount field!');
+					$err=False;
+					}*/
 	if($data['vehicle_ownership_types_id'] ==-1){
 	 $data['vehicle_ownership_types_id'] ='';
 	 $err=False;

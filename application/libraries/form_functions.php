@@ -1,47 +1,52 @@
 <?php 
 class Form_functions{
-function populate_dropdown($name = '', $options = array(), $selected = array(),$class='',$id='',$msg='select',$attr=array()){
-$CI = & get_instance();
-$attr_str='';
-foreach($attr as $k=>$v){
-$attr_str.= ' '.$k.'="'.$v.'"';
-}
-$form = '<select'.$attr_str.' name="'.$name.'" class="'.$class.'" id="'.$id.'"/>';
-if($selected==''){
-$form.='<option value="-1" selected="selected" >--'.$msg.'--</option></br>';
-}
-else{
-$form.='<option value="-1"  >--'.$msg.'--</option></br>';
-}
-if(!empty($options)){
-foreach ($options as $key => $val)
+function populate_dropdown($name = '', $options = array(), $selected = array(),$class='',$id='',$msg='select',	$attr=array()){
+	$CI = & get_instance();
+	$attr_str='';
+	foreach($attr as $k=>$v){
+		$attr_str.= ' '.$k.'="'.$v.'"';
+	}
+	$form = '<select'.$attr_str.' name="'.$name.'" class="'.$class.'" id="'.$id.'"/>';
+	if($selected==''){
+		$form.='<option value="-1" selected="selected" >--'.$msg.'--</option></br>';
+	}else{
+		$form.='<option value="-1"  >--'.$msg.'--</option></br>';
+	}
+
+	if(!empty($options)){
+		foreach ($options as $key => $val)
 		{
 			$key = (string) $key;
 
 			if($key==$selected){
-						$sel=' selected="selected"';
-						}
-						else{
-						$sel='';
-						}
+				$sel=' selected="selected"';
+			}else{
+				$sel='';
+			}
 
-					$form .= '<option value="'.$key.'"'.$sel.'>'.(string) $val."</option>\n";
+			$form .= '<option value="'.$key.'"'.$sel.'>'.(string) $val."</option>\n";
 					
 		}
-}
-		$form .= '</select>';
+	}
+	$form .= '</select>';
 
-		return $form;
+	return $form;
 }
 
-function populate_editable_dropdown($name = '', $options = array(),$class='',$tbl='',$attr=array()){
+function populate_editable_dropdown($name = '', $options = array(),$class='',$tbl='',$attr=array(),$msg=''){
 $CI = & get_instance();
 $attr_str='';
 foreach($attr as $k=>$v){
 $attr_str.= ' '.$k.'="'.$v.'"';
 }
 $form = '<select'.$attr_str.' name='.$name.' id="lstDropDown_A" class="'.$class.'" onKeyDown="fnKeyDownHandler_A(this, event);" onKeyUp="fnKeyUpHandler_A(this, event); return false;" onKeyPress = "return fnKeyPressHandler_A(this, event);"  onChange="fnChangeHandler_A(this);" onFocus="fnFocusHandler_A(this);" tblname="'.$tbl.'">';
-$form.='<option selected="selected"></option></br>';
+
+	if($msg != ''){
+		$form.='<option selected="selected" value="-1">'.$msg.'</option></br>';
+	}else{
+		$form.='<option selected="selected"></option></br>';
+	}
+
 if(!empty($options)){
 foreach ($options as $key => $val)
 		{
