@@ -481,7 +481,7 @@ $customer_type='';
 						//echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Available Vehicles");
 
 
-						echo $this->form_functions->populate_editable_dropdown('available_vehicle', $available_vehicles,$class,'vehicles',array(),"--Available Vehicles--");
+						echo $this->form_functions->populate_editable_dropdown('available_vehicle', $available_vehicles,$class,'vehicles',array(),"Vehicle",$available_vehicle);
 						
 						echo br(2);
 						 ?>
@@ -492,7 +492,7 @@ $customer_type='';
 						$id="available_driver";
 						//echo $this->form_functions->populate_dropdown('available_driver',$available_drivers,$available_driver,$class,$id,$msg="Driver");
 
-						echo $this->form_functions->populate_editable_dropdown('available_driver', $available_drivers,$class,'drivers',array(),"--Available Drivers--");
+						echo $this->form_functions->populate_editable_dropdown('available_driver', $available_drivers,$class,'drivers',array(),"Driver",$available_driver);
 						echo br(2);
 						 ?>
 						
