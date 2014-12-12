@@ -1,7 +1,8 @@
 <?php 
 class Form_functions{
-function populate_dropdown($name = '', $options = array(), $selected = array(),$class='',$id='',$msg='select',	$attr=array()){
+function populate_dropdown($name = '', $options = array(), $selected = array(),$class='',$id='',$msg='select',$attr=array()){
 	$CI = & get_instance();
+	//print($selected);exit;
 	$attr_str='';
 	foreach($attr as $k=>$v){
 		$attr_str.= ' '.$k.'="'.$v.'"';
