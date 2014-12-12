@@ -76,6 +76,8 @@ $customer_type					= -1;
 //echo $information['customer'];
 if($this->mysession->get('post')!=NULL || $information!=false){
 
+
+
 if($this->mysession->get('post')!=NULL){
 $data						=	$this->mysession->get('post');//print_r($data);
 if(isset($data['trip_id'])){
@@ -476,7 +478,11 @@ $customer_type='';
 						echo $this->form_functions->populate_dropdown('tariff',$tariffs,$tariff,$class,$id,$msg="Tariffs");
 						$class="form-control row-source-50-percent-width-with-margin-8 mandatory";
 						$id="available_vehicle";
-						echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Available Vehicles");
+						//echo $this->form_functions->populate_dropdown('available_vehicle',$available_vehicles,$available_vehicle,$class,$id,$msg="Available Vehicles");
+
+
+						echo $this->form_functions->populate_editable_dropdown('available_vehicle', $available_vehicles,$class,'vehicles',array(),"--Available Vehicles--");
+						
 						echo br(2);
 						 ?>
 						<div class="hide-me vehicle-tarif-checker" tariff_id="<?php echo $tariff;?>" available_vehicle_id="<?php echo $available_vehicle;?>"></div>
@@ -484,7 +490,9 @@ $customer_type='';
 						<div class="form-group">
 						<?php $class="form-control row-source-100-percent-width-with-margin-8 mandatory";
 						$id="available_driver";
-						echo $this->form_functions->populate_dropdown('available_driver',$available_drivers,$available_driver,$class,$id,$msg="Driver");
+						//echo $this->form_functions->populate_dropdown('available_driver',$available_drivers,$available_driver,$class,$id,$msg="Driver");
+
+						echo $this->form_functions->populate_editable_dropdown('available_driver', $available_drivers,$class,'drivers',array(),"--Available Drivers--");
 						echo br(2);
 						 ?>
 						
