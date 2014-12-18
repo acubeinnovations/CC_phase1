@@ -206,7 +206,7 @@ echo form_close();?></td>
 					
 					<?php // hidden values?>
 
-								<tr style="display:none;" class="hide-row " style="cursor:pointer; " limited="false" >
+								<tr style="display:none;" class="hide-row common" style="cursor:pointer; " limited="false" >
 						
 						<td><?php echo $trips[$trip_index]['trip_id'];?></td>
 						<td><?php echo $trips[$trip_index]['voucher_no'];?></td>

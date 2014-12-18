@@ -2646,7 +2646,7 @@ $('#hdriverDate').val(d.yyyymmdd());
 			//----ends function
 	//--to expand and collapse table rows for trips	
 
-	$('#trip_tbl tr').click(function(){
+	$('.common').click(function(){
 		$(this).hide();
 	if($(this).attr('limited')=='true'){
 		
