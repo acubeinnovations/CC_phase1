@@ -46,13 +46,13 @@ function populate_editable_dropdown($name = '', $options = array(),$class='',$tb
 	if($selected==''){
 		if($msg != ''){
 
-			$form.='<option selected="selected" value="-1">--Select '.$msg.'--</option></br>';
+			$form.='<option selected="selected" value="">--Select '.$msg.'--</option></br>';
 			
 		}else{
 			$form.='<option selected="selected"></option></br>';
 		}
 	}else{
-		$form.='<option value="-1">New '.$msg.'</option></br>';
+		$form.='<option value=" ">New '.$msg.'</option></br>';
 	}
 	
 

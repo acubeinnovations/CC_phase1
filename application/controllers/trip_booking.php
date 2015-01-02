@@ -279,8 +279,8 @@ class Trip_booking extends CI_Controller {
 			$data['available_driver'] = $this->input->post('available_driver');
 			if($this->input->post('available_vehicle') > 0 || $this->input->post('available_vehicle') == gINVALID){
 				$new_vehicle = '';
-			}else{
-				$new_vehicle = $this->input->post('available_vehicle');
+			}else{ 
+				 $new_vehicle = $this->input->post('available_vehicle');
 			}
 				
 			//------------------get driver---------------------------------
