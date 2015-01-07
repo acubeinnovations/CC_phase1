@@ -804,12 +804,12 @@ class User extends CI_Controller {
 			if($param2!=''){
 			$tdate=date('Y-m-d');
 			$date=explode("-",$tdate);
-			$fdate='2014-'.$date[1].'-01';
-			$todate='2014-'.$date[1].'-31';
+			$fdate=$date[0].'-'.$date[1].'-01';
+			$todate=$date[0].'-'.$date[1].'-31';
 			if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['cdate_search'])){ 
 			if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
-			$fdate='2014-'.$date[1].'-01';
-			$todate='2014-'.$date[1].'-31';
+			$fdate=$date[0].'-'.$date[1].'-01';
+			$todate=$date[0].'-'.$date[1].'-31';
 			} else{
 			$fdate=$_REQUEST['from_pick_date'];
 			$todate=$_REQUEST['to_pick_date']; }
@@ -1255,13 +1255,13 @@ if(isset($where_arry) || isset($like_arry)){
 			if($param2!=''){
 			$tdate=date('Y-m-d');
 			$date=explode("-",$tdate);
-			$fdate='2014-'.$date[1].'-01';
-			$todate='2014-'.$date[1].'-31';
+			$fdate=$date[0].'-'.$date[1].'-01';
+			$todate=$date[0].'-'.$date[1].'-31';
 			
 			if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['date_search'])){
 			if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
-			$fdate='2014-'.$date[1].'-01';
-			$todate='2014-'.$date[1].'-31';
+			$fdate=$date[0].'-'.$date[1].'-01';
+			$todate=$date[0].'-'.$date[1].'-31';
 			} else{
 			$fdate=$_REQUEST['from_pick_date'];
 			$todate=$_REQUEST['to_pick_date']; }
@@ -1426,13 +1426,13 @@ if(isset($where_arry) || isset($like_arry)){
 				if($id!=''){
 						$tdate=date('Y-m-d');
 						$date=explode("-",$tdate);
-						$fdate='2014-'.$date[1].'-01';
-						$todate='2014-'.$date[1].'-31';
+						$fdate=$date[0].'-'.$date[1].'-01';
+						$todate=$date[0].'-'.$date[1].'-31';
 						
 						if((isset($_REQUEST['from_pick_date'])|| isset($_REQUEST['to_pick_date']))&& isset($_REQUEST['vdate_search'])){
 						if($_REQUEST['from_pick_date']==null && $_REQUEST['to_pick_date']==null){
-						$fdate='2014-'.$date[1].'-01';
-						$todate='2014-'.$date[1].'-31';
+						$fdate=$date[0].'-'.$date[1].'-01';
+						$todate=$date[0].'-'.$date[1].'-31';
 						}else{
 						$fdate=$_REQUEST['from_pick_date'];
 						$todate=$_REQUEST['to_pick_date'];}
