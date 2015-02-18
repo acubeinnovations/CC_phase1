@@ -1700,13 +1700,23 @@ function timeDifference(fromdate,fromtime,todate,totime){
 
     var diffSeconds = diff/1000;
     var HH = Math.floor(diffSeconds/3600);
+    
     var MM = Math.floor(diffSeconds%3600)/60;
 	var result='';
-	var no_of_days=Math.floor(HH/24);
-    if((HH>=24 && MM>=1) || HH>24){
+	var no_of_days=Math.floor(HH/24); 
+    /*if((HH>=24 && MM>=1) || HH>24){
       no_of_days=no_of_days+1; 
 	result+=no_of_days+'-'+HH+'-'+MM;	
-    }else{
+    }*/
+   // alert(HH%24);
+    if(HH%24==0 && MM==0){
+    result+=no_of_days+'-'+HH+'-'+MM;	
+    }
+    else if((HH>=24 && MM>=1) || HH>24){
+      no_of_days=no_of_days+1; 
+	result+=no_of_days+'-'+HH+'-'+MM;	
+    }
+    else{
  	result+='1'+'-'+HH+'-'+MM;
 	
 	}
