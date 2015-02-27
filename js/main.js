@@ -26,7 +26,7 @@ function drawChart() {
 		  {
 			setup_dashboard:setup_dashboard
 			
-		  },function(data){
+		  },function(data){ 
 		  data=jQuery.parseJSON(data);
   var container = document.getElementById('front-desk-dashboard');
   var chart = new google.visualization.Timeline(container);
